@@ -1,6 +1,6 @@
-package IO;
+package io;
 
-import Model.Note;
+import model.Note;
 import com.sun.media.sound.StandardMidiFileReader;
 import javax.sound.midi.*;
 import javax.sound.midi.spi.MidiFileReader;

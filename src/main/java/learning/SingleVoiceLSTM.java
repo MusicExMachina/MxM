@@ -1,4 +1,4 @@
-package Learning;
+package learning;
 
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
@@ -23,6 +23,7 @@ public class SingleVoiceLSTM {
     public static void main(String[] args) {
 
     }
+
     public void run() {
         initialize();
         train();

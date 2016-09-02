@@ -1,4 +1,4 @@
-package Model;
+package model;
 /**
  * A Note in MxM is very similar to a single note in the musical
  * sense, save that an MxM note may also be a glissando.
