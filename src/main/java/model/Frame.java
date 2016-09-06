@@ -13,9 +13,6 @@ public class Frame implements Comparable<Frame> {
     TreeSet<Note> notes;
     long time;
 
-    /*
-    */
-
     public long getTime() {
         return time;
     }
