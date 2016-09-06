@@ -88,8 +88,7 @@ public class Converter
         }
     }
 
-    public void run()
-    {
+    public void run() {
         Sequence sequence = readFromURL("http://www.midiworld.com/download/4522");
         notes = new TreeMap<>();
         frames = new TreeMap<>();
@@ -177,4 +176,5 @@ public class Converter
             // System.out.println(tick.toString() + " \t: " +frames.get(tick).toString());
         }
     }
+
 }

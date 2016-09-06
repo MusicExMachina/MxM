@@ -3,7 +3,10 @@ package learning;
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
 import org.deeplearning4j.nn.conf.Updater;
+import org.deeplearning4j.nn.conf.layers.GravesLSTM;
+import org.deeplearning4j.nn.conf.layers.RnnOutputLayer;
 import org.deeplearning4j.nn.weights.WeightInit;
+import org.nd4j.linalg.lossfunctions.LossFunctions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +23,12 @@ public class SingleVoiceLSTM {
     public static int HIDDEN_LAYER_NUM = 50;
     public static List<Integer> POSSIBLE_PITCHES = new ArrayList<Integer>();
 
-    public static void main(String[] args) {
-
-    }
-
     public void run() {
+        // Initialize and configure the network
         initialize();
+        // Train it on the provided data
         train();
+        // Do something with the output
     }
 
     /**
@@ -61,6 +63,32 @@ public class SingleVoiceLSTM {
         builder.updater(Updater.RMSPROP);
         builder.weightInit(WeightInit.XAVIER);
         NeuralNetConfiguration.ListBuilder listBuilder = builder.list();
+
+        for(int i = 0; i < HIDDEN_LAYER_NUM; i++) {
+            GravesLSTM. Builder hiddenLayerBuilder = new GravesLSTM.Builder();
+            hiddenLayerBuilder.nIn(HIDDEN_LAYER_WIDTH);
+            hiddenLayerBuilder.nOut(HIDDEN_LAYER_WIDTH);
+            hiddenLayerBuilder.activation("tanh");
+            listBuilder.layer(i, hiddenLayerBuilder.build());
+        }
+
+        RnnOutputLayer.Builder outputLayerBuilder = new RnnOutputLayer.Builder(LossFunctions.LossFunction.MCXENT);
+        outputLayerBuilder.activation("softmax");
+        outputLayerBuilder.nIn(HIDDEN_LAYER_WIDTH);
+        outputLayerBuilder.nOut(120);
+        listBuilder.layer(HIDDEN_LAYER_NUM, outputLayerBuilder.build());
+
+        // finish builder
+        listBuilder.pretrain(false);
+        listBuilder.backprop(true);
+
+        /*
+        // create network
+        MultiLayerConfiguration conf = listBuilder.build();
+        MultiLayerNetwork net = new MultiLayerNetwork(conf);
+        net.init();
+        net.setListeners(new ScoreIterationListener(1));
+        */
     }
 
     /**
