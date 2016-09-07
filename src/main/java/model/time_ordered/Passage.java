@@ -1,8 +1,18 @@
-package model;
+package model.time_ordered;
+
+import model.Player;
+import model.time_insensitive.Note;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeSet;
+
+/**
+ * RE-IMPLEMENT AS A *NAVIGABLE* LINKED LIST?
+ */
+
+
+
 
 /**
  * A passage is a relatively straightforward
