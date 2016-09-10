@@ -1,4 +1,4 @@
-package model;
+package model.generative;
 
 import model.time_insensitive.Count;
 import model.time_insensitive.Note;
