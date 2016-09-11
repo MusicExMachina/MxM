@@ -29,13 +29,14 @@ public class Count {
         measure = numerator/denominator;
         // Second, get the sub-measure fraction
         numerator = numerator%denominator;
-        
+
         // Iterates over all the possible primes
-        for(int i = 0; i < PRIME_PRECISION;  i++) {
+        for(int i = PRIME_PRECISION-1; i >= 0; i++) {
             // While it's divisible by this prime
             while(numerator % PRIMES[i] == 0) {
                 // Reduce by this prime
                 numerator = numerator / PRIMES[i];
+                // denominator = denominator / PRIMES[i];
                 numerators[i]++;
             }
         }
