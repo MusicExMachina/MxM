@@ -22,4 +22,4 @@ buildNumber.properties
 .mvn/timing.properties
 
 # IntelliJ #
-.idea/*
+.idea/
