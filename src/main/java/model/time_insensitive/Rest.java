@@ -1,7 +1,11 @@
 package model.time_insensitive;
 
 /**
- * Created by celenp on 9/7/2016.
+ * Rests are simply musical pauses of a
+ * predefined length (unlike caesuras).
+ * In MxM, they are essentially identical
+ * to a MusicEvent, but are split up to
+ * make more logical sense.
  */
 public class Rest {
 

@@ -4,7 +4,9 @@ import model.time_insensitive.MusicEvent;
 import java.util.TreeSet;
 
 /**
- * A frame is a conceptualization of
+ * A frame is a vertical stack of MusicEvents.
+ * This may include identical pitches (and, of
+ * course, rests in different instruments).
  */
 public class Frame {
 

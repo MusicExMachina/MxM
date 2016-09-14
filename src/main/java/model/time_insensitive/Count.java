@@ -20,7 +20,7 @@ public class Count {
     byte[] denominators  = new byte[PRIME_PRECISION];
 
     /**
-     *
+     * A constructor for Count taking in
      * @param numerator
      * @param denominator
      */
