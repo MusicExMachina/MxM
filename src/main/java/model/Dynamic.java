@@ -1,4 +1,4 @@
-package model.frameEvents;
+package model;
 
 /**
  * A Dynamic is a measure of loudness. They're

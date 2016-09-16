@@ -1,4 +1,4 @@
-package model.frameEvents;
+package model;
 
 import java.util.*;
 

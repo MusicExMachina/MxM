@@ -1,4 +1,4 @@
-package model.time_insensitive;
+package model;
 
 /**
  * A Count is the fundamental measurement of

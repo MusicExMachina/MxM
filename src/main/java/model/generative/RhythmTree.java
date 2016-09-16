@@ -1,8 +1,6 @@
 package model.generative;
 
-import model.time_insensitive.Count;
-import model.time_insensitive.MusicEvent;
-import model.time_insensitive.Note;
+import model.Count;
 
 import java.io.Serializable;
 import java.util.*;
