@@ -8,11 +8,11 @@ package model.time_free;
  */
 public class Pitch {
 
-
-    public static int MAX_PITCH = 120;
+    /* Useful variable bounds */
     public static int MIN_PITCH = 0;
-    public static int MAX_OCTAVE = 1;
-    public static int MIN_OCTAVE = 1;
+    public static int MAX_PITCH = 120;
+    public static int MIN_OCTAVE = -1;
+    public static int MAX_OCTAVE = 9;
 
     private final int value;
 
@@ -21,7 +21,7 @@ public class Pitch {
      * @param value The pitch's MIDI value
      */
     public Pitch(int value) {
-        if(value >= 0 && value <= 120) {
+        if(value >= MIN_PITCH && value <= MAX_PITCH) {
             this.value = value;
         }
         else {
@@ -37,5 +37,20 @@ public class Pitch {
         this.value = other.value;
     }
 
+    /**
+     * Gets the pitch class of this pitch
+     * @return
+     */
+    public int getPitchClass() {
+        return value % 12;
+    }
+
+    /**
+     * Gets the octave of this pitch
+     * @return
+     */
+    public int getOctave() {
+        return value/12 + MIN_OCTAVE;
+    }
 
 }
