@@ -1,6 +1,7 @@
 package model.generative;
 
 import model.time_insensitive.Count;
+import model.time_insensitive.MusicEvent;
 import model.time_insensitive.Note;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.util.*;
  * save that their only "real" storage is in their
  * leaf nodes. This
  */
-public class RhythmTree implements Serializable, Cloneable, Iterable<Note>, Collection<Note>, NavigableSet<Note>, Set<Note>, SortedSet<Note> {
+public class RhythmTree implements Serializable, Cloneable, Iterable<MusicEvent>, Collection<MusicEvent>, NavigableSet<MusicEvent>, Set<MusicEvent>, SortedSet<MusicEvent> {
 
     private class Node {
         Count timing;
@@ -21,6 +22,11 @@ public class RhythmTree implements Serializable, Cloneable, Iterable<Note>, Coll
         Node parent;
         List<Node> children;
     }
+
+
+
+
+
 
     private Node root = null;
 
@@ -44,6 +50,40 @@ public class RhythmTree implements Serializable, Cloneable, Iterable<Note>, Coll
 
     /*   HERE BE OVERRIDE METHODS    */
     /* ABANDON ALL HOPE YE WHO ENTER */
+
+    @Override
+    public Iterator<MusicEvent> iterator() {
+        Iterator<MusicEvent> it = new Iterator<MusicEvent>() {
+            private Node node = root;
+
+            @Override
+            public boolean hasNext() {
+                Node nextNode           = null;
+                int parentsChildNumber  = -1;
+                nextNode= node.parent;
+                for(int i = 0; i < nextNode.children.size(); i++) {
+                    if(nextNode.children.get(i).equals(node)) {
+                        parentsChildNumber = i;
+                    }
+                }
+                if(parentsChildNumber < nextNode.children.size()) {
+
+                }
+                return currentIndex < currentSize && arrayList[currentIndex] != null;
+            }
+
+            @Override
+            public MusicEvent next() {
+                return arrayList[currentIndex++];
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+        return it;
+    }
 
     @Override
     public Note lower(Note note) {
@@ -188,10 +228,5 @@ public class RhythmTree implements Serializable, Cloneable, Iterable<Note>, Coll
     @Override
     public void clear() {
 
-    }
-
-    @Override
-    public Iterator<Note> iterator() {
-        return null;
     }
 }
