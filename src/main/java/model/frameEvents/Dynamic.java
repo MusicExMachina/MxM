@@ -1,4 +1,4 @@
-package model.time_free;
+package model.frameEvents;
 
 /**
  * A Dynamic is a measure of loudness. They're

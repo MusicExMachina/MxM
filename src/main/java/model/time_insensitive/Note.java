@@ -1,6 +1,6 @@
 package model.time_insensitive;
 
-import model.time_free.Pitch;
+import model.frameEvents.Pitch;
 
 /**
  * Notes are context-free musical notes. Imagine

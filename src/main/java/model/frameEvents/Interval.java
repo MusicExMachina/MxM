@@ -1,4 +1,4 @@
-package model.time_free;
+package model.frameEvents;
 
 import java.util.*;
 
