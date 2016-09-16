@@ -1,6 +1,7 @@
 package model.generative;
 
 import model.Count;
+import model.Frame;
 
 import java.io.Serializable;
 import java.util.*;
@@ -13,7 +14,7 @@ import java.util.*;
  * leaf nodes. This
  */
 
-public class RhythmTree implements Serializable, Cloneable, Iterable<MusicEvent>, Collection<MusicEvent>, NavigableSet<MusicEvent>, Set<MusicEvent>, SortedSet<MusicEvent> {
+public class RhythmTree implements Serializable, Cloneable, Iterable<Frame>, Collection<Frame>, NavigableSet<Frame>, Set<Frame>, SortedSet<Frame> {
 
     private class Node {
         Count timing;
@@ -21,11 +22,6 @@ public class RhythmTree implements Serializable, Cloneable, Iterable<MusicEvent>
         Node parent;
         List<Node> children;
     }
-
-
-
-
-
 
     private Node root = null;
 
@@ -44,15 +40,58 @@ public class RhythmTree implements Serializable, Cloneable, Iterable<MusicEvent>
 
     }
 
-
-
-
     /*   HERE BE OVERRIDE METHODS    */
     /* ABANDON ALL HOPE YE WHO ENTER */
 
     @Override
-    public Iterator<MusicEvent> iterator() {
-        Iterator<MusicEvent> it = new Iterator<MusicEvent>() {
+    public Frame lower(Frame frame) {
+        return null;
+    }
+
+    @Override
+    public Frame floor(Frame frame) {
+        return null;
+    }
+
+    @Override
+    public Frame ceiling(Frame frame) {
+        return null;
+    }
+
+    @Override
+    public Frame higher(Frame frame) {
+        return null;
+    }
+
+    @Override
+    public Frame pollFirst() {
+        return null;
+    }
+
+    @Override
+    public Frame pollLast() {
+        return null;
+    }
+
+    @Override
+    public int size() {
+        return 0;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        return false;
+    }
+
+    @Override
+    public Iterator<Frame> iterator() {
+            /*
+        Iterator<Frame> it = new Iterator<Frame>() {
             private Node node = root;
 
             @Override
@@ -82,106 +121,8 @@ public class RhythmTree implements Serializable, Cloneable, Iterable<MusicEvent>
             }
         };
         return it;
-    }
-
-    @Override
-    public Note lower(Note note) {
+        */
         return null;
-    }
-
-    @Override
-    public Note floor(Note note) {
-        return null;
-    }
-
-    @Override
-    public Note ceiling(Note note) {
-        return null;
-    }
-
-    @Override
-    public Note higher(Note note) {
-        return null;
-    }
-
-    @Override
-    public Note pollFirst() {
-        return null;
-    }
-
-    @Override
-    public Note pollLast() {
-        return null;
-    }
-
-    @Override
-    public NavigableSet<Note> descendingSet() {
-        return null;
-    }
-
-    @Override
-    public Iterator<Note> descendingIterator() {
-        return null;
-    }
-
-    @Override
-    public NavigableSet<Note> subSet(Note fromElement, boolean fromInclusive, Note toElement, boolean toInclusive) {
-        return null;
-    }
-
-    @Override
-    public NavigableSet<Note> headSet(Note toElement, boolean inclusive) {
-        return null;
-    }
-
-    @Override
-    public NavigableSet<Note> tailSet(Note fromElement, boolean inclusive) {
-        return null;
-    }
-
-    @Override
-    public Comparator<? super Note> comparator() {
-        return null;
-    }
-
-    @Override
-    public SortedSet<Note> subSet(Note fromElement, Note toElement) {
-        return null;
-    }
-
-    @Override
-    public SortedSet<Note> headSet(Note toElement) {
-        return null;
-    }
-
-    @Override
-    public SortedSet<Note> tailSet(Note fromElement) {
-        return null;
-    }
-
-    @Override
-    public Note first() {
-        return null;
-    }
-
-    @Override
-    public Note last() {
-        return null;
-    }
-
-    @Override
-    public int size() {
-        return 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public boolean contains(Object o) {
-        return false;
     }
 
     @Override
@@ -195,7 +136,7 @@ public class RhythmTree implements Serializable, Cloneable, Iterable<MusicEvent>
     }
 
     @Override
-    public boolean add(Note note) {
+    public boolean add(Frame frame) {
         return false;
     }
 
@@ -210,7 +151,7 @@ public class RhythmTree implements Serializable, Cloneable, Iterable<MusicEvent>
     }
 
     @Override
-    public boolean addAll(Collection<? extends Note> c) {
+    public boolean addAll(Collection<? extends Frame> c) {
         return false;
     }
 
@@ -227,5 +168,60 @@ public class RhythmTree implements Serializable, Cloneable, Iterable<MusicEvent>
     @Override
     public void clear() {
 
+    }
+
+    @Override
+    public NavigableSet<Frame> descendingSet() {
+        return null;
+    }
+
+    @Override
+    public Iterator<Frame> descendingIterator() {
+        return null;
+    }
+
+    @Override
+    public NavigableSet<Frame> subSet(Frame fromElement, boolean fromInclusive, Frame toElement, boolean toInclusive) {
+        return null;
+    }
+
+    @Override
+    public NavigableSet<Frame> headSet(Frame toElement, boolean inclusive) {
+        return null;
+    }
+
+    @Override
+    public NavigableSet<Frame> tailSet(Frame fromElement, boolean inclusive) {
+        return null;
+    }
+
+    @Override
+    public Comparator<? super Frame> comparator() {
+        return null;
+    }
+
+    @Override
+    public SortedSet<Frame> subSet(Frame fromElement, Frame toElement) {
+        return null;
+    }
+
+    @Override
+    public SortedSet<Frame> headSet(Frame toElement) {
+        return null;
+    }
+
+    @Override
+    public SortedSet<Frame> tailSet(Frame fromElement) {
+        return null;
+    }
+
+    @Override
+    public Frame first() {
+        return null;
+    }
+
+    @Override
+    public Frame last() {
+        return null;
     }
 }

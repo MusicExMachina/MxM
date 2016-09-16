@@ -1,7 +1,8 @@
 package model;
 
 /**
- * Created by celenp on 9/16/2016.
+ * A class for storing information about single events
+ * in a Passage.
  */
 public class Frame {
 
@@ -9,9 +10,11 @@ public class Frame {
     Count start;
     /** The length of this event in Counts  */
     Count length;
-
+    /** The Pitch of this Frame             */
     Pitch pitch;
+    /** The Dynamic of this Frame           */
     Dynamic dynamic;
+    /** The Tempo of this Frame             */
     Tempo tempo;
 
     /**
