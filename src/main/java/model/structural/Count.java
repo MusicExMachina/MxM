@@ -1,4 +1,4 @@
-package model;
+package model.structural;
 
 /**
  * A Count is the fundamental measurement of

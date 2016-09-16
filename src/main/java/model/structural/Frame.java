@@ -1,4 +1,4 @@
-package model;
+package model.structural;
 
 /**
  * A class for storing information about single events

@@ -1,6 +1,6 @@
-package model;
+package model.structural;
 
-import java.util.Comparator;
+import java.util.*;
 
 /**
  * Tempo is a glorified byte wrapper,

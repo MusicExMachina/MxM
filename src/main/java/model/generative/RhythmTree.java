@@ -1,7 +1,7 @@
 package model.generative;
 
-import model.Count;
-import model.Frame;
+import model.structural.Count;
+import model.structural.Frame;
 
 import java.io.Serializable;
 import java.util.*;
