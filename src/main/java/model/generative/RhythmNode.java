@@ -1,8 +1,6 @@
 package model.generative;
 
-import learning.RhythmNetwork;
 import model.structural.Count;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +36,7 @@ public class RhythmNode {
      * @return An edit-safe List of child nodes.
      */
     public List<RhythmNode> getChildren() {
-        return new ArrayList<>(children);
+        return new ArrayList<RhythmNode>(children);
     }
 
     /**
