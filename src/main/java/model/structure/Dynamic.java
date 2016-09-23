@@ -1,6 +1,6 @@
 package model.structure;
 
-import java.util.*;
+import java.util.Comparator;
 
 /**
  * Dynamic is a glorified byte wrapper,
@@ -58,7 +58,7 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
      */
     @Override
     public int compareTo(Dynamic other) {
-        return Byte.compare(value,other.value);
+        return new Byte(value).compareTo(new Byte(other.value));
     }
 
     /**
@@ -69,7 +69,7 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
      */
     @Override
     public int compare(Dynamic p1, Dynamic p2) {
-        return Byte.compare(p1.value,p2.value);
+        return new Byte(p1.value).compareTo(new Byte(p2.value));
     }
 
     /**
@@ -83,7 +83,6 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
         if (o == null || getClass() != o.getClass()) return false;
         Dynamic dynamic = (Dynamic) o;
         return value == dynamic.value;
-
     }
 
     /**

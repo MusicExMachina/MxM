@@ -1,6 +1,6 @@
 package model.structure;
 
-import java.util.*;
+import java.util.Comparator;
 
 /**
  * Pitch is a glorified byte wrapper,
@@ -10,11 +10,36 @@ import java.util.*;
  */
 public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
+    /* A bunch of preset Pitches for general use. */
+    public static Pitch C_FLAT_4    = new Pitch(59);
+    public static Pitch C_NATURAL_4 = new Pitch(60);
+    public static Pitch C_SHARP_4   = new Pitch(61);
+    public static Pitch D_FLAT_4    = new Pitch(61);
+    public static Pitch D_NATURAL_4 = new Pitch(62);
+    public static Pitch D_SHARP_4   = new Pitch(63);
+    public static Pitch E_FLAT_4    = new Pitch(63);
+    public static Pitch E_NATURAL_4 = new Pitch(64);
+    public static Pitch E_SHARP_4   = new Pitch(65);
+    public static Pitch F_FLAT_4    = new Pitch(64);
+    public static Pitch F_NATURAL_4 = new Pitch(65);
+    public static Pitch F_SHARP_4   = new Pitch(66);
+    public static Pitch G_FLAT_4    = new Pitch(66);
+    public static Pitch G_NATURAL_4 = new Pitch(67);
+    public static Pitch G_SHARP_4   = new Pitch(68);
+    public static Pitch A_FLAT_4    = new Pitch(68);
+    public static Pitch A_NATURAL_4 = new Pitch(69);
+    public static Pitch A_SHARP_4   = new Pitch(70);
+    public static Pitch B_FLAT_4    = new Pitch(70);
+    public static Pitch B_NATURAL_4 = new Pitch(71);
+    public static Pitch B_SHARP_4   = new Pitch(72);
+
     /* Useful variable bounds */
-    public static int MIN_PITCH = 0;
-    public static int MAX_PITCH = 120;
-    public static int MIN_OCTAVE = -1;
-    public static int MAX_OCTAVE = 9;
+    public static int MIN_PITCHCLASS    = 0;
+    public static int MAX_PITCHCLASS    = 11;
+    public static int MIN_OCTAVE        = -1;
+    public static int MAX_OCTAVE        = 9;
+    public static int MIN_PITCH         = 0;
+    public static int MAX_PITCH         = 120;
 
     /**
      * Stores the MIDI value of this Pitch.
@@ -59,13 +84,31 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
+     * Transposes a Pitch by a given interval.
+     * @param interval The Interval to transpose by.
+     * @return The new, resulting Pitch.
+     */
+    public Pitch transpose(Interval interval) {
+        return new Pitch(value + interval.getSize());
+    }
+
+    /**
+     * Gets the Interval between this Pitch and another.
+     * @param other The other Pitch to subtract from this one.
+     * @return THe Interval between this Pitch and another.
+     */
+    public Interval minus(Pitch other) {
+        return new Interval(other.value - this.value);
+    }
+
+    /**
      * Compares this Pitch to another Pitch.
      * @param other The other Pitch.
      * @return The comparison.
      */
     @Override
     public int compareTo(Pitch other) {
-        return Byte.compare(value,other.value);
+        return new Integer(value).compareTo(new Integer(other.value));
     }
 
     /**
@@ -76,7 +119,7 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
      */
     @Override
     public int compare(Pitch p1, Pitch p2) {
-        return Byte.compare(p1.value,p2.value);
+        return new Integer(p1.value).compareTo(new Integer(p2.value));
     }
 
     /**
@@ -90,7 +133,6 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
         if (o == null || getClass() != o.getClass()) return false;
         Pitch pitch = (Pitch) o;
         return value == pitch.value;
-
     }
 
     /**
