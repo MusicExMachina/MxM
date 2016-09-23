@@ -1,4 +1,4 @@
-package model.structural;
+package model.structure;
 
 import java.util.*;
 
@@ -10,14 +10,24 @@ import java.util.*;
  */
 public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
 
-    /* Useful variable bounds */
+    /* A bunch of preset dynamics for general use. */
+    public static Tempo PRESTO      = new Tempo(160);
+    public static Tempo VIVACE      = new Tempo(140);
+    public static Tempo ALLEGRO     = new Tempo(120);
+    public static Tempo MODERATO    = new Tempo(100);
+    public static Tempo ANDANTE     = new Tempo(80);
+    public static Tempo ADAGIO      = new Tempo(70);
+    public static Tempo LENTO       = new Tempo(60);
+    public static Tempo LARGO       = new Tempo(50);
+    public static Tempo GRAVE       = new Tempo(30);
+
     public static int MIN_TEMPO = 0;
     public static int MAX_TEMPO = 120;
 
     /**
-     * Stores the MIDI value of this Pitch.
+     * Stores a tempo value, in BPM
      */
-    private final byte value;
+    private final int value;
 
     /**
      * Constructor taking in a Tempo speed.
@@ -47,7 +57,7 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
      */
     @Override
     public int compareTo(Tempo other) {
-        return Byte.compare(value,other.value);
+        return new Integer(value).compareTo(other.value);
     }
 
     /**
@@ -58,7 +68,7 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
      */
     @Override
     public int compare(Tempo p1, Tempo p2) {
-        return Byte.compare(p1.value,p2.value);
+        return new Integer(p1.value).compareTo(p2.value);
     }
 
     /**
