@@ -12,6 +12,7 @@ import java.util.Comparator;
 public class Count implements Comparator<Count>, Comparable<Count> {
 
     /* A bunch of preset Count for general use. */
+    public static Count ZERO            = new Count(0,1);
     public static Count FULL_MEASURE    = new Count(1,1);
     public static Count HALF_MEASURE    = new Count(1,2);
     public static Count THIRD_MEASURE   = new Count(1,3);

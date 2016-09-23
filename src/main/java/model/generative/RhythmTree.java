@@ -1,6 +1,5 @@
 package model.generative;
 
-import model.structural.Frame;
 import java.util.*;
 
 /**
@@ -8,18 +7,21 @@ import java.util.*;
  * subdivisions of some concrete amount of time.
  * RhythmTrees operate like many other data structures
  * save that their only "real" storage is in their
- * leaf nodes. This
+ * leaf nodes.
  */
-public class RhythmTree /* implements Serializable, Cloneable, Iterable<Frame>, Collection<Frame>, NavigableSet<Frame>, Set<Frame>, SortedSet<Frame> */ {
+public class RhythmTree {
 
-    private RhythmNode root;
-    List<List<RhythmNode>> layers;
+    /** How deep a rhythm can go, Node-wise */
+    public static int MAX_DEPTH = 8;
+
+    /** Saves each layer individually **/
+    List<List<RhythmNode>> layers = new ArrayList<List<RhythmNode>>(MAX_DEPTH);
 
     /**
      * The RhythmTree default constructor
      */
     public RhythmTree() {
-        root = new RhythmNode();
+        //layers.get(0) = new RhythmNode(null,);
     }
 
     /**
@@ -28,6 +30,14 @@ public class RhythmTree /* implements Serializable, Cloneable, Iterable<Frame>, 
      */
     public RhythmTree(RhythmTree other) {
 
+    }
+
+    /**
+     * Getter for the root Node which fills the whole measure.
+     * @return
+     */
+    public RhythmNode getRoot() {
+        return layers.get(0).get(0);
     }
 }
 
