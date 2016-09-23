@@ -21,8 +21,9 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
     public static Tempo LARGO       = new Tempo(50);
     public static Tempo GRAVE       = new Tempo(30);
 
-    public static int MIN_TEMPO = 0;
-    public static int MAX_TEMPO = 120;
+    /* Some basic bounds on Tempo. */
+    private static int MIN_TEMPO = 0;
+    private static int MAX_TEMPO = 200;
 
     /**
      * Stores a tempo value, in BPM

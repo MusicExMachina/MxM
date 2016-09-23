@@ -25,18 +25,21 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
     public static Interval MINOR_SECOND     = new Interval(1);
     public static Interval UNISON           = new Interval(0);
 
+    /* Some basic bounds on Tempo. */
+    private static int MIN_INTERVAL = -240;
+    private static int MAX_INTERVAL = 240;
 
     /**
      * The immutable size of this Interval in half-steps
      */
-    byte size;
+    int size;
 
     /**
      * The normal Interval constructor.
      * @param size The size of the interval in half-steps.
      */
     public Interval(int size) {
-        if(size >= -Pitch.MAX_PITCH && size <= Pitch.MAX_PITCH) {
+        if(size >= MIN_INTERVAL && size <= MAX_INTERVAL) {
             this.size = (byte)size;
         }
         else {
@@ -77,7 +80,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      */
     @Override
     public int compareTo(Interval other) {
-        return Byte.compare(size, other.size);
+        return new Integer(size).compareTo(new Integer(other.size));
     }
 
     /**
@@ -88,7 +91,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      */
     @Override
     public int compare(Interval i1, Interval i2) {
-        return Byte.compare(i1.size, i2.size);
+        return new Integer(i1.size).compareTo(new Integer(i2.size));
     }
 
     /**
@@ -102,7 +105,6 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
         if (o == null || getClass() != o.getClass()) return false;
         Interval interval = (Interval) o;
         return size == interval.size;
-
     }
 
     /**

@@ -65,7 +65,7 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
      */
     @Override
     public int compareTo(Pitch other) {
-        return Byte.compare(value,other.value);
+        return new Integer(value).compareTo(new Integer(other.value));
     }
 
     /**
@@ -76,7 +76,7 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
      */
     @Override
     public int compare(Pitch p1, Pitch p2) {
-        return Byte.compare(p1.value,p2.value);
+        return new Integer(p1.value).compareTo(new Integer(p2.value));
     }
 
     /**
@@ -90,7 +90,6 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
         if (o == null || getClass() != o.getClass()) return false;
         Pitch pitch = (Pitch) o;
         return value == pitch.value;
-
     }
 
     /**
