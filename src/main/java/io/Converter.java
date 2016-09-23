@@ -18,15 +18,23 @@ import java.util.*;
     new URL("http://www.piano-midi.de/midis/debussy/deb_clai.mid"));
     new URL("http://www.8notes.com/school/midi/piano/debussy_clair.mid")
  */
+
+/*
 public class Converter
 {
     static final int NOTE_ON    = 0x90;
     static final int NOTE_OFF   = 0x80;
     static final long MAX_TIME  = 1000;
 
-    TreeMap<Integer, Note> notes;         /** A "dump" of all the notes in this piece by ID */
-    TreeMap<Long, List<Note>> frames;     /** Allows for groupings by concurrency */
-    TreeMap<String, List<Note>> parts;    /** Allows for groupings by instrumment */
+    TreeMap<Integer, Note> notes;         */
+/** A "dump" of all the notes in this piece by ID *//*
+
+    TreeMap<Long, List<Note>> frames;     */
+/** Allows for groupings by concurrency *//*
+
+    TreeMap<String, List<Note>> parts;    */
+/** Allows for groupings by instrumment *//*
+
 
     public static void main (String args[]) {
         Converter converter = new Converter();
@@ -34,11 +42,13 @@ public class Converter
         converter.writeToFile("test");
     }
 
-    /**
+    */
+/**
      * Reads a MIDI file from a given url string
      * @param str the url to read from
      * @return the MIDI Sequence read
-     */
+     *//*
+
     public static Sequence readFromURL (String str) {
         MidiFileReader reader = new StandardMidiFileReader();
         try {
@@ -51,9 +61,11 @@ public class Converter
         return null;
     }
 
-    /**
+    */
+/**
      * Attempts to write the current information to a file
-     */
+     *//*
+
     private void writeToFile (String fileName) {
         List<String> lines = new ArrayList<>();
         lines.add("notes {");
@@ -176,4 +188,4 @@ public class Converter
         }
     }
 
-}
+}*/
