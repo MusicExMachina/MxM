@@ -1,5 +1,7 @@
 package model.structure;
 
+import org.omg.CORBA.INTERNAL;
+
 import java.util.*;
 
 /**
@@ -56,6 +58,24 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
      */
     public int getOctave() {
         return value/12 + MIN_OCTAVE;
+    }
+
+    /**
+     * Transposes a Pitch by a given interval.
+     * @param interval The Interval to transpose by.
+     * @return The new, resulting Pitch.
+     */
+    public Pitch transpose(Interval interval) {
+        return new Pitch(value + interval.getSize());
+    }
+
+    /**
+     * Gets the Interval between this Pitch and another.
+     * @param other The other Pitch to subtract from this one.
+     * @return THe Interval between this Pitch and another.
+     */
+    public Interval minus(Pitch other) {
+        return new Interval(other.value - this.value);
     }
 
     /**

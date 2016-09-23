@@ -32,7 +32,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
     /**
      * The immutable size of this Interval in half-steps
      */
-    int size;
+    private int size;
 
     /**
      * The normal Interval constructor.
@@ -53,6 +53,14 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      */
     public Interval(Interval other) {
         this.size = other.size;
+    }
+
+    /**
+     * A getter for the size of this Interval, in half-steps.
+     * @return The size of this Interval, in half-steps.
+     */
+    public int getSize() {
+        return size;
     }
 
     /**
