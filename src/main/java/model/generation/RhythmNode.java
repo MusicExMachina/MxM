@@ -1,6 +1,6 @@
-package model.generative;
+package model.generation;
 
-import model.structural.Count;
+import model.structure.Count;
 import java.util.ArrayList;
 import java.util.List;
 

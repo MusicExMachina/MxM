@@ -1,4 +1,4 @@
-package model.generative;
+package model.generation;
 
 import java.util.*;
 
