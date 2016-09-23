@@ -57,7 +57,7 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
      */
     @Override
     public int compareTo(Tempo other) {
-        return Byte.compare(value,other.value);
+        return new Integer(value).compareTo(other.value);
     }
 
     /**
@@ -68,7 +68,7 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
      */
     @Override
     public int compare(Tempo p1, Tempo p2) {
-        return Byte.compare(p1.value,p2.value);
+        return new Integer(p1.value).compareTo(p2.value);
     }
 
     /**
