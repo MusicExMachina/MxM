@@ -43,7 +43,6 @@ public class RhythmTreeVisualizer extends Applet {
 
     public void paint(Graphics g) {
         this.rt.paint((Graphics2D) g, 0, 0);
-
     }
 
 }

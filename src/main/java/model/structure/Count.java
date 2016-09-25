@@ -185,6 +185,18 @@ public class Count implements Comparator<Count>, Comparable<Count> {
         int a = numerator;
         int b = denominator;
 
+
+        if(a == 0 && b==0) {
+            throw new IllegalArgumentException("Undefined Count: (0,0)");
+        }else if(a==0){
+            denominator /= b;
+            return;
+        }else if(b == 0){
+            numerator /= a;
+            return;
+        }
+
+
         while (a != b) {
             if (a > b) {
                 a -= b;

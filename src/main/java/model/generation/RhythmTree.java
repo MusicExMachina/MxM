@@ -41,7 +41,6 @@ public class RhythmTree {
         Queue<RhythmNode> constructQueue = new ArrayDeque<>();
 
         root = new RhythmNode();
-        root.children = new ArrayList<>();
         constructQueue.add(root);
 
         RhythmNode currentNode;
@@ -52,15 +51,20 @@ public class RhythmTree {
             } else {
                 throw new IllegalArgumentException("List cannot be converted to a rhythm tree, not enough divisions");
             }
-            if (aSubDiv != 1) {
-                for (int j = 0; j < aSubDiv; j++) {
-                    RhythmNode child = new RhythmNode();
-                    child.children = new ArrayList<>();
-                    child.parent = currentNode;
-                    currentNode.children.add(child);
-                    constructQueue.add(child);
-                }
+            if (aSubDiv!=0 && aSubDiv!=1){
+                List<RhythmNode> children = currentNode.subdivide(aSubDiv);
+                constructQueue.addAll(children);
             }
+//
+//            if (aSubDiv != 1) {
+//                for (int j = 0; j < aSubDiv; j++) {
+//                    RhythmNode child = new RhythmNode();
+//                    child.children = new ArrayList<>();
+//                    child.parent = currentNode;
+//                    currentNode.children.add(child);
+//                    constructQueue.add(child);
+//                }
+//            }
         }
 
         if (constructQueue.size() != 0) {
