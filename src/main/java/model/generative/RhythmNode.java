@@ -13,6 +13,8 @@ import java.util.List;
 public class RhythmNode {
 
     /**  */
+    private static final int DRAW_RAD = 10;
+
     Count timing;
     //Count length;
     RhythmNode parent;
