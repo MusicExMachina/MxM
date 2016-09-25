@@ -1,6 +1,6 @@
 package model.generation.tests;
 
-import model.generative.RhythmTree;
+import model.generation.RhythmTree;
 import org.junit.Test;
 
 /**

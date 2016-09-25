@@ -1,13 +1,11 @@
 package ui;
-import model.generative.RhythmTree;
+import model.generation.RhythmTree;
 import javax.swing.SwingUtilities;
 import java.applet.Applet;
 import java.awt.*;
 
 
-/**
- * Created by jpatsenker on 9/18/16.
- */
+
 public class RhythmTreeVisualizer extends Applet {
 
     RhythmTree rt;

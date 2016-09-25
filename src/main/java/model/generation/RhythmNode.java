@@ -16,8 +16,7 @@ public class RhythmNode {
 
     /**Radius for drawing */
     private static final int DRAW_RAD = 10;
-
-
+    
     /** The depth of this Node in the tree. */
     int depth;
 
