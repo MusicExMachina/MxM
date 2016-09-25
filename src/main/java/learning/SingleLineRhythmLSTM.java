@@ -17,7 +17,7 @@ import java.util.List;
  * of music by starting with a single note-after-note
  * line played by a single instrument.
  */
-public class SingleVoiceLSTM {
+public class SingleLineRhythmLSTM /* implements RhythmNetwork */ {
 
     public static int HIDDEN_LAYER_WIDTH = 50;
     public static int HIDDEN_LAYER_NUM = 50;

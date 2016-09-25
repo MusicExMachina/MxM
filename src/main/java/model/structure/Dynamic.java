@@ -1,6 +1,6 @@
-package model.structural;
+package model.structure;
 
-import java.util.*;
+import java.util.Comparator;
 
 /**
  * Dynamic is a glorified byte wrapper,
@@ -9,6 +9,17 @@ import java.util.*;
  * with arguments to constructors.
  */
 public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
+
+    /* A bunch of preset Dynamics for general use. */
+    public static Dynamic FORTISSISSIMO = new Dynamic(100);
+    public static Dynamic FORTISSIMO    = new Dynamic(88);
+    public static Dynamic FORTE         = new Dynamic(75);
+    public static Dynamic MEZZO_FORTE   = new Dynamic(62);
+    public static Dynamic MEZZO_PIANO   = new Dynamic(50);
+    public static Dynamic PIANO         = new Dynamic(38);
+    public static Dynamic PIANISSIMO    = new Dynamic(25);
+    public static Dynamic PIANISSISSIMO = new Dynamic(12);
+    public static Dynamic NIENTE        = new Dynamic(0);
 
     /* Useful variable bounds */
     public static int MIN_DYNAMIC = 0;
@@ -47,7 +58,7 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
      */
     @Override
     public int compareTo(Dynamic other) {
-        return Byte.compare(value,other.value);
+        return new Byte(value).compareTo(new Byte(other.value));
     }
 
     /**
@@ -58,7 +69,7 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
      */
     @Override
     public int compare(Dynamic p1, Dynamic p2) {
-        return Byte.compare(p1.value,p2.value);
+        return new Byte(p1.value).compareTo(new Byte(p2.value));
     }
 
     /**
@@ -72,7 +83,6 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
         if (o == null || getClass() != o.getClass()) return false;
         Dynamic dynamic = (Dynamic) o;
         return value == dynamic.value;
-
     }
 
     /**

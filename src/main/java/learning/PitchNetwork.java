@@ -1,18 +1,20 @@
 package learning;
 
 import model.structure.Frame;
+import model.structure.Passage;
 
 import java.util.List;
 
 /**
- * A RhythmNetwork is one which generates rhythms (duh).
+ *
  */
-public interface RhythmNetwork {
+public interface PitchNetwork {
     /**
      * Generates a rhythm of a given length given a seed.
      * @param seed
-     * @param numMeasures
+     * @param passage
      * @return
      */
-    public List<Frame> generateRhythm(int seed, int numMeasures);
+    public List<Frame> colorRhythm(int seed, Passage passage);
 }
+
