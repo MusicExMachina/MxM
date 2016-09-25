@@ -22,33 +22,6 @@ public class RhythmTree /* implements Serializable, Cloneable, Iterable<Frame>, 
 
     public static final int DRAW_RAD = 20;
 
-    private class Node {
-        Count timing;
-        Count length;
-        Node parent;
-        List<Node> children;
-
-
-        /**
-         * Paint the node, and its children w/ links
-         *
-         * @param g Graphics object to paint with
-         * @param x Top left corner of node x coord
-         * @param y Top left corner of node y coord
-         */
-        public void paint(Graphics2D g, int x, int y) {
-            g.drawOval(x, y, DRAW_RAD * 2, DRAW_RAD * 2);
-            for (int i = 0; i < children.size(); i++) {
-                int childX = x + DRAW_RAD * 6;
-                int childY = y + DRAW_RAD * 3 * i; //gap of 1 rad
-                g.drawLine(x + DRAW_RAD * 2, y + DRAW_RAD, childX, childY + DRAW_RAD); // y for center
-                children.get(i).paint(g, childX, childY);
-            }
-        }
-    }
-
-    private Node root = null;
-
     /**
      * The RhythmTree default constructor
      */
@@ -71,13 +44,13 @@ public class RhythmTree /* implements Serializable, Cloneable, Iterable<Frame>, 
      * @param subDiv list of subdivisions in Breadth First order
      */
     public RhythmTree(int[] subDiv) throws IllegalArgumentException {
-        Queue<Node> constructQueue = new ArrayDeque<>();
+        Queue<RhythmNode> constructQueue = new ArrayDeque<>();
 
-        root = new Node();
+        root = new RhythmNode();
         root.children = new ArrayList<>();
         constructQueue.add(root);
 
-        Node currentNode;
+        RhythmNode currentNode;
 
         for (int aSubDiv : subDiv) {
             if (constructQueue.size() != 0) {
@@ -87,7 +60,7 @@ public class RhythmTree /* implements Serializable, Cloneable, Iterable<Frame>, 
             }
             if (aSubDiv != 1) {
                 for (int j = 0; j < aSubDiv; j++) {
-                    Node child = new Node();
+                    RhythmNode child = new RhythmNode();
                     child.children = new ArrayList<>();
                     child.parent = currentNode;
                     currentNode.children.add(child);
