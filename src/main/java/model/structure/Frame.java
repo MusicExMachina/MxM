@@ -1,4 +1,4 @@
-package model.structural;
+package model.structure;
 
 /**
  * A class for storing information about single events
@@ -6,8 +6,6 @@ package model.structural;
  */
 public class Frame {
 
-    /** The start of this Frame in Counts   */
-    Count start;
     /** The length of this event in Counts  */
     Count length;
     /** The Pitch of this Frame             */

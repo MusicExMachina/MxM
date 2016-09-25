@@ -1,6 +1,6 @@
 package learning;
 
-import model.structural.Frame;
+import model.structure.Frame;
 
 import java.util.List;
 

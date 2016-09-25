@@ -1,37 +1,31 @@
-package model.generative;
+package model.generation;
 
-import model.structural.Count;
 import model.structural.Frame;
-
-import java.awt.*;
-import java.io.Serializable;
 import java.util.*;
 import java.util.List;
+import java.awt.*;
 
 /**
  * A conceptualization of rhythm as gradual, equal
  * subdivisions of some concrete amount of time.
  * RhythmTrees operate like many other data structures
  * save that their only "real" storage is in their
- * leaf nodes. This
+ * leaf nodes.
  */
-public class RhythmTree /* implements Serializable, Cloneable, Iterable<Frame>, Collection<Frame>, NavigableSet<Frame>, Set<Frame>, SortedSet<Frame> */ {
+public class RhythmTree {
 
-    private RhythmNode root;
-    List<List<RhythmNode>> layers;
-
-    public static final int DRAW_RAD = 20;
-
+    /** How deep a rhythm can go, Node-wise */
+    public static int MAX_DEPTH = 8;
+    public RhythmNode root;
     /**
      * The RhythmTree default constructor
      */
     public RhythmTree() {
-        root = new RhythmNode();
+        //layers.get(0) = new RhythmNode(null,);
     }
 
     /**
      * The RhythmTree copy constructor
-     *
      * @param other the RhythmTree to copy
      */
     public RhythmTree(RhythmTree other) {
@@ -74,14 +68,6 @@ public class RhythmTree /* implements Serializable, Cloneable, Iterable<Frame>, 
         }
 
     }
-
-    /*   HERE BE OVERRIDE METHODS    */
-    /* ABANDON ALL HOPE YE WHO ENTER */
-
-
-
-
-
 
 
 

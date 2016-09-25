@@ -1,9 +1,7 @@
-package model.generative.tests;
+package model.generation.tests;
 
 import model.generative.RhythmTree;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by jpatsenker on 9/18/16.
