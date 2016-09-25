@@ -1,12 +1,10 @@
-package model.structure;
+package model.structure.tests;
 
+import model.structure.Count;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by jpatsenker on 9/25/16.
- */
 public class CountTest {
 
 
