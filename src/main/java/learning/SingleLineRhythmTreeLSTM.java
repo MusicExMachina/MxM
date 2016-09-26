@@ -17,11 +17,11 @@ import java.util.List;
  * of music by starting with a single note-after-note
  * line played by a single instrument.
  */
-public class SingleLineRhythmLSTM /* implements RhythmNetwork */ {
+public class SingleLineRhythmTreeLSTM /* implements RhythmNetwork */ {
 
-    public static int HIDDEN_LAYER_WIDTH = 50;
-    public static int HIDDEN_LAYER_NUM = 50;
-    public static List<Integer> POSSIBLE_PITCHES = new ArrayList<Integer>();
+    public static int HIDDEN_LAYER_WIDTH            = 50;
+    public static int HIDDEN_LAYER_NUM              = 50;
+    public static List<Integer> POSSIBLE_PITCHES    = new ArrayList<Integer>();
 
     public void run() {
         // Initialize and configure the network
