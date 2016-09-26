@@ -3,9 +3,7 @@ package model.generation.tests;
 import model.generation.RhythmTree;
 import org.junit.Test;
 
-/**
- * Created by jpatsenker on 9/18/16.
- */
+
 public class RhythmTreeTest {
 
     @Test
