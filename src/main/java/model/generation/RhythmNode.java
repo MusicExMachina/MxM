@@ -135,19 +135,21 @@ public class RhythmNode {
      * @param y Top left corner of node y coord
      */
     public void paint(Graphics2D g, int x, int y) {
-        g.drawOval(x, y, DRAW_RAD * 2, DRAW_RAD * 2);
-        if (children != null) {
-            for (int i = 0; i < children.size(); i++) {
-                int childX = x + DRAW_RAD * 6;
-                int childY = y + DRAW_RAD * 3 * i; //gap of 1 rad
-                g.drawLine(x + DRAW_RAD * 2, y + DRAW_RAD, childX, childY + DRAW_RAD); // y for center
-                //g.drawString("" + children.get(i).getChildren().size(), childX + DRAW_RAD / 2, childY + DRAW_RAD);
-                if(children.get(i).getChildren().size() == 0) {
-                    g.drawString("Duration: " + children.get(i).getDuration(), childX + DRAW_RAD*3, childY + DRAW_RAD);
-                    g.drawString("Timing: " + children.get(i).getTiming(), childX + DRAW_RAD*3, childY + DRAW_RAD + 15);
-                }
-                children.get(i).paint(g, childX, childY);
+        if(children.size() == 0){
+            g.drawOval(x, y, DRAW_RAD * 2, DRAW_RAD * 2);
+        }else{
+            g.fillOval(x, y, DRAW_RAD * 2, DRAW_RAD * 2);
+        }
+        for (int i = 0; i < children.size(); i++) {
+            int childX = x + DRAW_RAD * 6;
+            int childY = y + DRAW_RAD * 3 * i; //gap of 1 rad
+            g.drawLine(x + DRAW_RAD * 2, y + DRAW_RAD, childX, childY + DRAW_RAD); // y for center
+            //g.drawString("" + children.get(i).getChildren().size(), childX + DRAW_RAD / 2, childY + DRAW_RAD);
+            if(children.get(i).getChildren().size() == 0) {
+                g.drawString("Duration: " + children.get(i).getDuration(), childX + DRAW_RAD*3, childY + DRAW_RAD);
+                g.drawString("Timing: " + children.get(i).getTiming(), childX + DRAW_RAD*3, childY + DRAW_RAD + 15);
             }
+            children.get(i).paint(g, childX, childY);
         }
     }
 }
