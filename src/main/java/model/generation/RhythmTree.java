@@ -1,9 +1,8 @@
 package model.generation;
 
-import model.structure.Frame;
+import java.awt.*;
 import java.util.*;
 import java.util.List;
-import java.awt.*;
 
 /**
  * A conceptualization of rhythm as gradual, equal
@@ -16,29 +15,23 @@ public class RhythmTree {
 
     /** How deep a rhythm can go, Node-wise */
     public static int MAX_DEPTH = 8;
-    public RhythmNode root;
+
+    /** Saves the root RhythmNode **/
+    private RhythmNode root;
+
     /**
      * The RhythmTree default constructor
      */
     public RhythmTree() {
-        //layers.get(0) = new RhythmNode(null,);
-    }
-
-    /**
-     * The RhythmTree copy constructor
-     * @param other the RhythmTree to copy
-     */
-    public RhythmTree(RhythmTree other) {
-
+        root = new RhythmNode();
     }
 
     /**
      * Quick constructor to make rhythm tree (mainly for testing)
-     *
      * @param subDiv list of subdivisions in Breadth First order
      */
-    public RhythmTree(int[] subDiv) throws IllegalArgumentException {
-        Queue<RhythmNode> constructQueue = new ArrayDeque<>();
+    public RhythmTree(int[] subDiv) throws IllegalArgumentException{
+        Queue<RhythmNode> constructQueue = new ArrayDeque<RhythmNode>();
 
         root = new RhythmNode();
         constructQueue.add(root);
@@ -51,27 +44,50 @@ public class RhythmTree {
             } else {
                 throw new IllegalArgumentException("List cannot be converted to a rhythm tree, not enough divisions");
             }
-            if (aSubDiv!=0 && aSubDiv!=1){
-                List<RhythmNode> children = currentNode.subdivide(aSubDiv);
-                constructQueue.addAll(children);
+            if(aSubDiv != 1) {
+                currentNode.subdivide(aSubDiv);
+                constructQueue.addAll(currentNode.getChildren());
             }
-//
-//            if (aSubDiv != 1) {
-//                for (int j = 0; j < aSubDiv; j++) {
-//                    RhythmNode child = new RhythmNode();
-//                    child.children = new ArrayList<>();
-//                    child.parent = currentNode;
-//                    currentNode.children.add(child);
-//                    constructQueue.add(child);
-//                }
-//            }
         }
 
-        if (constructQueue.size() != 0) {
+        if(constructQueue.size()!=0){
             throw new IllegalArgumentException("List cannot be converted to a rhythm tree, leftover divisions");
         }
 
     }
+
+    /**
+     * The RhythmTree copy constructor
+     * @param other the RhythmTree to copy
+     */
+    public RhythmTree(RhythmTree other) {
+
+    }
+
+    /**
+     * Getter for the root Node which fills the whole measure.
+     * @return
+     */
+    public RhythmNode getRoot() {
+        return root;
+    }
+
+    /**
+     * Paint the rhythm tree
+     * @param g Graphics2D object for painting
+     * @param x top left corner or RhythmTree xcoord
+     * @param y top left corner or RhythmTree ycoord
+     */
+    public void paint(Graphics2D g, int x, int y) {
+        getRoot().paint(g, x, y);
+    }
+}
+
+
+
+
+
+
 
 
 
@@ -114,16 +130,3 @@ public class RhythmTree {
         */
 //   return null;
 //}
-
-    /**
-     * Paint the rhythm tree
-     *
-     * @param g Graphics2D object for painting
-     * @param x top left corner or RhythmTree xcoord
-     * @param y top left corner or RhythmTree ycoord
-     */
-    public void paint(Graphics2D g, int x, int y) {
-        root.paint(g, x, y);
-
-    }
-}

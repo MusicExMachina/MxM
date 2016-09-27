@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class RhythmNode {
 
-    /**Radius for drawing */
-    private static final int DRAW_RAD = 20;
+    /** A static int for drawing purposes. */
+    public static final int DRAW_RAD = 20;
 
     /** The depth of this Node in the tree. */
     private int depth;
@@ -29,7 +29,6 @@ public class RhythmNode {
     /** The timing of this RhythmNode */
     private Count timing;
 
-
     /** The duration of this RhythmNode */
     private Count duration;
 
@@ -37,11 +36,11 @@ public class RhythmNode {
      * A basic constructor for a RhythmNode.
      */
     public RhythmNode() {
-        this.depth = 0;
-        this.parent = null;
-        this.children = new ArrayList<>();
-        this.timing = Count.ZERO;
-        this.duration = Count.FULL_MEASURE;
+        this.depth      = 0;
+        this.parent     = null;
+        this.children   = new ArrayList<RhythmNode>();
+        this.timing     = Count.ZERO;
+        this.duration   = Count.FULL_MEASURE;
     }
 
     /**
@@ -55,7 +54,7 @@ public class RhythmNode {
     private RhythmNode(RhythmNode parent, Count timing, Count duration) {
         this.depth      = parent.getDepth()+1;
         this.parent     = parent;
-        this.children   = new ArrayList<>();
+        this.children   = new ArrayList<RhythmNode>();
         this.timing     = timing;
         this.duration   = duration;
     }
@@ -92,14 +91,6 @@ public class RhythmNode {
         return depth;
     }
 
-    public Count getDuration() {
-        return duration;
-    }
-
-    public Count getTiming() {
-        return timing;
-    }
-
     /**
      * Subdivides this RhythmNode a given number of times.
      * @param times The number of times to divide this RhythmNode.
@@ -109,7 +100,9 @@ public class RhythmNode {
 
         // Ensure we're not trying something stupid
         if(times > 1) {
-            if(children.size() == 0) {
+            if(children != null) {
+                // Create the children ArrayList
+                children = new ArrayList<RhythmNode>();
 
                 // Add "times" many children
                 Count newDuration = this.duration.dividedBy(times);
@@ -120,35 +113,24 @@ public class RhythmNode {
             }
             else throw new Error("This RhythmNode is already subdivided!");
         }
-        else throw new Error("Trying to subdivide this RhythmNode " + times + " times!");
+        else throw new Error("Trying to subdivide this RhythmNode" + times + " times!");
 
         // Return the children
         return children;
     }
 
-
     /**
      * Paint the node, and its children w/ links
-     *
      * @param g Graphics object to paint with
      * @param x Top left corner of node x coord
      * @param y Top left corner of node y coord
      */
     public void paint(Graphics2D g, int x, int y) {
-        if(children.size() == 0){
-            g.drawOval(x, y, DRAW_RAD * 2, DRAW_RAD * 2);
-        }else{
-            g.fillOval(x, y, DRAW_RAD * 2, DRAW_RAD * 2);
-        }
-        for (int i = 0; i < children.size(); i++) {
-            int childX = x + DRAW_RAD * 6;
-            int childY = y + DRAW_RAD * 3 * i; //gap of 1 rad
-            g.drawLine(x + DRAW_RAD * 2, y + DRAW_RAD, childX, childY + DRAW_RAD); // y for center
-            //g.drawString("" + children.get(i).getChildren().size(), childX + DRAW_RAD / 2, childY + DRAW_RAD);
-            if(children.get(i).getChildren().size() == 0) {
-                g.drawString("Duration: " + children.get(i).getDuration(), childX + DRAW_RAD*3, childY + DRAW_RAD);
-                g.drawString("Timing: " + children.get(i).getTiming(), childX + DRAW_RAD*3, childY + DRAW_RAD + 15);
-            }
+        g.drawOval(x, y, DRAW_RAD * 2, DRAW_RAD * 2);
+        for(int i = 0; i<children.size(); i++){
+            int childX = x+DRAW_RAD*6;
+            int childY = y+DRAW_RAD*3*i; //gap of 1 rad
+            g.drawLine(x+DRAW_RAD*2, y+DRAW_RAD, childX, childY+DRAW_RAD); // y for center
             children.get(i).paint(g, childX, childY);
         }
     }
