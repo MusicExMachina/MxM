@@ -1,36 +1,42 @@
 package ui;
 import model.generation.RhythmTree;
-import javax.swing.SwingUtilities;
-import java.applet.Applet;
+
+import javax.swing.*;
 import java.awt.*;
 
 
-/**
- * Created by jpatsenker on 9/18/16.
- */
-public class RhythmTreeVisualizer extends Applet {
+
+public class RhythmTreeVisualizer extends JFrame {
 
     RhythmTree rt;
 
     public RhythmTreeVisualizer(RhythmTree rt){
+        super("Rhythm Tree Visualizer");
+
         this.rt = rt;
+
+        //you can set the content pane of the frame
+        //to your custom class.
+
+        setContentPane(new RhythmTreeDrawer());
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setSize(600, 600);
+
+        setVisible(true);
     }
 
-
-    public void init() {
-        try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-                @Override
-                public void run() {
-                    createGUI();
-                }
-            });
-        } catch (Exception e) {
-            System.err.println("createGUI didn't complete successfully");
+    class RhythmTreeDrawer extends JPanel{
+        public void paint(Graphics g) {
+            rt.paint((Graphics2D) g, 0, 0);
         }
     }
 
-    public void createGUI(){
+
+
+
+    public static void main(String[] args) {
         int[] rtarr = new int[8];
         rtarr[0] = 2;
         rtarr[1] = 1;
@@ -40,12 +46,11 @@ public class RhythmTreeVisualizer extends Applet {
         rtarr[5] = 2;
         rtarr[6] = 1;
         rtarr[7] = 1;
-        rt = new RhythmTree(rtarr);
-    }
+        RhythmTree rt = new RhythmTree(rtarr);
 
-    public void paint(Graphics g) {
-        this.rt.paint((Graphics2D) g, 0, 0);
 
+
+        RhythmTreeVisualizer rtv = new RhythmTreeVisualizer(rt);
     }
 
 }
