@@ -16,14 +16,14 @@ public class RhythmTree {
     /** How deep a rhythm can go, Node-wise */
     public static int MAX_DEPTH = 8;
 
-    /** Saves each layer individually **/
-    List<List<RhythmNode>> layers = new ArrayList<List<RhythmNode>>(MAX_DEPTH);
+    /** Saves the root RhythmNode **/
+    private RhythmNode root;
 
     /**
      * The RhythmTree default constructor
      */
     public RhythmTree() {
-        //layers.get(0) = new RhythmNode(null,);
+        root = new RhythmNode();
     }
 
     /**
@@ -33,8 +33,7 @@ public class RhythmTree {
     public RhythmTree(int[] subDiv) throws IllegalArgumentException{
         Queue<RhythmNode> constructQueue = new ArrayDeque<RhythmNode>();
 
-        RhythmNode root = new RhythmNode();
-        layers.get(0).add(root);
+        root = new RhythmNode();
         constructQueue.add(root);
 
         RhythmNode currentNode;
@@ -70,7 +69,7 @@ public class RhythmTree {
      * @return
      */
     public RhythmNode getRoot() {
-        return layers.get(0).get(0);
+        return root;
     }
 
     /**

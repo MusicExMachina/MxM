@@ -12,9 +12,9 @@ public class RhythmTreeVisualizer extends Applet {
 
     RhythmTree rt;
 
-//    public RhythmTreeVisualizer(RhythmTree rt){
-//        this.rt = rt;
-//    }
+    public RhythmTreeVisualizer(RhythmTree rt){
+        this.rt = rt;
+    }
 
 
     public void init() {
