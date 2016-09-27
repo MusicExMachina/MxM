@@ -11,35 +11,35 @@ import java.util.Comparator;
 public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
     /* A bunch of preset Pitches for general use. */
-    public static Pitch C_FLAT_4    = new Pitch(59);
-    public static Pitch C_NATURAL_4 = new Pitch(60);
-    public static Pitch C_SHARP_4   = new Pitch(61);
-    public static Pitch D_FLAT_4    = new Pitch(61);
-    public static Pitch D_NATURAL_4 = new Pitch(62);
-    public static Pitch D_SHARP_4   = new Pitch(63);
-    public static Pitch E_FLAT_4    = new Pitch(63);
-    public static Pitch E_NATURAL_4 = new Pitch(64);
-    public static Pitch E_SHARP_4   = new Pitch(65);
-    public static Pitch F_FLAT_4    = new Pitch(64);
-    public static Pitch F_NATURAL_4 = new Pitch(65);
-    public static Pitch F_SHARP_4   = new Pitch(66);
-    public static Pitch G_FLAT_4    = new Pitch(66);
-    public static Pitch G_NATURAL_4 = new Pitch(67);
-    public static Pitch G_SHARP_4   = new Pitch(68);
-    public static Pitch A_FLAT_4    = new Pitch(68);
-    public static Pitch A_NATURAL_4 = new Pitch(69);
-    public static Pitch A_SHARP_4   = new Pitch(70);
-    public static Pitch B_FLAT_4    = new Pitch(70);
-    public static Pitch B_NATURAL_4 = new Pitch(71);
-    public static Pitch B_SHARP_4   = new Pitch(72);
+    public static final Pitch C_FLAT_4    = new Pitch(59);
+    public static final Pitch C_NATURAL_4 = new Pitch(60);
+    public static final Pitch C_SHARP_4   = new Pitch(61);
+    public static final Pitch D_FLAT_4    = new Pitch(61);
+    public static final Pitch D_NATURAL_4 = new Pitch(62);
+    public static final Pitch D_SHARP_4   = new Pitch(63);
+    public static final Pitch E_FLAT_4    = new Pitch(63);
+    public static final Pitch E_NATURAL_4 = new Pitch(64);
+    public static final Pitch E_SHARP_4   = new Pitch(65);
+    public static final Pitch F_FLAT_4    = new Pitch(64);
+    public static final Pitch F_NATURAL_4 = new Pitch(65);
+    public static final Pitch F_SHARP_4   = new Pitch(66);
+    public static final Pitch G_FLAT_4    = new Pitch(66);
+    public static final Pitch G_NATURAL_4 = new Pitch(67);
+    public static final Pitch G_SHARP_4   = new Pitch(68);
+    public static final Pitch A_FLAT_4    = new Pitch(68);
+    public static final Pitch A_NATURAL_4 = new Pitch(69);
+    public static final Pitch A_SHARP_4   = new Pitch(70);
+    public static final Pitch B_FLAT_4    = new Pitch(70);
+    public static final Pitch B_NATURAL_4 = new Pitch(71);
+    public static final Pitch B_SHARP_4   = new Pitch(72);
 
     /* Useful variable bounds */
-    public static int MIN_PITCHCLASS    = 0;
-    public static int MAX_PITCHCLASS    = 11;
-    public static int MIN_OCTAVE        = -1;
-    public static int MAX_OCTAVE        = 9;
-    public static int MIN_PITCH         = 0;
-    public static int MAX_PITCH         = 120;
+    public static final int MIN_PITCHCLASS  = 0;
+    public static final int MAX_PITCHCLASS  = 11;
+    public static final int MIN_OCTAVE      = -1;
+    public static final int MAX_OCTAVE      = 9;
+    public static final int MIN_PITCH       = 0;
+    public static final int MAX_PITCH       = 120;
 
     /**
      * Stores the MIDI value of this Pitch.

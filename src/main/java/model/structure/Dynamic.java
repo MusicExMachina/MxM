@@ -11,15 +11,15 @@ import java.util.Comparator;
 public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
 
     /* A bunch of preset Dynamics for general use. */
-    public static Dynamic FORTISSISSIMO = new Dynamic(100);
-    public static Dynamic FORTISSIMO    = new Dynamic(88);
-    public static Dynamic FORTE         = new Dynamic(75);
-    public static Dynamic MEZZO_FORTE   = new Dynamic(62);
-    public static Dynamic MEZZO_PIANO   = new Dynamic(50);
-    public static Dynamic PIANO         = new Dynamic(38);
-    public static Dynamic PIANISSIMO    = new Dynamic(25);
-    public static Dynamic PIANISSISSIMO = new Dynamic(12);
-    public static Dynamic NIENTE        = new Dynamic(0);
+    public static final Dynamic FORTISSISSIMO = new Dynamic(100);
+    public static final Dynamic FORTISSIMO    = new Dynamic(88);
+    public static final Dynamic FORTE         = new Dynamic(75);
+    public static final Dynamic MEZZO_FORTE   = new Dynamic(62);
+    public static final Dynamic MEZZO_PIANO   = new Dynamic(50);
+    public static final Dynamic PIANO         = new Dynamic(38);
+    public static final Dynamic PIANISSIMO    = new Dynamic(25);
+    public static final Dynamic PIANISSISSIMO = new Dynamic(12);
+    public static final Dynamic NIENTE        = new Dynamic(0);
 
     /* Useful variable bounds */
     public static int MIN_DYNAMIC = 0;

@@ -14,7 +14,8 @@ import java.util.List;
 /**
  * This has little-to-nothing to do with MxM,
  * but everything to do with making sure things
- * are working. This should be
+ * are working. All this class does is generate
+ * output strings based on a given input string.
  */
 public class GeneralTextLSTM {
 
