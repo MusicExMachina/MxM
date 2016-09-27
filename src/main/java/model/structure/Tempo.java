@@ -11,19 +11,19 @@ import java.util.Comparator;
 public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
 
     /* A bunch of preset dynamics for general use. */
-    public static Tempo PRESTO      = new Tempo(160);
-    public static Tempo VIVACE      = new Tempo(140);
-    public static Tempo ALLEGRO     = new Tempo(120);
-    public static Tempo MODERATO    = new Tempo(100);
-    public static Tempo ANDANTE     = new Tempo(80);
-    public static Tempo ADAGIO      = new Tempo(70);
-    public static Tempo LENTO       = new Tempo(60);
-    public static Tempo LARGO       = new Tempo(50);
-    public static Tempo GRAVE       = new Tempo(30);
+    public static final Tempo PRESTO      = new Tempo(160);
+    public static final Tempo VIVACE      = new Tempo(140);
+    public static final Tempo ALLEGRO     = new Tempo(120);
+    public static final Tempo MODERATO    = new Tempo(100);
+    public static final Tempo ANDANTE     = new Tempo(80);
+    public static final Tempo ADAGIO      = new Tempo(70);
+    public static final Tempo LENTO       = new Tempo(60);
+    public static final Tempo LARGO       = new Tempo(50);
+    public static final Tempo GRAVE       = new Tempo(30);
 
     /* Some basic bounds on Tempo. */
-    private static int MIN_TEMPO = 0;
-    private static int MAX_TEMPO = 200;
+    private static final int MIN_TEMPO = 0;
+    private static final int MAX_TEMPO = 200;
 
     /**
      * Stores a tempo value, in BPM
