@@ -1,5 +1,5 @@
 package ui;
-import model.generative.RhythmTree;
+import model.generation.RhythmTree;
 import javax.swing.SwingUtilities;
 import java.applet.Applet;
 import java.awt.*;

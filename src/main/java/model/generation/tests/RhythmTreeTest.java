@@ -1,6 +1,6 @@
-package model.generative.tests;
+package model.generation.tests;
 
-import model.generative.RhythmTree;
+import model.generation.RhythmTree;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

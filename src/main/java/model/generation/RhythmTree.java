@@ -1,6 +1,8 @@
 package model.generation;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * A conceptualization of rhythm as gradual, equal
@@ -25,6 +27,37 @@ public class RhythmTree {
     }
 
     /**
+     * Quick constructor to make rhythm tree (mainly for testing)
+     * @param subDiv list of subdivisions in Breadth First order
+     */
+    public RhythmTree(int[] subDiv) throws IllegalArgumentException{
+        Queue<RhythmNode> constructQueue = new ArrayDeque<RhythmNode>();
+
+        RhythmNode root = new RhythmNode();
+        layers.get(0).add(root);
+        constructQueue.add(root);
+
+        RhythmNode currentNode;
+
+        for (int aSubDiv : subDiv) {
+            if (constructQueue.size() != 0) {
+                currentNode = constructQueue.poll();
+            } else {
+                throw new IllegalArgumentException("List cannot be converted to a rhythm tree, not enough divisions");
+            }
+            if(aSubDiv != 1) {
+                currentNode.subdivide(aSubDiv);
+                constructQueue.addAll(currentNode.getChildren());
+            }
+        }
+
+        if(constructQueue.size()!=0){
+            throw new IllegalArgumentException("List cannot be converted to a rhythm tree, leftover divisions");
+        }
+
+    }
+
+    /**
      * The RhythmTree copy constructor
      * @param other the RhythmTree to copy
      */
@@ -38,6 +71,16 @@ public class RhythmTree {
      */
     public RhythmNode getRoot() {
         return layers.get(0).get(0);
+    }
+
+    /**
+     * Paint the rhythm tree
+     * @param g Graphics2D object for painting
+     * @param x top left corner or RhythmTree xcoord
+     * @param y top left corner or RhythmTree ycoord
+     */
+    public void paint(Graphics2D g, int x, int y) {
+        getRoot().paint(g, x, y);
     }
 }
 

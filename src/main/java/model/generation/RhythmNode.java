@@ -1,6 +1,8 @@
 package model.generation;
 
 import model.structure.Count;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,30 +14,33 @@ import java.util.List;
  */
 public class RhythmNode {
 
+    /** A static int for drawing purposes. */
+    public static final int DRAW_RAD = 20;
+
     /** The depth of this Node in the tree. */
-    int depth;
+    private int depth;
 
     /** The parent of this Node. */
-    RhythmNode parent;
+    private RhythmNode parent;
 
     /** All of the children of this Node. */
-    List<RhythmNode> children;
+    private List<RhythmNode> children;
 
     /** The timing of this RhythmNode */
-    Count timing;
+    private Count timing;
 
     /** The duration of this RhythmNode */
-    Count duration;
+    private Count duration;
 
     /**
      * A basic constructor for a RhythmNode.
      */
     public RhythmNode() {
-        this.depth = 0;
-        this.parent = null;
-        this.children = null;
-        this.timing = Count.ZERO;
-        this.duration = Count.FULL_MEASURE;
+        this.depth      = 0;
+        this.parent     = null;
+        this.children   = new ArrayList<RhythmNode>();
+        this.timing     = Count.ZERO;
+        this.duration   = Count.FULL_MEASURE;
     }
 
     /**
@@ -49,7 +54,7 @@ public class RhythmNode {
     private RhythmNode(RhythmNode parent, Count timing, Count duration) {
         this.depth      = parent.getDepth()+1;
         this.parent     = parent;
-        this.children   = null;
+        this.children   = new ArrayList<RhythmNode>();
         this.timing     = timing;
         this.duration   = duration;
     }
@@ -112,5 +117,21 @@ public class RhythmNode {
 
         // Return the children
         return children;
+    }
+
+    /**
+     * Paint the node, and its children w/ links
+     * @param g Graphics object to paint with
+     * @param x Top left corner of node x coord
+     * @param y Top left corner of node y coord
+     */
+    public void paint(Graphics2D g, int x, int y) {
+        g.drawOval(x, y, DRAW_RAD * 2, DRAW_RAD * 2);
+        for(int i = 0; i<children.size(); i++){
+            int childX = x+DRAW_RAD*6;
+            int childY = y+DRAW_RAD*3*i; //gap of 1 rad
+            g.drawLine(x+DRAW_RAD*2, y+DRAW_RAD, childX, childY+DRAW_RAD); // y for center
+            children.get(i).paint(g, childX, childY);
+        }
     }
 }

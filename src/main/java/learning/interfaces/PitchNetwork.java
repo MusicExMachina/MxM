@@ -1,4 +1,4 @@
-package learning;
+package learning.interfaces;
 
 import model.structure.Frame;
 import model.structure.Passage;
