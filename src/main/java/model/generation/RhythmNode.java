@@ -108,7 +108,7 @@ public class RhythmNode {
 
         // Ensure we're not trying something stupid
         if(times > 1) {
-            if(children.size()!=0) {
+            if(children.size()==0) {
 
 
                 // Add "times" many children
