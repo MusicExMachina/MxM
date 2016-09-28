@@ -9,7 +9,7 @@ import java.util.*;
  * great big Frame holders, and provide users with the
  * ability to look up what's happening at any given Count.
  */
-public class Passage implements Serializable, Cloneable, Iterable<Frame> {
+public class Passage implements Iterable<Frame> {
 
     /** A TreeMap of all the frames in this Passage.
      * Note that this data structure was chosen for its
@@ -86,5 +86,3 @@ public class Passage implements Serializable, Cloneable, Iterable<Frame> {
         return frames.values().iterator();
     }
 }
-
-//Test
