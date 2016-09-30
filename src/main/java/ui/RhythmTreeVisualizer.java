@@ -37,15 +37,9 @@ public class RhythmTreeVisualizer extends JFrame {
 
 
     public static void main(String[] args) {
-        int[] rtarr = new int[8];
-        rtarr[0] = 2;
-        rtarr[1] = 1;
-        rtarr[2] = 3;
-        rtarr[3] = 1;
-        rtarr[4] = 1;
-        rtarr[5] = 2;
-        rtarr[6] = 1;
-        rtarr[7] = 1;
+        //int[] rtarr = new int[]{2,1,3,1,1,2,1,1};
+        //int[] rtarr = new int[]{2,1,2,1,2,1,2,1,1};
+        int[] rtarr = new int[]{2,2,2,1,1,1,2,1,2,1,1};
         RhythmTree rt = new RhythmTree(rtarr);
 
 
