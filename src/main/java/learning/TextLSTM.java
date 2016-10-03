@@ -64,7 +64,9 @@ public class TextLSTM {
     public void run() {
         // Initialize and configure the network
         initialize();
+        // Configure the network's data.
         configure();
+        // Create the actual neural network
         build();
         // Train it on the provided data
         train();
@@ -82,7 +84,7 @@ public class TextLSTM {
         for (char c : inputString) {
             possibleCharsSet.add(c);
         }
-        possibleChars = new ArrayList<>();
+        possibleChars = new ArrayList<Character>();
         possibleChars.addAll(possibleCharsSet);
 
         System.out.println(possibleChars.toString());
