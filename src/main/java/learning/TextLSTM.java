@@ -79,6 +79,7 @@ public class TextLSTM {
      * aside for the configuration method.
      */
     private void initialize() {
+        System.out.println("Beginning initialization...");
         // Extract all of the possible states
         LinkedHashSet<Character> possibleCharsSet = new LinkedHashSet<Character>();
         for (char c : inputString) {
@@ -87,9 +88,6 @@ public class TextLSTM {
         possibleChars = new ArrayList<Character>();
         possibleChars.addAll(possibleCharsSet);
 
-        System.out.println(possibleChars.toString());
-        System.out.println(possibleChars.size());
-        System.out.println(inputString.length);
         // Create input and output arrays
         INDArray input  = Nd4j.zeros(1, possibleChars.size(), inputString.length);
         INDArray labels = Nd4j.zeros(1, possibleChars.size(), inputString.length);
@@ -108,6 +106,7 @@ public class TextLSTM {
             samplePos++;
         }
         trainingData = new DataSet(input, labels);
+        System.out.println("...completed initialization.");
     }
 
     /**
@@ -117,6 +116,7 @@ public class TextLSTM {
      * only tangible outcome is that it creates "configuration."
      */
     private void configure() {
+        System.out.println("Beginning configuration...");
         // Create and initialize a NeuralNetConfiguration.Builder
         // This establishes all the settings for the neural network
         NeuralNetConfiguration.Builder builder = new NeuralNetConfiguration.Builder();
@@ -163,6 +163,7 @@ public class TextLSTM {
         // Construct our MultiLayerConfig off of the our favorite
         // NeuralNetConfiguration.ListBuilder.
         configuration = listBuilder.build();
+        System.out.println("...completed configuration.");
     }
 
     /**
@@ -171,17 +172,20 @@ public class TextLSTM {
      * sort of training is done.
      */
     private void build() {
+        System.out.println("Beginning building...");
         // Construct a neural network off of the configuration,
         // then initialize it and set how often it should print.
         network = new MultiLayerNetwork(configuration);
         network.init();
         network.setListeners(new ScoreIterationListener(1));
+        System.out.println("...completed building.");
     }
 
     /**
      * A method to encapsulate the training process
      */
     private void train() {
+        System.out.println("Beginning training...");
         // some epochs
         for (int epoch = 0; epoch < 100; epoch++) {
 
@@ -224,8 +228,7 @@ public class TextLSTM {
 
             }
             System.out.print("\n");
-
-
+            System.out.println("...completed training.");
         }
     }
 
