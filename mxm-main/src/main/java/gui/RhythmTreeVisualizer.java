@@ -1,4 +1,4 @@
-package ui;
+package gui;
 import model.generation.RhythmTree;
 
 import javax.swing.*;

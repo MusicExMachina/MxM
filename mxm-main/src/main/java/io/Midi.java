@@ -3,7 +3,6 @@ package io;
 import com.sun.media.sound.StandardMidiFileReader;
 import com.sun.media.sound.StandardMidiFileWriter;
 import model.structure.Passage;
-import ui.MidiPlayer;
 
 import javax.sound.midi.*;
 import javax.sound.midi.spi.MidiFileReader;
@@ -232,7 +231,6 @@ public abstract class Midi
      * @throws InvalidMidiDataException If the midi Sequence is flawed.
      */
     public static void play(Sequence sequence) throws MidiUnavailableException, InvalidMidiDataException {
-        MidiPlayer player = new MidiPlayer();
         Sequencer sequencer = MidiSystem.getSequencer();
         sequencer.open();
         sequencer.setSequence(sequence);

@@ -1,10 +1,8 @@
-package ui.tests;
+package gui.tests;
 
 import model.generation.RhythmTree;
 import org.junit.Test;
-import ui.RhythmTreeVisualizer;
-
-import static org.junit.Assert.*;
+import gui.RhythmTreeVisualizer;
 
 /**
  * Created by jpatsenker on 9/26/16.
