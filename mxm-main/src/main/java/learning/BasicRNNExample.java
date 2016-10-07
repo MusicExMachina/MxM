@@ -29,7 +29,7 @@ import java.util.Random;
 public class BasicRNNExample {
 
     // define a sentence to learn
-    public static final char[] LEARNSTRING = "Der Cottbuser Postkutscher putzt den Cottbuser Postkutschkasten.".toCharArray();
+    public static final char[] LEARNSTRING = "Dies iræ, dies illa Solvet sæclum in favilla, Teste David cum Sibylla.".toCharArray();
 
     // a list of all possible characters
     public static final List<Character> LEARNSTRING_CHARS_LIST = new ArrayList<Character>();
