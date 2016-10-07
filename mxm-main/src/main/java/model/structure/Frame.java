@@ -1,5 +1,10 @@
 package model.structure;
 
+import model.basic.Count;
+import model.basic.Dynamic;
+import model.basic.Pitch;
+import model.basic.Tempo;
+
 /**
  * A class for storing information about single events
  * in a Passage.

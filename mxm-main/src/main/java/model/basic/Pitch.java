@@ -1,4 +1,6 @@
-package model.structure;
+package model.basic;
+
+import model.structure.Interval;
 
 import java.util.Comparator;
 
@@ -42,13 +44,13 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     public static final int MAX_PITCH       = 120;
 
     /**
-     * Stores the MIDI value of this Pitch.
+     * Stores the Midi value of this Pitch.
      */
     private final byte value;
 
     /**
-     * Constructor taking in a MIDI value.
-     * @param value The pitch's MIDI value.
+     * Constructor taking in a Midi value.
+     * @param value The pitch's Midi value.
      */
     public Pitch(int value) {
         if(value >= MIN_PITCH && value <= MAX_PITCH) {

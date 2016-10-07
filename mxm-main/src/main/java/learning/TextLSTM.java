@@ -212,7 +212,7 @@ public class TextLSTM {
 
             // train the data
             network.fit(trainingData);
-
+            
             // clear current stance from the last example
             network.rnnClearPreviousState();
 

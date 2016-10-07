@@ -1,6 +1,7 @@
 package model.structure;
 
-import java.io.Serializable;
+import model.basic.Count;
+
 import java.util.*;
 
 /**
