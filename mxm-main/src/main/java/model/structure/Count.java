@@ -11,7 +11,7 @@ import java.util.Comparator;
  */
 public class Count implements Comparator<Count>, Comparable<Count> {
 
-    /* A bunch of preset Count for general use. */
+    /* A bunch of preset Counts for general use. */
     public static final Count ZERO            = new Count(0,1);
     public static final Count FULL_MEASURE    = new Count(1,1);
     public static final Count HALF_MEASURE    = new Count(1,2);
@@ -45,13 +45,13 @@ public class Count implements Comparator<Count>, Comparable<Count> {
      * @param denominator The desired denominator.
      */
     public Count(int numerator, int denominator) {
-        if(denominator != 0) {
+        if(denominator > 0) {
             this.numerator   = numerator;
             this.denominator = denominator;
             reduce();
         }
         else {
-            throw new Error("Cannot create a Count with a deno");
+            throw new Error("Cannot create a Count with a denominator less than or equal to zero.");
         }
     }
 
@@ -123,7 +123,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     /**
      * Returns a nicely-formatted String
      * of this Count (for debug).
-     * @return This Count's double value.
+     * @return A nicely-formatted String of this Count.
      */
     public String toString() {
         return "[ M " + getMeasure() + " | " + getBeat() + "/" + getSubdivision() + "]";
