@@ -26,7 +26,7 @@ public class TextLSTM {
 
     // Neural network dimensions
     private int hiddenLayerWidth;
-    private int hiddenLayerHeight;
+    private int hiddenLayerCount;
 
     // Neural network and its configuration
     private MultiLayerConfiguration configuration;
@@ -48,7 +48,7 @@ public class TextLSTM {
         // Take in all of the arguments
         this.inputString        = inputString.toCharArray();
         this.hiddenLayerWidth   = hiddenLayerWidth;
-        this.hiddenLayerHeight  = hiddenLayerNum;
+        this.hiddenLayerCount   = hiddenLayerNum;
 
         // Make everything else null
         this.network        = null;
@@ -62,14 +62,29 @@ public class TextLSTM {
      * which initialize, configure, build, and execute the network.
      */
     public void run() {
+        // A way to measure elapsed time
+        long startTime;
+
         // Initialize and configure the network
+        startTime = System.nanoTime();
         initialize();
+        System.out.println("Time elapsed: " + (System.nanoTime() - startTime)/1000000d + "ms");
+
         // Configure the network's data.
+        startTime = System.nanoTime();
         configure();
+        System.out.println("Time elapsed: " + (System.nanoTime() - startTime)/1000000d + "ms");
+
         // Create the actual neural network
+        startTime = System.nanoTime();
         build();
+        System.out.println("Time elapsed: " + (System.nanoTime() - startTime)/1000000d + "ms");
+
         // Train it on the provided data
+        startTime = System.nanoTime();
         train();
+        System.out.println("Time elapsed: " + (System.nanoTime() - startTime)/1000000d + "ms");
+
         // Do something with the output
     }
 
@@ -135,11 +150,15 @@ public class TextLSTM {
         NeuralNetConfiguration.ListBuilder listBuilder = builder.list();
 
         // Set up inputs and outputs for each layer.
-        for(int i = 0; i < hiddenLayerHeight; i++) {
+        for(int i = 0; i < hiddenLayerCount; i++) {
             // Create and initialize a GravesLSTM.Builder
             // This establishes each layer's settings
             GravesLSTM.Builder hiddenLayerBuilder = new GravesLSTM.Builder();
-            hiddenLayerBuilder.nIn(hiddenLayerWidth);
+            if(i == 0) {
+                hiddenLayerBuilder.nIn(possibleChars.size());
+            } else {
+                hiddenLayerBuilder.nIn(hiddenLayerWidth);
+            }
             hiddenLayerBuilder.nOut(hiddenLayerWidth);
             hiddenLayerBuilder.activation("tanh");
 
@@ -152,8 +171,8 @@ public class TextLSTM {
         RnnOutputLayer.Builder outputLayerBuilder = new RnnOutputLayer.Builder(LossFunctions.LossFunction.MCXENT);
         outputLayerBuilder.activation("softmax");
         outputLayerBuilder.nIn(hiddenLayerWidth);
-        outputLayerBuilder.nOut(120);
-        listBuilder.layer(hiddenLayerHeight, outputLayerBuilder.build());
+        outputLayerBuilder.nOut(possibleChars.size());
+        listBuilder.layer(hiddenLayerCount, outputLayerBuilder.build());
 
         // Finish the last two settings for the now-infamous
         // NeuralNetConfiguration.ListBuilder
@@ -197,7 +216,7 @@ public class TextLSTM {
             // clear current stance from the last example
             network.rnnClearPreviousState();
 
-            // put the first caracter into the rrn as an initialisation
+            // put the first character into the rrn as an initialisation
             INDArray testInit = Nd4j.zeros(possibleChars.size());
             testInit.putScalar(possibleChars.indexOf(inputString[0]), 1);
 
@@ -206,12 +225,12 @@ public class TextLSTM {
             // the output shows what the net thinks what should come next
             INDArray output = network.rnnTimeStep(testInit);
 
-            // now the net sould guess LEARNSTRING.length mor characters
+            // now the net should guess LEARNSTRING.length more characters
             for (int j = 0; j < inputString.length; j++) {
 
                 // first process the last output of the network to a concrete
                 // neuron, the neuron with the highest output cas the highest
-                // cance to get chosen
+                // chance to get chosen
                 double[] outputProbDistribution = new double[possibleChars.size()];
                 for (int k = 0; k < outputProbDistribution.length; k++) {
                     outputProbDistribution[k] = output.getDouble(k);
