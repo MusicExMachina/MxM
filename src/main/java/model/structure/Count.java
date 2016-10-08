@@ -51,7 +51,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
             reduce();
         }
         else {
-            throw new Error("Cannot create a Count with a deno");
+            throw new Error("Cannot create a Count with a denominator  = 0");
         }
     }
 
