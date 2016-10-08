@@ -1,4 +1,8 @@
-package model.structure;
+package model.trainable;
+
+import model.basic.Pitch;
+
+import java.util.Set;
 
 /**
  * A class for storing information about
@@ -10,4 +14,5 @@ package model.structure;
  */
 public class Instrument {
     // Store possible pitches
+    Set<Pitch> possiblePitches;
 }

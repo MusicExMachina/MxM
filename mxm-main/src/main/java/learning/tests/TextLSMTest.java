@@ -9,7 +9,7 @@ import org.junit.Test;
 public class TextLSMTest {
     @Test
     public void basicTest() {
-        TextLSTM network = new TextLSTM("I am flacid on Tuesdays when the sun rises. ",50,2);
+        TextLSTM network = new TextLSTM("This is a sample text string. ",50,2);
         network.run();
     }
 }
