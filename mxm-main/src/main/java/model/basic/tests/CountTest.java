@@ -1,10 +1,7 @@
-package model.structure.tests;
+package model.basic.tests;
 
-import model.structure.Count;
-import model.structure.Dynamic;
+import model.basic.Count;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class CountTest {
 
