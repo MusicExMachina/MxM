@@ -138,9 +138,12 @@ public abstract class Midi
                         case NOTE_ON_CH4:   case NOTE_ON_CH5:   case NOTE_ON_CH6:   case NOTE_ON_CH7:
                         case NOTE_ON_CH8:   case NOTE_ON_CH9:   case NOTE_ON_CH10:  case NOTE_ON_CH11:
                         case NOTE_ON_CH12:  case NOTE_ON_CH13:  case NOTE_ON_CH14:  case NOTE_ON_CH15:
-                            /*
+
                             int pitch       = sm.getData1();
                             int velocity    = sm.getData2();
+                            
+
+                            /*
                             note.setPitch(pitch);
                             note.setVelocity(velocity);
                             note.setAttack(tick);
