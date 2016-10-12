@@ -141,7 +141,7 @@ public abstract class Midi
 
                             int pitch       = sm.getData1();
                             int velocity    = sm.getData2();
-                            
+                            int voice       = 0;                // Later
 
                             /*
                             note.setPitch(pitch);
