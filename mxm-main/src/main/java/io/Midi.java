@@ -2,6 +2,7 @@ package io;
 
 import com.sun.media.sound.StandardMidiFileReader;
 import com.sun.media.sound.StandardMidiFileWriter;
+import model.basic.TimeSignature;
 import model.structure.Passage;
 
 import javax.sound.midi.*;
@@ -53,8 +54,8 @@ public abstract class Midi
     private static final int NOTE_OFF_CH15  = 0x8F;
 
     /**/
-    private static final int TEMPO      = 0x51;
-    private static final int TIME_SIGN  = 0x58;
+    private static final int TEMPO_MSG       = 0x51;
+    private static final int TIME_SIGN_MSG   = 0x58;
 
     /**
      * Loads a midi Sequence from a given filename.
@@ -183,17 +184,40 @@ public abstract class Midi
                     MetaMessage mm = (MetaMessage)message;
                     int type = mm.getType();
 
-                    switch(type){
-                        case 0x20:      System.out.println("Midi Channel prefix:" + mm.getData().toString()); break;
-                        case TEMPO:     System.out.println("Tempo message"); break;
-                        case TIME_SIGN: System.out.println("Time signature message" + mm.getData().toString()); break;
-                        default:        System.out.print("Unrecognized midi message"); break;
+                    switch(type) {
+
+                        //
+                        case 0x20:
+                            System.out.println("Midi Channel prefix:" + mm.getData().toString());
+                            break;
+
+                        // A tempo message
+                        case TEMPO_MSG:
+                            byte[] data = mm.getData();
+                            int tempo = (data[0] & 0xff) << 16 |
+                                        (data[1] & 0xff) << 8 |
+                                        (data[2] & 0xff);
+                            int bpm = 60000000 / tempo;
+                            break;
+
+                        // A time-signature message
+                        case TIME_SIGN_MSG:
+                            int numerator   = mm.getMessage()[0];
+                            int denominator = mm.getMessage()[1];
+                            TimeSignature timeSignature = new TimeSignature(numerator, denominator);
+                            break;
+
+                        // If we don't know the message
+                        default:
+                            System.out.print("Unrecognized Midi MetaMessage. " + mm.getData());
+                            break;
                     }
                 }
-                // If it's a SysEx Message
-                else
+                // If it's a System-exclusive message
+                else if (message instanceof SysexMessage)
                 {
-
+                    SysexMessage sm;
+                    System.out.print("Unrecognized Midi SysEx message. " + sm.getData());
                 }
             }
         }
