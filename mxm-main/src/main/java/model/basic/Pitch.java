@@ -2,6 +2,8 @@ package model.basic;
 
 import model.structure.Interval;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 
 /**
@@ -12,36 +14,37 @@ import java.util.Comparator;
  */
 public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
-    /* A bunch of preset Pitches for general use. */
-    public static final Pitch C_FLAT_4    = new Pitch(59);
-    public static final Pitch C_NATURAL_4 = new Pitch(60);
-    public static final Pitch C_SHARP_4   = new Pitch(61);
-    public static final Pitch D_FLAT_4    = new Pitch(61);
-    public static final Pitch D_NATURAL_4 = new Pitch(62);
-    public static final Pitch D_SHARP_4   = new Pitch(63);
-    public static final Pitch E_FLAT_4    = new Pitch(63);
-    public static final Pitch E_NATURAL_4 = new Pitch(64);
-    public static final Pitch E_SHARP_4   = new Pitch(65);
-    public static final Pitch F_FLAT_4    = new Pitch(64);
-    public static final Pitch F_NATURAL_4 = new Pitch(65);
-    public static final Pitch F_SHARP_4   = new Pitch(66);
-    public static final Pitch G_FLAT_4    = new Pitch(66);
-    public static final Pitch G_NATURAL_4 = new Pitch(67);
-    public static final Pitch G_SHARP_4   = new Pitch(68);
-    public static final Pitch A_FLAT_4    = new Pitch(68);
-    public static final Pitch A_NATURAL_4 = new Pitch(69);
-    public static final Pitch A_SHARP_4   = new Pitch(70);
-    public static final Pitch B_FLAT_4    = new Pitch(70);
-    public static final Pitch B_NATURAL_4 = new Pitch(71);
-    public static final Pitch B_SHARP_4   = new Pitch(72);
-
     /* Useful variable bounds */
-    public static final int MIN_PITCHCLASS  = 0;
-    public static final int MAX_PITCHCLASS  = 11;
-    public static final int MIN_OCTAVE      = -1;
-    public static final int MAX_OCTAVE      = 9;
-    public static final int MIN_PITCH       = 0;
-    public static final int MAX_PITCH       = 120;
+    private static final int MIN_PITCHCLASS  = 0;
+    private static final int MAX_PITCHCLASS  = 11;
+    private static final int MIN_OCTAVE      = -1;
+    private static final int MAX_OCTAVE      = 9;
+    private static final int MIN_PITCH       = 0;
+    private static final int MAX_PITCH       = 120;
+
+    private static final int C_NATURAL  = 0;
+    private static final int D_FLAT     = 1;
+    private static final int D_NATURAL  = 2;
+    private static final int E_FLAT     = 3;
+    private static final int E_NATURAL  = 4;
+    private static final int F_NATURAL  = 5;
+    private static final int G_FLAT     = 6;
+    private static final int G_NATURAL  = 7;
+    private static final int A_FLAT     = 8;
+    private static final int A_NATURAL  = 9;
+    private static final int B_FLAT     = 10;
+    private static final int B_NATURAL  = 11;
+
+    /* A bunch of preset Pitches for general use. */
+    public static final Collection<Pitch> ALL_PITCHES;
+
+    // Initialize all pitches
+    static {
+        ALL_PITCHES = new ArrayList<Pitch>();
+        for(int midiValue = MIN_PITCH; midiValue < MAX_PITCH; midiValue++) {
+            ALL_PITCHES.add(new Pitch(midiValue));
+        }
+    }
 
     /**
      * Stores the Midi value of this Pitch.
@@ -101,6 +104,30 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
      */
     public Interval minus(Pitch other) {
         return new Interval(other.value - this.value);
+    }
+
+
+    /**
+     * Returns a nicely-formatted String
+     * of this Pitch (for debug).
+     * @return A nicely-formatted String of this Pitch.
+     */
+    public String toString() {
+        switch (getPitchClass()) {
+            case C_NATURAL:     return "C"  + getOctave();
+            case D_FLAT:        return "Db" + getOctave();
+            case D_NATURAL:     return "D"  + getOctave();
+            case E_FLAT:        return "Eb" + getOctave();
+            case E_NATURAL:     return "E"  + getOctave();
+            case F_NATURAL:     return "F"  + getOctave();
+            case G_FLAT:        return "Gb" + getOctave();
+            case G_NATURAL:     return "G"  + getOctave();
+            case A_FLAT:        return "Ab" + getOctave();
+            case A_NATURAL:     return "A"  + getOctave();
+            case B_FLAT:        return "Bb" + getOctave();
+            case B_NATURAL:     return "B"  + getOctave();
+            default:            return "ERROR";
+        }
     }
 
     /**

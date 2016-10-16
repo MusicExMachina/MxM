@@ -13,8 +13,8 @@ public class PitchDistribution {
 
     public PitchDistribution(){
         pmf = new HashMap<>();
-        for(int i = Pitch.MIN_PITCH; i<Pitch.MAX_PITCH; i++) {
-            pmf.put(new Pitch(i), 0d);
+        for(Pitch pitch : Pitch.ALL_PITCHES) {
+            pmf.put(pitch, 0d);
         }
     }
 

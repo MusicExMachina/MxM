@@ -126,7 +126,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
      * @return A nicely-formatted String of this Count.
      */
     public String toString() {
-        return "[ M " + getMeasure() + " | " + getBeat() + "/" + getSubdivision() + "]";
+        return "[ Count | measure: " + getMeasure() + ", beat: " + getBeat() + "/" + getSubdivision() + " ]";
     }
 
     /**

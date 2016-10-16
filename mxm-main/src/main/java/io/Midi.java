@@ -2,8 +2,7 @@ package io;
 
 import com.sun.media.sound.StandardMidiFileReader;
 import com.sun.media.sound.StandardMidiFileWriter;
-import model.basic.Tempo;
-import model.basic.TimeSignature;
+import model.basic.*;
 import model.structure.Passage;
 
 import javax.sound.midi.*;
@@ -13,6 +12,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Dictionary;
+import java.util.HashMap;
 
 public abstract class Midi
 {
@@ -57,6 +58,7 @@ public abstract class Midi
     /**/
     private static final int TEMPO_MSG       = 0x51;
     private static final int TIME_SIGN_MSG   = 0x58;
+    private static final int TEXT_MSG        = 0x01;
 
     /**
      * Loads a midi Sequence from a given filename.
@@ -120,6 +122,11 @@ public abstract class Midi
 
             System.out.println("MIDI:\tNew track");
 
+            // Creates a HashMap from Pitches to the time they were last
+            // played and left "unresolved." Note that if a Pitch has been
+            // resolved, we simply remove the key-value pair from the HashMap.
+            HashMap<Pitch,Count> currentPitches = new HashMap<Pitch,Count>();
+
             // For every Midi event
             for (int i = 0; i < track.size(); i++) {
 
@@ -132,8 +139,13 @@ public abstract class Midi
                 if (message instanceof ShortMessage) {
 
                     // Cast it to a Midi short message
-                    ShortMessage sm = (ShortMessage)message;
-                    int channel     = sm.getChannel();
+                    ShortMessage sm     = (ShortMessage)message;
+                    int channel         = sm.getChannel();
+                    int pitchValue;
+                    int velocityValue;
+                    Pitch pitch;
+                    Count time;
+                    Count lastTime;
 
                     switch (sm.getCommand()) {
 
@@ -143,34 +155,59 @@ public abstract class Midi
                         case NOTE_ON_CH8:   case NOTE_ON_CH9:   case NOTE_ON_CH10:  case NOTE_ON_CH11:
                         case NOTE_ON_CH12:  case NOTE_ON_CH13:  case NOTE_ON_CH14:  case NOTE_ON_CH15:
 
-                            int pitch       = sm.getData1();
-                            int velocity    = sm.getData2();
-                            int voice       = 0;                // Later
+                            pitchValue      = sm.getData1();
+                            velocityValue   = sm.getData2();            // TODO: Implement this later
+                            pitch           = new Pitch(pitchValue);
+                            time            = Count.ZERO;
+                            lastTime        = currentPitches.get(pitch);
 
-                            /*
-                            note.setPitch(pitch);
-                            note.setVelocity(velocity);
-                            note.setAttack(tick);
-
-                            notes.put(note.getUID(),note);
-
-                            if(frames.containsKey(tick)) {
-                                frames.get(tick).add(note);
+                            // If this isn't a note off in disguise
+                            if(velocityValue != 0) {
+                                // If the note we're looking at has not been left unresolved
+                                if(lastTime == null) {
+                                    currentPitches.put(pitch,time);
+                                }
+                                // If the note we're looking at has been left unended
+                                else {
+                                    System.out.println("MIDI:\tRearticulating note (" + pitch.toString() + ") that was not ended");
+                                }
                             }
+                            // If this is really a note off message
                             else {
-                                frames.put(tick,new ArrayList<Note>());
-                                frames.get(tick).add(note);
+                                // If the note we're looking at has not been left unresolved
+                                if(lastTime != null) {
+                                    Note note = new Note(pitch,time.minus(lastTime));
+                                    System.out.println("MIDI:\t"+note.toString());
+                                }
+                                // If the note we're looking at has been left unended
+                                else {
+                                    System.out.println("MIDI:\tEnding note (" + pitch.toString() + ") that was not ended");
+                                }
                             }
 
-                            */
                             break;
+
                         // Note off messages for each channel
                         case NOTE_OFF_CH0:  case NOTE_OFF_CH1:  case NOTE_OFF_CH2:  case NOTE_OFF_CH3:
                         case NOTE_OFF_CH4:  case NOTE_OFF_CH5:  case NOTE_OFF_CH6:  case NOTE_OFF_CH7:
                         case NOTE_OFF_CH8:  case NOTE_OFF_CH9:  case NOTE_OFF_CH10: case NOTE_OFF_CH11:
                         case NOTE_OFF_CH12: case NOTE_OFF_CH13: case NOTE_OFF_CH14: case NOTE_OFF_CH15:
 
-                            //Pitch pitch     = new Pitch(sm.getData1())
+                            pitchValue      = sm.getData1();
+                            velocityValue   = sm.getData2();            // TODO: Implement this later
+                            pitch           = new Pitch(pitchValue);
+                            time            = Count.ZERO;
+                            lastTime        = currentPitches.get(pitch);
+
+                            // If the note we're looking at has not been left unresolved
+                            if(lastTime != null) {
+                                Note note = new Note(pitch,time.minus(lastTime));
+                                System.out.println("MIDI:\t"+note.toString());
+                            }
+                            // If the note we're looking at has been left unended
+                            else {
+                                System.out.println("MIDI:\tEnding note (" + pitch.toString() + ") that was not ended");
+                            }
 
                             break;
 
@@ -185,6 +222,7 @@ public abstract class Midi
                 {
                     // Cast it to a Midi short message
                     MetaMessage mm = (MetaMessage)message;
+                    byte[] data = mm.getData();
                     int type = mm.getType();
 
                     switch(type) {
@@ -196,11 +234,10 @@ public abstract class Midi
 
                         // A tempo message
                         case TEMPO_MSG:
-                            byte[] data = mm.getData();
-                            int value = (data[0] & 0xff) << 16 |
-                                        (data[1] & 0xff) << 8 |
-                                        (data[2] & 0xff);
-                            int bpm = 60000000 / value;
+                            int tempoValue = (data[0] & 0xff) << 16 |
+                                             (data[1] & 0xff) << 8 |
+                                             (data[2] & 0xff);
+                            int bpm = 60000000 / tempoValue;
                             Tempo tempo = new Tempo(bpm);
                             System.out.println("MIDI:\tSetting tempo: " + tempo.toString());
                             break;
@@ -211,6 +248,10 @@ public abstract class Midi
                             int denominator = 2 << (mm.getData()[1] - 1);
                             TimeSignature timeSignature = new TimeSignature(numerator, denominator);
                             System.out.println("MIDI:\tSetting time signature: " + timeSignature.toString());
+                            break;
+
+                        // A tempo message
+                        case TEXT_MSG:
                             break;
 
                         // If we don't know the message
