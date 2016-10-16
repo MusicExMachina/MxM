@@ -2,6 +2,7 @@ package io;
 
 import com.sun.media.sound.StandardMidiFileReader;
 import com.sun.media.sound.StandardMidiFileWriter;
+import model.basic.Tempo;
 import model.basic.TimeSignature;
 import model.structure.Passage;
 
@@ -103,7 +104,7 @@ public abstract class Midi
      * @param sequence
      * @return
      */
-    public static Passage read(Sequence sequence) {
+    public static Passage parse(Sequence sequence) {
 
         System.out.println("Reading in Midi sequence...");
 
@@ -116,6 +117,8 @@ public abstract class Midi
 
         // For every Midi track
         for (Track track : sequence.getTracks()) {
+
+            System.out.println("MIDI:\tNew track");
 
             // For every Midi event
             for (int i = 0; i < track.size(); i++) {
@@ -159,8 +162,8 @@ public abstract class Midi
                                 frames.get(tick).add(note);
                             }
 
-                            break;
                             */
+                            break;
                         // Note off messages for each channel
                         case NOTE_OFF_CH0:  case NOTE_OFF_CH1:  case NOTE_OFF_CH2:  case NOTE_OFF_CH3:
                         case NOTE_OFF_CH4:  case NOTE_OFF_CH5:  case NOTE_OFF_CH6:  case NOTE_OFF_CH7:
@@ -173,7 +176,7 @@ public abstract class Midi
 
                         // In the case that we don't know what Midi ShortMessage was sent.
                         default:
-                            System.out.println("Unknown Midi ShortMessage: " + sm.getCommand());
+                            System.out.println("MIDI:\tUnrecognized Midi ShortMessage " + sm.getCommand());
                             break;
                     }
                 }
@@ -188,36 +191,39 @@ public abstract class Midi
 
                         //
                         case 0x20:
-                            System.out.println("Midi Channel prefix:" + mm.getData().toString());
+                            System.out.println("MIDI:\tMidi Channel prefix:" + mm.getData().toString());
                             break;
 
                         // A tempo message
                         case TEMPO_MSG:
                             byte[] data = mm.getData();
-                            int tempo = (data[0] & 0xff) << 16 |
+                            int value = (data[0] & 0xff) << 16 |
                                         (data[1] & 0xff) << 8 |
                                         (data[2] & 0xff);
-                            int bpm = 60000000 / tempo;
+                            int bpm = 60000000 / value;
+                            Tempo tempo = new Tempo(bpm);
+                            System.out.println("MIDI:\tSetting tempo: " + tempo.toString());
                             break;
 
                         // A time-signature message
                         case TIME_SIGN_MSG:
-                            int numerator   = mm.getMessage()[0];
-                            int denominator = mm.getMessage()[1];
+                            int numerator   = mm.getData()[0];
+                            int denominator = 2 << (mm.getData()[1] - 1);
                             TimeSignature timeSignature = new TimeSignature(numerator, denominator);
+                            System.out.println("MIDI:\tSetting time signature: " + timeSignature.toString());
                             break;
 
                         // If we don't know the message
                         default:
-                            System.out.print("Unrecognized Midi MetaMessage. " + mm.getData());
+                            System.out.println("MIDI:\tUnrecognized Midi MetaMessage " + mm.getData());
                             break;
                     }
                 }
                 // If it's a System-exclusive message
                 else if (message instanceof SysexMessage)
                 {
-                    SysexMessage sm;
-                    System.out.print("Unrecognized Midi SysEx message. " + sm.getData());
+                    SysexMessage sm = (SysexMessage)message;
+                    System.out.println("MIDI:\tUnrecognized Midi SysexMessage " + sm.getData());
                 }
             }
         }

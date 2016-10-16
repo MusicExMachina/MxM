@@ -52,6 +52,15 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
     }
 
     /**
+     * Returns a nicely-formatted String
+     * of this Tempo (for debug).
+     * @return This Tempo's String representation.
+     */
+    public String toString() {
+        return "[ " + value + " bpm ]";
+    }
+
+    /**
      * Compares this Tempo to another Tempo.
      * @param other The other Tempo.
      * @return The comparison.

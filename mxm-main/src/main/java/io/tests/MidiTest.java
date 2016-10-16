@@ -14,6 +14,22 @@ public class MidiTest {
      */
     @Test
     public void basicTest() {
+        try {
+            Sequence sequence = Midi.download("http://www.midiworld.com/download/4522");
+            //Sequence sequence = Midi.download("http://www.mfiles.co.uk/downloads/edvard-grieg-peer-gynt1-morning-mood.mid");
+            Midi.parse(sequence);
+            //Midi.play(sequence);
+            //Thread.sleep(10000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Tests that you can run
+     */
+    @Test
+    public void playTest() {
         System.out.print("A");
         try {
             System.out.print("B");
