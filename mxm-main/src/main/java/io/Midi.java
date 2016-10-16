@@ -12,50 +12,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Dictionary;
 import java.util.HashMap;
 
 public abstract class Midi
 {
     /* A few of the most useful Midi messages */
-
-    /* Note on messages for all 16 Midi channels */
-    private static final int NOTE_ON_CH0    = 0x90;
-    private static final int NOTE_ON_CH1    = 0x91;
-    private static final int NOTE_ON_CH2    = 0x92;
-    private static final int NOTE_ON_CH3    = 0x93;
-    private static final int NOTE_ON_CH4    = 0x94;
-    private static final int NOTE_ON_CH5    = 0x95;
-    private static final int NOTE_ON_CH6    = 0x96;
-    private static final int NOTE_ON_CH7    = 0x97;
-    private static final int NOTE_ON_CH8    = 0x98;
-    private static final int NOTE_ON_CH9    = 0x99;
-    private static final int NOTE_ON_CH10   = 0x9A;
-    private static final int NOTE_ON_CH11   = 0x9B;
-    private static final int NOTE_ON_CH12   = 0x9C;
-    private static final int NOTE_ON_CH13   = 0x9D;
-    private static final int NOTE_ON_CH14   = 0x9E;
-    private static final int NOTE_ON_CH15   = 0x9F;
-
-    /* Note off messages for all 16 Midi channels */
-    private static final int NOTE_OFF_CH0   = 0x80;
-    private static final int NOTE_OFF_CH1   = 0x81;
-    private static final int NOTE_OFF_CH2   = 0x82;
-    private static final int NOTE_OFF_CH3   = 0x83;
-    private static final int NOTE_OFF_CH4   = 0x84;
-    private static final int NOTE_OFF_CH5   = 0x85;
-    private static final int NOTE_OFF_CH6   = 0x86;
-    private static final int NOTE_OFF_CH7   = 0x87;
-    private static final int NOTE_OFF_CH8   = 0x88;
-    private static final int NOTE_OFF_CH9   = 0x89;
-    private static final int NOTE_OFF_CH10  = 0x8A;
-    private static final int NOTE_OFF_CH11  = 0x8B;
-    private static final int NOTE_OFF_CH12  = 0x8C;
-    private static final int NOTE_OFF_CH13  = 0x8D;
-    private static final int NOTE_OFF_CH14  = 0x8E;
-    private static final int NOTE_OFF_CH15  = 0x8F;
-
-    /**/
     private static final int TEMPO_MSG       = 0x51;
     private static final int TIME_SIGN_MSG   = 0x58;
     private static final int TEXT_MSG        = 0x01;
@@ -150,10 +111,7 @@ public abstract class Midi
                     switch (sm.getCommand()) {
 
                         // Note on messages for each channel
-                        case NOTE_ON_CH0:   case NOTE_ON_CH1:   case NOTE_ON_CH2:   case NOTE_ON_CH3:
-                        case NOTE_ON_CH4:   case NOTE_ON_CH5:   case NOTE_ON_CH6:   case NOTE_ON_CH7:
-                        case NOTE_ON_CH8:   case NOTE_ON_CH9:   case NOTE_ON_CH10:  case NOTE_ON_CH11:
-                        case NOTE_ON_CH12:  case NOTE_ON_CH13:  case NOTE_ON_CH14:  case NOTE_ON_CH15:
+                        case ShortMessage.NOTE_ON:
 
                             pitchValue      = sm.getData1();
                             velocityValue   = sm.getData2();            // TODO: Implement this later
@@ -188,10 +146,7 @@ public abstract class Midi
                             break;
 
                         // Note off messages for each channel
-                        case NOTE_OFF_CH0:  case NOTE_OFF_CH1:  case NOTE_OFF_CH2:  case NOTE_OFF_CH3:
-                        case NOTE_OFF_CH4:  case NOTE_OFF_CH5:  case NOTE_OFF_CH6:  case NOTE_OFF_CH7:
-                        case NOTE_OFF_CH8:  case NOTE_OFF_CH9:  case NOTE_OFF_CH10: case NOTE_OFF_CH11:
-                        case NOTE_OFF_CH12: case NOTE_OFF_CH13: case NOTE_OFF_CH14: case NOTE_OFF_CH15:
+                        case ShortMessage.NOTE_OFF:
 
                             pitchValue      = sm.getData1();
                             velocityValue   = sm.getData2();            // TODO: Implement this later
@@ -209,6 +164,15 @@ public abstract class Midi
                                 System.out.println("MIDI:\tEnding note (" + pitch.toString() + ") that was not ended");
                             }
 
+                            break;
+
+                        // Control change message
+                        case ShortMessage.CONTROL_CHANGE:
+                            System.out.println("MIDI:\tSetting controller to " + sm.getData1());
+                            break;
+
+                        case ShortMessage.PROGRAM_CHANGE:
+                            System.out.println("MIDI:\tSetting instrument to " + sm.getData1());
                             break;
 
                         // In the case that we don't know what Midi ShortMessage was sent.
