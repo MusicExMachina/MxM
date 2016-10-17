@@ -104,6 +104,7 @@ public abstract class Midi
                     int channel         = sm.getChannel();
                     int pitchValue;
                     int velocityValue;
+
                     Pitch pitch;
                     Count time;
                     Count lastTime;
@@ -127,7 +128,7 @@ public abstract class Midi
                                 }
                                 // If the note we're looking at has been left unended
                                 else {
-                                    System.out.println("MIDI:\tRearticulating note (" + pitch.toString() + ") that was not ended");
+                                    System.out.println("MIDI:\tRearticulating note (" + pitch.toString() + ") that was not ended on channel " + channel);
                                 }
                             }
                             // If this is really a note off message
@@ -135,11 +136,11 @@ public abstract class Midi
                                 // If the note we're looking at has not been left unresolved
                                 if(lastTime != null) {
                                     Note note = new Note(pitch,time.minus(lastTime));
-                                    System.out.println("MIDI:\t"+note.toString());
+                                    System.out.println("MIDI:\t"+note.toString() + " on channel " + channel);
                                 }
                                 // If the note we're looking at has been left unended
                                 else {
-                                    System.out.println("MIDI:\tEnding note (" + pitch.toString() + ") that was not ended");
+                                    System.out.println("MIDI:\tEnding note (" + pitch.toString() + ") that was not ended on channel " + channel);
                                 }
                             }
 
@@ -157,27 +158,27 @@ public abstract class Midi
                             // If the note we're looking at has not been left unresolved
                             if(lastTime != null) {
                                 Note note = new Note(pitch,time.minus(lastTime));
-                                System.out.println("MIDI:\t"+note.toString());
+                                System.out.println("MIDI:\t"+note.toString() + " on channel " + channel);
                             }
                             // If the note we're looking at has been left unended
                             else {
-                                System.out.println("MIDI:\tEnding note (" + pitch.toString() + ") that was not ended");
+                                System.out.println("MIDI:\tEnding note (" + pitch.toString() + ") that was not ended on channel " + channel);
                             }
 
                             break;
 
                         // Control change message
                         case ShortMessage.CONTROL_CHANGE:
-                            System.out.println("MIDI:\tSetting controller to " + sm.getData1());
+                            System.out.println("MIDI:\tSetting controller to " + sm.getData1() + " on channel " + channel);
                             break;
 
                         case ShortMessage.PROGRAM_CHANGE:
-                            System.out.println("MIDI:\tSetting instrument to " + sm.getData1());
+                            System.out.println("MIDI:\tSetting instrument to " + sm.getData1() + " on channel " + channel);
                             break;
 
                         // In the case that we don't know what Midi ShortMessage was sent.
                         default:
-                            System.out.println("MIDI:\tUnrecognized Midi ShortMessage " + sm.getCommand());
+                            System.out.println("MIDI:\tUnrecognized Midi ShortMessage " + sm.getCommand() + " on channel " + channel);
                             break;
                     }
                 }
