@@ -18,8 +18,8 @@ public class MidiTest {
             //Sequence sequence = Midi.download("http://www.midiworld.com/download/4522");
             Sequence sequence = Midi.download("http://www.mfiles.co.uk/downloads/edvard-grieg-peer-gynt1-morning-mood.mid");
             Midi.parse(sequence);
-            Midi.play(sequence);
-            Thread.sleep(10000);
+            //Midi.play(sequence);
+            //Thread.sleep(10000);
         } catch (Exception e) {
             e.printStackTrace();
         }

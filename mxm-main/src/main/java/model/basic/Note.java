@@ -26,6 +26,6 @@ public class Note {
 
     @Override
     public String toString() {
-        return "[ Note | pitch: " + pitch.toString() + ", length: " + length.toString() + " ]";
+        return "(" + pitch.toString() + " " + length.toString() + ")";
     }
 }

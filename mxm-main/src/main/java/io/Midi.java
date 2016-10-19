@@ -12,14 +12,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Time;
 import java.util.HashMap;
 
 public abstract class Midi
 {
-    /* A few of the most useful Midi messages */
-    private static final int TEMPO_MSG       = 0x51;
-    private static final int TIME_SIGN_MSG   = 0x58;
-    private static final int TEXT_MSG        = 0x01;
 
     /**
      * Loads a midi Sequence from a given filename.
@@ -68,182 +65,9 @@ public abstract class Midi
      * @return
      */
     public static Passage parse(Sequence sequence) {
-
-        System.out.println("Reading in Midi sequence...");
-
-        // The Passage we're going to return
-        Passage passage = new Passage();
-
-        for(Patch patch : sequence.getPatchList()) {
-            System.out.println(patch.toString());
-        }
-
-        // For every Midi track
-        for (Track track : sequence.getTracks()) {
-
-            System.out.println("MIDI:\tNew track");
-
-            // Creates a HashMap from Pitches to the time they were last
-            // played and left "unresolved." Note that if a Pitch has been
-            // resolved, we simply remove the key-value pair from the HashMap.
-            HashMap<Pitch,Count> currentPitches = new HashMap<Pitch,Count>();
-
-            // For every Midi event
-            for (int i = 0; i < track.size(); i++) {
-
-                // Some information about this Midi event
-                MidiEvent event     = track.get(i);
-                MidiMessage message = event.getMessage();
-                Long tick           = event.getTick();
-
-                // If it's a Midi short message
-                if (message instanceof ShortMessage) {
-
-                    // Cast it to a Midi short message
-                    ShortMessage sm     = (ShortMessage)message;
-                    int channel         = sm.getChannel();
-                    int pitchValue;
-                    int velocityValue;
-
-                    Pitch pitch;
-                    Count time;
-                    Count lastTime;
-
-                    switch (sm.getCommand()) {
-
-                        // Note on messages for each channel
-                        case ShortMessage.NOTE_ON:
-
-                            pitchValue      = sm.getData1();
-                            velocityValue   = sm.getData2();            // TODO: Implement this later
-                            pitch           = new Pitch(pitchValue);
-                            time            = Count.ZERO;
-                            lastTime        = currentPitches.get(pitch);
-
-                            // If this isn't a note off in disguise
-                            if(velocityValue != 0) {
-                                // If the note we're looking at has not been left unresolved
-                                if(lastTime == null) {
-                                    currentPitches.put(pitch,time);
-                                }
-                                // If the note we're looking at has been left unended
-                                else {
-                                    System.out.println("MIDI:\tRearticulating note (" + pitch.toString() + ") that was not ended on channel " + channel);
-                                }
-                            }
-                            // If this is really a note off message
-                            else {
-                                // If the note we're looking at has not been left unresolved
-                                if(lastTime != null) {
-                                    Note note = new Note(pitch,time.minus(lastTime));
-                                    System.out.println("MIDI:\t"+note.toString() + " on channel " + channel);
-                                }
-                                // If the note we're looking at has been left unended
-                                else {
-                                    System.out.println("MIDI:\tEnding note (" + pitch.toString() + ") that was not ended on channel " + channel);
-                                }
-                            }
-
-                            break;
-
-                        // Note off messages for each channel
-                        case ShortMessage.NOTE_OFF:
-
-                            pitchValue      = sm.getData1();
-                            velocityValue   = sm.getData2();            // TODO: Implement this later
-                            pitch           = new Pitch(pitchValue);
-                            time            = Count.ZERO;
-                            lastTime        = currentPitches.get(pitch);
-
-                            // If the note we're looking at has not been left unresolved
-                            if(lastTime != null) {
-                                Note note = new Note(pitch,time.minus(lastTime));
-                                System.out.println("MIDI:\t"+note.toString() + " on channel " + channel);
-                            }
-                            // If the note we're looking at has been left unended
-                            else {
-                                System.out.println("MIDI:\tEnding note (" + pitch.toString() + ") that was not ended on channel " + channel);
-                            }
-
-                            break;
-
-                        // Control change message
-                        case ShortMessage.CONTROL_CHANGE:
-                            System.out.println("MIDI:\tSetting controller to " + sm.getData1() + " on channel " + channel);
-                            break;
-
-                        case ShortMessage.PROGRAM_CHANGE:
-                            System.out.println("MIDI:\tSetting instrument to " + sm.getData1() + " on channel " + channel);
-                            break;
-
-                        // In the case that we don't know what Midi ShortMessage was sent.
-                        default:
-                            System.out.println("MIDI:\tUnrecognized Midi ShortMessage " + sm.getCommand() + " on channel " + channel);
-                            break;
-                    }
-                }
-                // If it's a Midi short message
-                else if (message instanceof MetaMessage)
-                {
-                    // Cast it to a Midi short message
-                    MetaMessage mm = (MetaMessage)message;
-                    byte[] data = mm.getData();
-                    int type = mm.getType();
-
-                    switch(type) {
-
-                        //
-                        case 0x20:
-                            System.out.println("MIDI:\tMidi Channel prefix:" + mm.getData().toString());
-                            break;
-
-                        // A tempo message
-                        case TEMPO_MSG:
-                            int tempoValue = (data[0] & 0xff) << 16 |
-                                             (data[1] & 0xff) << 8 |
-                                             (data[2] & 0xff);
-                            int bpm = 60000000 / tempoValue;
-                            Tempo tempo = new Tempo(bpm);
-                            System.out.println("MIDI:\tSetting tempo: " + tempo.toString());
-                            break;
-
-                        // A time-signature message
-                        case TIME_SIGN_MSG:
-                            int numerator   = mm.getData()[0];
-                            int denominator = 2 << (mm.getData()[1] - 1);
-                            TimeSignature timeSignature = new TimeSignature(numerator, denominator);
-                            System.out.println("MIDI:\tSetting time signature: " + timeSignature.toString());
-                            break;
-
-                        // A tempo message
-                        case TEXT_MSG:
-                            break;
-
-                        // If we don't know the message
-                        default:
-                            System.out.println("MIDI:\tUnrecognized Midi MetaMessage " + mm.getData());
-                            break;
-                    }
-                }
-                // If it's a System-exclusive message
-                else if (message instanceof SysexMessage)
-                {
-                    SysexMessage sm = (SysexMessage)message;
-                    System.out.println("MIDI:\tUnrecognized Midi SysexMessage " + sm.getData());
-                }
-            }
-        }
-        /*
-        // Print everything out
-        for(Long tick : frames.keySet())
-        {
-            // System.out.println(tick.toString() + " \t: " +frames.get(tick).toString());
-        }
-        */
-        System.out.println("... finished reading Midi sequence.");
-
-        // Finally our passage is done
-        return passage;
+        // Spawn off a parser object
+        MidiParser midiParser = new MidiParser();
+        return midiParser.parse(sequence);
     }
 
     /**

@@ -57,7 +57,7 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
      * @return This Tempo's String representation.
      */
     public String toString() {
-        return "[ " + value + " bpm ]";
+        return value + " bpm";
     }
 
     /**
