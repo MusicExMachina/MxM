@@ -44,11 +44,12 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
     }
 
     /**
-     * Copy constructor for Tempo.
-     * @param other The other Tempo.
+     * Returns the number of beats per minute this
+     * tempo represents.
+     * @return The BPM of this tempo
      */
-    public Tempo(Tempo other) {
-        this.value = other.value;
+    public int getBeatsPerMinute() {
+        return value;
     }
 
     /**
