@@ -91,7 +91,6 @@ public class TimeSignature {
 
         if (numerator != timeSignature.numerator) return false;
         return denominator == timeSignature.denominator;
-
     }
 
     /**

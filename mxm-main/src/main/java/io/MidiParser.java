@@ -10,10 +10,7 @@ import model.trainable.Instrument;
 import org.jfree.data.time.TimeSeries;
 
 import javax.sound.midi.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by celenp on 10/18/2016.
@@ -37,85 +34,63 @@ public class MidiParser {
     private static final int KEY_SIGNATURE      = 0x59;
     private static final int SEQUENCER_SPECIFIC = 0x7F;
 
+    // Stage 0
+    private Sequence sequence;
+
     // Stage 1
-    HashSet<Track> tracks;
-    TreeMap<Long,HashSet<MidiEvent>> events;
+    private HashSet<Track> tracks;
 
     // Stage 2
-    HashMap<Track,TreeMap<Long,HashSet<Pitch>>> noteOns;
-    HashMap<Track,TreeMap<Long,HashSet<Pitch>>> noteOffs;
-    TreeMap<Long,TimeSignature> timeSignatures;
-    TreeMap<Long,Integer> ppqns;
+    private HashMap<Track,TreeMap<Long,HashSet<Pitch>>> noteOns;
+    private HashMap<Track,TreeMap<Long,HashSet<Pitch>>> noteOffs;
+    private TreeMap<Long,TimeSignature> timeSignatures;
+    private TreeMap<Long,Integer> pulsesPerQuarter;
 
     // Stage 3
-    ArrayList<Long> measures;
+    private TreeMap<Long,Float> timePoints;
 
-    public MidiParser() {
-        tracks          = new HashSet<Track>();
-        events          = new TreeMap<Long,HashSet<MidiEvent>>();
-        noteOns         = new HashMap<Track,TreeMap<Long,HashSet<Pitch>>>();
-        noteOffs        = new HashMap<Track,TreeMap<Long,HashSet<Pitch>>>();
-        timeSignatures  = new TreeMap<Long,TimeSignature>();
-        ppqns           = new TreeMap<Long,Integer>();
+    public MidiParser(Sequence sequence) {
+        this.sequence        = sequence;
+        tracks          = new HashSet<>();
+        noteOns         = new HashMap<>();
+        noteOffs        = new HashMap<>();
+        timeSignatures  = new TreeMap<>();
+        pulsesPerQuarter= new TreeMap<>();
+        timePoints      = new TreeMap<>();
     }
 
-    Passage parse(Sequence sequence) {
-        System.out.println("MIDI:\tReading in Midi sequence...");
-        readAll(sequence);
-        System.out.println("MIDI:\t...Finished reading in Midi sequence.");
+    Passage parse() {
 
         System.out.println("MIDI:\tParsing MidiEvents...");
+        parseAll();
         System.out.println("MIDI:\t...Finished parsing MidiEvents.");
 
+        System.out.println("MIDI:\tInterpreting MidiEvents...");
+        interpretAll();
+        System.out.println("MIDI:\t...Finished interpreting MidiEvents.");
+
         /*
-        float divisionType = sequence.getDivisionType();
-        float framesPerSecond = sequence.getResolution() * (1000000 / ppqns.get(new Long(0)));
-        if(divisionType == Sequence.SMPTE_24) {
-            framesPerSecond = 24;
+        for(Long tick : timePoints.keySet()) {
+            System.out.println(tick + "   " + timePoints.get(tick));
         }
-        else if(divisionType == Sequence.SMPTE_25) {
-            framesPerSecond = 25;
-        }
-        else if(divisionType == Sequence.SMPTE_30) {
-            framesPerSecond = 30;
-        }
-        float ticksPerSecond = sequence.getResolution() * framesPerSecond;
-        double tickSize = 1.0 / ticksPerSecond;
-        System.out.println(framesPerSecond);
-        float lastSecond = 0.0f;
         */
-        Long lastTick = null;
-        for(Long curTick : ppqns.keySet()) {
-            if(lastTick != null) {
-                //float secondsPerQuarter = ppqns.get(tick) / 1000000f;
-                //System.out.println("Seconds per quarter: " + secondsPerQuarter);
-                //System.out.println("Ticks since last: " + (curTick - prevTick));
-                TimeSignature timeSignature = timeSignatures.floorEntry(curTick).getValue();
-                Integer ppqn = sequence.getResolution(); //ppqns.floorEntry(curTick).getValue();
 
-                Long ticksPerMeasure = new Long(ppqn * 4 * timeSignature.getNumerator() / timeSignature.getDenominator());
-
-                //System.out.println((curTick - lastTick) + "    " + ticksPerMeasure);
-                System.out.println((float)(curTick - lastTick)/ ticksPerMeasure + " measures of " + timeSignature.toString() + " at " + 60000000 / ppqns.get(curTick) + " bpm");
-            }
-            lastTick = curTick;
-        }
-        /*
         for(Track track : noteOns.keySet()) {
+            System.out.println("============== TRACK ============================================");
             for(Long tick : noteOns.get(track).keySet()) {
                 String allPitches = "";
                 for(Pitch pitch : noteOns.get(track).get(tick)) {
                     allPitches += " " + pitch.toString();
                 }
-                System.out.println(track.toString() + "  " + tick.toString() + "  {" + allPitches + " }");
+                System.out.println( tick + "   " + interpolate(tick) + "  {" + allPitches + " }");
             }
         }
-        */
+
         return new Passage();
     }
 
     // The Instrument that did a certain action
-    void readAll(Sequence sequence) {
+    private void parseAll() {
 
         /*
         for(Patch patch : sequence.getPatchList()) {
@@ -134,12 +109,6 @@ public class MidiParser {
                 MidiEvent event     = track.get(i);
                 MidiMessage message = event.getMessage();
                 Long tick           = event.getTick();
-
-                // Add the MidiEvent to "events"
-                if(!events.containsKey(tick)) {
-                    events.put(tick,new HashSet<MidiEvent>());
-                }
-                events.get(tick).add(event);
 
                 if (message instanceof ShortMessage) {
                     // Cast it to a Midi short message and parse
@@ -303,7 +272,7 @@ public class MidiParser {
     void parseTempoMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         Integer ppqn = new Integer((data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff));
-        ppqns.put(tick,ppqn); // Pulses Per Quarter Note
+        pulsesPerQuarter.put(tick,ppqn); // Pulses Per Quarter Note
     }
 
     void parseTimeSignatureMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
@@ -318,5 +287,87 @@ public class MidiParser {
         byte[] data = message.getData();
         String string = new String(data);
         System.out.println("MIDI:\tReading text: " + string);
+    }
+
+
+
+
+
+
+    // Take the parse
+    void interpretAll() {
+
+        Integer resolution  = sequence.getResolution();
+        long tick           = 0;
+        long prevTick       = 0;
+        long finalTick      = sequence.getTickLength();
+        float time          = 0.0f;
+
+        while(tick <= finalTick) {
+            // Information
+            TimeSignature timeSignature = timeSignatures.floorEntry(tick).getValue();
+            long ticksPerMeasure        = resolution * 4 * timeSignature.getNumerator() / timeSignature.getDenominator();
+            long ticksElapsed           = tick - prevTick;
+            float timeElapsed           = (float)ticksElapsed/ticksPerMeasure;
+
+            // Add to the time
+            time += timeElapsed;
+
+            // Add this timePoint, if it's not a duplicate
+            if(!timePoints.containsKey(tick)) {
+                timePoints.put(tick, time);
+            }
+
+            // Set "prevTick"
+            prevTick = tick;
+            // Ensure we don't select the same tick again
+            tick++;
+
+            // Check for the next changes in key signature or pulses per quarter note.
+            // If there are upcoming changes, figure out when they are, and if not, say
+            // that they're infinitely far away.
+            Map.Entry<Long,TimeSignature> nextTimeSigChange     = timeSignatures.ceilingEntry(tick);
+            Map.Entry<Long,Integer> nextPulsesPerQuarterChange  = pulsesPerQuarter.ceilingEntry(tick);
+            long nextTimeSigChangeTick                          = Long.MAX_VALUE;
+            long nextPulsesPerQuarterChangeTick                 = Long.MAX_VALUE;
+
+            if(nextTimeSigChange != null) {
+                nextTimeSigChangeTick = nextTimeSigChange.getKey();
+            }
+            if(nextPulsesPerQuarterChange != null) {
+                nextPulsesPerQuarterChangeTick = nextPulsesPerQuarterChange.getKey();
+            }
+
+            // If the next upcoming event is the end of the piece, mark it with a time point
+            // and be done with it.
+            if(tick <= finalTick &&
+               finalTick <= nextTimeSigChangeTick &&
+               finalTick <= nextPulsesPerQuarterChangeTick)
+            {
+                tick = finalTick;
+            }
+            // Else, if a time signature change is due sooner, move the tick to that
+            else if (nextTimeSigChangeTick <= nextPulsesPerQuarterChangeTick) {
+                tick = nextTimeSigChangeTick;
+            }
+            // Otherwise, the next ppqn change must be the closest relevant difference
+            else {
+                tick = nextPulsesPerQuarterChangeTick;
+            }
+        }
+    }
+
+    private float interpolate(long tick) {
+        long earlierTick    = timePoints.floorKey(tick);
+        long laterTick      = timePoints.ceilingKey(tick);
+        if(Long.compare(earlierTick,laterTick) == 0) {
+            return timePoints.get(earlierTick);
+        }
+        else {
+            float earlierTimePoint  = timePoints.get(earlierTick);
+            float laterTimePoint    = timePoints.get(laterTick);
+            float relativePosition  = (float)(tick - earlierTick) / (float)(laterTick - earlierTick);
+            return (relativePosition * (laterTimePoint - earlierTimePoint )) + earlierTimePoint;
+        }
     }
 }

@@ -66,8 +66,8 @@ public abstract class Midi
      */
     public static Passage parse(Sequence sequence) {
         // Spawn off a parser object
-        MidiParser midiParser = new MidiParser();
-        return midiParser.parse(sequence);
+        MidiParser midiParser = new MidiParser(sequence);
+        return midiParser.parse();
     }
 
     /**
