@@ -2,21 +2,54 @@ package io;
 
 import com.sun.media.sound.StandardMidiFileReader;
 import com.sun.media.sound.StandardMidiFileWriter;
-import model.basic.*;
 import model.structure.Passage;
+import model.trainable.*;
 
 import javax.sound.midi.*;
+import javax.sound.midi.Instrument;
 import javax.sound.midi.spi.MidiFileReader;
 import javax.sound.midi.spi.MidiFileWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Time;
-import java.util.HashMap;
+import java.util.List;
 
 public abstract class Midi
 {
+
+    public static void printSequencerInfo() {
+        try {
+            Sequencer sequencer = MidiSystem.getSequencer();
+
+            System.out.println("MIDI:\tReceivers:");
+            List<Receiver> receivers = sequencer.getReceivers();
+            for(Receiver receiver : receivers) {
+                System.out.println("MIDI:\t\t"+receiver.toString());
+            }
+
+            System.out.println("MIDI:\tTransmitters:");
+            List<Transmitter> transmitters = sequencer.getTransmitters();
+            for(Transmitter transmitter : transmitters) {
+                System.out.println("MIDI:\t\t"+transmitter.toString());
+            }
+
+            Synthesizer synthesizer = MidiSystem.getSynthesizer();
+
+            System.out.println("MIDI:\tInstruments:");
+            Instrument[] instruments = synthesizer.getAvailableInstruments();
+            for(Instrument instrument : instruments) {
+                System.out.println("MIDI:\t\t"+instrument.getSoundbank().getName() + " - " + instrument.getName());
+            }
+
+
+            System.out.println("");
+
+        } catch (MidiUnavailableException e) {
+            System.out.println("MIDI:\tThe sequencer is unavailable");
+        }
+
+    }
 
     /**
      * Loads a midi Sequence from a given filename.

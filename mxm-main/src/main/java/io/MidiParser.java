@@ -1,13 +1,7 @@
 package io;
 
-import it.unimi.dsi.fastutil.Hash;
-import it.unimi.dsi.util.Interval;
-import javafx.util.Pair;
 import model.basic.*;
 import model.structure.Passage;
-import model.trainable.*;
-import model.trainable.Instrument;
-import org.jfree.data.time.TimeSeries;
 
 import javax.sound.midi.*;
 import java.util.*;
@@ -50,16 +44,16 @@ public class MidiParser {
     private TreeMap<Long,Float> timePoints;
 
     public MidiParser(Sequence sequence) {
-        this.sequence        = sequence;
-        tracks          = new HashSet<>();
-        noteOns         = new HashMap<>();
-        noteOffs        = new HashMap<>();
-        timeSignatures  = new TreeMap<>();
-        pulsesPerQuarter= new TreeMap<>();
-        timePoints      = new TreeMap<>();
+        this.sequence       = sequence;
+        tracks              = new HashSet<>();
+        noteOns             = new HashMap<>();
+        noteOffs            = new HashMap<>();
+        timeSignatures      = new TreeMap<>();
+        pulsesPerQuarter    = new TreeMap<>();
+        timePoints          = new TreeMap<>();
     }
 
-    Passage parse() {
+    public Passage parse() {
 
         System.out.println("MIDI:\tParsing MidiEvents...");
         parseAll();
@@ -76,7 +70,7 @@ public class MidiParser {
         */
 
         for(Track track : noteOns.keySet()) {
-            System.out.println("============== TRACK ============================================");
+            System.out.println("========== TRACK ==========");
             for(Long tick : noteOns.get(track).keySet()) {
                 String allPitches = "";
                 for(Pitch pitch : noteOns.get(track).get(tick)) {
@@ -157,48 +151,48 @@ public class MidiParser {
         switch(message.getType()) {
 
             case SEQUENCE_NUMBER:
-                System.out.println("MIDI:\tSequence number");
+                //System.out.println("MIDI:\tSequence number");
                 break;
             case TEXT_EVENT:
                 parseTextMessage(track,event,message,tick);
                 break;
             case COPYRIGHT_NOTICE:
-                System.out.println("MIDI:\tCopyright notice");
+                //System.out.println("MIDI:\tCopyright notice");
                 break;
             case SEQUENCE_NAME:
-                System.out.println("MIDI:\tSequence name");
+                //System.out.println("MIDI:\tSequence name");
                 break;
             case INSTRUMENT_NAME:
-                System.out.println("MIDI:\tInstrument name");
+                //System.out.println("MIDI:\tInstrument name");
                 break;
             case LYRIC_TEXT:
-                System.out.println("MIDI:\tLyric text");
+                //System.out.println("MIDI:\tLyric text");
                 break;
             case MARKER_TEXT:
-                System.out.println("MIDI:\tMarker text");
+                //System.out.println("MIDI:\tMarker text");
                 break;
             case CUE_POINT:
-                System.out.println("MIDI:\tCue point");
+                //System.out.println("MIDI:\tCue point");
                 break;
             case MIDI_CHNL_PREFIX:
-                System.out.println("MIDI:\tMidi channel control");
+                //System.out.println("MIDI:\tMidi channel control");
                 break;
             case END_OF_TRACK:
-                System.out.println("MIDI:\tEnd of track");
+                //System.out.println("MIDI:\tEnd of track");
                 break;
             case TEMPO_SETTING:
                 parseTempoMessage(track,event,message,tick);
                 break;
             case SMPTE_OFFSET:
-                System.out.println("MIDI:\tMidi channel control");
+                //System.out.println("MIDI:\tMidi channel control");
             case TIME_SIGNATURE:
                 parseTimeSignatureMessage(track,event,message,tick);
                 break;
             case KEY_SIGNATURE:
-                System.out.println("MIDI:\tKey signature");
+                //System.out.println("MIDI:\tKey signature");
                 break;
             case SEQUENCER_SPECIFIC:
-                System.out.println("MIDI:\tSequencer-specific");
+                //System.out.println("MIDI:\tSequencer-specific");
                 break;
             default:
                 System.out.println("MIDI:\tUnrecognized Midi MetaMessage " + message.getData());
@@ -357,6 +351,11 @@ public class MidiParser {
         }
     }
 
+    /**
+     * Interpolates a tick between established time points.
+     * @param tick
+     * @return The float value of this tick as fractions of a measure.
+     */
     private float interpolate(long tick) {
         long earlierTick    = timePoints.floorKey(tick);
         long laterTick      = timePoints.ceilingKey(tick);

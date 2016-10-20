@@ -15,12 +15,13 @@ public class MidiTest {
     @Test
     public void basicTest() {
         try {
+            Midi.printSequencerInfo();
             //Sequence sequence = Midi.download("http://www.midiworld.com/download/4522");
             Sequence sequence = Midi.download("http://www.mfiles.co.uk/downloads/edvard-grieg-peer-gynt1-morning-mood.mid");
             //Sequence sequence = Midi.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
             Midi.parse(sequence);
-            Midi.play(sequence);
-            Thread.sleep(1000);
+            //Midi.play(sequence);
+            //Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
         }
