@@ -1,10 +1,13 @@
 package model.generation;
 
 import model.basic.Count;
+import model.basic.Pitch;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.NavigableMap;
 
 /**
  * RhythmNodes are the very active, very exposed,
@@ -68,10 +71,18 @@ public class RhythmNode {
         return parent;
     }
 
+    /**
+     * Gets the duration of this node in Counts.
+     * @return The duration of this node in Counts.
+     */
     public Count getDuration() {
         return duration;
     }
 
+    /**
+     * Gets the duration of this node in Counts.
+     * @return The duration of this node in Counts.
+     */
     public Count getTiming() {
         return timing;
     }
@@ -151,4 +162,6 @@ public class RhythmNode {
             children.get(i).paint(g, childX, childY);
         }
     }
+
+
 }

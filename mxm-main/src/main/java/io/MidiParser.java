@@ -1,6 +1,8 @@
 package io;
 
 import model.basic.*;
+import model.generation.RhythmNode;
+import model.generation.RhythmTree;
 import model.structure.Passage;
 
 import javax.sound.midi.*;
@@ -42,6 +44,10 @@ public class MidiParser {
 
     // Stage 3
     private TreeMap<Long,Float> timePoints;
+    private HashMap<Track,TreeMap<Float,HashSet<Pitch>>> frames;
+
+    // Stage 4
+    private HashMap<Track,TreeMap<Integer,RhythmTree>> rhythmTrees;
 
     public MidiParser(Sequence sequence) {
         this.sequence       = sequence;
@@ -51,6 +57,7 @@ public class MidiParser {
         timeSignatures      = new TreeMap<>();
         pulsesPerQuarter    = new TreeMap<>();
         timePoints          = new TreeMap<>();
+        rhythmTrees         = new HashMap<>();
     }
 
     public Passage parse() {
@@ -63,34 +70,15 @@ public class MidiParser {
         interpretAll();
         System.out.println("MIDI:\t...Finished interpreting MidiEvents.");
 
-        /*
-        for(Long tick : timePoints.keySet()) {
-            System.out.println(tick + "   " + timePoints.get(tick));
-        }
-        */
-
-        for(Track track : noteOns.keySet()) {
-            System.out.println("========== TRACK ==========");
-            for(Long tick : noteOns.get(track).keySet()) {
-                String allPitches = "";
-                for(Pitch pitch : noteOns.get(track).get(tick)) {
-                    allPitches += " " + pitch.toString();
-                }
-                System.out.println( tick + "   " + interpolate(tick) + "  {" + allPitches + " }");
-            }
-        }
+        System.out.println("MIDI:\tConverting to Counts...");
+        convertToCounts();
+        System.out.println("MIDI:\t...Finished converting to Counts.");
 
         return new Passage();
     }
 
     // The Instrument that did a certain action
     private void parseAll() {
-
-        /*
-        for(Patch patch : sequence.getPatchList()) {
-            System.out.println(patch.toString());
-        }
-        */
 
         // For every Midi track
         for (Track track : sequence.getTracks()) {
@@ -273,7 +261,14 @@ public class MidiParser {
         byte[] data = message.getData();
         int numerator   = data[0];
         int denominator = 2 << (data[1] - 1);
-        TimeSignature timeSignature = new TimeSignature(numerator, denominator);
+        TimeSignature timeSignature;
+        if(numerator == 0 || denominator == 0) {
+            System.out.println("MIDI:\tImproper time signature message, reverting to 4/4");
+            timeSignature = new TimeSignature(4,4);
+        }
+        else {
+            timeSignature = new TimeSignature(numerator, denominator);
+        }
         timeSignatures.put(tick,timeSignature);
     }
 
@@ -282,9 +277,6 @@ public class MidiParser {
         String string = new String(data);
         System.out.println("MIDI:\tReading text: " + string);
     }
-
-
-
 
 
 
@@ -349,6 +341,15 @@ public class MidiParser {
                 tick = nextPulsesPerQuarterChangeTick;
             }
         }
+
+        frames = new HashMap<Track,TreeMap<Float,HashSet<Pitch>>>();
+
+        for(Track track : noteOns.keySet()) {
+            frames.put(track,new TreeMap<Float, HashSet<Pitch>>());
+            for(Long tickTime : noteOns.get(track).keySet()) {
+                frames.get(track).put(interpolate(tickTime),noteOns.get(track).get(tickTime));
+            }
+        }
     }
 
     /**
@@ -367,6 +368,87 @@ public class MidiParser {
             float laterTimePoint    = timePoints.get(laterTick);
             float relativePosition  = (float)(tick - earlierTick) / (float)(laterTick - earlierTick);
             return (relativePosition * (laterTimePoint - earlierTimePoint )) + earlierTimePoint;
+        }
+    }
+
+
+
+    private void convertToCounts() {
+
+        for(Track track : frames.keySet()) {
+            System.out.println("Track");
+            // Create a new track in rhythmTrees
+            rhythmTrees.put(track,new TreeMap<Integer, RhythmTree>());
+
+            // Take the first measure this track plays in
+            float measureStart = (float)Math.floor(frames.get(track).firstKey());
+            while(frames.get(track).ceilingEntry(measureStart) != null) {
+                // Check if the next note is in the next measure
+                RhythmTree rhythmTree = new RhythmTree();
+                subdivideNode(rhythmTree.getRoot(), 0.0f, 1.0f, frames.get(track).subMap(measureStart, true, measureStart + 1.0f, false));
+                rhythmTrees.get(track).put(Math.round(measureStart),rhythmTree);
+                // Move on to a new measure
+                measureStart += 1.0f;
+            }
+        }
+    }
+
+    private void subdivideNode (RhythmNode node, float start, float end, NavigableMap<Float,HashSet<Pitch>> notes) {
+
+        //System.out.println("start: " + start + " end: " + end);
+
+        // Figure out the subdivision which will bring about the lowest error.
+        int subdivisions = 1;
+        float lowestError = Float.MAX_VALUE;
+
+        // For all possible subdivision amounts
+        for(int trySubdiv = 1; trySubdiv < 10; trySubdiv++) {
+            if(notes.keySet().size() <= trySubdiv ) {
+                float totalError = 0.0f;
+                for(Float time : notes.keySet()) {
+                    float lowestDistance = Float.MAX_VALUE;
+                    for(int num = 0; num < trySubdiv; num++) {
+                        float perfectDivision = start + ((end - start) / trySubdiv * (float) num);
+                        float distance = Math.abs(perfectDivision - time);
+                        if(distance < lowestDistance) {
+                            lowestDistance = distance;
+                        }
+                    }
+                    //System.out.println("ld " + lowestDistance);
+                    float weightedError = 1 * lowestDistance;
+                    totalError += weightedError;
+                }
+                //System.out.println(trySubdiv + " ) " + totalError);
+                if(totalError < lowestError) {
+                    subdivisions = trySubdiv;
+                    lowestError = totalError;
+                }
+            }
+        }
+
+        if(subdivisions > 1) {
+            for(int i = 2; i < 10; i++) {
+                if(subdivisions % i == 0) {
+                    subdivisions = i;
+                    break;
+                }
+            }
+            //System.out.println("> " + subdivisions);
+            Collection<RhythmNode> children = node.subdivide(subdivisions);
+            int childNumber = 0;
+            for (RhythmNode child : children) {
+                float beginTime = start + ((end - start) / subdivisions * (float) childNumber);
+                float endTime = start + ((end - start) / subdivisions * (float) (childNumber + 1));
+
+                if(notes.ceilingEntry(beginTime) != null &&
+                        notes.ceilingKey(beginTime) < endTime &&
+                        notes.ceilingEntry(endTime) != null) {
+                    //System.out.println("  start: " + beginTime + " end: " + endTime);
+                    NavigableMap<Float, HashSet<Pitch>> noteSubset = notes.subMap(beginTime, true, endTime, false);
+                    subdivideNode(child, beginTime, endTime, noteSubset);
+                }
+                childNumber++;
+            }
         }
     }
 }

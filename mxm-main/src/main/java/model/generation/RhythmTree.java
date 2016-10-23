@@ -2,7 +2,6 @@ package model.generation;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * A conceptualization of rhythm as gradual, equal
@@ -60,52 +59,26 @@ public class RhythmTree {
      * The RhythmTree copy constructor
      * @param other the RhythmTree to copy
      */
-    public RhythmTree(RhythmTree other) {
+    //public RhythmTree(RhythmTree other) {
 
-    }
+    //}
 
     /**
-     * Getter for the root Node which fills the whole measure.
+     *
      * @return
      */
-    public RhythmNode getRoot() {
-        return root;
-    }
-
-    /**
-     * Paint the rhythm tree
-     * @param g Graphics2D object for painting
-     * @param x top left corner or RhythmTree xcoord
-     * @param y top left corner or RhythmTree ycoord
-     */
-    public void paint(Graphics2D g, int x, int y) {
-        getRoot().paint(g, x, y);
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-//@Override
-//public Iterator<Frame> iterator() {
-            /*
-        Iterator<Frame> it = new Iterator<Frame>() {
-            private Node node = root;
+    /*
+    @Override
+    public Iterator<RhythmNode> iterator() {
+        Iterator<RhythmNode> it = new Iterator<Frame>() {
+            private RhythmNode node = root;
 
             @Override
             public boolean hasNext() {
-                Node nextNode           = null;
+                RhythmNode nextNode           = null;
                 int parentsChildNumber  = -1;
-                nextNode= node.parent;
-                for(int i = 0; i < nextNode.children.size(); i++) {
+                nextNode= node.getParent();
+                for(int i = 0; i < nextNode.getChildren().size(); i++) {
                     if(nextNode.children.get(i).equals(node)) {
                         parentsChildNumber = i;
                     }
@@ -127,6 +100,24 @@ public class RhythmTree {
             }
         };
         return it;
-        */
-//   return null;
-//}
+        return null;
+    }
+
+    /**
+     * Getter for the root Node which fills the whole measure.
+     * @return
+     */
+    public RhythmNode getRoot() {
+        return root;
+    }
+
+    /**
+     * Paint the rhythm tree
+     * @param g Graphics2D object for painting
+     * @param x top left corner or RhythmTree xcoord
+     * @param y top left corner or RhythmTree ycoord
+     */
+    public void paint(Graphics2D g, int x, int y) {
+        getRoot().paint(g, x, y);
+    }
+}
