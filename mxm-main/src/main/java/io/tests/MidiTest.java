@@ -8,7 +8,7 @@ import javax.sound.midi.Sequence;
 /**
  *
  */
-public class MidiToolsTest {
+public class MidiTest {
 
     /**
      * Tests that you can run
