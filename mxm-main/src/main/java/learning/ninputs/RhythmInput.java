@@ -24,7 +24,7 @@ public class RhythmInput {
     }
 
     public DataSet buildDataSet(){
-        DataSet
+        DataSet d = new DataSet(input, labels);
     }
 
 }

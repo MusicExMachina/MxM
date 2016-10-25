@@ -77,7 +77,15 @@ public class RhythmTree {
      * @return List of subdivisions breadth first order
      */
     public ArrayList<Integer> toList() {
-
+        ArrayList<Integer> list = new ArrayList<>();
+        PriorityQueue<RhythmNode> q = new PriorityQueue<>();
+        q.add(root);
+        RhythmNode curr = root;
+        while(!q.isEmpty()){
+            list.add(root.getChildren().size());
+            q.addAll(root.getChildren());
+        }
+        return list;
     }
 
 
