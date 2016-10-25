@@ -73,6 +73,15 @@ public class RhythmTree {
     }
 
     /**
+     * Creates list from RhythmTree based on number of subdivisions
+     * @return List of subdivisions breadth first order
+     */
+    public ArrayList<Integer> toList() {
+
+    }
+
+
+    /**
      * Paint the rhythm tree
      * @param g Graphics2D object for painting
      * @param x top left corner or RhythmTree xcoord
