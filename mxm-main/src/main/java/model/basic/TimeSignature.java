@@ -74,7 +74,7 @@ public class TimeSignature {
      * @return This TimeSignature's String representation.
      */
     public String toString() {
-        return "[ " + getNumerator() + " / " + getDenominator() + " Time ]";
+        return getNumerator() + "/" + getDenominator() + " time ";
     }
 
     /**
@@ -91,7 +91,6 @@ public class TimeSignature {
 
         if (numerator != timeSignature.numerator) return false;
         return denominator == timeSignature.denominator;
-
     }
 
     /**

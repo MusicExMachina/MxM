@@ -1,7 +1,8 @@
 package io.tests;
 
-import io.Midi;
+import io.MidiTools;
 import org.junit.Test;
+
 import javax.sound.midi.Sequence;
 
 /**
@@ -14,14 +15,34 @@ public class MidiTest {
      */
     @Test
     public void basicTest() {
+        try {
+            //MidiTools.printSequencerInfo();
+            Sequence sequence = MidiTools.download("http://www.midiworld.com/download/4522");
+            //Sequence sequence = MidiTools.download("http://www.mfiles.co.uk/downloads/edvard-grieg-peer-gynt1-morning-mood.mid");
+            //Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
+            //Sequence sequence = MidiTools.load("C:/users/celenp/desktop/test.mid");
+            MidiTools.parse(sequence);
+            MidiTools.play(sequence);
+            Thread.sleep(100000);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Tests that you can run
+     */
+    @Test
+    public void playTest() {
         System.out.print("A");
         try {
             System.out.print("B");
-            Sequence sequence1 = Midi.download("http://www.midiworld.com/midis/other/n1/EspanjaPrelude.mid");
-            Sequence sequence2 = Midi.download("http://www.midiworld.com/download/4573");
+            //Sequence sequence1 = MidiTools.download("http://www.midiworld.com/midis/other/n1/EspanjaPrelude.mid");
+            Sequence sequence2 = MidiTools.download("http://www.midiworld.com/download/4573");
             System.out.print("C");
-            Midi.play(sequence1);
-            Midi.play(sequence2);
+            //MidiTools.play(sequence1);
+            MidiTools.play(sequence2);
             System.out.print("D");
             Thread.sleep(100000);
         } catch (Exception e) {
