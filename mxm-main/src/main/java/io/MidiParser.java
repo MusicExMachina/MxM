@@ -4,13 +4,16 @@ import model.basic.*;
 import model.generation.RhythmNode;
 import model.generation.RhythmTree;
 import model.structure.Passage;
-import sun.reflect.generics.tree.Tree;
 
 import javax.sound.midi.*;
 import java.util.*;
 
 /**
- * Created by celenp on 10/18/2016.
+ * MidiParser is a class which does exactly what you'd expect.
+ * Note that each MidiParser parses exactly *one* midi Sequence.
+ * This means that the MidiTools class instantiates one for every
+ * single file to be read. This class could potentially be abs-
+ * orbed into MidiTools, but is seperated for the code cleanness.
  */
 public class MidiParser {
 
@@ -50,16 +53,14 @@ public class MidiParser {
     // Stage 4
     private HashMap<Track,TreeMap<Integer,RhythmTree>> rhythmTrees;
 
-    public MidiParser() {
-        tracks              = new HashSet<>();
-        noteOns             = new HashMap<>();
-        noteOffs            = new HashMap<>();
-        timeSignatures      = new TreeMap<>();
-        pulsesPerQuarter    = new TreeMap<>();
-        timePoints          = new TreeMap<>();
-        rhythmTrees         = new HashMap<>();
-    }
-
+    /**
+     * The main method of MidiParser, which is the entire
+     * essence of this class. In fact, this class could be
+     * summed up in a single method, but it is simply too
+     * cumbersome to do so.
+     * @param sequence The midi Sequence to parse.
+     * @return The Passage representing this Sequence.
+     */
     public Passage run(Sequence sequence) {
 
         this.sequence = sequence;
@@ -86,7 +87,11 @@ public class MidiParser {
         return new Passage();
     }
 
-    // The Instrument that did a certain action
+    /**
+     * Reads in and parses basic midi information, such
+     * as all the events in a given midi Sequence. This
+     * information is stored, and then later interpreted.
+     */
     private void parseAll() {
 
         // For every MidiTools track
@@ -210,7 +215,6 @@ public class MidiParser {
                 break;
         }
     }
-
 
     /**
      * Parses a MIDI system-exclusive message.
@@ -354,10 +358,12 @@ public class MidiParser {
         System.out.println("MIDI:\tReading text: " + string);
     }
 
-
-
-    // Take the parse
-    void interpretAll() {
+    /**
+     * "Interprets" stored midi data, by extracting useful
+     * features, and saving time points which which we will
+     * later convert all events to counts.
+     */
+    private void interpretAll() {
 
         Integer resolution  = sequence.getResolution();
         long tick           = 0;
@@ -429,28 +435,14 @@ public class MidiParser {
     }
 
     /**
-     * Interpolates a tick between established time points.
-     * @param tick
-     * @return The float value of this tick as fractions of a measure.
+     * Converts the all events into fractions-of-a-measure
+     * format. Note that this is a touchy, time-consuming
+     * process prone to minor errors, and thus, this function
+     * is likely to require tweaking going forward.
      */
-    private float interpolate(long tick) {
-        long earlierTick    = timePoints.floorKey(tick);
-        long laterTick      = timePoints.ceilingKey(tick);
-        if(Long.compare(earlierTick,laterTick) == 0) {
-            return timePoints.get(earlierTick);
-        }
-        else {
-            float earlierTimePoint  = timePoints.get(earlierTick);
-            float laterTimePoint    = timePoints.get(laterTick);
-            float relativePosition  = (float)(tick - earlierTick) / (float)(laterTick - earlierTick);
-            return (relativePosition * (laterTimePoint - earlierTimePoint )) + earlierTimePoint;
-        }
-    }
-
-
-
     private void convertToCounts() {
 
+        // For every track
         for(Track track : frames.keySet()) {
             // System.out.println("Track");
             // Create a new track in rhythmTrees
@@ -469,24 +461,64 @@ public class MidiParser {
         }
     }
 
-    private void subdivideNode (RhythmNode node, float start, float end, TreeMap<Float,HashSet<Pitch>> notes) {
+    /**
+     * A useful method that interpolates a tick between established
+     * time points. Note that this is similar to the way that pixels
+     * are interpolated in digital images.
+     * @param tick The tick representing the time to be interpolated.
+     * @return The float value of this tick as fractions of a measure.
+     */
+    private float interpolate(long tick) {
+        // Get the timepoints before and after this tick
+        long earlierTick    = timePoints.floorKey(tick);
+        long laterTick      = timePoints.ceilingKey(tick);
 
+        // If we're right on the time point we want
+        if(Long.compare(earlierTick,laterTick) == 0) {
+            return timePoints.get(earlierTick);
+        }
+        // If we have to interpolate
+        else {
+            // Figure out what fractions-of-a-measure those time points
+            // represent, and lerp between them to figure out where "tick" is
+            float earlierTimePoint  = timePoints.get(earlierTick);
+            float laterTimePoint    = timePoints.get(laterTick);
+            float relativePosition  = (float)(tick - earlierTick) / (float)(laterTick - earlierTick);
+            return (relativePosition * (laterTimePoint - earlierTimePoint )) + earlierTimePoint;
+        }
+    }
+
+    /**
+     * Subdivides a given RhythmNode, which involves calculating the
+     * optimal number of equal subdivisions, given the note-ons that
+     * occur during the time of a given node. This function is called
+     * recursively until no note-ons have been accounted for.
+     * @param node The RhythmNode that we're subdividing.
+     * @param start The start time as fractions-of-a-measure.
+     * @param end The end time as fractions-of-a-measure.
+     * @param notes A TreeMap of *all* notes, even before/after this node.
+     */
+    private void subdivideNode (RhythmNode node, float start, float end, TreeMap<Float,HashSet<Pitch>> notes) {
 
         // Figure out the subdivision which will bring about the lowest error.
         int subdivisions = 1;
         float lowestError = Float.MAX_VALUE;
 
+        // Gets all the notes which occur during this node
         NavigableMap<Float,HashSet<Pitch>> myNotes = notes.subMap(start,true,end,false);
 
         //System.out.println("start: " + start + " end: " + end + " num notes : " + myNotes.size());
 
         // For all possible subdivision amounts
         for(int trySubdiv = 1; trySubdiv < 55; trySubdiv++) {
+            // If there's at least one note on during this node
             if(myNotes.keySet().size() > 0 &&
                     myNotes.keySet().size() <= trySubdiv ) {
                 float totalError = 0.0f;
+                // For every note on during this node
                 for(Float time : myNotes.keySet()) {
                     float lowestDistance = Float.MAX_VALUE;
+                    // Calculate the total "error" of each trySubdiv
                     for(int num = 0; num < trySubdiv; num++) {
                         float perfectDivision = start + ((end - start) / trySubdiv * (float) num);
                         float distance = Math.abs(perfectDivision - time);
@@ -499,6 +531,7 @@ public class MidiParser {
                     totalError += weightedError;
                 }
                 //System.out.println(trySubdiv + " ) " + totalError);
+                // If this subdivision number is better than all previous
                 if(totalError < lowestError) {
                     subdivisions = trySubdiv;
                     lowestError = totalError;
@@ -506,7 +539,9 @@ public class MidiParser {
             }
         }
 
+        // If this node is to be subdivided at all
         if(subdivisions > 1) {
+            // Subdivide only by small, prime numbers
             for(int i = 2; i < 10; i++) {
                 if(subdivisions % i == 0) {
                     subdivisions = i;
