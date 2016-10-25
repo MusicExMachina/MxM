@@ -3,7 +3,6 @@ package io;
 import com.sun.media.sound.StandardMidiFileReader;
 import com.sun.media.sound.StandardMidiFileWriter;
 import model.structure.Passage;
-import model.trainable.*;
 
 import javax.sound.midi.*;
 import javax.sound.midi.Instrument;
@@ -15,7 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-public abstract class Midi
+public abstract class MidiTools
 {
 
     public static void printSequencerInfo() {
@@ -99,24 +98,21 @@ public abstract class Midi
      */
     public static Passage parse(Sequence sequence) {
         // Spawn off a parser object
-        MidiParser midiParser = new MidiParser(sequence);
-        return midiParser.parse();
+        MidiParser midiParser = new MidiParser();
+        return midiParser.run(sequence);
     }
 
     /**
      * Takes in a Passage and writes a midi Sequence from
-     * it. The Sequence can then be played using Midi.play()
-     * or saved to a midi file using Midi.save()
+     * it. The Sequence can then be played using MidiTools.play()
+     * or saved to a midi file using MidiTools.save()
      * @param passage The Passage to make into a Sequence.
-     * @return The created Midi Sequence.
+     * @return The created MidiTools Sequence.
      */
     public static Sequence write(Passage passage) {
-        try {
-            return new Sequence(0.0f,1);
-        } catch (InvalidMidiDataException e) {
-            e.printStackTrace();
-        }
-        return null;
+        // Spawn off a parser object
+        MidiComposer midiComposer = new MidiComposer();
+        return midiComposer.run(passage);
     }
 
     /**

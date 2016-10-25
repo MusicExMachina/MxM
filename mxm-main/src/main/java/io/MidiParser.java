@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class MidiParser {
 
-    /* A few of the most useful Midi messages */
+    /* A few of the most useful MidiTools messages */
     private static final int SEQUENCE_NUMBER    = 0x00;
     private static final int TEXT_EVENT         = 0x01;
     private static final int COPYRIGHT_NOTICE   = 0x02;
@@ -50,8 +50,7 @@ public class MidiParser {
     // Stage 4
     private HashMap<Track,TreeMap<Integer,RhythmTree>> rhythmTrees;
 
-    public MidiParser(Sequence sequence) {
-        this.sequence       = sequence;
+    public MidiParser() {
         tracks              = new HashSet<>();
         noteOns             = new HashMap<>();
         noteOffs            = new HashMap<>();
@@ -61,7 +60,9 @@ public class MidiParser {
         rhythmTrees         = new HashMap<>();
     }
 
-    public Passage parse() {
+    public Passage run(Sequence sequence) {
+
+        this.sequence = sequence;
 
         System.out.println("MIDI:\tParsing MidiEvents...");
         parseAll();
@@ -88,28 +89,28 @@ public class MidiParser {
     // The Instrument that did a certain action
     private void parseAll() {
 
-        // For every Midi track
+        // For every MidiTools track
         for (Track track : sequence.getTracks()) {
             // Add the track to "tracks"
             tracks.add(track);
 
-            // For every Midi event
+            // For every MidiTools event
             for (int i = 0; i < track.size(); i++) {
-                // Some information about this Midi event
+                // Some information about this MidiTools event
                 MidiEvent event     = track.get(i);
                 MidiMessage message = event.getMessage();
                 Long tick           = event.getTick();
 
                 if (message instanceof ShortMessage) {
-                    // Cast it to a Midi short message and parse
+                    // Cast it to a MidiTools short message and parse
                     parseShortMessage(track, event,(ShortMessage)message,tick);
                 }
                 else if (message instanceof MetaMessage) {
-                    // Cast it to a Midi short message and parse
+                    // Cast it to a MidiTools short message and parse
                     parseMetaMessage(track, event,(MetaMessage)message,tick);
                 }
                 else if (message instanceof SysexMessage) {
-                    // Cast it to a Midi short message and parse
+                    // Cast it to a MidiTools short message and parse
                     parseSysexMessage(track, event,(SysexMessage)message,tick);
                 }
                 else {
@@ -119,7 +120,14 @@ public class MidiParser {
         }
     }
 
-    void parseShortMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
+    /**
+     * Parses a MIDI short message.
+     * @param track The track this message is on.
+     * @param event The event of this message.
+     * @param message The message itself.
+     * @param tick The tick of this event's timing.
+     */
+    private void parseShortMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
 
         // Figure out the message's command
         switch (message.getCommand()) {
@@ -136,12 +144,19 @@ public class MidiParser {
                 parseProgramChangeMessage(track, event, message, tick);
                 break;
             default:
-                System.out.println("MIDI:\tUnrecognized Midi ShortMessage " + message.getCommand() + " on channel " + message.getChannel());
+                System.out.println("MIDI:\tUnrecognized MidiTools ShortMessage " + message.getCommand() + " on channel " + message.getChannel());
                 break;
         }
     }
 
-    void parseMetaMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
+    /**
+     * Parses a MIDI meta message.
+     * @param track The track this message is on.
+     * @param event The event of this message.
+     * @param message The message itself.
+     * @param tick The tick of this event's timing.
+     */
+    private void parseMetaMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
 
         // Figure out the message's type
         switch(message.getType()) {
@@ -191,18 +206,31 @@ public class MidiParser {
                 //System.out.println("MIDI:\tSequencer-specific");
                 break;
             default:
-                System.out.println("MIDI:\tUnrecognized Midi MetaMessage " + message.getData());
+                System.out.println("MIDI:\tUnrecognized MidiTools MetaMessage " + message.getData());
                 break;
         }
     }
 
-    void parseSysexMessage(Track track, MidiEvent event, SysexMessage message, Long tick) {
-        System.out.println("MIDI:\tUnrecognized Midi SysexMessage " + message.getData());
+
+    /**
+     * Parses a MIDI system-exclusive message.
+     * @param track The track this message is on.
+     * @param event The event of this message.
+     * @param message The message itself.
+     * @param tick The tick of this event's timing.
+     */
+    private void parseSysexMessage(Track track, MidiEvent event, SysexMessage message, Long tick) {
+        System.out.println("MIDI:\tUnrecognized MidiTools SysexMessage " + message.getData());
     }
 
-    // MIDI SHORT MESSAGES
-
-    void parseNoteOnMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
+    /**
+     * Parses a MIDI note-on (short) message.
+     * @param track The track this message is on.
+     * @param event The event of this message.
+     * @param message The message itself.
+     * @param tick The tick of this event's timing.
+     */
+    private void parseNoteOnMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
 
         // Data pulled off of the MidiEvent
         int pitchValue      = message.getData1();
@@ -229,7 +257,14 @@ public class MidiParser {
         }
     }
 
-    void parseNoteOffMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
+    /**
+     * Parses a MIDI note-off (short) message.
+     * @param track The track this message is on.
+     * @param event The event of this message.
+     * @param message The message itself.
+     * @param tick The tick of this event's timing.
+     */
+    private void parseNoteOffMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
 
         // Data pulled off of the MidiEvent
         int pitchValue      = message.getData1();
@@ -249,23 +284,49 @@ public class MidiParser {
         noteOffs.get(track).get(tick).add(pitch);
     }
 
-    void parseControlChangeMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
+    /**
+     * Parses a MIDI control change (short) message.
+     * @param track The track this message is on.
+     * @param event The event of this message.
+     * @param message The message itself.
+     * @param tick The tick of this event's timing.
+     */
+    private void parseControlChangeMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
 
     }
 
-    void parseProgramChangeMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
+    /**
+     * Parses a MIDI program change (short) message.
+     * @param track The track this message is on.
+     * @param event The event of this message.
+     * @param message The message itself.
+     * @param tick The tick of this event's timing.
+     */
+    private void parseProgramChangeMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
 
     }
 
-    // MIDI META MESSAGES
-
-    void parseTempoMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
+    /**
+     * Parses a MIDI tempo change (meta) message.
+     * @param track The track this message is on.
+     * @param event The event of this message.
+     * @param message The message itself.
+     * @param tick The tick of this event's timing.
+     */
+    private void parseTempoMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         Integer ppqn = (data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff);
         pulsesPerQuarter.put(tick,ppqn); // Pulses Per Quarter Note
     }
 
-    void parseTimeSignatureMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
+    /**
+     * Parses a MIDI time signature (meta) message.
+     * @param track The track this message is on.
+     * @param event The event of this message.
+     * @param message The message itself.
+     * @param tick The tick of this event's timing.
+     */
+    private void parseTimeSignatureMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         int numerator   = data[0];
         int denominator = 2 << (data[1] - 1);
@@ -280,7 +341,14 @@ public class MidiParser {
         timeSignatures.put(tick,timeSignature);
     }
 
-    void parseTextMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
+    /**
+     * Parses a MIDI text (meta) message.
+     * @param track The track this message is on.
+     * @param event The event of this message.
+     * @param message The message itself.
+     * @param tick The tick of this event's timing.
+     */
+    private void parseTextMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         String string = new String(data);
         System.out.println("MIDI:\tReading text: " + string);

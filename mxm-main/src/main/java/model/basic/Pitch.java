@@ -47,13 +47,13 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Stores the Midi value of this Pitch.
+     * Stores the MidiTools value of this Pitch.
      */
     private final byte value;
 
     /**
-     * Constructor taking in a Midi value.
-     * @param value The pitch's Midi value.
+     * Constructor taking in a MidiTools value.
+     * @param value The pitch's MidiTools value.
      */
     public Pitch(int value) {
         if(value >= MIN_PITCH && value <= MAX_PITCH) {
