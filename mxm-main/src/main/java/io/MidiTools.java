@@ -17,7 +17,11 @@ import java.util.List;
 public abstract class MidiTools
 {
 
-    public static void printSequencerInfo() {
+    /**
+     * Prints some useful information about this system's
+     * Midi sequencer, synthesizer, and so forth.
+     */
+    public static void printInfo() {
         try {
             Sequencer sequencer = MidiSystem.getSequencer();
 
@@ -40,14 +44,11 @@ public abstract class MidiTools
             for(Instrument instrument : instruments) {
                 System.out.println("MIDI:\t\t"+instrument.getSoundbank().getName() + " - " + instrument.getName());
             }
-
-
             System.out.println("");
 
         } catch (MidiUnavailableException e) {
             System.out.println("MIDI:\tThe sequencer is unavailable");
         }
-
     }
 
     /**

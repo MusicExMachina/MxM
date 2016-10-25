@@ -22,6 +22,7 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     private static final int MIN_PITCH       = 0;
     private static final int MAX_PITCH       = 120;
 
+    /* Pitch classes */
     private static final int C_NATURAL  = 0;
     private static final int D_FLAT     = 1;
     private static final int D_NATURAL  = 2;
