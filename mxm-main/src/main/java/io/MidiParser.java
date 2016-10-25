@@ -13,7 +13,7 @@ import java.util.*;
  * Note that each MidiParser parses exactly *one* midi Sequence.
  * This means that the MidiTools class instantiates one for every
  * single file to be read. This class could potentially be abs-
- * orbed into MidiTools, but is seperated for the code cleanness.
+ * orbed into MidiTools, but is separated for the code cleanness.
  */
 public class MidiParser {
 
