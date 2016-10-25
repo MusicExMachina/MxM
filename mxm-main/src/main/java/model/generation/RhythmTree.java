@@ -56,6 +56,15 @@ public class RhythmTree {
     }
 
     /**
+     * Returns a nicely-formatted string
+     * representing this RhythmTree.
+     * @return A String of this RhythmTree.
+     */
+    public String toString() {
+        return root.toString();
+    }
+
+    /**
      * The RhythmTree copy constructor
      * @param other the RhythmTree to copy
      */

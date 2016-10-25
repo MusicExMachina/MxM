@@ -138,6 +138,24 @@ public class RhythmNode {
     }
 
     /**
+     * Returns a nicely-formatted string
+     * representing this RhythmTree.
+     * @return A String of this RhythmTree.
+     */
+    public String toString() {
+        String toReturn = "(";
+        for(RhythmNode node : children) {
+            toReturn += node.toString();
+        }
+        if(children.size() == 0) {
+            return "o";
+        }
+        toReturn += ")";
+        return toReturn;
+    }
+
+
+    /**
      * Paint the node, and its children w/ links
      *
      * @param g Graphics object to paint with

@@ -4,6 +4,7 @@ import model.basic.*;
 import model.generation.RhythmNode;
 import model.generation.RhythmTree;
 import model.structure.Passage;
+import sun.reflect.generics.tree.Tree;
 
 import javax.sound.midi.*;
 import java.util.*;
@@ -73,6 +74,13 @@ public class MidiParser {
         System.out.println("MIDI:\tConverting to Counts...");
         convertToCounts();
         System.out.println("MIDI:\t...Finished converting to Counts.");
+
+        for(Track track : rhythmTrees.keySet()) {
+            System.out.println("TRACK");
+            for(Integer measureNum : rhythmTrees.get(track).keySet()) {
+                System.out.println("\t" + measureNum + " | " +rhythmTrees.get(track).get(measureNum).toString());
+            }
+        }
 
         return new Passage();
     }
@@ -253,7 +261,7 @@ public class MidiParser {
 
     void parseTempoMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
-        Integer ppqn = new Integer((data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff));
+        Integer ppqn = (data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff);
         pulsesPerQuarter.put(tick,ppqn); // Pulses Per Quarter Note
     }
 
@@ -376,7 +384,7 @@ public class MidiParser {
     private void convertToCounts() {
 
         for(Track track : frames.keySet()) {
-            System.out.println("Track");
+            // System.out.println("Track");
             // Create a new track in rhythmTrees
             rhythmTrees.put(track,new TreeMap<Integer, RhythmTree>());
 
@@ -385,7 +393,7 @@ public class MidiParser {
             while(frames.get(track).ceilingEntry(measureStart) != null) {
                 // Check if the next note is in the next measure
                 RhythmTree rhythmTree = new RhythmTree();
-                subdivideNode(rhythmTree.getRoot(), 0.0f, 1.0f, frames.get(track).subMap(measureStart, true, measureStart + 1.0f, false));
+                subdivideNode(rhythmTree.getRoot(), measureStart, measureStart + 1.0f, frames.get(track));
                 rhythmTrees.get(track).put(Math.round(measureStart),rhythmTree);
                 // Move on to a new measure
                 measureStart += 1.0f;
@@ -393,19 +401,23 @@ public class MidiParser {
         }
     }
 
-    private void subdivideNode (RhythmNode node, float start, float end, NavigableMap<Float,HashSet<Pitch>> notes) {
+    private void subdivideNode (RhythmNode node, float start, float end, TreeMap<Float,HashSet<Pitch>> notes) {
 
-        //System.out.println("start: " + start + " end: " + end);
 
         // Figure out the subdivision which will bring about the lowest error.
         int subdivisions = 1;
         float lowestError = Float.MAX_VALUE;
 
+        NavigableMap<Float,HashSet<Pitch>> myNotes = notes.subMap(start,true,end,false);
+
+        //System.out.println("start: " + start + " end: " + end + " num notes : " + myNotes.size());
+
         // For all possible subdivision amounts
-        for(int trySubdiv = 1; trySubdiv < 10; trySubdiv++) {
-            if(notes.keySet().size() <= trySubdiv ) {
+        for(int trySubdiv = 1; trySubdiv < 55; trySubdiv++) {
+            if(myNotes.keySet().size() > 0 &&
+                    myNotes.keySet().size() <= trySubdiv ) {
                 float totalError = 0.0f;
-                for(Float time : notes.keySet()) {
+                for(Float time : myNotes.keySet()) {
                     float lowestDistance = Float.MAX_VALUE;
                     for(int num = 0; num < trySubdiv; num++) {
                         float perfectDivision = start + ((end - start) / trySubdiv * (float) num);
@@ -415,7 +427,7 @@ public class MidiParser {
                         }
                     }
                     //System.out.println("ld " + lowestDistance);
-                    float weightedError = 1 * lowestDistance;
+                    float weightedError = trySubdiv * trySubdiv * lowestDistance;
                     totalError += weightedError;
                 }
                 //System.out.println(trySubdiv + " ) " + totalError);
@@ -437,16 +449,9 @@ public class MidiParser {
             Collection<RhythmNode> children = node.subdivide(subdivisions);
             int childNumber = 0;
             for (RhythmNode child : children) {
-                float beginTime = start + ((end - start) / subdivisions * (float) childNumber);
-                float endTime = start + ((end - start) / subdivisions * (float) (childNumber + 1));
-
-                if(notes.ceilingEntry(beginTime) != null &&
-                        notes.ceilingKey(beginTime) < endTime &&
-                        notes.ceilingEntry(endTime) != null) {
-                    //System.out.println("  start: " + beginTime + " end: " + endTime);
-                    NavigableMap<Float, HashSet<Pitch>> noteSubset = notes.subMap(beginTime, true, endTime, false);
-                    subdivideNode(child, beginTime, endTime, noteSubset);
-                }
+                float beginTime = start + ((end - start) / (float) subdivisions * (float) childNumber);
+                float endTime = start + ((end - start) / (float) subdivisions * (float) (childNumber + 1));
+                subdivideNode(child, beginTime, endTime, notes);
                 childNumber++;
             }
         }
