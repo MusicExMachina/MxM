@@ -1,7 +1,5 @@
 package model.basic;
 
-import model.structure.Interval;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;

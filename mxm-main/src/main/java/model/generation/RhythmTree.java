@@ -49,7 +49,7 @@ public class RhythmTree {
             }
         }
 
-        if(constructQueue.size()!=0){
+        if(constructQueue.size() != 0){
             throw new IllegalArgumentException("List cannot be converted to a rhythm tree, leftover divisions");
         }
 
