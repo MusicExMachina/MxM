@@ -1,6 +1,6 @@
 package model.trainable;
 
-import model.basic.Pitch;
+import model.pitch.Pitch;
 import model.basic.Technique;
 
 import java.util.Set;

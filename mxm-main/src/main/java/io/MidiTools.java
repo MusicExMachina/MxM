@@ -2,7 +2,7 @@ package io;
 
 import com.sun.media.sound.StandardMidiFileReader;
 import com.sun.media.sound.StandardMidiFileWriter;
-import model.structure.Passage;
+import model.form.Passage;
 
 import javax.sound.midi.*;
 import javax.sound.midi.Instrument;

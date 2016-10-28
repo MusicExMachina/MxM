@@ -1,6 +1,6 @@
-package model.structure;
+package model.form;
 
-import model.basic.TimeSignature;
+import model.time.TimeSignature;
 
 /**
  * Created by celenp on 10/7/2016.

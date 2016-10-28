@@ -1,6 +1,6 @@
-package model.basic.tests;
+package model.time.tests;
 
-import model.basic.Count;
+import model.time.Count;
 import org.junit.Test;
 
 public class CountTest {

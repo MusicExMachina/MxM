@@ -1,6 +1,6 @@
 package io;
 
-import model.structure.Passage;
+import model.form.Passage;
 import javax.sound.midi.Sequence;
 
 /**

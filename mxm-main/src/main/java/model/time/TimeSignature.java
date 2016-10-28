@@ -1,4 +1,4 @@
-package model.basic;
+package model.time;
 
 /**
  * TimeSignatures are exactly what they

@@ -1,9 +1,10 @@
 package io;
 
-import model.basic.*;
-import model.generation.RhythmNode;
-import model.generation.RhythmTree;
-import model.structure.Passage;
+import model.pitch.Pitch;
+import model.form.RhythmNode;
+import model.form.RhythmTree;
+import model.form.Passage;
+import model.time.TimeSignature;
 
 import javax.sound.midi.*;
 import java.util.*;

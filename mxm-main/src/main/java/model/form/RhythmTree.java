@@ -1,4 +1,4 @@
-package model.generation;
+package model.form;
 
 import java.awt.*;
 import java.util.*;

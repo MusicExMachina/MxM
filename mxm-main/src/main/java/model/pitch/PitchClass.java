@@ -1,4 +1,4 @@
-package model.basic;
+package model.pitch;
 
 import java.util.ArrayList;
 import java.util.Collection;

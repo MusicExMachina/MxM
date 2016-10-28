@@ -1,13 +1,10 @@
-package model.generation;
+package model.form;
 
-import model.basic.Count;
-import model.basic.Pitch;
+import model.time.Count;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.NavigableMap;
 
 /**
  * RhythmNodes are the very active, very exposed,

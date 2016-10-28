@@ -1,38 +1,26 @@
-package model.basic;
+package model.pitch;
 
 import java.util.Comparator;
 
 /**
- * Interval is a glorified byte wrapper,
- * which allows for a little more dress
- * and prevents problems down the line
- * with arguments to constructors.
+ * Interval is a glorified byte wrapper, which allows for a little more
+ * dress and prevents problems down the line with constructor arguments.
  */
 public class Interval implements Comparator<Interval>, Comparable<Interval> {
 
-    /* A bunch of preset Intervals for general use. */
-    public static final Interval OCTAVE           = new Interval(12);
-    public static final Interval MAJOR_SEVENTH    = new Interval(11);
-    public static final Interval MINOR_SEVENTH    = new Interval(10);
-    public static final Interval MAJOR_SIXTH      = new Interval(9);
-    public static final Interval MINOR_SIXTH      = new Interval(8);
-    public static final Interval PERFECT_FIFTH    = new Interval(7);
-    public static final Interval TRITONE          = new Interval(6);
-    public static final Interval PERFECT_FOURTH   = new Interval(5);
-    public static final Interval MAJOR_THIRD      = new Interval(4);
-    public static final Interval MINOR_THIRD      = new Interval(3);
-    public static final Interval MAJOR_SECOND     = new Interval(2);
-    public static final Interval MINOR_SECOND     = new Interval(1);
-    public static final Interval UNISON           = new Interval(0);
+    /////////////////////////////
+    // Public static variables //
+    /////////////////////////////
 
-    /* Some basic bounds on Tempo. */
+    /** The smallest an interval can be. */
     private static int MIN_INTERVAL = -240;
+    /** The largest an interval can be. */
     private static int MAX_INTERVAL = 240;
 
-    /**
-     * The immutable size of this Interval in half-steps
-     */
-    private int size;
+    /** The immutable basic IntervalClass of this Interval. */
+    private IntervalClass intervalClass;
+    /** The immutable number of Octaves in this Interval. */
+    private Octave octave;
 
     /**
      * The normal Interval constructor.

@@ -1,6 +1,6 @@
 package learning.noutputs;
 
-import model.basic.Pitch;
+import model.pitch.Pitch;
 
 import java.util.HashMap;
 

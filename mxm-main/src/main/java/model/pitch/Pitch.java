@@ -1,4 +1,4 @@
-package model.basic;
+package model.pitch;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,8 +15,6 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     /* Useful variable bounds */
     private static final int MIN_PITCHCLASS  = 0;
     private static final int MAX_PITCHCLASS  = 11;
-    private static final int MIN_OCTAVE      = -1;
-    private static final int MAX_OCTAVE      = 9;
     private static final int MIN_PITCH       = 0;
     private static final int MAX_PITCH       = 120;
 
@@ -45,46 +43,28 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
         }
     }
 
-    /**
-     * Stores the MidiTools value of this Pitch.
-     */
-    private final byte value;
+    private PitchClass pitchClass;
+    private Octave octave;
 
-    /**
-     * Constructor taking in a MidiTools value.
-     * @param value The pitch's MidiTools value.
-     */
-    public Pitch(int value) {
-        if(value >= MIN_PITCH && value <= MAX_PITCH) {
-            this.value = (byte)value;
-        }
-        else {
-            throw new Error("Invalid pitch range!");
-        }
+    private Pitch(PitchClass pitchClass, Octave octave) {
+        this.pitchClass = pitchClass;
+        this.octave = octave;
     }
 
     /**
-     * Copy constructor for Pitch.
-     * @param other The other Pitch.
+     * Gets the PitchClass of this Pitch.
+     * @return The PitchClass of this Pitch.
      */
-    public Pitch(Pitch other) {
-        this.value = other.value;
+    public PitchClass getPitchClass() {
+        return pitchClass;
     }
 
     /**
-     * Gets the pitch class of this Pitch.
-     * @return The pitch class of this Pitch.
+     * Gets the Octave of this Pitch.
+     * @return The Octave of this Pitch.
      */
-    public int getPitchClass() {
-        return value % 12;
-    }
-
-    /**
-     * Gets the octave of this Pitch.
-     * @return The octave of this Pitch.
-     */
-    public int getOctave() {
-        return value/12 + MIN_OCTAVE;
+    public Octave getOctave() {
+        return octave;
     }
 
     /**
@@ -106,27 +86,17 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     }
 
 
+    public float normalized() {
+        return pitchClass.normalized(); // INCLUDE OCTAVES
+    }
+
     /**
      * Returns a nicely-formatted String
      * of this Pitch (for debug).
      * @return A nicely-formatted String of this Pitch.
      */
     public String toString() {
-        switch (getPitchClass()) {
-            case C_NATURAL:     return "C"  + getOctave();
-            case D_FLAT:        return "Db" + getOctave();
-            case D_NATURAL:     return "D"  + getOctave();
-            case E_FLAT:        return "Eb" + getOctave();
-            case E_NATURAL:     return "E"  + getOctave();
-            case F_NATURAL:     return "F"  + getOctave();
-            case G_FLAT:        return "Gb" + getOctave();
-            case G_NATURAL:     return "G"  + getOctave();
-            case A_FLAT:        return "Ab" + getOctave();
-            case A_NATURAL:     return "A"  + getOctave();
-            case B_FLAT:        return "Bb" + getOctave();
-            case B_NATURAL:     return "B"  + getOctave();
-            default:            return "ERROR";
-        }
+        return pitchClass.toString() + octave.toString();
     }
 
     /**
@@ -172,3 +142,29 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
         return (int) value;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if(value >= MIN_PITCH && value <= MAX_PITCH) {
+                this.value = (byte)value;
+                }
+                else {
+                throw new Error("Invalid pitch range!");
+                }

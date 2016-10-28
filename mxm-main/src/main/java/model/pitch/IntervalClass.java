@@ -1,14 +1,12 @@
-package model.basic;
+package model.pitch;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 
 /**
- * Interval is a glorified byte wrapper,
- * which allows for a little more dress
- * and prevents problems down the line
- * with arguments to constructors.
+ * Interval is a glorified byte wrapper, which allows for a little more dress
+ * and prevents problems down the line with arguments to constructors.
  */
 public class IntervalClass implements Comparator<IntervalClass>, Comparable<IntervalClass> {
 
@@ -42,11 +40,10 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     public static final IntervalClass MAJOR_SEVENTH     = new IntervalClass(11);
 
     /** All possible IntervalClasses */
-    public static final Collection<IntervalClass> ALL;
+    public static final ArrayList<IntervalClass> ALL    = new ArrayList<>();
 
     // Initialize the "ALL" collection
     static {
-        ALL = new ArrayList<>();
         for(int intervalClassValue = 0; intervalClassValue < 12; intervalClassValue++) {
             ALL.add(new IntervalClass(intervalClassValue));
         }
@@ -56,32 +53,32 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     // Private member variables //
     //////////////////////////////
 
-    /** The value of the interval */
+    /** The value of the IntervalClass. */
     private int value;
+
+    ///////////////////////////
+    // Public static methods //
+    ///////////////////////////
+
+    public static IntervalClass getInstance(int value) {
+        if(value >= 0 && value < 12) {
+            return ALL[value];
+        }
+        else {
+            throw new Error("INTERVAL CLASS:\tImproper");
+        }
+    }
 
     ///////////////////////////
     // Public member methods //
     ///////////////////////////
 
     /**
-     * The normal Interval constructor.
-     * @param size The size of the interval in half-steps.
+     * A constructor for IntervalClass which is private.
+     * @param value The value (0-11) of this IntervalClass.
      */
-    public IntervalClass(int size) {
-        if(size >= MIN_INTERVAL && size <= MAX_INTERVAL) {
-            this.size = (byte)size;
-        }
-        else {
-            throw new Error("Invalid interval size");
-        }
-    }
-
-    /**
-     * The Interval copy constructor.
-     * @param other The other Interval to copy.
-     */
-    public Interval(Interval other) {
-        this.size = other.size;
+    private IntervalClass(int value) {
+        this.value = value;
     }
 
     /**

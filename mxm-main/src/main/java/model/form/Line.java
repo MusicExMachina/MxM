@@ -1,4 +1,4 @@
-package model.structure;
+package model.form;
 
 /**
  * A line is a horizontal arrangement of Notes.

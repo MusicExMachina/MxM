@@ -1,4 +1,9 @@
-package model.basic;
+package model.form;
+
+import model.basic.Articulation;
+import model.basic.Technique;
+import model.pitch.Pitch;
+import model.time.Count;
 
 /**
  * The Note class

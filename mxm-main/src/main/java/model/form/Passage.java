@@ -1,6 +1,6 @@
-package model.structure;
+package model.form;
 
-import model.basic.Count;
+import model.time.Count;
 
 import java.util.*;
 
@@ -13,7 +13,7 @@ import java.util.*;
 public class Passage implements Iterable<Frame> {
 
     /** A TreeMap of all the frames in this Passage.
-     * Note that this data structure was chosen for its
+     * Note that this data form was chosen for its
      * lookup abilities, which are quite useful in answering
      * questions such as "What is playing at time x?" etc. etc. */
     TreeMap<Count,Frame> frames;
