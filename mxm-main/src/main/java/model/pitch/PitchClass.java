@@ -21,7 +21,7 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     /** The highest pitch class, better known as "B." */
     private static final int MAX_PITCHCLASS = 11;
     /** All possible PitchClasses */
-    public static final ArrayList<PitchClass> ALL = new ArrayList<>();
+    private static final ArrayList<PitchClass> ALL = new ArrayList<>();
 
     // Initialize the "ALL" collection
     static {
