@@ -1,82 +1,90 @@
 package model.pitch;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
- * Pitch is a glorified byte wrapper,
- * which allows for a little more dress
- * and prevents problems down the line
- * with arguments to constructors.
+ * PitchClass is a simple class which utilizes the interning design pattern to create only
+ * twelve different values: C, C#, D, D#, E, F, G, G#, A, A#, and B. These are usually found
+ * on a Pitch, though may be used in Collections. Note that there should never be more than
+ * these 12 PitchClasses, and that an iterator() has been provided for easy access.
  */
 public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass> {
 
-    /////////////////////////////
-    // Public static variables //
-    /////////////////////////////
+    //////////////////////////////
+    // Private static variables //
+    //////////////////////////////
 
-    /** The PitchClass of C*/
-    private static final PitchClass C_NATURAL  = new PitchClass(0);
-    /** The PitchClass of Db */
-    private static final PitchClass D_FLAT     = new PitchClass(1);
-    /** The PitchClass of D */
-    private static final PitchClass D_NATURAL  = new PitchClass(2);
-    /** The PitchClass of Eb */
-    private static final PitchClass E_FLAT     = new PitchClass(3);
-    /** The PitchClass of E */
-    private static final PitchClass E_NATURAL  = new PitchClass(4);
-    /** The PitchClass of F */
-    private static final PitchClass F_NATURAL  = new PitchClass(5);
-    /** The PitchClass of Gb */
-    private static final PitchClass G_FLAT     = new PitchClass(6);
-    /** The PitchClass of G */
-    private static final PitchClass G_NATURAL  = new PitchClass(7);
-    /** The PitchClass of Ab */
-    private static final PitchClass A_FLAT     = new PitchClass(8);
-    /** The PitchClass of A */
-    private static final PitchClass A_NATURAL  = new PitchClass(9);
-    /** The PitchClass of Bb */
-    private static final PitchClass B_FLAT     = new PitchClass(10);
-    /** The PitchClass of B */
-    private static final PitchClass B_NATURAL  = new PitchClass(11);
-
+    /** The lowest pitch class, better known as "C." */
+    private static final int MIN_PITCHCLASS = 0;
+    /** The highest pitch class, better known as "B." */
+    private static final int MAX_PITCHCLASS = 11;
     /** All possible PitchClasses */
-    public static final Collection<PitchClass> ALL;
+    public static final ArrayList<PitchClass> ALL = new ArrayList<>();
 
     // Initialize the "ALL" collection
     static {
-        ALL = new ArrayList<>();
-        for(int pitchClassValue = 0; pitchClassValue < 12; pitchClassValue++) {
+        for(int pitchClassValue = MIN_PITCHCLASS; pitchClassValue <= MAX_PITCHCLASS; pitchClassValue++) {
             ALL.add(new PitchClass(pitchClassValue));
         }
     }
 
+    ///////////////////////////
+    // Public static methods //
+    ///////////////////////////
+
+    /**
+     * Gets an iterator which enumerates all valid PitchClasses.
+     * @return An iterator over all valid Pitches.
+     */
+    public static Iterator<PitchClass> iterator() {
+        return ALL.iterator();
+    }
+
+    /**
+     * Gets an instance of a given PitchClass size. This method
+     * creates the interning design pattern per PitchClass.
+     * @param value The value of this PitchClass.
+     * @return An PitchClass of this value.
+     */
+    public static PitchClass getInstance(int value) {
+        if(value >= MIN_PITCHCLASS && value < MAX_PITCHCLASS) {
+            return ALL.get(value);
+        }
+        else {
+            throw new Error("PITCH CLASS:\tPitch class out of range.");
+        }
+    }
+
+    //////////////////////////////
+    // Private member variables //
+    //////////////////////////////
+
     /**
      * Stores the MidiTools value of this Pitch.
      */
-    private final byte value;
+    private int value;
 
+    //////////////////////////////
+    // Private instance methods //
+    //////////////////////////////
+
+    /**
+     * The private constructor for PitchClass.
+     * @param value The value of this PitchClass.
+     */
     private PitchClass(int value) {
-        if(value >= 0 && value < 12) {
-            this.value = (byte)value;
-        }
-        else {
-            throw new Error("Invalid pitch range!");
-        }
-    }
-
-    public PitchClass(PitchClass other) {
-        this.value = other.value;
+        this.value = (byte)value;
     }
 
     /**
-     * Transposes a Pitch by a given interval.
-     * @param interval The Interval to transpose by.
-     * @return The new, resulting Pitch.
+     * Transposes a PitchClass by a given interval.
+     * @param intervalClass The Interval to transpose by.
+     * @return The new, resulting PitchClass.
      */
-    public Pitch transpose(Interval interval) {
-        return new Pitch(value + interval.getSize());
+    public PitchClass transpose(IntervalClass intervalClass) {
+        return PitchClass.getInstance((value + intervalClass.getSize() % 12));
     }
 
     /**
@@ -84,8 +92,8 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
      * @param other The other Pitch to subtract from this one.
      * @return THe Interval between this Pitch and another.
      */
-    public IntervalClass minus(PitchClass other) {
-        return new IntervalClass(other.value - this.value);
+    public PitchClass minus(PitchClass other) {
+        return new PitchClass(other.value - this.value);
     }
 
     /**
@@ -93,31 +101,28 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
      * @return This PitchClass in the range [0,1).
      */
     public float normalized() {
-        return value/12.0f;
+        return (float)(value - MIN_PITCHCLASS)/(float)(MAX_PITCHCLASS - MIN_PITCHCLASS);
     }
 
     /**
-     * Returns a nicely-formatted String
-     * of this Pitch (for debug).
-     * @return A nicely-formatted String of this Pitch.
+     * Returns a nicely-formatted String of this PitchClass (for debug).
+     * @return A nicely-formatted String of this PitchClass.
      */
     public String toString() {
         switch (value) {
-            case 0:     return "C";
-            case 1:     return "Db";
-            case 2:     return "D";
-            case 3:     return "Eb";
-            case 4:     return "E";
-            case 5:     return "F";
-            case 6:     return "Gb";
-            case 7:     return "G";
-            case 8:     return "Ab";
-            case 9:     return "A";
-            case 10:    return "Bb";
-            case 11:    return "B";
+            case 0:     return "C";     case 1:     return "Db";
+            case 2:     return "D";     case 3:     return "Eb";
+            case 4:     return "E";     case 5:     return "F";
+            case 6:     return "Gb";    case 7:     return "G";
+            case 8:     return "Ab";    case 9:     return "A";
+            case 10:    return "Bb";    case 11:    return "B";
             default:    return "ERROR";
         }
     }
+
+    //////////////////////////////
+    // Various override methods //
+    //////////////////////////////
 
     /**
      * Compares this PitchClass to another PitchClass.
@@ -126,7 +131,7 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
      */
     @Override
     public int compareTo(PitchClass other) {
-        return new Integer(value).compareTo(new Integer(other.value));
+        return (new Integer(value)).compareTo(other.value);
     }
 
     /**
@@ -137,7 +142,7 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
      */
     @Override
     public int compare(PitchClass pc1, PitchClass pc2) {
-        return new Integer(pc1.value).compareTo(new Integer(pc2.value));
+        return new Integer(pc1.value).compareTo(pc2.value);
     }
 
     /**
@@ -147,10 +152,7 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PitchClass pitch = (PitchClass) o;
-        return value == pitch.value;
+        return this == o;
     }
 
     /**
@@ -159,6 +161,6 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
      */
     @Override
     public int hashCode() {
-        return (int) value;
+        return value;
     }
 }

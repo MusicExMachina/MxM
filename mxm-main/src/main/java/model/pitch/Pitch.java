@@ -1,54 +1,74 @@
 package model.pitch;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
- * Pitch is a glorified byte wrapper,
- * which allows for a little more dress
- * and prevents problems down the line
- * with arguments to constructors.
+ * Pitch is a simple class which utilizes the interning design pattern to create only one
+ * hundred twenty different values- all possible MIDI pitches. Pitches are usually found on
+ * Notes, though they may be used in Collections. Note that there should never be more than
+ * these 120 Pitches, and that an iterator() has been provided for easy access.
  */
 public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
-    /* Useful variable bounds */
-    private static final int MIN_PITCHCLASS  = 0;
-    private static final int MAX_PITCHCLASS  = 11;
-    private static final int MIN_PITCH       = 0;
-    private static final int MAX_PITCH       = 120;
+    //////////////////////////////
+    // Private static variables //
+    //////////////////////////////
 
-    /* Pitch classes */
-    private static final int C_NATURAL  = 0;
-    private static final int D_FLAT     = 1;
-    private static final int D_NATURAL  = 2;
-    private static final int E_FLAT     = 3;
-    private static final int E_NATURAL  = 4;
-    private static final int F_NATURAL  = 5;
-    private static final int G_FLAT     = 6;
-    private static final int G_NATURAL  = 7;
-    private static final int A_FLAT     = 8;
-    private static final int A_NATURAL  = 9;
-    private static final int B_FLAT     = 10;
-    private static final int B_NATURAL  = 11;
-
-    /* A bunch of preset Pitches for general use. */
-    public static final Collection<Pitch> ALL_PITCHES;
+    /** The minimum midi value of pitch, C-1. */
+    private static final int MIN_PITCH = 0;
+    /** The maximum midi value of pitch, B9. */
+    private static final int MAX_PITCH = 120;
+    /** An ArrayList of all valid Pitches */
+    private static final ArrayList<Pitch> ALL = new ArrayList<Pitch>();
 
     // Initialize all pitches
     static {
-        ALL_PITCHES = new ArrayList<Pitch>();
         for(int midiValue = MIN_PITCH; midiValue < MAX_PITCH; midiValue++) {
-            ALL_PITCHES.add(new Pitch(midiValue));
+            ALL.add(new Pitch(midiValue));
         }
     }
 
-    private PitchClass pitchClass;
-    private Octave octave;
+    ///////////////////////////
+    // Public static methods //
+    ///////////////////////////
 
-    private Pitch(PitchClass pitchClass, Octave octave) {
-        this.pitchClass = pitchClass;
-        this.octave = octave;
+    /**
+     * Gets an iterator which enumerates all valid Pitches.
+     * @return An iterator over all valid Pitches.
+     */
+    public static Iterator<Pitch> iterator() {
+        return ALL.iterator();
+    }
+
+    /**
+     * Gets an instance of a given Pitch size. This method
+     * creates the interning design pattern per Pitch.
+     * @param value The (midi) value of this Pitch
+     * @return An Pitch of this size.
+     */
+    public static Pitch getInstance(int value) {
+        if(value >= MIN_PITCH&& value < MAX_PITCH) {
+            return ALL.get(value - MIN_PITCH);
+        }
+        else {
+            throw new Error("INTERVAL:\tInterval out of range.");
+        }
+    }
+
+    //////////////////////////////
+    // Private instance methods //
+    //////////////////////////////
+
+    /** The PitchClass of this Pitch. */
+    private PitchClass pitchClass;
+    /** The midi value of this Pitch. */
+    private int value;
+
+    private Pitch(int value) {
+        this.value = value;
+        this.pitchClass = PitchClass.getInstance(value%12);
     }
 
     /**
@@ -57,14 +77,6 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
      */
     public PitchClass getPitchClass() {
         return pitchClass;
-    }
-
-    /**
-     * Gets the Octave of this Pitch.
-     * @return The Octave of this Pitch.
-     */
-    public Octave getOctave() {
-        return octave;
     }
 
     /**
@@ -82,12 +94,15 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
      * @return THe Interval between this Pitch and another.
      */
     public Interval minus(Pitch other) {
-        return new Interval(other.value - this.value);
+        return Interval.getInstance(other.value - this.value);
     }
 
-
+    /**
+     * Normalizes this PitchClass between 0 and 1.
+     * @return This PitchClass in the range [0,1).
+     */
     public float normalized() {
-        return pitchClass.normalized(); // INCLUDE OCTAVES
+        return (float)(value - MIN_PITCH)/(float)(MAX_PITCH - MIN_PITCH);
     }
 
     /**
@@ -96,8 +111,12 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
      * @return A nicely-formatted String of this Pitch.
      */
     public String toString() {
-        return pitchClass.toString() + octave.toString();
+        return pitchClass.toString() + (value/12 - 1);
     }
+
+    //////////////////////////////
+    // Various override methods //
+    //////////////////////////////
 
     /**
      * Compares this Pitch to another Pitch.
@@ -127,10 +146,7 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pitch pitch = (Pitch) o;
-        return value == pitch.value;
+        return this == o;
     }
 
     /**
@@ -142,29 +158,3 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
         return (int) value;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        if(value >= MIN_PITCH && value <= MAX_PITCH) {
-                this.value = (byte)value;
-                }
-                else {
-                throw new Error("Invalid pitch range!");
-                }

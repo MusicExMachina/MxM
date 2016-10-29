@@ -1,46 +1,103 @@
 package model.pitch;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
- * Interval is a glorified byte wrapper, which allows for a little more
- * dress and prevents problems down the line with constructor arguments.
+ * Interval is a simple class which utilizes the interning design pattern to create only two
+ * hundred forty different values- all possible MIDI pitch differences. Intervals are usually
+ * used for analysis, though they may be used in Collections. Note that there should never be
+ * more than these 240 Intervals, and that an iterator() has been provided for easy access.
+ * Also note that Intervals may be negative, though IntervalClasses never are.
  */
 public class Interval implements Comparator<Interval>, Comparable<Interval> {
 
-    /////////////////////////////
-    // Public static variables //
-    /////////////////////////////
+    //////////////////////////////
+    // Private static variables //
+    //////////////////////////////
 
     /** The smallest an interval can be. */
-    private static int MIN_INTERVAL = -240;
+    private static int MIN_INTERVAL = -120;
     /** The largest an interval can be. */
-    private static int MAX_INTERVAL = 240;
+    private static int MAX_INTERVAL = 120;
+
+    /** All possible IntervalClasses */
+    private static final ArrayList<Interval> ALL   = new ArrayList<>();
+
+    // Initialize the "ALL" collection
+    static {
+        for(int intervalValue = MIN_INTERVAL; intervalValue < MAX_INTERVAL; intervalValue++) {
+            ALL.add(new Interval(intervalValue));
+        }
+    }
+
+    ///////////////////////////
+    // Public static methods //
+    ///////////////////////////
+
+    /**
+     * Gets an iterator which enumerates all valid Intervals.
+     * @return An iterator over all valid Intervals.
+     */
+    public static Iterator<Interval> iterator() {
+        return ALL.iterator();
+    }
+
+    //////////////////////////////
+    // Private member variables //
+    //////////////////////////////
 
     /** The immutable basic IntervalClass of this Interval. */
     private IntervalClass intervalClass;
-    /** The immutable number of Octaves in this Interval. */
-    private Octave octave;
+    /** The immutable size of this interval in half-steps. */
+    private int size;
+
+
+    //////////////////////////////
+    // Private instance methods //
+    //////////////////////////////
 
     /**
      * The normal Interval constructor.
      * @param size The size of the interval in half-steps.
      */
-    public Interval(int size) {
+    private Interval(int size) {
         if(size >= MIN_INTERVAL && size <= MAX_INTERVAL) {
             this.size = (byte)size;
+            this.intervalClass = IntervalClass.getInstance((Math.abs(size) + 1200) % 12);
         }
         else {
-            throw new Error("Invalid interval size");
+            throw new Error("INTERVAL:\nInvalid interval size");
         }
     }
 
     /**
-     * The Interval copy constructor.
-     * @param other The other Interval to copy.
+     * Gets an instance of a given Interval size. This method
+     * creates the interning design pattern per Interval.
+     * @param value The size (in half steps) of this Interval
+     * @return An Interval of this size.
      */
-    public Interval(Interval other) {
-        this.size = other.size;
+    public static Interval getInstance(int value) {
+        if(value >= MIN_INTERVAL&& value < MAX_INTERVAL) {
+            return ALL.get(value - MIN_INTERVAL);
+        }
+        else {
+            throw new Error("INTERVAL:\tInterval out of range.");
+        }
+    }
+
+
+    /////////////////////////////
+    // Public instance methods //
+    /////////////////////////////
+
+    /**
+     * A getter for the IntervalClass of this Interval.
+     * @return The IntervalClass of this Interval.
+     */
+    public IntervalClass getIntervalClass() {
+        return intervalClass;
     }
 
     /**
@@ -57,7 +114,13 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      * @return  The new Interval sum.
      */
     public Interval plus(Interval other) {
-        return new Interval(size + other.size);
+        int newSize = size + other.size;
+        if(newSize >= MIN_INTERVAL && newSize <= MAX_INTERVAL) {
+            return ALL.get(newSize + MIN_INTERVAL);
+        }
+        else {
+            throw new Error("INTERVAL:\nResultant Interval out of range!");
+        }
     }
 
     /**
@@ -66,11 +129,17 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      * @return The new Interval difference.
      */
     public Interval minus(Interval other) {
-        return new Interval(size - other.size);
+        int newSize = size - other.size;
+        if(newSize >= MIN_INTERVAL && newSize <= MAX_INTERVAL) {
+            return ALL.get(newSize + MIN_INTERVAL);
+        }
+        else {
+            throw new Error("INTERVAL:\nResultant Interval out of range!");
+        }
     }
 
     /**
-     * Compares this Interval to another, purely based on size.
+     * Compares this Interval to another, purely based on size and direction.
      * @param other the other Interval to compare this one to.
      * @return The comparison between the two.
      */
@@ -80,14 +149,14 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
     }
 
     /**
-     * Compares two Intervals, purely based on size.
+     * Compares two Intervals, purely based on size and direction.
      * @param i1 The first Interval.
      * @param i2 The second Interval.
      * @return The comparison between the two.
      */
     @Override
     public int compare(Interval i1, Interval i2) {
-        return new Integer(i1.size).compareTo(new Integer(i2.size));
+        return new Integer(i1.size).compareTo(i2.size);
     }
 
     /**
@@ -97,10 +166,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Interval interval = (Interval) o;
-        return size == interval.size;
+        return this == o;
     }
 
     /**
@@ -109,6 +175,6 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      */
     @Override
     public int hashCode() {
-        return (int) size;
+        return size;
     }
 }

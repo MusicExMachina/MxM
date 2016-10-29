@@ -1,51 +1,60 @@
 package model.pitch;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
- * Interval is a glorified byte wrapper, which allows for a little more dress
- * and prevents problems down the line with arguments to constructors.
+ * IntervalClass is a simple class which utilizes the interning design pattern to create only
+ * twelve different values: PU, m2, M2, m3, M3, P4, TT, P5, m6, M6, m7, and M7. These are usually
+ * found in Intervals, though may be used in Collections. Note that there should never be more than
+ * these 12 IntervalClasses, and that an iterator() has been provided for easy access. Also note
+ * that IntervalClasses are always positive, as they represent a distance.
  */
 public class IntervalClass implements Comparator<IntervalClass>, Comparable<IntervalClass> {
 
-    /////////////////////////////
-    // Public static variables //
-    /////////////////////////////
+    //////////////////////////////
+    // Private static variables //
+    //////////////////////////////
 
-    /** The IntervalClass of a unison */
-    public static final IntervalClass UNISON            = new IntervalClass(0);
-    /** The IntervalClass of a minor second */
-    public static final IntervalClass MINOR_SECOND      = new IntervalClass(1);
-    /** The IntervalClass of a major second */
-    public static final IntervalClass MAJOR_SECOND      = new IntervalClass(2);
-    /** The IntervalClass of a minor third */
-    public static final IntervalClass MINOR_THIRD       = new IntervalClass(3);
-    /** The IntervalClass of a major third */
-    public static final IntervalClass MAJOR_THIRD       = new IntervalClass(4);
-    /** The IntervalClass of a perfect fourth */
-    public static final IntervalClass PERFECT_FOURTH    = new IntervalClass(5);
-    /** The IntervalClass of a tritone */
-    public static final IntervalClass TRITONE           = new IntervalClass(6);
-    /** The IntervalClass of a perfect fifth */
-    public static final IntervalClass PERFECT_FIFTH     = new IntervalClass(7);
-    /** The IntervalClass of a minor sixth */
-    public static final IntervalClass MINOR_SIXTH       = new IntervalClass(8);
-    /** The IntervalClass of a major sixth */
-    public static final IntervalClass MAJOR_SIXTH       = new IntervalClass(9);
-    /** The IntervalClass of a minor seventh */
-    public static final IntervalClass MINOR_SEVENTH     = new IntervalClass(10);
-    /** The IntervalClass of a major seventh */
-    public static final IntervalClass MAJOR_SEVENTH     = new IntervalClass(11);
-
+    /** The lowest interval class, better known as "unison." */
+    private static final int MIN_INTERVALCLASS = 0;
+    /** The highest interval class, better known as "a major seventh." */
+    private static final int MAX_INTERVALCLASS = 11;
     /** All possible IntervalClasses */
-    public static final ArrayList<IntervalClass> ALL    = new ArrayList<>();
+    private static final ArrayList<IntervalClass> ALL = new ArrayList<>();
 
     // Initialize the "ALL" collection
     static {
-        for(int intervalClassValue = 0; intervalClassValue < 12; intervalClassValue++) {
+        for(int intervalClassValue = MIN_INTERVALCLASS; intervalClassValue <= MAX_INTERVALCLASS; intervalClassValue++) {
             ALL.add(new IntervalClass(intervalClassValue));
+        }
+    }
+
+    ///////////////////////////
+    // Public static methods //
+    ///////////////////////////
+
+    /**
+     * Gets an iterator which enumerates all valid IntervalClasses.
+     * @return An iterator over all valid Pitches.
+     */
+    public static Iterator<IntervalClass> iterator() {
+        return ALL.iterator();
+    }
+
+    /**
+     * Gets an instance of a given IntervalClass size. This method
+     * creates the interning design pattern per IntervalClass.
+     * @param size The size (in half steps) of this IntervalClass
+     * @return An IntervalClass of this size.
+     */
+    public static IntervalClass getInstance(int size) {
+        if(size >= MIN_INTERVALCLASS && size < MAX_INTERVALCLASS) {
+            return ALL.get(size);
+        }
+        else {
+            throw new Error("INTERVAL CLASS:\tInterval class out of range.");
         }
     }
 
@@ -53,33 +62,24 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     // Private member variables //
     //////////////////////////////
 
-    /** The value of the IntervalClass. */
-    private int value;
+    /** The size of the IntervalClass. */
+    private int size;
 
-    ///////////////////////////
-    // Public static methods //
-    ///////////////////////////
-
-    public static IntervalClass getInstance(int value) {
-        if(value >= 0 && value < 12) {
-            return ALL[value];
-        }
-        else {
-            throw new Error("INTERVAL CLASS:\tImproper");
-        }
-    }
-
-    ///////////////////////////
-    // Public member methods //
-    ///////////////////////////
+    //////////////////////////////
+    // Private instance methods //
+    //////////////////////////////
 
     /**
      * A constructor for IntervalClass which is private.
-     * @param value The value (0-11) of this IntervalClass.
+     * @param size The size (0-11) of this IntervalClass.
      */
-    private IntervalClass(int value) {
-        this.value = value;
+    private IntervalClass(int size) {
+        this.size = size;
     }
+
+    /////////////////////////////
+    // Public instance methods //
+    /////////////////////////////
 
     /**
      * A getter for the size of this Interval, in half-steps.
@@ -90,22 +90,42 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     }
 
     /**
-     * Creates a new Interval that is the sum of these two.
-     * @param other The other Interval to add to this one.
-     * @return  The new Interval sum.
+     * Creates a new IntervalClass that is the sum of these two.
+     * @param other The other IntervalClass to add to this one.
+     * @return  The new IntervalClass sum. Note: This loops.
      */
-    public Interval plus(Interval other) {
-        return new Interval(size + other.size);
+    public IntervalClass plus(IntervalClass other) {
+        return ALL.get((this.size + other.size)%12);
     }
 
     /**
-     * Creates a new Interval that is the difference of these two.
-     * @param other The other Interval to subtract from this one.
-     * @return The new Interval difference.
+     * Creates a new IntervalClass that is the difference of these two.
+     * @param other The other IntervalClass to subtract from this one.
+     * @return The new IntervalClass difference. Note: This loops.
      */
-    public Interval minus(Interval other) {
-        return new IntervalClass(value - other.value);
+    public IntervalClass minus(IntervalClass other) {
+        return ALL.get((this.size - other.size + 12)%12);
     }
+
+    /**
+     * Returns a nicely-formatted String of this IntervalClass (for debug).
+     * @return A nicely-formatted String of this IntervalClass.
+     */
+    public String toString() {
+        switch (size) {
+            case 0:     return "PU";   case 1:     return "m2";
+            case 2:     return "M2";   case 3:     return "m3";
+            case 4:     return "M3";   case 5:     return "P4";
+            case 6:     return "TT";   case 7:     return "P5";
+            case 8:     return "m6";   case 9:     return "M6";
+            case 10:    return "m7";   case 11:    return "M7";
+            default:    return "ERROR";
+        }
+    }
+
+    //////////////////////////////
+    // Various override methods //
+    //////////////////////////////
 
     /**
      * Compares this IntervalClass to another, purely based on size.
@@ -114,7 +134,18 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      */
     @Override
     public int compareTo(IntervalClass other) {
-        return new Integer(value).compareTo(new Integer(other.value));
+        return new Integer(size).compareTo(other.size);
+    }
+
+    /**
+     * Compares two IntervalClasses, purely based on size.
+     * @param ic1 The first IntervalClass.
+     * @param ic2 The second IntervalClass.
+     * @return The comparison between the two.
+     */
+    @Override
+    public int compare(IntervalClass ic1, IntervalClass ic2) {
+        return new Integer(ic1.size).compareTo(ic2.size);
     }
 
     /**
@@ -127,7 +158,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         IntervalClass intervalClass = (IntervalClass) o;
-        return value == intervalClass.value;
+        return size == intervalClass.size;
     }
 
     /**
@@ -136,6 +167,6 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      */
     @Override
     public int hashCode() {
-        return (int) value;
+        return size;
     }
 }
