@@ -1,4 +1,4 @@
-package model.basic;
+package model.time;
 
 /**
  * TimeSignatures are exactly what they
@@ -53,6 +53,14 @@ public class TimeSignature {
     }
 
     /**
+     * Returns the "beat"
+     * @return
+     */
+    public Count getBeat() {
+        return null;
+    }
+
+    /**
      * Gets the denominator of this TimeSignature.
      * @return This TimeSignature's denominator.
      */
@@ -66,6 +74,59 @@ public class TimeSignature {
      */
     public int getDenominator() {
         return denominator;
+    }
+
+    /**
+     * The preferred subdivision at each given subdivision
+     * level.
+     * @return
+     */
+    public int getPreferredSubdivision(int level) {
+        switch(level) {
+            case 0:
+                // 2/2, 3/2
+                if(denominator == 2) {
+                    return numerator;
+                }
+                // 2/4, 3/4, 4/4, 5/4, 6/4
+                else if(denominator == 4) {
+                    return numerator;
+                }
+                // 3/8, 6/8, 9/8, 12/8
+                if(numerator % 3 == 0 && denominator == 8) {
+                    return 2;
+                }
+                // 2/8, 4/8, 8/8
+                else if(numerator % 2 == 0 && denominator == 8) {
+                    return 2;
+                }
+                // 5/8, 7/8
+                else {
+                    return numerator;
+                }
+            case 1:
+                // 2/2, 3/2
+                if(denominator == 2) {
+                    return numerator;
+                }
+                // 2/4, 3/4, 4/4, 5/4, 6/4
+                if(denominator == 4) {
+                    return 2;
+                }
+                // 3/8, 6/8, 9/8, 12/8
+                else if(numerator % 3 == 0 && denominator == 8) {
+                    return 3;
+                }
+                // 2/8, 4/8, 8/8
+                else if(numerator % 2 == 0 && denominator == 8) {
+                    return 2;
+                }
+                // 5/8, 7/8
+                else {
+                    return 2;
+                }
+        }
+        return 2;
     }
 
     /**

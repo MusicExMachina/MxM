@@ -1,9 +1,9 @@
-package model.structure;
+package model.form;
 
-import model.basic.Count;
+import model.time.Count;
 import model.basic.Dynamic;
-import model.basic.Pitch;
-import model.basic.Tempo;
+import model.pitch.Pitch;
+import model.time.Tempo;
 
 /**
  * A class for storing information about single events

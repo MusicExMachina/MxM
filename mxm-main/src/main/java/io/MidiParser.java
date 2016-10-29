@@ -1,9 +1,10 @@
 package io;
 
-import model.basic.*;
-import model.generation.RhythmNode;
-import model.generation.RhythmTree;
-import model.structure.Passage;
+import model.pitch.Pitch;
+import model.form.RhythmNode;
+import model.form.RhythmTree;
+import model.form.Passage;
+import model.time.TimeSignature;
 
 import javax.sound.midi.*;
 import java.util.*;
@@ -15,7 +16,7 @@ import java.util.*;
  * single file to be read. This class could potentially be abs-
  * orbed into MidiTools, but is separated for the code cleanness.
  */
-public class MidiParser {
+class MidiParser {
 
     /* A few of the most useful MidiTools messages */
     private static final int SEQUENCE_NUMBER    = 0x00;
@@ -64,6 +65,15 @@ public class MidiParser {
     public Passage run(Sequence sequence) {
 
         this.sequence = sequence;
+
+        tracks = new HashSet<>();
+        rhythmTrees = new HashMap<>();
+        noteOns = new HashMap<>();
+        noteOffs = new HashMap<>();
+        timeSignatures = new TreeMap<>();
+        pulsesPerQuarter = new TreeMap<>();
+        timePoints = new TreeMap<>();
+        frames = new HashMap<>();
 
         System.out.println("MIDI:\tParsing MidiEvents...");
         parseAll();

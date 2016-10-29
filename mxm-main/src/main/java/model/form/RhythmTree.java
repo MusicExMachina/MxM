@@ -1,4 +1,4 @@
-package model.generation;
+package model.form;
 
 import java.awt.*;
 import java.util.*;
@@ -49,7 +49,7 @@ public class RhythmTree {
             }
         }
 
-        if(constructQueue.size()!=0){
+        if(constructQueue.size() != 0){
             throw new IllegalArgumentException("List cannot be converted to a rhythm tree, leftover divisions");
         }
 
