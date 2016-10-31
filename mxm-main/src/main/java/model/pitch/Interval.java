@@ -59,7 +59,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
     //////////////////////////////
 
     /**
-     * The normal Interval constructor.
+     * The normal, private Interval constructor.
      * @param size The size of the interval in half-steps.
      */
     private Interval(int size) {
@@ -86,7 +86,6 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
             throw new Error("INTERVAL:\tInterval out of range.");
         }
     }
-
 
     /////////////////////////////
     // Public instance methods //

@@ -11,13 +11,13 @@ import model.time.Tempo;
  */
 public class Frame {
 
-    /** The length of this event in Counts  */
+    /** The length of this event in Counts. */
     Count length;
-    /** The Pitch of this Frame             */
+    /** The Pitch of this Frame.            */
     Pitch pitch;
-    /** The Dynamic of this Frame           */
+    /** The Dynamic of this Frame.          */
     Dynamic dynamic;
-    /** The Tempo of this Frame             */
+    /** The Tempo of this Frame.            */
     Tempo tempo;
 
     /**
