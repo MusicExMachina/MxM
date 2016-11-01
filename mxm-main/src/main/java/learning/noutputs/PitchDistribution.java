@@ -13,9 +13,6 @@ public class PitchDistribution {
 
     public PitchDistribution(){
         pmf = new HashMap<>();
-        for(Pitch pitch : Pitch.ALL_PITCHES) {
-            pmf.put(pitch, 0d);
-        }
     }
 
     public void setProbabilityForPitch(Pitch p, Double prob){

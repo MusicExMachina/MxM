@@ -249,7 +249,7 @@ class MidiParser {
         // Data pulled off of the MidiEvent
         int pitchValue      = message.getData1();
         int velocityValue   = message.getData2();
-        Pitch pitch         = new Pitch(pitchValue);
+        Pitch pitch         = Pitch.getInstance(pitchValue);
 
         // If this was a note-off message in disguise
         if(velocityValue == 0) {
@@ -282,7 +282,7 @@ class MidiParser {
 
         // Data pulled off of the MidiEvent
         int pitchValue      = message.getData1();
-        Pitch pitch         = new Pitch(pitchValue);
+        Pitch pitch         = Pitch.getInstance(pitchValue);
 
         // If this track hasn't had a note-on yet
         if(!noteOffs.containsKey(track)){
