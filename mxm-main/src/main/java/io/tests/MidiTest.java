@@ -23,7 +23,7 @@ public class MidiTest {
             //Sequence sequence = MidiTools.load("C:/users/celenp/desktop/test.mid");
             MidiTools.parse(sequence);
             MidiTools.play(sequence);
-            Thread.sleep(100000);
+            //Thread.sleep(100000);
 
         } catch (Exception e) {
             e.printStackTrace();
