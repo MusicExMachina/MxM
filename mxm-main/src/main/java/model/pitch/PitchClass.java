@@ -49,7 +49,7 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
      * @return An PitchClass of this value.
      */
     public static PitchClass getInstance(int value) {
-        if(value >= MIN_PITCHCLASS && value < MAX_PITCHCLASS) {
+        if(value >= MIN_PITCHCLASS && value <= MAX_PITCHCLASS) {
             return ALL.get(value);
         }
         else {
