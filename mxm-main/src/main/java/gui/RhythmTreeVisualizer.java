@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 
 
-
 public class RhythmTreeVisualizer extends JFrame {
 
     RhythmTree rt;
