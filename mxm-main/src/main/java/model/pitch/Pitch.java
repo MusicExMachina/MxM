@@ -30,10 +30,6 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
         }
     }
 
-    ///////////////////////////
-    // Public static methods //
-    ///////////////////////////
-
     /**
      * Gets an iterator which enumerates all valid Pitches.
      * @return An iterator over all valid Pitches.
@@ -56,10 +52,6 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
             throw new Error("INTERVAL:\tInterval out of range.");
         }
     }
-
-    //////////////////////////////
-    // Private instance methods //
-    //////////////////////////////
 
     /** The PitchClass of this Pitch. */
     private PitchClass pitchClass;
@@ -113,10 +105,6 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     public String toString() {
         return pitchClass.toString() + (value/12 - 1);
     }
-
-    //////////////////////////////
-    // Various override methods //
-    //////////////////////////////
 
     /**
      * Compares this Pitch to another Pitch.

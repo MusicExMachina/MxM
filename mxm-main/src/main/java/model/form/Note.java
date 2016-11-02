@@ -6,9 +6,8 @@ import model.pitch.Pitch;
 import model.time.Count;
 
 /**
- * The Note class represents (in essence) a Pitch
- * with a given length. Articulation and Technique
- * are also applied, but mostly just for future expansion.
+ * The Note class represents (in essence) a Pitch with a given length. Articulation
+ * and Technique are also applied, but mostly just for future expansion.
  */
 public class Note {
 

@@ -12,10 +12,6 @@ import java.util.Iterator;
  */
 public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass> {
 
-    //////////////////////////////
-    // Private static variables //
-    //////////////////////////////
-
     /** The lowest pitch class, better known as "C." */
     private static final int MIN_PITCHCLASS = 0;
     /** The highest pitch class, better known as "B." */
@@ -29,10 +25,6 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
             ALL.add(new PitchClass(pitchClassValue));
         }
     }
-
-    ///////////////////////////
-    // Public static methods //
-    ///////////////////////////
 
     /**
      * Gets an iterator which enumerates all valid PitchClasses.
@@ -57,18 +49,10 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
         }
     }
 
-    //////////////////////////////
-    // Private member variables //
-    //////////////////////////////
-
     /**
      * Stores the MidiTools value of this Pitch.
      */
     private int value;
-
-    //////////////////////////////
-    // Private instance methods //
-    //////////////////////////////
 
     /**
      * The private constructor for PitchClass.
@@ -119,10 +103,6 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
             default:    return "ERROR";
         }
     }
-
-    //////////////////////////////
-    // Various override methods //
-    //////////////////////////////
 
     /**
      * Compares this PitchClass to another PitchClass.

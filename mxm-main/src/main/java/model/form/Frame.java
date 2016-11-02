@@ -5,41 +5,34 @@ import model.basic.Dynamic;
 import model.pitch.Pitch;
 import model.time.Tempo;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.TreeSet;
+
 /**
  * A class for storing information about single events
  * in a Passage.
  */
 public class Frame {
 
-    /** The length of this event in Counts. */
-    Count length;
-    /** The Pitch of this Frame.            */
-    Pitch pitch;
-    /** The Dynamic of this Frame.          */
+    Count time;
+    TreeSet<Note> notes;
     Dynamic dynamic;
-    /** The Tempo of this Frame.            */
     Tempo tempo;
 
-    /**
-     * A getter for this Frame's Pitch.
-     * @return The Pitch of this Frame (null if a rest).
-     */
-    public Pitch getPitch() {
-        return pitch;
+    public Iterator<Note> getNotes() {
+        return notes.iterator();
     }
 
-    /**
-     * A setter for this Frame's Pitch.
-     * @param pitch The Pitch of this Frame (null if a rest).
-     */
-    public void setPitch(Pitch pitch) {
-        this.pitch = pitch;
+    public void addNote(Note note) {
+        if(!notes.contains(note)) {
+            notes.add(note);
+        }
+        else {
+            throw new Error("FRAME:\nThis frame already contains this note!");
+        }
     }
 
-    /**
-     * A getter for this Frame's Dynamic level.
-     * @return The Dynamic of this Frame.
-     */
     public Dynamic getDynamic() {
         return dynamic;
     }

@@ -14,6 +14,8 @@ import java.util.Set;
  * have different tendencies.
  */
 public class Instrument {
+
+    String name;
     // Store possible pitches
     Set<Pitch> possiblePitches;
     // Store possible techniques

@@ -3,28 +3,23 @@ package model.time;
 import java.util.Comparator;
 
 /**
- * A Count is the fundamental measurement of
- * musical time. Note that Counts are essentially
- * just fractions. They're not really that special.
- * They are, however, immutable, in order to avoid
- * accidental headaches down the line.
+ * A Count is the fundamental measurement of  musical time. Note that Counts are essentially
+ * just fractions. They're not really that special. They are, however, immutable, in order to
+ * avoid accidental headaches down the line.
  */
 public class Count implements Comparator<Count>, Comparable<Count> {
 
-    /* A bunch of preset Counts for general use. */
-    public static final Count ZERO            = new Count(0,1);
-    public static final Count FULL_MEASURE    = new Count(1,1);
-    public static final Count HALF_MEASURE    = new Count(1,2);
-    public static final Count THIRD_MEASURE   = new Count(1,3);
-    public static final Count QUARTER_MEASURE = new Count(1,4);
-    public static final Count EIGHTH_MEASURE  = new Count(1,8);
+    /** A zero Count. */
+    public static final Count ZERO = new Count(0,1);
+
+    /** A full measure Count. */
+    public static final Count FULL_MEASURE = new Count(1,1);
 
     /** The fractional numerator of this Count */
     private int numerator;
 
     /** The fractional denominator of this Count */
     private int denominator;
-
 
     /**
      * A constructor for Count taking in just a measure

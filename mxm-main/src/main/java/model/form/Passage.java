@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class Passage implements Iterable<Frame> {
 
+    ArrayList<Measure> measures;
     /** A TreeMap of all the frames in this Passage.
      * Note that this data form was chosen for its
      * lookup abilities, which are quite useful in answering
