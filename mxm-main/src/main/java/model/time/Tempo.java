@@ -3,31 +3,15 @@ package model.time;
 import java.util.Comparator;
 
 /**
- * Tempo is a glorified byte wrapper,
- * which allows for a little more dress
- * and prevents problems down the line
- * with arguments to constructors.
+ * Tempo is a glorified int wrapper, which allows for a little more dress
+ * and prevents problems down the line with arguments to constructors.
  */
 public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
 
-    /* A bunch of preset dynamics for general use. */
-    public static final Tempo PRESTO      = new Tempo(160);
-    public static final Tempo VIVACE      = new Tempo(140);
-    public static final Tempo ALLEGRO     = new Tempo(120);
-    public static final Tempo MODERATO    = new Tempo(100);
-    public static final Tempo ANDANTE     = new Tempo(80);
-    public static final Tempo ADAGIO      = new Tempo(70);
-    public static final Tempo LENTO       = new Tempo(60);
-    public static final Tempo LARGO       = new Tempo(50);
-    public static final Tempo GRAVE       = new Tempo(30);
-
-    /* Some basic bounds on Tempo. */
+    /** The minimum tempo possible. */
     private static final int MIN_TEMPO = 0;
-    private static final int MAX_TEMPO = 200;
 
-    /**
-     * Stores a tempo value, in BPM
-     */
+    /** Stores a tempo value, in BPM. */
     private final int value;
 
     /**
@@ -35,8 +19,8 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
      * @param value The Tempo's speed.
      */
     public Tempo(int value) {
-        if(value >= MIN_TEMPO && value <= MAX_TEMPO) {
-            this.value = (byte)value;
+        if(value >= MIN_TEMPO ) {
+            this.value = value;
         }
         else {
             throw new Error("Invalid tempo range!");
@@ -44,17 +28,15 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
     }
 
     /**
-     * Returns the number of beats per minute this
-     * tempo represents.
-     * @return The BPM of this tempo
+     * Returns the number of beats per minute this Tempo represents.
+     * @return The BPM of this tempo.
      */
-    public int getBeatsPerMinute() {
+    public int getBPM() {
         return value;
     }
 
     /**
-     * Returns a nicely-formatted String
-     * of this Tempo (for debug).
+     * Returns a nicely-formatted String of this Tempo (for debug).
      * @return This Tempo's String representation.
      */
     public String toString() {
@@ -93,7 +75,6 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
         if (o == null || getClass() != o.getClass()) return false;
         Tempo tempo = (Tempo) o;
         return value == tempo.value;
-
     }
 
     /**
@@ -102,6 +83,6 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
      */
     @Override
     public int hashCode() {
-        return (int) value;
+        return value;
     }
 }

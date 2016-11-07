@@ -13,14 +13,12 @@ import java.util.Iterator;
  */
 public class IntervalClass implements Comparator<IntervalClass>, Comparable<IntervalClass> {
 
-    //////////////////////////////
-    // Private static variables //
-    //////////////////////////////
-
     /** The lowest interval class, better known as "unison." */
     private static final int MIN_INTERVALCLASS = 0;
+
     /** The highest interval class, better known as "a major seventh." */
     private static final int MAX_INTERVALCLASS = 11;
+
     /** All possible IntervalClasses */
     private static final ArrayList<IntervalClass> ALL = new ArrayList<>();
 
@@ -30,10 +28,6 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
             ALL.add(new IntervalClass(intervalClassValue));
         }
     }
-
-    ///////////////////////////
-    // Public static methods //
-    ///////////////////////////
 
     /**
      * Gets an iterator which enumerates all valid IntervalClasses.
@@ -58,16 +52,8 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
         }
     }
 
-    //////////////////////////////
-    // Private member variables //
-    //////////////////////////////
-
     /** The size of the IntervalClass. */
     private int size;
-
-    //////////////////////////////
-    // Private instance methods //
-    //////////////////////////////
 
     /**
      * A constructor for IntervalClass which is private.
@@ -76,10 +62,6 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     private IntervalClass(int size) {
         this.size = size;
     }
-
-    /////////////////////////////
-    // Public instance methods //
-    /////////////////////////////
 
     /**
      * A getter for the size of this Interval, in half-steps.
@@ -122,10 +104,6 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
             default:    return "ERROR";
         }
     }
-
-    //////////////////////////////
-    // Various override methods //
-    //////////////////////////////
 
     /**
      * Compares this IntervalClass to another, purely based on size.

@@ -3,10 +3,8 @@ package model.basic;
 import java.util.Comparator;
 
 /**
- * Dynamic is a glorified byte wrapper,
- * which allows for a little more dress
- * and prevents problems down the line
- * with arguments to constructors.
+ * Dynamic is a glorified int wrapper, which allows for a little more dress
+ * and prevents problems down the line with arguments to constructors.
  */
 public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
 

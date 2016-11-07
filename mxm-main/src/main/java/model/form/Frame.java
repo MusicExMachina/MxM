@@ -5,39 +5,64 @@ import model.basic.Dynamic;
 import model.pitch.Pitch;
 import model.time.Tempo;
 
+import java.util.*;
+
 /**
- * A class for storing information about single events
- * in a Passage.
+ * A class for storing information about contemporaneous events in a Passage.
  */
 public class Frame {
 
-    /** The length of this event in Counts. */
-    Count length;
-    /** The Pitch of this Frame.            */
-    Pitch pitch;
-    /** The Dynamic of this Frame.          */
-    Dynamic dynamic;
-    /** The Tempo of this Frame.            */
-    Tempo tempo;
+    /** A TreeMap that stores all Notes, ordered by Pitch. */
+    private TreeMap<Pitch,Note> notes;
+
+    /** The time at which this Frame occurs (starts). */
+    private Count time;
+
+    /** The Tempo of this Frame. */
+    private Tempo tempo;
+
+    /** The Dynamic of this Frame. */
+    private Dynamic dynamic;
 
     /**
-     * A getter for this Frame's Pitch.
-     * @return The Pitch of this Frame (null if a rest).
+     * Constructs a frame at a given time.
+     * @param time The time this Frame starts.
      */
-    public Pitch getPitch() {
-        return pitch;
+    public Frame(Count time) {
+        this.notes = new TreeMap<>();
+        this.time = time;
     }
 
     /**
-     * A setter for this Frame's Pitch.
-     * @param pitch The Pitch of this Frame (null if a rest).
+     * Adds a Note to this Frame, if the Note's Pitch is not
+     * already represented, and the Note's start is exactly the
+     * same as this Frame's time.
+     * @param note
      */
-    public void setPitch(Pitch pitch) {
-        this.pitch = pitch;
+    public void add(Note note) {
+        if(!notes.containsKey(note.getPitch())) {
+            if(note.getStart().equals(time)) {
+                notes.put(note.getPitch(),note);
+            }
+            else {
+                throw new Error("FRAME:\tThis Note doesn't start on this Frame!");
+            }
+        }
+        else {
+            throw new Error("FRAME:\tThis frame already contains this pitch!");
+        }
     }
 
     /**
-     * A getter for this Frame's Dynamic level.
+     * Gets the time at which this Frame occurs.
+     * @return The time this Frame starts.
+     */
+    public Count getTime() {
+        return time;
+    }
+
+    /**
+     * A getter for this Frame's Dynamic.
      * @return The Dynamic of this Frame.
      */
     public Dynamic getDynamic() {
@@ -66,5 +91,13 @@ public class Frame {
      */
     public void setTempo(Tempo tempo) {
         this.tempo = tempo;
+    }
+
+    /**
+     * Returns an iterator over all Notes in this Frame, Pitch-ordered.
+     * @return An iterator over all Notes in this Frame.
+     */
+    public Iterator<Note> iterator() {
+        return notes.values().iterator();
     }
 }

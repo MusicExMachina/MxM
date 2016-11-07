@@ -13,12 +13,9 @@ import java.util.Iterator;
  */
 public class Interval implements Comparator<Interval>, Comparable<Interval> {
 
-    //////////////////////////////
-    // Private static variables //
-    //////////////////////////////
-
     /** The smallest an interval can be. */
     private static int MIN_INTERVAL = -120;
+
     /** The largest an interval can be. */
     private static int MAX_INTERVAL = 120;
 
@@ -32,10 +29,6 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
         }
     }
 
-    ///////////////////////////
-    // Public static methods //
-    ///////////////////////////
-
     /**
      * Gets an iterator which enumerates all valid Intervals.
      * @return An iterator over all valid Intervals.
@@ -44,19 +37,11 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
         return ALL.iterator();
     }
 
-    //////////////////////////////
-    // Private member variables //
-    //////////////////////////////
-
     /** The immutable basic IntervalClass of this Interval. */
     private IntervalClass intervalClass;
+
     /** The immutable size of this interval in half-steps. */
     private int size;
-
-
-    //////////////////////////////
-    // Private instance methods //
-    //////////////////////////////
 
     /**
      * The normal, private Interval constructor.
@@ -86,10 +71,6 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
             throw new Error("INTERVAL:\tInterval out of range.");
         }
     }
-
-    /////////////////////////////
-    // Public instance methods //
-    /////////////////////////////
 
     /**
      * A getter for the IntervalClass of this Interval.

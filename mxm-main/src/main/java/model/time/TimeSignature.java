@@ -1,32 +1,15 @@
 package model.time;
 
 /**
- * TimeSignatures are exactly what they
- * sound like in the Western music theory
- * sense. These are useful as they define
- * how RhythmTrees divide on the first few
- * levels (3/4 versus 6/8) and will eventually
- * be useful in determining how transitions
- * between TimeSignatures work.
+ * TimeSignatures are exactly what they sound like in the Western music theory
+ * sense. These are useful as they define how RhythmTrees divide on the first few
+ * levels (3/4 versus 6/8) and will eventually  be useful in determining how
+ * transitions between TimeSignatures work.
  *
- * Note: These are in many ways structurally
- * similar to Counts. The major difference is
- * that there's no reason to ever reduce a
- * TimeSignature from say, 4/4 to 2/2 to 1/1.
+ * Note: These are in many ways structurally similar to Counts. The major difference
+ * is that there's no reason to ever reduce a TimeSignature from say, 4/4 to 2/2.
  */
 public class TimeSignature {
-
-    /* A bunch of preset TimeSignatures for general use. */
-    public static final TimeSignature CUT_TIME          = new TimeSignature(2,2);
-    public static final TimeSignature COMMON_TIME       = new TimeSignature(4,4);
-    public static final TimeSignature THREE_FOUR_TIME   = new TimeSignature(3,4);
-    public static final TimeSignature TWO_FOUR_TIME     = new TimeSignature(2,4);
-    public static final TimeSignature FOUR_FOUR_TIME    = new TimeSignature(4,4);
-    public static final TimeSignature TWO_TWO_TIME      = new TimeSignature(2,2);
-    public static final TimeSignature FIVE_EIGHT_TIME   = new TimeSignature(5,8);
-    public static final TimeSignature SIX_EIGHT_TIME    = new TimeSignature(6,8);
-    public static final TimeSignature SEVEN_EIGHT_TIME  = new TimeSignature(7,8);
-    public static final TimeSignature NINE_EIGHT_TIME   = new TimeSignature(9,8);
 
     /** The fractional numerator of this TimeSignature */
     private int numerator;
@@ -53,14 +36,6 @@ public class TimeSignature {
     }
 
     /**
-     * Returns the "beat"
-     * @return
-     */
-    public Count getBeat() {
-        return null;
-    }
-
-    /**
      * Gets the denominator of this TimeSignature.
      * @return This TimeSignature's denominator.
      */
@@ -77,9 +52,8 @@ public class TimeSignature {
     }
 
     /**
-     * The preferred subdivision at each given subdivision
-     * level.
-     * @return
+     * The preferred subdivision at each given subdivision level.
+     * @return The prefered number of subdivisions at each level.
      */
     public int getPreferredSubdivision(int level) {
         switch(level) {
@@ -150,8 +124,7 @@ public class TimeSignature {
 
         TimeSignature timeSignature = (TimeSignature) o;
 
-        if (numerator != timeSignature.numerator) return false;
-        return denominator == timeSignature.denominator;
+        return numerator == timeSignature.numerator && denominator == timeSignature.denominator;
     }
 
     /**

@@ -13,8 +13,8 @@ import java.util.*;
  * MidiParser is a class which does exactly what you'd expect.
  * Note that each MidiParser parses exactly *one* midi Sequence.
  * This means that the MidiTools class instantiates one for every
- * single file to be read. This class could potentially be abs-
- * orbed into MidiTools, but is separated for the code cleanness.
+ * single file to be read. This class could potentially be
+ * absorbed into MidiTools, but is separated for the code cleanness.
  */
 class MidiParser {
 

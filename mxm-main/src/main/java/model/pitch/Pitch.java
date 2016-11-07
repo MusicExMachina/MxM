@@ -18,8 +18,10 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
     /** The minimum midi value of pitch, C-1. */
     private static final int MIN_PITCH = 0;
+
     /** The maximum midi value of pitch, B9. */
     private static final int MAX_PITCH = 120;
+
     /** An ArrayList of all valid Pitches */
     private static final ArrayList<Pitch> ALL = new ArrayList<Pitch>();
 
@@ -29,10 +31,6 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
             ALL.add(new Pitch(midiValue));
         }
     }
-
-    ///////////////////////////
-    // Public static methods //
-    ///////////////////////////
 
     /**
      * Gets an iterator which enumerates all valid Pitches.
@@ -57,12 +55,9 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
         }
     }
 
-    //////////////////////////////
-    // Private instance methods //
-    //////////////////////////////
-
     /** The PitchClass of this Pitch. */
     private PitchClass pitchClass;
+    
     /** The midi value of this Pitch. */
     private int value;
 
@@ -113,10 +108,6 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     public String toString() {
         return pitchClass.toString() + (value/12 - 1);
     }
-
-    //////////////////////////////
-    // Various override methods //
-    //////////////////////////////
 
     /**
      * Compares this Pitch to another Pitch.

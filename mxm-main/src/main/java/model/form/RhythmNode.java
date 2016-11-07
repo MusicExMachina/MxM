@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * RhythmNodes are the very active, very exposed,
- * mutable building block of RhythmTrees. One cannot
- * Directly create anything but a root node, and then
- * create more by subdividing existing ones.
+ * RhythmNodes are the very active, very exposed, mutable building block of RhythmTrees. One cannot
+ * Directly create anything but a root node, and then create more by subdividing existing ones.
  */
 public class RhythmNode {
 
@@ -29,7 +27,6 @@ public class RhythmNode {
     /** The timing of this RhythmNode */
     private Count timing;
 
-
     /** The duration of this RhythmNode */
     private Count duration;
 
@@ -39,7 +36,7 @@ public class RhythmNode {
     public RhythmNode() {
         this.depth      = 0;
         this.parent     = null;
-        this.children   = new ArrayList<RhythmNode>();
+        this.children   = new ArrayList<>();
         this.timing     = Count.ZERO;
         this.duration   = Count.FULL_MEASURE;
     }
@@ -55,7 +52,7 @@ public class RhythmNode {
     private RhythmNode(RhythmNode parent, Count timing, Count duration) {
         this.depth      = parent.getDepth()+1;
         this.parent     = parent;
-        this.children   = new ArrayList<RhythmNode>();
+        this.children   = new ArrayList<>();
         this.timing     = timing;
         this.duration   = duration;
     }
@@ -88,7 +85,7 @@ public class RhythmNode {
      * @return An edit-safe List of child nodes.
      */
     public List<RhythmNode> getChildren() {
-        return new ArrayList<RhythmNode>(children);
+        return new ArrayList<>(children);
     }
 
     /**
@@ -117,8 +114,6 @@ public class RhythmNode {
         // Ensure we're not trying something stupid
         if(times > 1) {
             if(children.size()==0) {
-
-
                 // Add "times" many children
                 Count newDuration = this.duration.dividedBy(times);
                 for (int i = 0; i < times; i++) {
@@ -130,7 +125,6 @@ public class RhythmNode {
         }
         else throw new Error("Trying to subdivide this RhythmNode" + times + " times!");
 
-        // Return the children
         return children;
     }
 
@@ -151,10 +145,8 @@ public class RhythmNode {
         return toReturn;
     }
 
-
     /**
      * Paint the node, and its children w/ links
-     *
      * @param g Graphics object to paint with
      * @param x Top left corner of node x coord
      * @param y Top left corner of node y coord
@@ -177,6 +169,4 @@ public class RhythmNode {
             children.get(i).paint(g, childX, childY);
         }
     }
-
-
 }

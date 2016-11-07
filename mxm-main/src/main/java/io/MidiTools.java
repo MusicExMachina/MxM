@@ -112,7 +112,7 @@ public abstract class MidiTools
      */
     public static Sequence write(Passage passage) {
         // Spawn off a parser object
-        MidiComposer midiComposer = new MidiComposer();
+        MidiWriter midiComposer = new MidiWriter();
         return midiComposer.run(passage);
     }
 
