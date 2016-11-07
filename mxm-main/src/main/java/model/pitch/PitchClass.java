@@ -14,8 +14,10 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
 
     /** The lowest pitch class, better known as "C." */
     private static final int MIN_PITCHCLASS = 0;
+
     /** The highest pitch class, better known as "B." */
     private static final int MAX_PITCHCLASS = 11;
+
     /** All possible PitchClasses */
     private static final ArrayList<PitchClass> ALL = new ArrayList<>();
 
@@ -49,9 +51,7 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
         }
     }
 
-    /**
-     * Stores the MidiTools value of this Pitch.
-     */
+    /** Stores the MidiTools value of this Pitch. */
     private int value;
 
     /**

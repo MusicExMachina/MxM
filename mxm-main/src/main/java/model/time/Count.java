@@ -15,10 +15,10 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     /** A full measure Count. */
     public static final Count FULL_MEASURE = new Count(1,1);
 
-    /** The fractional numerator of this Count */
+    /** The fractional numerator of this Count. */
     private int numerator;
 
-    /** The fractional denominator of this Count */
+    /** The fractional denominator of this Count. */
     private int denominator;
 
     /**

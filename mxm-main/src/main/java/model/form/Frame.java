@@ -5,6 +5,7 @@ import model.basic.Dynamic;
 import model.pitch.Pitch;
 import model.time.Tempo;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.TreeSet;
@@ -13,7 +14,7 @@ import java.util.TreeSet;
  * A class for storing information about single events
  * in a Passage.
  */
-public class Frame {
+public class Frame implements Collection<Note> {
 
     Count time;
     TreeSet<Note> notes;
@@ -59,5 +60,10 @@ public class Frame {
      */
     public void setTempo(Tempo tempo) {
         this.tempo = tempo;
+    }
+
+
+    public Count getTime() {
+
     }
 }

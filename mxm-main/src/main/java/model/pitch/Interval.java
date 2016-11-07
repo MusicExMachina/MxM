@@ -15,6 +15,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
 
     /** The smallest an interval can be. */
     private static int MIN_INTERVAL = -120;
+
     /** The largest an interval can be. */
     private static int MAX_INTERVAL = 120;
 
@@ -38,6 +39,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
 
     /** The immutable basic IntervalClass of this Interval. */
     private IntervalClass intervalClass;
+
     /** The immutable size of this interval in half-steps. */
     private int size;
 

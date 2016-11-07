@@ -8,14 +8,10 @@ import java.util.Comparator;
  */
 public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
 
-    /**
-     * The minimum tempo possible.
-     */
+    /** The minimum tempo possible. */
     private static final int MIN_TEMPO = 0;
 
-    /**
-     * Stores a tempo value, in BPM.
-     */
+    /** Stores a tempo value, in BPM. */
     private final int value;
 
     /**

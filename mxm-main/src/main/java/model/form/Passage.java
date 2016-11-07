@@ -5,10 +5,8 @@ import model.time.Count;
 import java.util.*;
 
 /**
- * After we're done creating a RhythmTree, we put all
- * of its frames into a Passage. Passages are essentially
- * great big Frame holders, and provide users with the
- * ability to look up what's happening at any given Count.
+ * After we're done creating a RhythmTree, we put all of its frames into a Passage. Passages are essentially
+ * great big Frame holders, and provide users with the ability to look up what's happening at any given Count.
  */
 public class Passage implements Iterable<Frame> {
 

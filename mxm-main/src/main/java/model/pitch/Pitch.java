@@ -18,8 +18,10 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
     /** The minimum midi value of pitch, C-1. */
     private static final int MIN_PITCH = 0;
+
     /** The maximum midi value of pitch, B9. */
     private static final int MAX_PITCH = 120;
+
     /** An ArrayList of all valid Pitches */
     private static final ArrayList<Pitch> ALL = new ArrayList<Pitch>();
 
@@ -55,6 +57,7 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
     /** The PitchClass of this Pitch. */
     private PitchClass pitchClass;
+    
     /** The midi value of this Pitch. */
     private int value;
 

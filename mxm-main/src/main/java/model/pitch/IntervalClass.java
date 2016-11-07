@@ -15,8 +15,10 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /** The lowest interval class, better known as "unison." */
     private static final int MIN_INTERVALCLASS = 0;
+
     /** The highest interval class, better known as "a major seventh." */
     private static final int MAX_INTERVALCLASS = 11;
+
     /** All possible IntervalClasses */
     private static final ArrayList<IntervalClass> ALL = new ArrayList<>();
 
