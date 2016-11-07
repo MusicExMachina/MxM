@@ -12,6 +12,9 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     /** A zero Count. */
     public static final Count ZERO = new Count(0,1);
 
+    /** An "infinite" Count- should be optimized later, maybe 0/0? */
+    public static final Count INFINITY = new Count(Integer.MAX_VALUE,1);
+
     /** A full measure Count. */
     public static final Count FULL_MEASURE = new Count(1,1);
 
