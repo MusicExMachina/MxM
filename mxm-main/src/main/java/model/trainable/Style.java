@@ -1,5 +1,7 @@
 package model.trainable;
 
+import model.structure.Instrument;
+
 import java.util.Set;
 
 /**

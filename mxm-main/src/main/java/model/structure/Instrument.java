@@ -1,4 +1,4 @@
-package model.trainable;
+package model.structure;
 
 import model.pitch.Pitch;
 import model.basic.Technique;

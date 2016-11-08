@@ -13,7 +13,7 @@ import java.util.List;
 public class RhythmNode {
 
     /** A static int for drawing purposes. */
-    public static final int DRAW_RAD = 20;
+    private static final int DRAW_RAD = 20;
 
     /** The depth of this Node in the tree. */
     private int depth;
