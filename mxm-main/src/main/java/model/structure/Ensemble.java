@@ -1,6 +1,7 @@
 package model.structure;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public class Ensemble {
 
     private List<Instrument> instruments;
+    private HashMap<Instrument,List<Part>> parts;
 
     public Ensemble() {
         instruments = new ArrayList<>();
@@ -18,4 +20,7 @@ public class Ensemble {
     public Iterator<Instrument> iterator() {
         return instruments.iterator();
     }
+
+
+
 }

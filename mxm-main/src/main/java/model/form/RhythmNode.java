@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * RhythmNodes are the very active, very exposed, mutable building block of RhythmTrees. One cannot
- * Directly create anything but a root node, and then create more by subdividing existing ones.
+ * directly create anything but a root node, and then create more by subdividing existing ones.
  */
 public class RhythmNode {
 

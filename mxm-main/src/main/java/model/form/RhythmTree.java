@@ -4,11 +4,9 @@ import java.awt.*;
 import java.util.*;
 
 /**
- * A conceptualization of rhythm as gradual, equal
- * subdivisions of some concrete amount of time.
- * RhythmTrees operate like many other data structures
- * save that their only "real" storage is in their
- * leaf nodes.
+ * A conceptualization of rhythm as gradual, equal subdivisions of some concrete amount of time.
+ * RhythmTrees operate like many other data structures save that their only "real" storage is in
+ * their leaf nodes.
  */
 public class RhythmTree {
 
@@ -18,9 +16,7 @@ public class RhythmTree {
     /** Saves the root RhythmNode **/
     private RhythmNode root;
 
-    /**
-     * The RhythmTree default constructor
-     */
+    /** The RhythmTree default constructor */
     public RhythmTree() {
         root = new RhythmNode();
     }
