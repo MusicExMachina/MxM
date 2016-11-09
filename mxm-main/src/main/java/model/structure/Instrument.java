@@ -1,4 +1,4 @@
-package model.trainable;
+package model.structure;
 
 import model.pitch.Pitch;
 import model.basic.Technique;
@@ -15,11 +15,11 @@ import java.util.Set;
  */
 public class Instrument {
 
-    String name;
+    private String name;
     // Store possible pitches
-    Set<Pitch> possiblePitches;
+    private Set<Pitch> possiblePitches;
     // Store possible techniques
-    Set<Technique> possibleTechniques;
+    private Set<Technique> possibleTechniques;
 
     // All articulations are possible on all instruments (as things stand)
 }
