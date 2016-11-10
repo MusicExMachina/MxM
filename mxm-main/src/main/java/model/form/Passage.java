@@ -15,8 +15,10 @@ public class Passage{
     /** The Ensemble of all Instruments which are involved in this Passage. */
     private Ensemble ensemble;
 
+    /** */
     private HashMap<Instrument,List<Part>> sections;
 
+    /** */
     private List<Part> parts;
-    
+
 }

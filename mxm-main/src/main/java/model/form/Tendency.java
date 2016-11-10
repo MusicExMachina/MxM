@@ -9,13 +9,15 @@ import model.time.Count;
 import java.util.TreeMap;
 
 /**
- * Created by celenp on 11/9/2016.
+ * Measures the tendency of given
  */
 public class Tendency {
 
     TreeMap<Count,Distribution<Pitch>> pitchesOverTime;
     TreeMap<Count,Distribution<Pitch>> intervalsOverTime;
+
     TreeMap<Count,Distribution<PitchClass>> pitchClassesOverTime;
     TreeMap<Count,Distribution<IntervalClass>> intervalClassesOverTime;
 
+    //TreeMap<Count,Distribution<>>;
 }

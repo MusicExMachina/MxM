@@ -168,4 +168,17 @@ public class Distribution<T> {
 
         return sum;
     }
+
+    /**
+     * Checks what percent of these Distributions are identical, where
+     * 0 would mean they are essentially disjoint sets, and 1 would mean
+     * they are identical percentage-wise.
+     * @param idealDistribution The ideal Distribution.
+     * @return The result of this Chi Squared Analysis.
+     */
+    public float percentDifferent(Distribution<T> idealDistribution) {
+        float sum = 0;
+        //TODO: finish this
+        return sum;
+    }
 }
