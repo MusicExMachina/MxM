@@ -1,6 +1,6 @@
-package model.form.tests;
+package model.rhythmTree.tests;
 
-import model.form.RhythmTree;
+import model.rhythmTree.RhythmTree;
 import org.junit.Test;
 
 

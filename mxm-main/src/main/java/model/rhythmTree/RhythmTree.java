@@ -1,4 +1,4 @@
-package model.form;
+package model.rhythmTree;
 
 import java.awt.*;
 import java.util.*;
@@ -16,7 +16,7 @@ public class RhythmTree {
     /** Saves the root RhythmNode **/
     private RhythmNode root;
 
-    /** The RhythmTree default constructor */
+    /** The rhythmTree default constructor */
     public RhythmTree() {
         root = new RhythmNode();
     }
@@ -53,18 +53,18 @@ public class RhythmTree {
 
     /**
      * Returns a nicely-formatted string
-     * representing this RhythmTree.
-     * @return A String of this RhythmTree.
+     * representing this rhythmTree.
+     * @return A String of this rhythmTree.
      */
     public String toString() {
         return root.toString();
     }
 
     /**
-     * The RhythmTree copy constructor
-     * @param other the RhythmTree to copy
+     * The rhythmTree copy constructor
+     * @param other the rhythmTree to copy
      */
-    //public RhythmTree(RhythmTree other) {
+    //public rhythmTree(rhythmTree other) {
 
     //}
 
@@ -119,8 +119,8 @@ public class RhythmTree {
     /**
      * Paint the rhythm tree
      * @param g Graphics2D object for painting
-     * @param x top left corner or RhythmTree xcoord
-     * @param y top left corner or RhythmTree ycoord
+     * @param x top left corner or rhythmTree xcoord
+     * @param y top left corner or rhythmTree ycoord
      */
     public void paint(Graphics2D g, int x, int y) {
         getRoot().paint(g, x, y);

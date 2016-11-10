@@ -11,8 +11,6 @@ import java.util.List;
 public class Ensemble {
 
     private List<Instrument> instruments;
-    private HashMap<Instrument,List<Part>> parts;
-
     public Ensemble() {
         instruments = new ArrayList<>();
     }
