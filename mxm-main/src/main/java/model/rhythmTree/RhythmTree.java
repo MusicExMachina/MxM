@@ -1,8 +1,7 @@
-package model.form;
+package model.rhythmTree;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * A conceptualization of rhythm as gradual, equal subdivisions of some concrete amount of time.
@@ -17,7 +16,7 @@ public class RhythmTree {
     /** Saves the root RhythmNode **/
     private RhythmNode root;
 
-    /** The RhythmTree default constructor */
+    /** The rhythmTree default constructor */
     public RhythmTree() {
         root = new RhythmNode();
     }
@@ -54,73 +53,30 @@ public class RhythmTree {
 
     /**
      * Returns a nicely-formatted string
-     * representing this RhythmTree.
-     * @return A String of this RhythmTree.
+     * representing this rhythmTree.
+     * @return A String of this rhythmTree.
      */
     public String toString() {
         return root.toString();
     }
 
     /**
-     * The RhythmTree copy constructor
-     * @param other the RhythmTree to copy
+     * The rhythmTree copy constructor
+     * @param other the rhythmTree to copy
      */
-    public RhythmTree(RhythmTree other) {
+    //public rhythmTree(rhythmTree other) {
 
-    }
+    //}
 
     /**
-     * Getter for the root Node which fills the whole measure.
+     *
      * @return
      */
-    public RhythmNode getRoot() {
-        return root;
-    }
-
-    /**
-     * Creates list from RhythmTree based on number of subdivisions
-     * @return List of subdivisions breadth first order
-     */
-    public ArrayList<Integer> toList() {
-        ArrayList<Integer> list = new ArrayList<>();
-        PriorityQueue<RhythmNode> q = new PriorityQueue<>();
-        q.add(root);
-        RhythmNode curr = root;
-        while(!q.isEmpty()){
-            list.add(root.getChildren().size());
-            q.addAll(root.getChildren());
-        }
-        return list;
-    }
-
-
-    /**
-     * Paint the rhythm tree
-     * @param g Graphics2D object for painting
-     * @param x top left corner or RhythmTree xcoord
-     * @param y top left corner or RhythmTree ycoord
-     */
-    public void paint(Graphics2D g, int x, int y) {
-        getRoot().paint(g, x, y);
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-//@Override
-//public Iterator<Frame> iterator() {
-            /*
-        Iterator<Frame> it = new Iterator<Frame>() {
-            private Node node = root;
+    /*
+    @Override
+    public Iterator<RhythmNode> iterator() {
+        Iterator<RhythmNode> it = new Iterator<Frame>() {
+            private RhythmNode node = root;
 
             @Override
             public boolean hasNext() {
@@ -149,6 +105,24 @@ public class RhythmTree {
             }
         };
         return it;
-        */
-//   return null;
-//}
+        return null;
+    }
+
+    /**
+     * Getter for the root Node which fills the whole measure.
+     * @return
+     */
+    public RhythmNode getRoot() {
+        return root;
+    }
+
+    /**
+     * Paint the rhythm tree
+     * @param g Graphics2D object for painting
+     * @param x top left corner or rhythmTree xcoord
+     * @param y top left corner or rhythmTree ycoord
+     */
+    public void paint(Graphics2D g, int x, int y) {
+        getRoot().paint(g, x, y);
+    }
+}

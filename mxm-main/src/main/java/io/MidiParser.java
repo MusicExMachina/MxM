@@ -1,8 +1,8 @@
 package io;
 
 import model.pitch.Pitch;
-import model.form.RhythmNode;
-import model.form.RhythmTree;
+import model.rhythmTree.RhythmNode;
+import model.rhythmTree.RhythmTree;
 import model.form.Passage;
 import model.time.TimeSignature;
 

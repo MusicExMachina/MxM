@@ -1,4 +1,4 @@
-package model.form;
+package model.rhythmTree;
 
 import model.time.Count;
 
@@ -130,8 +130,8 @@ public class RhythmNode {
 
     /**
      * Returns a nicely-formatted string
-     * representing this RhythmTree.
-     * @return A String of this RhythmTree.
+     * representing this rhythmTree.
+     * @return A String of this rhythmTree.
      */
     public String toString() {
         String toReturn = "(";

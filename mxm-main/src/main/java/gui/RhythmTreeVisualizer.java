@@ -1,5 +1,5 @@
 package gui;
-import model.form.RhythmTree;
+import model.rhythmTree.RhythmTree;
 
 import javax.swing.*;
 import java.awt.*;

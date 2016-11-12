@@ -10,9 +10,16 @@ import java.util.List;
  */
 public class Ensemble {
 
-    private List<Instrument> instruments;
-    private HashMap<Instrument,List<Part>> parts;
+    public Ensemble PIANO_SOLO;
+    public Ensemble FOUR_PART_CHOIR;
+    public Ensemble STRING_QUARTET;
+    public Ensemble WOODWIND_QUINTET;
+    public Ensemble BRASS_QUINTET;
 
+
+
+
+    private List<Instrument> instruments;
     public Ensemble() {
         instruments = new ArrayList<>();
     }
@@ -20,7 +27,4 @@ public class Ensemble {
     public Iterator<Instrument> iterator() {
         return instruments.iterator();
     }
-
-
-
 }

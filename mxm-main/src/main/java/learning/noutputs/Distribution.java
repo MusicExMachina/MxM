@@ -36,7 +36,7 @@ public class Distribution<T> {
     public void add(T toAdd) {
         if (occurences.containsKey(toAdd)) {
             Integer integer = occurences.get(toAdd);
-            occurences.put(toAdd, integer++);
+            occurences.put(toAdd, integer + 1);
         } else {
             occurences.put(toAdd, 1);
         }
@@ -118,7 +118,10 @@ public class Distribution<T> {
 
         // Put it in the new Distribution
         for(T key : newOccurences.keySet()) {
-            newDistribution.add(key,newOccurences.get(key));
+            // If the chance of this type is not 0.
+            if(!newOccurences.get(key).equals(0)) {
+                newDistribution.add(key,newOccurences.get(key));
+            }
         }
 
         return newDistribution;
@@ -141,5 +144,41 @@ public class Distribution<T> {
         }
 
         return null;
+    }
+
+    /**
+     * Does Chi-Squared analysis between this Distribution
+     * and an ideal Distribution.
+     * @param idealDistribution The ideal Distribution.
+     * @return The result of this Chi Squared Analysis.
+     */
+    public float chiSquared(Distribution<T> idealDistribution) {
+        float sum = 0;
+
+        for(T type : occurences.keySet()) {
+            int ideal = 0;
+            int actual = occurences.get(type);
+            if(idealDistribution.occurences.containsKey(type)) {
+                ideal = idealDistribution.occurences.get(type);
+            }
+            int differenceSquared = (ideal-actual) * (ideal-actual);
+            // Can be infinity!
+            sum += (float)differenceSquared/(float)ideal;
+        }
+
+        return sum;
+    }
+
+    /**
+     * Checks what percent of these Distributions are identical, where
+     * 0 would mean they are essentially disjoint sets, and 1 would mean
+     * they are identical percentage-wise.
+     * @param idealDistribution The ideal Distribution.
+     * @return The result of this Chi Squared Analysis.
+     */
+    public float percentDifferent(Distribution<T> idealDistribution) {
+        float sum = 0;
+        //TODO: finish this
+        return sum;
     }
 }
