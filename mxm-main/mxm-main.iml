@@ -14,9 +14,9 @@
     <orderEntry type="library" name="Maven: org.nd4j:nd4j-native-platform:0.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.nd4j:nd4j-native:0.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.nd4j:nd4j-native-api:0.5.0" level="project" />
-    <orderEntry type="library" name="Maven: org.nd4j:nd4j-native:windows-x86_64:0.5.0" level="project" />
-    <orderEntry type="library" name="Maven: org.nd4j:nd4j-native:linux-x86_64:0.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.nd4j:nd4j-native:macosx-x86_64:0.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.nd4j:nd4j-native:linux-x86_64:0.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.nd4j:nd4j-native:windows-x86_64:0.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.nd4j:nd4j-native:linux-ppc64le:0.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.deeplearning4j:deeplearning4j-core:0.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.12" level="project" />
@@ -59,19 +59,16 @@
     <orderEntry type="library" name="Maven: org.bytedeco:javacpp:1.2.3" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:javacv:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:opencv:3.1.0-1.2" level="project" />
-    <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:opencv:windows-x86:3.1.0-1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:opencv:linux-x86_64:3.1.0-1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:opencv:macosx-x86_64:3.1.0-1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:opencv:windows-x86_64:3.1.0-1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:opencv:linux-ppc64le:3.1.0-1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:ffmpeg:3.0.2-1.2" level="project" />
-    <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:ffmpeg:windows-x86:3.0.2-1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:ffmpeg:linux-x86_64:3.0.2-1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:ffmpeg:macosx-x86_64:3.0.2-1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:ffmpeg:windows-x86_64:3.0.2-1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:ffmpeg:linux-ppc64le:3.0.2-1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:leptonica:1.73-1.2" level="project" />
-    <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:leptonica:windows-x86:1.73-1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:leptonica:linux-x86_64:1.73-1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:leptonica:macosx-x86_64:1.73-1.2" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:leptonica:windows-x86_64:1.73-1.2" level="project" />
