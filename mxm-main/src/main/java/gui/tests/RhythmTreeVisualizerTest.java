@@ -1,6 +1,6 @@
 package gui.tests;
 
-import model.generation.RhythmTree;
+import model.form.RhythmTree;
 import org.junit.Test;
 import gui.RhythmTreeVisualizer;
 

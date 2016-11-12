@@ -1,10 +1,8 @@
 package gui;
-import model.generation.RhythmTree;
+import model.form.RhythmTree;
 
 import javax.swing.*;
 import java.awt.*;
-
-
 
 public class RhythmTreeVisualizer extends JFrame {
 
