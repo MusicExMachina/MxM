@@ -1,5 +1,6 @@
 package model.form;
 
+import model.rhythmTree.RhythmTree;
 import model.time.TimeSignature;
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -22,4 +22,10 @@ public class Instrument {
     private Set<Technique> possibleTechniques;
 
     // All articulations are possible on all instruments (as things stand)
+
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
