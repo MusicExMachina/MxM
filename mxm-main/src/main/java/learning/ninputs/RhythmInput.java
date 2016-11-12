@@ -1,7 +1,7 @@
 package learning.ninputs;
 
 
-import model.generation.RhythmTree;
+import model.rhythmTree.RhythmTree;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.factory.Nd4j;
