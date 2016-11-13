@@ -51,7 +51,7 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
         }
     }
 
-    /** Stores the MidiTools value of this Pitch. */
+    /** Stores the midi value of this Pitch. */
     private int value;
 
     /**

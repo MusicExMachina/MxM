@@ -12,12 +12,10 @@ import java.util.TreeMap;
 public class Line implements Iterable<Note>{
 
     private Instrument instrument;
-    private Passage passage;
     private TreeMap<Count,Note> notes;
 
-    public Line(Instrument instrument, Passage passage) {
+    public Line(Instrument instrument) {
         this.instrument = instrument;
-        this.passage = passage;
         this.notes = new TreeMap<>();
     }
 

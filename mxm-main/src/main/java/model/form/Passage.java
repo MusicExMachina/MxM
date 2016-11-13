@@ -69,7 +69,7 @@ public class Passage implements Iterable<Frame> {
 
         // If there's no frame available
         if(frame == null) {
-            frame = new Frame(time,this);
+            frame = new Frame(time);
             frames.put(time,frame);
         }
         frame.add(note);

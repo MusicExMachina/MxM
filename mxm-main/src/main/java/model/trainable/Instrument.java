@@ -15,19 +15,18 @@ import java.util.Set;
  */
 public class Instrument {
 
-    public static final Instrument DEFAULT = new Instrument();
+    public static final Instrument DEFAULT = new Instrument("Default Instrument");
 
     private String name;
     private Set<Pitch> possiblePitches;
     private Set<Technique> possibleTechniques;
-    private int numVoices;
 
-    public Instrument() {
-        numVoices = 1;
+    public Instrument(String name) {
+        this.name = name;
     }
 
-    public int getNumVoices() {
-        return numVoices;
+    public static Instrument getGeneralMIDIInstrument(int number) {
+        return null;
     }
 
     @Override

@@ -5,6 +5,8 @@ import model.basic.Count;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import model.form.Frame;
+import model.form.Note;
 
 /**
  * RhythmNodes are the very active, very exposed, mutable building block of RhythmTrees. One cannot
@@ -33,6 +35,9 @@ public class RhythmNode {
     /** The duration of this RhythmNode */
     private Count duration;
 
+    /** The frame of this RhythmNode. */
+    private Frame frame;
+
     /**
      * The RhythmNode constructor, used by the subdivide function in an almost-factory method.
      * @param parent The parent of this RhythmNode.
@@ -40,12 +45,14 @@ public class RhythmNode {
      * @param duration The duration of this RhythmNode.
      */
     public RhythmNode(RhythmTree tree, RhythmNode parent, Count timing, Count duration) {
-        this.depth      = parent.getDepth()+1;
+        if(parent != null)
+            this.depth = parent.getDepth()+1;
         this.parent     = parent;
         this.tree       = tree;
         this.children   = new ArrayList<>();
         this.timing     = timing;
         this.duration   = duration;
+        this.frame      = new Frame(timing);
     }
 
     /**
@@ -104,6 +111,14 @@ public class RhythmNode {
     }
 
     /**
+     * Returns the Frame of this RhythmNode.
+     * @return The Frame of this RhythmNode.
+     */
+    public Frame getFrame() {
+        return frame;
+    }
+
+    /**
      * Subdivides this RhythmNode a given number of times.
      * @param times The number of times to divide this RhythmNode.
      * @return A list of the children of this Node.
@@ -123,7 +138,7 @@ public class RhythmNode {
             else throw new Error("This RhythmNode is already subdivided!");
         }
         else if(times == 1) {
-            tree.addFrame(timing);
+            //tree.addFrame(timing);
         }
         else if(times < 0)
             throw new Error("Trying to subdivide this RhythmNode" + times + " times!");
@@ -156,7 +171,11 @@ public class RhythmNode {
             toReturn += node.toString();
         }
         if(children.size() == 0) {
-            return "o";
+            String thisNode = "[ ";
+            for(Note note : frame) {
+                thisNode += note.getPitch().toString() + " ";
+            }
+            return thisNode + "]";
         }
         toReturn += ")";
         return toReturn;

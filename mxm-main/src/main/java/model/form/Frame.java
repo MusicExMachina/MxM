@@ -11,17 +11,21 @@ import java.util.*;
 public class Frame implements Iterable<Note> {
 
     private Count time;
-    private Passage passage;
     private TreeMap<Pitch,Note> notes;
 
-    public Frame(Count time,Passage passage) {
+    public Frame(Count time) {
         this.time = time;
-        this.passage = passage;
         this.notes = new TreeMap<>();
     }
 
     public void add(Note note) {
         notes.put(note.getPitch(),note);
+    }
+
+    public void add(Frame frame) {
+        for(Note note : frame) {
+            notes.put(note.getPitch(),note);
+        }
     }
 
     @Override
