@@ -67,19 +67,6 @@ public class RhythmTree {
     }
 
     /**
-     * Allows RhythmNodes to add frames to this RhythmTree
-     */
-    public void addFrame(Count timing) {
-        Frame frame = new Frame();
-        // Subdivide a previous Frame if necessary.
-        if(frames.floorEntry(timing) != null) {
-            frames.floorEntry(timing).getValue().setEnd();
-        }
-        frames.put(timing,new Frame());
-    }
-
-
-    /**
      * Getter for the root RhythmNode which fills the whole measure.
      * @return Gets the root RhythmNode of this RhythmTree.
      */
@@ -87,20 +74,13 @@ public class RhythmTree {
         return root;
     }
 
-
-
-
-
-
-
-
     /**
-     * The rhythmTree copy constructor
-     * @param other the rhythmTree to copy
+     * Converts this RhythmTree to a List of Integer subdivisions
+     * @return A List of Integer subdivisions.
      */
-    //public rhythmTree(rhythmTree other) {
-
-    //}
+    public ArrayList<Integer> toList() {
+        return root.toList();
+    }
 
     /**
      *

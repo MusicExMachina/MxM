@@ -46,31 +46,13 @@ public class Note {
      * @param start The start time of this Note.
      * @param length The length of this Note.
      */
-    public Note(Pitch pitch, Count start, Count length) {
+    public Note(Pitch pitch, Count start, Count length, Instrument instrument) {
         this.pitch          = pitch;
         this.start          = start;
         this.length         = length;
+        this.instrument     = instrument;
         this.articulation   = Articulation.DEFAULT;
-        this.instrument     = Instrument.DEFAULT;
         this.technique      = Technique.DEFAULT;
-    }
-
-    /**
-     * A more complete constructor which allows for
-     * initialization of Articulation Techniques.
-     * @param pitch The Pitch of this Note.
-     * @param start The start time of this Note.
-     * @param length The length of this Note.
-     * @param articulation The Articulation of this Note.
-     * @param technique The Technique of this Note.
-     */
-    public Note(Pitch pitch, Count start, Count length, Articulation articulation, Technique technique) {
-        this.pitch          = pitch;
-        this.start          = start;
-        this.length         = length;
-        this.articulation   = articulation;
-        this.instrument     = Instrument.DEFAULT;
-        this.technique      = technique;
     }
 
     /**

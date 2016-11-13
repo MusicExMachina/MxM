@@ -1,31 +1,31 @@
 package model.form;
 
+import model.pitch.Pitch;
 import model.time.Count;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 /**
- * A class for storing information about contemporaneous events in a Passage.
+ * Frames are vertical arrangements of Notes that are sounded (at least their starts) all at once.
  */
 public class Frame implements Iterable<Note> {
 
     private Count time;
     private Passage passage;
-    private ArrayList<Note> notes;
+    private TreeMap<Pitch,Note> notes;
 
     public Frame(Count time,Passage passage) {
         this.time = time;
         this.passage = passage;
-        this.notes = new ArrayList<>();
+        this.notes = new TreeMap<>();
     }
 
     public void add(Note note) {
-        notes.add(note);
+        notes.put(note.getPitch(),note);
     }
 
     @Override
     public Iterator<Note> iterator() {
-        return notes.iterator();
+        return notes.values().iterator();
     }
 }

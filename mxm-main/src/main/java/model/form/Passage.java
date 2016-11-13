@@ -11,7 +11,7 @@ import java.util.*;
  * After we're done creating a RhythmTree, we put all of its frames into a Passage. Passages are essentially
  * great big Frame holders, and provide users with the ability to look up what's happening at any given Count.
  */
-public class Passage {
+public class Passage implements Iterable<Frame> {
 
     /** TimeSignatures throughout this passage. */
     private NavigableMap<Count,TimeSignature> timeSignatures;
@@ -118,7 +118,8 @@ public class Passage {
      * Returns an Iterator over all Frames in this Passage.
      * @return An Iterator over all Frames in this Passage.
      */
-    public Iterator<Frame> frameIterator() {
+    @Override
+    public Iterator<Frame> iterator() {
         return frames.values().iterator();
     }
 
@@ -127,5 +128,4 @@ public class Passage {
      * @return An Iterator over all Lines in this Passage.
      */
     public Iterator<Line> lineIterator() { return lines.iterator(); }
-
 }

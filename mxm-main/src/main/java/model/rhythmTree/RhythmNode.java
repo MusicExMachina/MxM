@@ -132,6 +132,20 @@ public class RhythmNode {
     }
 
     /**
+     * Converts this RhythmNode to a List of Integer subdivisions
+     * @return A List of Integer subdivisions.
+     */
+    public ArrayList<Integer> toList() {
+        ArrayList<Integer> toReturn = new ArrayList<>();
+        toReturn.add(getValue());
+        for(RhythmNode child : children)
+        {
+            toReturn.addAll(child.toList());
+        }
+        return toReturn;
+    }
+
+    /**
      * Returns a nicely-formatted string
      * representing this rhythmTree.
      * @return A String of this rhythmTree.
