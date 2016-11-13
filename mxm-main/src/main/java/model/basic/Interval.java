@@ -1,4 +1,4 @@
-package model.pitch;
+package model.basic;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 /**
  * Interval is a simple class which utilizes the interning design pattern to create only two
- * hundred forty different values- all possible MIDI pitch differences. Intervals are usually
+ * hundred forty different values- all possible MIDI basic differences. Intervals are usually
  * used for analysis, though they may be used in Collections. Note that there should never be
  * more than these 240 Intervals, and that an iterator() has been provided for easy access.
  * Also note that Intervals may be negative, though IntervalClasses never are.
@@ -37,7 +37,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
         return ALL.iterator();
     }
 
-    /** The immutable basic IntervalClass of this Interval. */
+    /** The immutable noteQualities IntervalClass of this Interval. */
     private IntervalClass intervalClass;
 
     /** The immutable size of this interval in half-steps. */
@@ -140,7 +140,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
     }
 
     /**
-     * A basic (generated) equals() method for Intervals.
+     * A noteQualities (generated) equals() method for Intervals.
      * @param o The Object to compare this to.
      * @return If these two Objects are equal.
      */

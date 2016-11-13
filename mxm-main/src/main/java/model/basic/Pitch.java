@@ -1,4 +1,4 @@
-package model.pitch;
+package model.basic;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -16,10 +16,10 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     // Private static variables //
     //////////////////////////////
 
-    /** The minimum midi value of pitch, C-1. */
+    /** The minimum midi value of basic, C-1. */
     private static final int MIN_PITCH = 0;
 
-    /** The maximum midi value of pitch, B9. */
+    /** The maximum midi value of basic, B9. */
     private static final int MAX_PITCH = 120;
 
     /** An ArrayList of all valid Pitches */

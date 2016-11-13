@@ -1,10 +1,12 @@
 package model.rhythmTree;
 
-import model.time.Count;
+import model.basic.Count;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import model.form.Frame;
+import model.form.Note;
 
 /**
  * RhythmNodes are the very active, very exposed, mutable building block of RhythmTrees. One cannot
@@ -18,6 +20,9 @@ public class RhythmNode {
     /** The depth of this Node in the tree. */
     private int depth;
 
+    /** The RhythmTree of this Node. */
+    private RhythmTree tree;
+
     /** The parent of this Node. */
     private RhythmNode parent;
 
@@ -30,31 +35,32 @@ public class RhythmNode {
     /** The duration of this RhythmNode */
     private Count duration;
 
-    /**
-     * A basic constructor for a RhythmNode.
-     */
-    public RhythmNode() {
-        this.depth      = 0;
-        this.parent     = null;
-        this.children   = new ArrayList<>();
-        this.timing     = Count.ZERO;
-        this.duration   = Count.FULL_MEASURE;
-    }
+    /** The frame of this RhythmNode. */
+    private Frame frame;
 
     /**
-     * The private RhythmNode constructor, used by
-     * the subdivide function in an almost factory-
-     * like method.
+     * The RhythmNode constructor, used by the subdivide function in an almost-factory method.
      * @param parent The parent of this RhythmNode.
      * @param timing The timing of this RhythmNode.
      * @param duration The duration of this RhythmNode.
      */
-    private RhythmNode(RhythmNode parent, Count timing, Count duration) {
-        this.depth      = parent.getDepth()+1;
+    public RhythmNode(RhythmTree tree, RhythmNode parent, Count timing, Count duration) {
+        if(parent != null)
+            this.depth = parent.getDepth()+1;
         this.parent     = parent;
+        this.tree       = tree;
         this.children   = new ArrayList<>();
         this.timing     = timing;
         this.duration   = duration;
+        this.frame      = new Frame(timing);
+    }
+
+    /**
+     * Returns the RhythmTree of this RhythmNode.
+     * @return The RhythmTree of this RhythmNode.
+     */
+    public RhythmTree getTree() {
+        return tree;
     }
 
     /**
@@ -105,6 +111,14 @@ public class RhythmNode {
     }
 
     /**
+     * Returns the Frame of this RhythmNode.
+     * @return The Frame of this RhythmNode.
+     */
+    public Frame getFrame() {
+        return frame;
+    }
+
+    /**
      * Subdivides this RhythmNode a given number of times.
      * @param times The number of times to divide this RhythmNode.
      * @return A list of the children of this Node.
@@ -118,14 +132,32 @@ public class RhythmNode {
                 Count newDuration = this.duration.dividedBy(times);
                 for (int i = 0; i < times; i++) {
                     Count newTiming = this.timing.plus(newDuration.times(i));
-                    children.add(new RhythmNode(this,newTiming,newDuration));
+                    children.add(new RhythmNode(tree,this,newTiming,newDuration));
                 }
             }
             else throw new Error("This RhythmNode is already subdivided!");
         }
-        else throw new Error("Trying to subdivide this RhythmNode" + times + " times!");
+        else if(times == 1) {
+            //tree.addFrame(timing);
+        }
+        else if(times < 0)
+            throw new Error("Trying to subdivide this RhythmNode" + times + " times!");
 
         return children;
+    }
+
+    /**
+     * Converts this RhythmNode to a List of Integer subdivisions
+     * @return A List of Integer subdivisions.
+     */
+    public ArrayList<Integer> toList() {
+        ArrayList<Integer> toReturn = new ArrayList<>();
+        toReturn.add(getValue());
+        for(RhythmNode child : children)
+        {
+            toReturn.addAll(child.toList());
+        }
+        return toReturn;
     }
 
     /**
@@ -139,7 +171,11 @@ public class RhythmNode {
             toReturn += node.toString();
         }
         if(children.size() == 0) {
-            return "o";
+            String thisNode = "[ ";
+            for(Note note : frame) {
+                thisNode += note.getPitch().toString() + " ";
+            }
+            return thisNode + "]";
         }
         toReturn += ")";
         return toReturn;

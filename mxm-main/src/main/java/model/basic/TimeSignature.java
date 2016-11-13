@@ -1,4 +1,4 @@
-package model.time;
+package model.basic;
 
 /**
  * TimeSignatures are exactly what they sound like in the Western music theory
@@ -113,7 +113,7 @@ public class TimeSignature {
     }
 
     /**
-     * A basic (generated) equals() method for TimeSignature.
+     * A noteQualities (generated) equals() method for TimeSignature.
      * @param o The Object to compare this to.
      * @return If these two Objects are equal.
      */

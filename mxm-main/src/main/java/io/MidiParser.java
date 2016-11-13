@@ -1,10 +1,14 @@
 package io;
 
-import model.pitch.Pitch;
+import model.basic.Count;
+import model.basic.Pitch;
+import model.form.Note;
 import model.rhythmTree.RhythmNode;
 import model.rhythmTree.RhythmTree;
 import model.form.Passage;
-import model.time.TimeSignature;
+import model.basic.TimeSignature;
+import model.trainable.*;
+import model.trainable.Instrument;
 
 import javax.sound.midi.*;
 import java.util.*;
@@ -54,6 +58,9 @@ class MidiParser {
     // Stage 4
     private HashMap<Track,TreeMap<Integer,RhythmTree>> rhythmTrees;
 
+    // Output
+    private Passage passage;
+
     /**
      * The main method of MidiParser, which is the entire
      * essence of this class. In fact, this class could be
@@ -74,6 +81,7 @@ class MidiParser {
         pulsesPerQuarter = new TreeMap<>();
         timePoints = new TreeMap<>();
         frames = new HashMap<>();
+        passage = new Passage();
 
         System.out.println("MIDI:\tParsing MidiEvents...");
         parseAll();
@@ -94,11 +102,11 @@ class MidiParser {
             }
         }
 
-        return new Passage();
+        return passage;
     }
 
     /**
-     * Reads in and parses basic midi information, such
+     * Reads in and parses noteQualities midi information, such
      * as all the events in a given midi Sequence. This
      * information is stored, and then later interpreted.
      */
@@ -266,7 +274,7 @@ class MidiParser {
                 noteOns.get(track).put(tick, new HashSet<Pitch>());
             }
 
-            // Add this pitch to note-ons
+            // Add this basic to note-ons
             noteOns.get(track).get(tick).add(pitch);
         }
     }
@@ -294,7 +302,7 @@ class MidiParser {
             noteOffs.get(track).put(tick,new HashSet<Pitch>());
         }
 
-        // Add this pitch to note-ons
+        // Add this basic to note-ons
         noteOffs.get(track).get(tick).add(pitch);
     }
 
@@ -460,12 +468,18 @@ class MidiParser {
 
             // Take the first measure this track plays in
             float measureStart = (float)Math.floor(frames.get(track).firstKey());
+
+            // While there are still measures left on this track
             while(frames.get(track).ceilingEntry(measureStart) != null) {
-                // Check if the next note is in the next measure
-                RhythmTree rhythmTree = new RhythmTree();
-                subdivideNode(rhythmTree.getRoot(), measureStart, measureStart + 1.0f, frames.get(track));
-                rhythmTrees.get(track).put(Math.round(measureStart),rhythmTree);
-                // Move on to a new measure
+                // If there's something going on in this measure
+                if(frames.get(track).ceilingKey(measureStart) < measureStart + 1.0f) {
+                    // Create a rhythm tree for every measure
+                    RhythmTree rhythmTree = new RhythmTree();
+                    // Given measure bounds, build a rhythm tree off of those notes
+                    subdivideNode(rhythmTree.getRoot(), measureStart, measureStart + 1.0f, frames.get(track));
+                    rhythmTrees.get(track).put(Math.round(measureStart), rhythmTree);
+                    // Move on to a new measure
+                }
                 measureStart += 1.0f;
             }
         }
@@ -566,6 +580,12 @@ class MidiParser {
                 float endTime = start + ((end - start) / (float) subdivisions * (float) (childNumber + 1));
                 subdivideNode(child, beginTime, endTime, notes);
                 childNumber++;
+            }
+        }
+        else if(subdivisions == 1 && myNotes.keySet().size() > 0) {
+            for(Pitch pitch : myNotes.floorEntry(end).getValue()) {
+                Note note = new Note(pitch, node.getTiming(), Count.ZERO, Instrument.DEFAULT);
+                node.getFrame().add(note);
             }
         }
     }
