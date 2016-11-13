@@ -106,8 +106,8 @@ class MidiWriter {
             MidiTools.play(s);
 
             //****  write the MIDI sequence to a MIDI file  ****
-            //File f = new File("midifile.mid");
-            //MidiSystem.write(s,1,f);
+            File f = new File("midifile.mid");
+            MidiSystem.write(s,1,f);
 
         } //try
         catch(Exception e)

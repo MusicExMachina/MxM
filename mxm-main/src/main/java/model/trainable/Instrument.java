@@ -26,7 +26,7 @@ public class Instrument {
     }
 
     public static Instrument getGeneralMIDIInstrument(int number) {
-        return DEFAULT;
+        return null;
     }
 
     @Override
