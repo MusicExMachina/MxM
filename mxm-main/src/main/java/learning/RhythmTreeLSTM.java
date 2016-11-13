@@ -36,6 +36,8 @@ public class RhythmTreeLSTM {
     private DataSet rhythmDataSet;
     private List<Integer> possibleSubdivisions;
 
+    private static final int MAX_NUM_SUBDIVS = 21;
+
     /**
      * A constructor for this TextLSTM with various initialization arguments
      * @param rhythmDataSet The rhythm trees we're using to train our neural net
@@ -94,6 +96,12 @@ public class RhythmTreeLSTM {
      */
     private void initialize() {
         System.out.println("Beginning initialization...");
+
+        possibleSubdivisions = new ArrayList<>();
+        for(int i = 2; i<=MAX_NUM_SUBDIVS; i++){
+            possibleSubdivisions.add(i);
+        }
+
 
         System.out.println("...completed initialization.");
     }
