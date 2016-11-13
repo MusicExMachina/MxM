@@ -1,10 +1,10 @@
 package io;
 
-import model.pitch.Pitch;
+import model.basic.Pitch;
 import model.rhythmTree.RhythmNode;
 import model.rhythmTree.RhythmTree;
 import model.form.Passage;
-import model.time.TimeSignature;
+import model.basic.TimeSignature;
 
 import javax.sound.midi.*;
 import java.util.*;
@@ -102,7 +102,7 @@ class MidiParser {
     }
 
     /**
-     * Reads in and parses basic midi information, such
+     * Reads in and parses noteQualities midi information, such
      * as all the events in a given midi Sequence. This
      * information is stored, and then later interpreted.
      */
@@ -270,7 +270,7 @@ class MidiParser {
                 noteOns.get(track).put(tick, new HashSet<Pitch>());
             }
 
-            // Add this pitch to note-ons
+            // Add this basic to note-ons
             noteOns.get(track).get(tick).add(pitch);
         }
     }
@@ -298,7 +298,7 @@ class MidiParser {
             noteOffs.get(track).put(tick,new HashSet<Pitch>());
         }
 
-        // Add this pitch to note-ons
+        // Add this basic to note-ons
         noteOffs.get(track).get(tick).add(pitch);
     }
 

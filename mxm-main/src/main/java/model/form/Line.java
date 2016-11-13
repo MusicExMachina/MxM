@@ -1,6 +1,6 @@
 package model.form;
 
-import model.time.Count;
+import model.basic.Count;
 import model.trainable.Instrument;
 
 import java.util.Iterator;

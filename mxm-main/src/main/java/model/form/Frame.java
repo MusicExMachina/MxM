@@ -1,7 +1,7 @@
 package model.form;
 
-import model.pitch.Pitch;
-import model.time.Count;
+import model.basic.Pitch;
+import model.basic.Count;
 
 import java.util.*;
 

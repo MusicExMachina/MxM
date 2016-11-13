@@ -1,4 +1,4 @@
-package model.time;
+package model.basic;
 
 import java.util.Comparator;
 
@@ -232,7 +232,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     }
 
     /**
-     * A basic (generated) equals() method for Counts.
+     * A noteQualities (generated) equals() method for Counts.
      * @param o The Object to compare this to.
      * @return If these two Objects are equal.
      */

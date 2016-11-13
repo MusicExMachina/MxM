@@ -2,8 +2,8 @@ package model.form;
 
 import model.basic.Articulation;
 import model.basic.Technique;
-import model.pitch.Pitch;
-import model.time.Count;
+import model.basic.Pitch;
+import model.basic.Count;
 import model.trainable.Instrument;
 
 /**
@@ -40,7 +40,7 @@ public class Note {
     private final Count length;
 
     /**
-     * A basic Note constructor utilizing the
+     * A noteQualities Note constructor utilizing the
      * default Technique and Articulation.
      * @param pitch The Pitch of this Note.
      * @param start The start time of this Note.

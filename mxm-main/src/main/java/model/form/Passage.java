@@ -1,8 +1,8 @@
 package model.form;
 
-import model.time.Tempo;
-import model.time.Count;
-import model.time.TimeSignature;
+import model.basic.Tempo;
+import model.basic.Count;
+import model.basic.TimeSignature;
 import model.trainable.Instrument;
 
 import java.util.*;

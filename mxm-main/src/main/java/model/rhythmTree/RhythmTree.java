@@ -1,6 +1,6 @@
 package model.rhythmTree;
 
-import model.time.Count;
+import model.basic.Count;
 
 import model.form.Frame;
 import java.awt.*;

@@ -22,7 +22,7 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
 
     /**
      * Constructor taking in a loudness value.
-     * @param value The pitch's loudness value.
+     * @param value The basic's loudness value.
      */
     public Dynamic(int value) {
         if(value >= MIN_DYNAMIC && value <= MAX_DYNAMIC) {

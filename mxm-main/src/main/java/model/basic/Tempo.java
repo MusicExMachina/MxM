@@ -1,4 +1,4 @@
-package model.time;
+package model.basic;
 
 import java.util.Comparator;
 
