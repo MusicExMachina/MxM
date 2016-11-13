@@ -33,8 +33,7 @@ public class RhythmTreeLSTM {
     private MultiLayerNetwork network;
     private DataSet trainingData;
 
-    // Specific to our text-based example
-    private DataSet rhythmDataSet;
+    // Rhythm Outputs
     private List<Integer> possibleSubdivisions;
 
     private static final int MAX_NUM_SUBDIVS = 21;
@@ -48,13 +47,12 @@ public class RhythmTreeLSTM {
     public RhythmTreeLSTM(DataSet rhythmDataSet, int hiddenLayerWidth, int hiddenLayerNum) {
 
         // Take in all of the arguments
-        this.rhythmDataSet = rhythmDataSet;
+        this.trainingData = rhythmDataSet;
         this.hiddenLayerWidth   = hiddenLayerWidth;
         this.hiddenLayerCount   = hiddenLayerNum;
 
         // Make everything else null
         this.network        = null;
-        this.trainingData   = null;
         this.configuration  = null;
         this.possibleSubdivisions  = null;
     }
@@ -151,7 +149,6 @@ public class RhythmTreeLSTM {
         }
 
         // Create and initialize the RnnOutputLayer.Builder,
-        // which does exactly what you'd think it does
         RnnOutputLayer.Builder outputLayerBuilder = new RnnOutputLayer.Builder(LossFunctions.LossFunction.MCXENT);
         outputLayerBuilder.activation("softmax");
         outputLayerBuilder.nIn(hiddenLayerWidth);
@@ -210,7 +207,7 @@ public class RhythmTreeLSTM {
             INDArray output = network.rnnTimeStep(testInit);
 
             // now the net should guess LEARNSTRING.length more characters
-            for (int j = 0; j < rhythmDataSet.numInputs(); j++) {
+            for (int j = 0; j < trainingData.numInputs(); j++) {
 
                 // first process the last output of the network to a concrete
                 // neuron, the neuron with the highest output cas the highest
