@@ -34,11 +34,11 @@ public class RhythmTreeLSTM {
 
     // Specific to our text-based example
     private DataSet rhythmDataSet;
-    private List<Character> possibleChars;
+    private List<Integer> possibleSubdivisions;
 
     /**
      * A constructor for this TextLSTM with various initialization arguments
-     * @param inputString The string we're using to train our neural net
+     * @param rhythmDataSet The rhythm trees we're using to train our neural net
      * @param hiddenLayerWidth The width of hidden layers to use
      * @param hiddenLayerNum The number of hidden layers to use
      */
@@ -53,7 +53,7 @@ public class RhythmTreeLSTM {
         this.network        = null;
         this.trainingData   = null;
         this.configuration  = null;
-        this.possibleChars  = null;
+        this.possibleSubdivisions  = null;
     }
 
     /**
@@ -129,7 +129,7 @@ public class RhythmTreeLSTM {
             // This establishes each layer's settings
             GravesLSTM.Builder hiddenLayerBuilder = new GravesLSTM.Builder();
             if(i == 0) {
-                hiddenLayerBuilder.nIn(possibleChars.size());
+                hiddenLayerBuilder.nIn(possibleSubdivisions.size());
             } else {
                 hiddenLayerBuilder.nIn(hiddenLayerWidth);
             }
@@ -145,7 +145,7 @@ public class RhythmTreeLSTM {
         RnnOutputLayer.Builder outputLayerBuilder = new RnnOutputLayer.Builder(LossFunctions.LossFunction.MCXENT);
         outputLayerBuilder.activation("softmax");
         outputLayerBuilder.nIn(hiddenLayerWidth);
-        outputLayerBuilder.nOut(possibleChars.size());
+        outputLayerBuilder.nOut(possibleSubdivisions.size());
         listBuilder.layer(hiddenLayerCount, outputLayerBuilder.build());
 
         // Finish the last two settings for the now-infamous
@@ -190,9 +190,9 @@ public class RhythmTreeLSTM {
             // clear current stance from the last example
             network.rnnClearPreviousState();
 
-            // put the first character into the rrn as an initialisation
-            INDArray testInit = Nd4j.zeros(possibleChars.size());
-            testInit.putScalar(possibleChars.indexOf(inputString[0]), 1);
+            // put the first subdivision into RNN as base
+            INDArray testInit = Nd4j.zeros(possibleSubdivisions.size());
+            testInit.putScalar(new int[]{possibleSubdivisions.get(0), possibleSubdivisions.get(0)}, 1);
 
             // run one step -> IMPORTANT: rnnTimeStep() must be called, not
             // output()
@@ -200,22 +200,22 @@ public class RhythmTreeLSTM {
             INDArray output = network.rnnTimeStep(testInit);
 
             // now the net should guess LEARNSTRING.length more characters
-            for (int j = 0; j < inputString.length; j++) {
+            for (int j = 0; j < rhythmDataSet.numInputs(); j++) {
 
                 // first process the last output of the network to a concrete
                 // neuron, the neuron with the highest output cas the highest
                 // chance to get chosen
-                double[] outputProbDistribution = new double[possibleChars.size()];
+                double[] outputProbDistribution = new double[possibleSubdivisions.size()];
                 for (int k = 0; k < outputProbDistribution.length; k++) {
                     outputProbDistribution[k] = output.getDouble(k);
                 }
                 int sampledCharacterIdx = findIndexOfHighestValue(outputProbDistribution);
 
                 // print the chosen output
-                System.out.print(possibleChars.get(sampledCharacterIdx));
+                System.out.print(possibleSubdivisions.get(sampledCharacterIdx));
 
                 // use the last output as input
-                INDArray nextInput = Nd4j.zeros(possibleChars.size());
+                INDArray nextInput = Nd4j.zeros(possibleSubdivisions.size());
                 nextInput.putScalar(sampledCharacterIdx, 1);
                 output = network.rnnTimeStep(nextInput);
 

@@ -58,11 +58,12 @@ public class RhythmInput {
                 rhythm.add(0, 0);
             }
             for (int j = 0; j < rhythm.size()-1; j++) {
-                int[] partialList = new int[j];
-                for (int k = 0; k<j; k++) {
-                    partialList[k] = rhythm.get(k);
-                }
-                input.putScalar(partialList, count);
+//                int[] partialList = new int[j];
+//                for (int k = 0; k<j; k++) {
+//                    partialList[k] = rhythm.get(k);
+//                }
+
+                input.putScalar(new int[]{0, }, count);
                 output.putScalar(rhythm.get(j), count);
                 count++;
             }
