@@ -9,6 +9,7 @@ import model.form.Passage;
 import model.basic.TimeSignature;
 import model.trainable.*;
 import model.trainable.Instrument;
+import sun.reflect.generics.tree.Tree;
 
 import javax.sound.midi.*;
 import java.util.*;
@@ -122,6 +123,10 @@ class MidiParser {
         for (Track track : sequence.getTracks()) {
             // Add the track to "tracks"
             tracks.add(track);
+
+            TreeMap<Long,Instrument> init = new TreeMap<Long, Instrument>();
+            init.put(0L,Instrument.DEFAULT);
+            instrumentSwitches.put(track,init);
 
             // For every MidiTools event
             for (int i = 0; i < track.size(); i++) {
@@ -340,9 +345,6 @@ class MidiParser {
      * @param tick The tick of this event's timing.
      */
     private void parseProgramChangeMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
-        if(!instrumentSwitches.containsKey(track)) {
-            instrumentSwitches.put(track,new TreeMap<Long, Instrument>());
-        }
         instrumentSwitches.get(track).put(tick,Instrument.getGeneralMIDIInstrument(message.getData1()));
     }
 
