@@ -6,6 +6,7 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.factory.Nd4j;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class RhythmInput {
 
         INDArray input = Nd4j.zeros(maxTreeLength, numPossibleStates);
         INDArray output = Nd4j.zeros(1, numPossibleStates);
-
+        int count = 0;
 
         //Create DS from input and output, put into Matrix
         for (int i = 0; i < rhythmLists.size(); i++) {
@@ -56,11 +57,16 @@ public class RhythmInput {
             for (int j = rhythm.size(); j < maxTreeLength; j++) {
                 rhythm.add(0, 0);
             }
-            for (int j = 0; j < rhythm.size(); j++) {
-                input.putScalar(i, rhythm.get(j));
+            for (int j = 0; j < rhythm.size()-1; j++) {
+                int[] partialList = new int[j];
+                for (int k = 0; k<j; k++) {
+                    partialList[k] = rhythm.get(k);
+                }
+                input.putScalar(partialList, count);
+                output.putScalar(rhythm.get(j), count);
+                count++;
             }
         }
-        //TODO::List Length Calculation!!!
         return new DataSet(input, output);
     }
 
