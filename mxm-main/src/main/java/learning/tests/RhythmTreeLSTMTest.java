@@ -1,0 +1,28 @@
+package learning.tests;
+
+import learning.RhythmTreeLSTM;
+import learning.ninputs.RhythmInput;
+import model.rhythmTree.RhythmTree;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+/**
+ * Created by jpatsenker on 11/13/16.
+ */
+public class RhythmTreeLSTMTest {
+
+    @Test
+    public void basicTest() {
+
+        RhythmTree a = new RhythmTree(new int[]{3, 2, 1, 1, 1, 1});
+        RhythmTree b = new RhythmTree(new int[]{3, 1, 2, 1, 1, 1});
+
+        RhythmInput r = new RhythmInput();
+        r.addRhythm(a);
+        r.addRhythm(b);
+
+        RhythmTreeLSTM network = new RhythmTreeLSTM(r.buildDataSet(),20,2);
+        network.run();
+    }
+}

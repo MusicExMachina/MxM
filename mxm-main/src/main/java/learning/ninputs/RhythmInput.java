@@ -17,6 +17,8 @@ public class RhythmInput {
      */
     private List<RhythmTree> rhythms;
 
+    public static final int DIVISION_TOKEN = -1;
+
     /**
      * Create a blank rhythm input object
      */
@@ -63,10 +65,12 @@ public class RhythmInput {
 //                    partialList[k] = rhythm.get(k);
 //                }
 
-                input.putScalar(new int[]{0, }, count);
+                input.putScalar(new int[]{0, rhythm.get(j), count}, 1);
                 output.putScalar(rhythm.get(j), count);
                 count++;
             }
+            input.putScalar(new int[]{0, DIVISION_TOKEN, count}, 1);
+            count++;
         }
         return new DataSet(input, output);
     }
