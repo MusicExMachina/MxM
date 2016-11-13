@@ -1,4 +1,4 @@
-package model.pitch;
+package model.basic;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,10 +12,10 @@ import java.util.Iterator;
  */
 public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass> {
 
-    /** The lowest pitch class, better known as "C." */
+    /** The lowest basic class, better known as "C." */
     private static final int MIN_PITCHCLASS = 0;
 
-    /** The highest pitch class, better known as "B." */
+    /** The highest basic class, better known as "B." */
     private static final int MAX_PITCHCLASS = 11;
 
     /** All possible PitchClasses */
@@ -51,7 +51,7 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
         }
     }
 
-    /** Stores the MidiTools value of this Pitch. */
+    /** Stores the midi value of this Pitch. */
     private int value;
 
     /**

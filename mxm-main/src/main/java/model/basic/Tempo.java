@@ -1,4 +1,4 @@
-package model.time;
+package model.basic;
 
 import java.util.Comparator;
 
@@ -8,9 +8,6 @@ import java.util.Comparator;
  */
 public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
 
-    /** The minimum tempo possible. */
-    private static final int MIN_TEMPO = 0;
-
     /** Stores a tempo value, in BPM. */
     private final int value;
 
@@ -19,7 +16,7 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
      * @param value The Tempo's speed.
      */
     public Tempo(int value) {
-        if(value >= MIN_TEMPO ) {
+        if(value > 0 ) {
             this.value = value;
         }
         else {

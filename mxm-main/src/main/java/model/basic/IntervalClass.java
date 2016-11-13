@@ -1,4 +1,4 @@
-package model.pitch;
+package model.basic;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -127,7 +127,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     }
 
     /**
-     * A basic (generated) equals() method for IntervalClasses.
+     * A noteQualities (generated) equals() method for IntervalClasses.
      * @param o The Object to compare this to.
      * @return If these two Objects are equal.
      */

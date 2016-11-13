@@ -2,8 +2,9 @@ package model.form;
 
 import model.basic.Articulation;
 import model.basic.Technique;
-import model.pitch.Pitch;
-import model.time.Count;
+import model.basic.Pitch;
+import model.basic.Count;
+import model.trainable.Instrument;
 
 /**
  * The Note class represents (in essence) a Pitch with a given length. Articulation
@@ -23,6 +24,9 @@ public class Note {
     /** The quality of this note's attack. */
     private final Articulation articulation;
 
+    /** The Instrument which produced this Note. */
+    private final Instrument instrument;
+
     /** The Technique of this note's production. */
     private final Technique technique;
 
@@ -36,35 +40,19 @@ public class Note {
     private final Count length;
 
     /**
-     * A basic Note constructor utilizing the
+     * A noteQualities Note constructor utilizing the
      * default Technique and Articulation.
      * @param pitch The Pitch of this Note.
      * @param start The start time of this Note.
      * @param length The length of this Note.
      */
-    public Note(Pitch pitch, Count start, Count length) {
-        this.pitch          = pitch;
-        this.start         = start;
-        this.length         = length;
-        this.articulation   = Articulation.DEFAULT;
-        this.technique      = Technique.DEFAULT;
-    }
-
-    /**
-     * A more complete constructor which allows for
-     * initialization of Articulation Techniques.
-     * @param pitch The Pitch of this Note.
-     * @param start The start time of this Note.
-     * @param length The length of this Note.
-     * @param articulation The Articulation of this Note.
-     * @param technique The Technique of this Note.
-     */
-    public Note(Pitch pitch, Count start, Count length, Articulation articulation, Technique technique) {
+    public Note(Pitch pitch, Count start, Count length, Instrument instrument) {
         this.pitch          = pitch;
         this.start          = start;
         this.length         = length;
-        this.articulation   = articulation;
-        this.technique      = technique;
+        this.instrument     = instrument;
+        this.articulation   = Articulation.DEFAULT;
+        this.technique      = Technique.DEFAULT;
     }
 
     /**
@@ -97,6 +85,30 @@ public class Note {
      */
     public Count getLength() {
         return length;
+    }
+
+    /**
+     * Gets the Articulation of this Note.
+     * @return The Articulation of this Note.
+     */
+    public Articulation getArticulation() {
+        return articulation;
+    }
+
+    /**
+     * Gets the Instrument of this Note.
+     * @return The Instrument of this Note.
+     */
+    public Instrument getInstrument() {
+        return instrument;
+    }
+
+    /**
+     * Gets the Technique of this Note.
+     * @return The Technique of this Note.
+     */
+    public Technique getTechnique() {
+        return technique;
     }
 
     /**
