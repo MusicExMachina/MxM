@@ -54,6 +54,9 @@ class MidiParser {
     // Stage 4
     private HashMap<Track,TreeMap<Integer,RhythmTree>> rhythmTrees;
 
+    // Output
+    private Passage passage;
+
     /**
      * The main method of MidiParser, which is the entire
      * essence of this class. In fact, this class could be
@@ -74,6 +77,7 @@ class MidiParser {
         pulsesPerQuarter = new TreeMap<>();
         timePoints = new TreeMap<>();
         frames = new HashMap<>();
+        passage = new Passage();
 
         System.out.println("MIDI:\tParsing MidiEvents...");
         parseAll();
@@ -94,7 +98,7 @@ class MidiParser {
             }
         }
 
-        return new Passage();
+        return passage;
     }
 
     /**
@@ -567,6 +571,9 @@ class MidiParser {
                 subdivideNode(child, beginTime, endTime, notes);
                 childNumber++;
             }
+        }
+        else if(subdivisions == 1) {
+            //passage.addNote();
         }
     }
 }

@@ -1,5 +1,8 @@
 package model.rhythmTree;
 
+import model.time.Count;
+
+import model.form.Frame;
 import java.awt.*;
 import java.util.*;
 
@@ -10,15 +13,18 @@ import java.util.*;
  */
 public class RhythmTree {
 
-    /** How deep a rhythm can go, Node-wise */
-    public static int MAX_DEPTH = 8;
-
     /** Saves the root RhythmNode **/
     private RhythmNode root;
 
-    /** The rhythmTree default constructor */
+    /** A TreeMap of all the Frames in this RhythmTree*/
+    private TreeMap<Count,Frame> frames;
+
+    /**
+     * The rhythmTree default constructor
+     */
     public RhythmTree() {
-        root = new RhythmNode();
+        root = new RhythmNode(this,null,Count.ZERO,Count.FULL_MEASURE);
+        frames = new TreeMap<>();
     }
 
     /**
@@ -28,7 +34,7 @@ public class RhythmTree {
     public RhythmTree(int[] subDiv) throws IllegalArgumentException{
         Queue<RhythmNode> constructQueue = new ArrayDeque<RhythmNode>();
 
-        root = new RhythmNode();
+        root = new RhythmNode(this,null,Count.ZERO,Count.FULL_MEASURE);
         constructQueue.add(root);
 
         RhythmNode currentNode;
@@ -48,7 +54,7 @@ public class RhythmTree {
         if(constructQueue.size() != 0){
             throw new IllegalArgumentException("List cannot be converted to a rhythm tree, leftover divisions");
         }
-
+        frames = new TreeMap<>();
     }
 
     /**
@@ -59,6 +65,34 @@ public class RhythmTree {
     public String toString() {
         return root.toString();
     }
+
+    /**
+     * Allows RhythmNodes to add frames to this RhythmTree
+     */
+    public void addFrame(Count timing) {
+        Frame frame = new Frame();
+        // Subdivide a previous Frame if necessary.
+        if(frames.floorEntry(timing) != null) {
+            frames.floorEntry(timing).getValue().setEnd();
+        }
+        frames.put(timing,new Frame());
+    }
+
+
+    /**
+     * Getter for the root RhythmNode which fills the whole measure.
+     * @return Gets the root RhythmNode of this RhythmTree.
+     */
+    public RhythmNode getRoot() {
+        return root;
+    }
+
+
+
+
+
+
+
 
     /**
      * The rhythmTree copy constructor
@@ -107,14 +141,7 @@ public class RhythmTree {
         return it;
         return null;
     }
-
-    /**
-     * Getter for the root Node which fills the whole measure.
-     * @return
-     */
-    public RhythmNode getRoot() {
-        return root;
-    }
+*/
 
     /**
      * Paint the rhythm tree

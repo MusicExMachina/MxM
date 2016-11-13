@@ -4,6 +4,7 @@ import model.basic.Articulation;
 import model.basic.Technique;
 import model.pitch.Pitch;
 import model.time.Count;
+import model.trainable.Instrument;
 
 /**
  * The Note class represents (in essence) a Pitch with a given length. Articulation
@@ -22,6 +23,9 @@ public class Note {
 
     /** The quality of this note's attack. */
     private final Articulation articulation;
+
+    /** The Instrument which produced this Note. */
+    private final Instrument instrument;
 
     /** The Technique of this note's production. */
     private final Technique technique;
@@ -44,9 +48,10 @@ public class Note {
      */
     public Note(Pitch pitch, Count start, Count length) {
         this.pitch          = pitch;
-        this.start         = start;
+        this.start          = start;
         this.length         = length;
         this.articulation   = Articulation.DEFAULT;
+        this.instrument     = Instrument.DEFAULT;
         this.technique      = Technique.DEFAULT;
     }
 
@@ -64,6 +69,7 @@ public class Note {
         this.start          = start;
         this.length         = length;
         this.articulation   = articulation;
+        this.instrument     = Instrument.DEFAULT;
         this.technique      = technique;
     }
 
@@ -97,6 +103,30 @@ public class Note {
      */
     public Count getLength() {
         return length;
+    }
+
+    /**
+     * Gets the Articulation of this Note.
+     * @return The Articulation of this Note.
+     */
+    public Articulation getArticulation() {
+        return articulation;
+    }
+
+    /**
+     * Gets the Instrument of this Note.
+     * @return The Instrument of this Note.
+     */
+    public Instrument getInstrument() {
+        return instrument;
+    }
+
+    /**
+     * Gets the Technique of this Note.
+     * @return The Technique of this Note.
+     */
+    public Technique getTechnique() {
+        return technique;
     }
 
     /**
