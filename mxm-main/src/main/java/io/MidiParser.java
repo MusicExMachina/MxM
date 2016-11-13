@@ -393,7 +393,7 @@ class MidiParser {
     private void parseTextMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         String string = new String(data);
-        System.out.println("MIDI:\tReading text: " + string);
+        System.out.print("MIDI:\tReading text: " + string);
     }
 
     /**
