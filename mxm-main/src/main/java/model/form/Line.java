@@ -1,8 +1,11 @@
 package model.form;
 
 import model.basic.Count;
+import model.rhythmTree.RhythmTree;
 import model.trainable.Instrument;
+import sun.reflect.generics.tree.Tree;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -13,6 +16,7 @@ public class Line implements Iterable<Note>{
 
     private Instrument instrument;
     private TreeMap<Count,Note> notes;
+    private TreeMap<Integer,RhythmTree> trees;
 
     public Line(Instrument instrument) {
         this.instrument = instrument;
@@ -43,5 +47,9 @@ public class Line implements Iterable<Note>{
     @Override
     public Iterator<Note> iterator() {
         return notes.values().iterator();
+    }
+
+    public Iterator<RhythmTree> rhythmTreeIterator() {
+        return trees.values().iterator();
     }
 }

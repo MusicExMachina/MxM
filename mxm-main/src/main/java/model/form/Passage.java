@@ -14,7 +14,7 @@ import java.util.*;
 public class Passage implements Iterable<Frame> {
 
     /** TimeSignatures throughout this passage. */
-    private NavigableMap<Count,TimeSignature> timeSignatures;
+    private NavigableMap<Integer,TimeSignature> timeSignatures;
     /** All tempi in this Passage. */
     private NavigableMap<Count,Tempo> tempi;
     /** All lines being played in this Passage. */
@@ -38,15 +38,10 @@ public class Passage implements Iterable<Frame> {
     /**
      * Adds a TimeSignature (change) to the Passage at a given time (that must be on beat 1 of a measure).
      * @param timeSignature The TimeSignature to add to this Passage.
-     * @param time The time at which to add this TimeSignature.
+     * @param measure The time at which to add this TimeSignature.
      */
-    public void addTimeSignature(TimeSignature timeSignature,Count time) {
-        if(time.getBeat() == 0) {
-            timeSignatures.put(time,timeSignature);
-        }
-        else {
-            throw new Error("PASSAGE:\tTime signature does not line up with the beginning of a measure!");
-        }
+    public void addTimeSignature(TimeSignature timeSignature,Integer measure) {
+        timeSignatures.put(measure,timeSignature);
     }
 
     /**
@@ -93,7 +88,7 @@ public class Passage implements Iterable<Frame> {
      * @return The TimeSignature at this time.
      */
     public TimeSignature getTimeSignatureAt(Count time) {
-        return timeSignatures.floorEntry(time).getValue();
+        return timeSignatures.floorEntry(time.getMeasure()).getValue();
     }
 
     /**
