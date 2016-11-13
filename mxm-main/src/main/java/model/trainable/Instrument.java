@@ -1,6 +1,6 @@
-package model.structure;
+package model.trainable;
 
-import model.pitch.Pitch;
+import model.basic.Pitch;
 import model.basic.Technique;
 
 import java.util.Set;
@@ -15,14 +15,20 @@ import java.util.Set;
  */
 public class Instrument {
 
+    public static final Instrument DEFAULT = new Instrument();
+
     private String name;
-    // Store possible pitches
     private Set<Pitch> possiblePitches;
-    // Store possible techniques
     private Set<Technique> possibleTechniques;
+    private int numVoices;
 
-    // All articulations are possible on all instruments (as things stand)
+    public Instrument() {
+        numVoices = 1;
+    }
 
+    public int getNumVoices() {
+        return numVoices;
+    }
 
     @Override
     public String toString() {

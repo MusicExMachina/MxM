@@ -1,10 +1,10 @@
 package io;
 
-import model.pitch.Pitch;
+import model.basic.Pitch;
 import model.rhythmTree.RhythmNode;
 import model.rhythmTree.RhythmTree;
 import model.form.Passage;
-import model.time.TimeSignature;
+import model.basic.TimeSignature;
 
 import javax.sound.midi.*;
 import java.util.*;
@@ -54,6 +54,9 @@ class MidiParser {
     // Stage 4
     private HashMap<Track,TreeMap<Integer,RhythmTree>> rhythmTrees;
 
+    // Output
+    private Passage passage;
+
     /**
      * The main method of MidiParser, which is the entire
      * essence of this class. In fact, this class could be
@@ -74,6 +77,7 @@ class MidiParser {
         pulsesPerQuarter = new TreeMap<>();
         timePoints = new TreeMap<>();
         frames = new HashMap<>();
+        passage = new Passage();
 
         System.out.println("MIDI:\tParsing MidiEvents...");
         parseAll();
@@ -94,11 +98,11 @@ class MidiParser {
             }
         }
 
-        return new Passage();
+        return passage;
     }
 
     /**
-     * Reads in and parses basic midi information, such
+     * Reads in and parses noteQualities midi information, such
      * as all the events in a given midi Sequence. This
      * information is stored, and then later interpreted.
      */
@@ -266,7 +270,7 @@ class MidiParser {
                 noteOns.get(track).put(tick, new HashSet<Pitch>());
             }
 
-            // Add this pitch to note-ons
+            // Add this basic to note-ons
             noteOns.get(track).get(tick).add(pitch);
         }
     }
@@ -294,7 +298,7 @@ class MidiParser {
             noteOffs.get(track).put(tick,new HashSet<Pitch>());
         }
 
-        // Add this pitch to note-ons
+        // Add this basic to note-ons
         noteOffs.get(track).get(tick).add(pitch);
     }
 
@@ -567,6 +571,9 @@ class MidiParser {
                 subdivideNode(child, beginTime, endTime, notes);
                 childNumber++;
             }
+        }
+        else if(subdivisions == 1) {
+            //passage.addNote();
         }
     }
 }
