@@ -1,5 +1,6 @@
 package learning;
 
+import learning.ninputs.RhythmInput;
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
@@ -98,6 +99,7 @@ public class RhythmTreeLSTM {
         System.out.println("Beginning initialization...");
 
         possibleSubdivisions = new ArrayList<>();
+        possibleSubdivisions.add(RhythmInput.DIVISION_TOKEN);
         for(int i = 2; i<=MAX_NUM_SUBDIVS; i++){
             possibleSubdivisions.add(i);
         }
