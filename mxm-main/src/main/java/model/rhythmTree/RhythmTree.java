@@ -3,6 +3,8 @@ package model.rhythmTree;
 import model.basic.Count;
 
 import model.form.Frame;
+import model.form.Note;
+
 import java.awt.*;
 import java.util.*;
 
@@ -11,7 +13,7 @@ import java.util.*;
  * RhythmTrees operate like many other data structures save that their only "real" storage is in
  * their leaf nodes.
  */
-public class RhythmTree {
+public class RhythmTree implements Iterable<Note> {
 
     /** Saves the root RhythmNode **/
     private RhythmNode root;
@@ -131,5 +133,10 @@ public class RhythmTree {
      */
     public void paint(Graphics2D g, int x, int y) {
         getRoot().paint(g, x, y);
+    }
+
+    @Override
+    public Iterator<Note> iterator() {
+        ArrayList<RhythmNode> nodes = toList();
     }
 }

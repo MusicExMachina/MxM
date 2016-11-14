@@ -10,10 +10,10 @@ import java.util.Comparator;
 public class Count implements Comparator<Count>, Comparable<Count> {
 
     /** A zero Count. */
-    public static final Count ZERO = new Count(0,1);
+    public static final Count ZERO = new Count(0);
 
     /** An "infinite" Count- should be optimized later, maybe 0/0? */
-    public static final Count INFINITY = new Count(Integer.MAX_VALUE,1);
+    public static final Count INFINITY = new Count(Integer.MAX_VALUE);
 
     /** A full measure Count. */
     public static final Count FULL_MEASURE = new Count(1,1);
@@ -24,6 +24,12 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     /** The fractional denominator of this Count. */
     private int denominator;
 
+    /** The measure of this Count. */
+    private int measure;
+
+    /** The sub-measure part of this Count. */
+    private CountClass countClass;
+
     /**
      * A constructor for Count taking in just a measure
      * number. Use of this is likely to be rare, but this
@@ -33,6 +39,8 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     public Count(int measure) {
         this.numerator   = measure;
         this.denominator = 1;
+        this.measure     = numerator / denominator;
+        this.countClass  = new CountClass(numerator,denominator);
     }
 
     /**
@@ -47,6 +55,8 @@ public class Count implements Comparator<Count>, Comparable<Count> {
             this.numerator   = numerator;
             this.denominator = denominator;
             reduce();
+            this.measure     = numerator / denominator;
+            this.countClass  = new CountClass(numerator,denominator);
         }
         else {
             throw new Error("Cannot create a Count with a denominator less than or equal to zero.");
@@ -66,6 +76,8 @@ public class Count implements Comparator<Count>, Comparable<Count> {
             this.numerator   = numerator + measure*denominator;
             this.denominator = denominator;
             reduce();
+            this.measure     = numerator / denominator;
+            this.countClass  = new CountClass(numerator,denominator);
         }
         else {
             throw new Error("Cannot create a Count with a deno");
@@ -78,28 +90,15 @@ public class Count implements Comparator<Count>, Comparable<Count> {
      * @return This Count's measure number.
      */
     public int getMeasure() {
-        return numerator / denominator;
+        return measure;
     }
 
     /**
-     * Gets the beat of this Count, which is
-     * essentially which number of a subdivision
-     * this Count is in its measure. For example,
-     * with a subdivision of 3, a beat of 1 would
-     * be the second quarter note in 3/4.
-     * @return This Count's beat in the measure.
+     * Gets the CountClass of this Count.
+     * @return The CountClass of this Count.
      */
-    public int getBeat() {
-        return numerator % denominator;
-    }
-
-    /**
-     * Gets the subdivision level of this Count,
-     * i.e. the denominator of the internal fraction.
-     * @return This Count's subdivision level.
-     */
-    public int getSubdivision() {
-        return denominator;
+    public CountClass getCountClass() {
+        return countClass;
     }
 
     /**
@@ -124,7 +123,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
      * @return A nicely-formatted String of this Count.
      */
     public String toString() {
-        return getMeasure() + " & " + getBeat() + "/" + getSubdivision();
+        return getMeasure() + " & " + countClass.toString();
     }
 
     /**
@@ -183,7 +182,6 @@ public class Count implements Comparator<Count>, Comparable<Count> {
         int a = numerator;
         int b = denominator;
 
-
         if(a == 0 && b==0) {
             throw new IllegalArgumentException("Undefined Count: (0,0)");
         }else if(a==0){
@@ -193,7 +191,6 @@ public class Count implements Comparator<Count>, Comparable<Count> {
             numerator /= a;
             return;
         }
-
 
         while (a != b) {
             if (a > b) {

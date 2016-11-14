@@ -14,11 +14,14 @@ import java.util.TreeMap;
  */
 public class Line implements Iterable<Note>{
 
+    private Rhythm rhythm;
+    private Contour contour;
     private Instrument instrument;
     private TreeMap<Count,Note> notes;
-    private TreeMap<Integer,RhythmTree> trees;
 
     public Line(Instrument instrument) {
+        this.rhythm = new Rhythm();
+        this.contour = new Contour();
         this.instrument = instrument;
         this.notes = new TreeMap<>();
     }
@@ -44,12 +47,16 @@ public class Line implements Iterable<Note>{
         notes.put(note.getStart(),note);
     }
 
+    public Rhythm getRhythm() {
+        return rhythm;
+    }
+
+    public Contour getContour() {
+        return contour;
+    }
+
     @Override
     public Iterator<Note> iterator() {
         return notes.values().iterator();
-    }
-
-    public Iterator<RhythmTree> rhythmTreeIterator() {
-        return trees.values().iterator();
     }
 }

@@ -546,7 +546,6 @@ class MidiParser {
      * @param node The RhythmNode that we're subdividing.
      * @param start The start time as fractions-of-a-measure.
      * @param end The end time as fractions-of-a-measure.
-     * @param notes A TreeMap of *all* notes, even before/after this node.
      */
     private void subdivideNode (RhythmNode node, float start, float end, Track track) {
 
@@ -611,7 +610,7 @@ class MidiParser {
             for(Pitch pitch : myNotes.floorEntry(end).getValue()) {
                 Instrument instrument = instruments.get(track).floorEntry(end).getValue();
                 Note note = new Note(pitch, node.getTiming(), Count.ZERO, instrument);
-                node.getFrame().add(note);
+                node.add(note);
             }
         }
     }

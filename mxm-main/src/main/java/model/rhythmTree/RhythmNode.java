@@ -35,8 +35,8 @@ public class RhythmNode {
     /** The duration of this RhythmNode */
     private Count duration;
 
-    /** The frame of this RhythmNode. */
-    private Frame frame;
+    /** The Note (if this is a leaf RhythmNode) */
+    private Note note;
 
     /**
      * The RhythmNode constructor, used by the subdivide function in an almost-factory method.
@@ -52,7 +52,6 @@ public class RhythmNode {
         this.children   = new ArrayList<>();
         this.timing     = timing;
         this.duration   = duration;
-        this.frame      = new Frame(timing);
     }
 
     /**
@@ -111,11 +110,11 @@ public class RhythmNode {
     }
 
     /**
-     * Returns the Frame of this RhythmNode.
-     * @return The Frame of this RhythmNode.
+     * Returns the Note of this RhythmNode.
+     * @return The Note of this RhythmNode.
      */
-    public Frame getFrame() {
-        return frame;
+    public Note getNote() {
+        return note;
     }
 
     /**
@@ -166,16 +165,17 @@ public class RhythmNode {
      * @return A String of this rhythmTree.
      */
     public String toString() {
+        if(children.size() == 0) {
+            if(note == null) {
+                return "o";
+            }
+            else {
+                return note.getPitch().toString();
+            }
+        }
         String toReturn = "(";
         for(RhythmNode node : children) {
             toReturn += node.toString();
-        }
-        if(children.size() == 0) {
-            String thisNode = "[ ";
-            for(Note note : frame) {
-                thisNode += note.getPitch().toString() + " ";
-            }
-            return thisNode + "]";
         }
         toReturn += ")";
         return toReturn;
