@@ -5,7 +5,8 @@ import model.basic.Count;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import model.form.Frame;
+
+import model.basic.CountClass;
 import model.form.Note;
 
 /**
@@ -30,10 +31,10 @@ public class RhythmNode {
     private List<RhythmNode> children;
 
     /** The timing of this RhythmNode */
-    private Count timing;
+    private CountClass timing;
 
     /** The duration of this RhythmNode */
-    private Count duration;
+    private CountClass duration;
 
     /** The Note (if this is a leaf RhythmNode) */
     private Note note;
@@ -44,7 +45,7 @@ public class RhythmNode {
      * @param timing The timing of this RhythmNode.
      * @param duration The duration of this RhythmNode.
      */
-    public RhythmNode(RhythmTree tree, RhythmNode parent, Count timing, Count duration) {
+    public RhythmNode(RhythmTree tree, RhythmNode parent, CountClass timing, CountClass duration) {
         if(parent != null)
             this.depth = parent.getDepth()+1;
         this.parent     = parent;
@@ -71,18 +72,18 @@ public class RhythmNode {
     }
 
     /**
-     * Gets the duration of this node in Counts.
-     * @return The duration of this node in Counts.
+     * Gets the duration of this node in CountClasses.
+     * @return The duration of this node in CountClasses.
      */
-    public Count getDuration() {
+    public CountClass getDuration() {
         return duration;
     }
 
     /**
-     * Gets the duration of this node in Counts.
-     * @return The duration of this node in Counts.
+     * Gets the duration of this node in CountClasses.
+     * @return The duration of this node in CountClasses.
      */
-    public Count getTiming() {
+    public CountClass getTiming() {
         return timing;
     }
     /**
@@ -128,9 +129,9 @@ public class RhythmNode {
         if(times > 1) {
             if(children.size()==0) {
                 // Add "times" many children
-                Count newDuration = this.duration.dividedBy(times);
+                CountClass newDuration = this.duration.dividedBy(times);
                 for (int i = 0; i < times; i++) {
-                    Count newTiming = this.timing.plus(newDuration.times(i));
+                    CountClass newTiming = this.timing.plus(newDuration.times(i));
                     children.add(new RhythmNode(tree,this,newTiming,newDuration));
                 }
             }

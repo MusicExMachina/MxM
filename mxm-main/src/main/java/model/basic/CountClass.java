@@ -1,6 +1,9 @@
 package model.basic;
 
+import javafx.util.Pair;
+
 import java.util.Comparator;
+import java.util.HashMap;
 
 /**
  * CountClass represents a measure-less Count. Note that this is useful for several reasons-
@@ -21,6 +24,9 @@ public class CountClass implements Comparator<CountClass>, Comparable<CountClass
 
     /** The fractional denominator of this Count. */
     private int denominator;
+
+    /** Stores all CountClasses so that we avoid abusing memory. */
+    private static HashMap<Pair<Integer,Integer>,CountClass> ALL = new HashMap<>();
 
     /**
      * A constructor for CountClass taking in a numerator and
@@ -204,6 +210,21 @@ public class CountClass implements Comparator<CountClass>, Comparable<CountClass
         if (numerator != count.numerator) return false;
         return denominator == count.denominator;
 
+    }
+
+    /**
+     * Gets an instance of a given CountClass size. This method
+     * creates the interning design pattern per CountClass.
+     * @param numerator The numerator of this CountClass.
+     * @param denominator The denominator of this CountClass.
+     * @return An CountClass of this value.
+     */
+    public static CountClass getInstance(int numerator,int denominator) {
+        Pair<Integer,Integer> pair = new Pair<>(numerator,denominator);
+        if(!ALL.containsKey(pair)) {
+            ALL.put(pair,new CountClass(numerator,denominator));
+        }
+        return ALL.get(pair);
     }
 
     /**

@@ -1,8 +1,6 @@
 package model.rhythmTree;
 
-import model.basic.Count;
-
-import model.form.Frame;
+import model.basic.CountClass;
 import model.form.Note;
 
 import java.awt.*;
@@ -18,15 +16,11 @@ public class RhythmTree implements Iterable<Note> {
     /** Saves the root RhythmNode **/
     private RhythmNode root;
 
-    /** A TreeMap of all the Frames in this RhythmTree*/
-    private TreeMap<Count,Frame> frames;
-
     /**
      * The rhythmTree default constructor
      */
     public RhythmTree() {
-        root = new RhythmNode(this,null,Count.ZERO,Count.FULL_MEASURE);
-        frames = new TreeMap<>();
+        root = new RhythmNode(this,null, CountClass.ZERO,CountClass.ONE);
     }
 
     /**
@@ -36,7 +30,7 @@ public class RhythmTree implements Iterable<Note> {
     public RhythmTree(int[] subDiv) throws IllegalArgumentException{
         Queue<RhythmNode> constructQueue = new ArrayDeque<RhythmNode>();
 
-        root = new RhythmNode(this,null,Count.ZERO,Count.FULL_MEASURE);
+        root = new RhythmNode(this,null,CountClass.ZERO,CountClass.ONE);
         constructQueue.add(root);
 
         RhythmNode currentNode;
@@ -56,7 +50,6 @@ public class RhythmTree implements Iterable<Note> {
         if(constructQueue.size() != 0){
             throw new IllegalArgumentException("List cannot be converted to a rhythm tree, leftover divisions");
         }
-        frames = new TreeMap<>();
     }
 
     /**
@@ -85,10 +78,24 @@ public class RhythmTree implements Iterable<Note> {
     }
 
     /**
-     *
-     * @return
+     * Paint the rhythm tree
+     * @param g Graphics2D object for painting
+     * @param x top left corner or rhythmTree xcoord
+     * @param y top left corner or rhythmTree ycoord
      */
-    /*
+    public void paint(Graphics2D g, int x, int y) {
+        getRoot().paint(g, x, y);
+    }
+
+    @Override
+    public Iterator<Note> iterator() {
+        return null;
+       // ArrayList<RhythmNode> nodes = toList();
+    }
+}
+
+
+/*
     @Override
     public Iterator<RhythmNode> iterator() {
         Iterator<RhythmNode> it = new Iterator<Frame>() {
@@ -124,19 +131,3 @@ public class RhythmTree implements Iterable<Note> {
         return null;
     }
 */
-
-    /**
-     * Paint the rhythm tree
-     * @param g Graphics2D object for painting
-     * @param x top left corner or rhythmTree xcoord
-     * @param y top left corner or rhythmTree ycoord
-     */
-    public void paint(Graphics2D g, int x, int y) {
-        getRoot().paint(g, x, y);
-    }
-
-    @Override
-    public Iterator<Note> iterator() {
-        ArrayList<RhythmNode> nodes = toList();
-    }
-}
