@@ -31,10 +31,12 @@ public class Line implements Iterable<Note>{
         for(RhythmNode node : tree) {
             Note note = node.getNote();
             if(note != null) {
+                /*
                 // If this is the wrong instrument for this note
                 if(note.getInstrument() != instrument) {
                     throw new Error("LINE:\tWrong instrument!");
                 }
+                */
 
                 // Gets the note before and after this note
                 Note previousNote = notes.floorEntry(note.getStart()).getValue();

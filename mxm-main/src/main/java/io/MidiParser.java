@@ -1,7 +1,7 @@
 package io;
 
-import javafx.util.Pair;
 import model.basic.Count;
+import model.basic.Interval;
 import model.basic.Pitch;
 import model.form.Line;
 import model.form.Note;
@@ -10,10 +10,9 @@ import model.rhythmTree.RhythmTree;
 import model.form.Passage;
 import model.basic.TimeSignature;
 import model.trainable.Instrument;
+import sun.reflect.generics.tree.Tree;
 
 import javax.sound.midi.*;
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -56,9 +55,12 @@ class MidiParser {
     private HashMap<Track,TreeMap<Pitch,TreeSet<Long>>> noteOffs;
     private HashMap<Track,TreeMap<Long,Instrument>> instSwitches;
 
-    // ConvertedEvents to Float format
-    private HashMap<Track,TreeMap<Float,TreeMap<Pitch,Float>> noteFloats;
+    // Converted Events to Float format
+    private HashMap<Track,TreeMap<Float,TreeMap<Pitch,Float>>> noteFloats;
     private HashMap<Track,TreeMap<Float,Instrument>> instSwitchFloats;
+
+    // The RhythmTrees for each Line
+    private HashMap<Line,TreeMap<Integer,RhythmTree>> rhythmTrees;
 
 
     /**
@@ -97,10 +99,21 @@ class MidiParser {
         convertToCounts();
         System.out.println("MIDI:\t...Finished converting to Counts.");
 
+        /*
         for(Track track : rhythmTrees.keySet()) {
             System.out.println("TRACK: " + instSwitchFloats.get(track).firstEntry().getValue());
             for(Integer measureNum : rhythmTrees.get(track).keySet()) {
                 System.out.println("\t" + measureNum + " | " +rhythmTrees.get(track).get(measureNum).toString());
+            }
+        }
+        */
+
+        for(Track track : noteFloats.keySet()) {
+            for(Float startTime : noteFloats.get(track).keySet()) {
+                for(Pitch pitch : noteFloats.get(track).get(startTime).keySet()) {
+                    Float endTime = noteFloats.get(track).get(startTime).get(pitch);
+                    System.out.println(pitch + " @ " + startTime + " " + endTime);
+                }
             }
         }
 
@@ -508,25 +521,41 @@ class MidiParser {
 
                     // Gets all the note ons and note offs in this measure
                     NavigableMap<Float,TreeMap<Pitch,Float>> notesInMeasure = noteFloatsInTrack.subMap(measureStart,true,measureStart + 1.0f ,false);
-                    //NavigableMap<Float,TreeSet<Pitch>> noteOffsInMeasure = noteOffFloatsInTrack.subMap(measureStart,true,measureStart + 1.0f ,false);
 
                     // Build up the proto-lines
                     ArrayList<NavigableMap<Float,Pitch>> protoLines = new ArrayList<>();
 
-                    // For
-                    for( : noteOnsInMeasure) {
+                    // For each note in this measure
+                    for(Float startTime : notesInMeasure.keySet()) {
+                        for(Pitch pitch : notesInMeasure.get(startTime).descendingKeySet()) {
+                            Float endTime = notesInMeasure.get(startTime).get(pitch);
+                            Line bestLine = null;
+                            for(Line line : lines) {
+                                // If this line is free in time
+                                if(line.getLastTime() <= startTime) {
+                                    // Check the interval between the last note and this one.
+                                    //Interval intervalFromLast = pitch.minus();
+                                    //if()
+                                }
+                            }
+                            if(bestLine == null) {
+                                bestLine = new Line(instSwitchFloats.get(track).floorEntry(endTime).getValue());
+                                lines.add(bestLine);
+                            }
+                            else {
 
-                        for( )
-
-                        if(line.getLastTime() < noteOnFloats) {
-
+                            }
                         }
+
+                        //if(line.getLastTime() < noteOnFloats) {
+
+                        //}
                     }
 
                     // For each proto-line...
                     for(NavigableMap<Float,Pitch> protoLine : protoLines) {
                         // Create a rhythm tree for every measure
-                        RhythmTree rhythmTree = new RhythmTree();
+                        RhythmTree rhythmTree = new RhythmTree((int)measureStart);
                         // Given measure bounds, build a rhythm tree off of those notes
                         subdivideNode(rhythmTree.getRoot(), measureStart, measureStart + 1.0f, protoLine, track);
                         // Add this to the line
@@ -537,7 +566,7 @@ class MidiParser {
                 measureStart += 1.0f;
             }
             // Add all the lines to this passage.
-            passage.add(lines);
+            //passage.add(lines);
         }
     }
 
@@ -636,7 +665,7 @@ class MidiParser {
         else if(subdivisions == 1 && notes.keySet().size() > 0) {
             int measure = (int)Math.floor(start);
             Instrument instrument = instSwitchFloats.get(track).floorEntry(end).getValue();
-            Note note = new Note(notes.floorEntry(end).getValue(), new Count(measure,node.getTiming()), Count.ZERO, instrument);
+            Note note = new Note(notes.floorEntry(end).getValue() /*, instrument*/);
             node.color(note);
         }
     }

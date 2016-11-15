@@ -11,7 +11,7 @@ import java.util.*;
  * After we're done creating a RhythmTree, we put all of its frames into a Passage. Passages are essentially
  * great big Frame holders, and provide users with the ability to look up what's happening at any given Count.
  */
-public class Passage implements Iterable<Frame> {
+public class Passage implements Iterable<Line> {
 
     /** TimeSignatures throughout this passage. */
     private NavigableMap<Integer,TimeSignature> timeSignatures;
@@ -19,10 +19,6 @@ public class Passage implements Iterable<Frame> {
     private NavigableMap<Count,Tempo> tempi;
     /** All lines being played in this Passage. */
     private List<Line> lines;
-    /** All lines being played in this Passage by a specific instrument. */
-    private HashMap<Instrument,List<Line>> linesByInstrument;
-    /** All frames in this Passage. */
-    private NavigableMap<Count,Frame> frames;
 
     /**
      * The Passage constructor.
@@ -31,8 +27,6 @@ public class Passage implements Iterable<Frame> {
         this.timeSignatures = new TreeMap<>();
         this.tempi = new TreeMap<>();
         this.lines = new ArrayList<>();
-        this.linesByInstrument = new HashMap<>();
-        this.frames = new TreeMap<>();
     }
 
     /**
@@ -53,42 +47,10 @@ public class Passage implements Iterable<Frame> {
         tempi.put(time,tempo);
     }
 
-    /**
-     * Adds a Note to this Passage.
-     * @param note The Note to add to this Passage.
-     */
-    private void add(Note note) {
-        Count time = note.getStart();
-        Frame frame = getFrameAt(time);
-        Instrument instrument = note.getInstrument();
-
-        // If there's no frame available
-        if(frame == null) {
-            frame = new Frame(time);
-            frames.put(time,frame);
-        }
-        frame.add(note);
-
-        // If we've not had this instrument here before
-        if(!linesByInstrument.containsKey(instrument)) {
-            linesByInstrument.put(instrument,new ArrayList<Line>());
-        }
-
-        // Get all the Lines played by this instrument
-        Iterator<Line> itr = linesByInstrument.get(instrument).iterator();
-        while(itr.hasNext()) {
-            Line line = itr.next();
-        }
-        //line.add(note);
-    }
-
 
     public void add(Collection<Line> lines) {
         for(Line line : lines) {
             lines.add(line);
-            for(Note note : line) {
-                add(note);
-            }
         }
     }
 
@@ -110,14 +72,6 @@ public class Passage implements Iterable<Frame> {
         return tempi.floorEntry(time).getValue();
     }
 
-    /**
-     * Gets the Frame at a given time in this Passage.
-     * @param time The time at which to sample.
-     * @return The Frame at this time.
-     */
-    public Frame getFrameAt(Count time) {
-        return frames.floorEntry(time).getValue();
-    }
 
     @Override
     public String toString() {
@@ -129,17 +83,11 @@ public class Passage implements Iterable<Frame> {
     }
 
     /**
-     * Returns an Iterator over all Frames in this Passage.
-     * @return An Iterator over all Frames in this Passage.
-     */
-    @Override
-    public Iterator<Frame> iterator() {
-        return frames.values().iterator();
-    }
-
-    /**
      * Returns an Iterator over all Lines in this Passage.
      * @return An Iterator over all Lines in this Passage.
      */
-    public Iterator<Line> lineIterator() { return lines.iterator(); }
+    @Override
+    public Iterator<Line> iterator() {
+        return lines.iterator();
+    }
 }

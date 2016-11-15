@@ -21,11 +21,11 @@ class MidiWriter {
     public Sequence run(Passage passage) {
         try {
             Sequence s = new Sequence(Sequence.PPQ,24);
-            Iterator<Line> itr = passage.lineIterator();
+            Iterator<Line> itr = passage.iterator();
             while(itr.hasNext()) {
                 Track track = s.createTrack();
                 for(Note note : itr.next()) {
-
+                    
                 }
             }
         }

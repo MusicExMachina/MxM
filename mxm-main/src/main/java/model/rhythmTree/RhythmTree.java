@@ -1,7 +1,6 @@
 package model.rhythmTree;
 
-import model.basic.CountClass;
-import model.form.Note;
+import model.basic.Count;
 
 import java.awt.*;
 import java.util.*;
@@ -20,8 +19,8 @@ public class RhythmTree implements Iterable<RhythmNode> {
     /**
      * The rhythmTree default constructor
      */
-    public RhythmTree() {
-        root = new RhythmNode(this, null, CountClass.ZERO, CountClass.ONE);
+    public RhythmTree(Integer measure) {
+        root = new RhythmNode(this, null, new Count(measure), new Count(measure + 1));
     }
 
     /**
@@ -31,7 +30,7 @@ public class RhythmTree implements Iterable<RhythmNode> {
     public RhythmTree(int[] subDiv) throws IllegalArgumentException {
         Queue<RhythmNode> constructQueue = new ArrayDeque<RhythmNode>();
 
-        root = new RhythmNode(this, null, CountClass.ZERO, CountClass.ONE);
+        root = new RhythmNode(this, null, Count.ZERO, Count.ONE);
         constructQueue.add(root);
 
         RhythmNode currentNode;
