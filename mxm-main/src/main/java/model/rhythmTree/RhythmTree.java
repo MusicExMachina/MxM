@@ -5,32 +5,33 @@ import model.form.Note;
 
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * A conceptualization of rhythm as gradual, equal subdivisions of some concrete amount of time.
  * RhythmTrees operate like many other data structures save that their only "real" storage is in
  * their leaf nodes.
  */
-public class RhythmTree implements Iterable<Note> {
+public class RhythmTree implements Iterable<RhythmNode> {
 
-    /** Saves the root RhythmNode **/
+    /** Saves the root RhythmNode. */
     private RhythmNode root;
 
     /**
      * The rhythmTree default constructor
      */
     public RhythmTree() {
-        root = new RhythmNode(this,null, CountClass.ZERO,CountClass.ONE);
+        root = new RhythmNode(this, null, CountClass.ZERO, CountClass.ONE);
     }
 
     /**
      * Quick constructor to make rhythm tree (mainly for testing)
      * @param subDiv list of subdivisions in Breadth First order
      */
-    public RhythmTree(int[] subDiv) throws IllegalArgumentException{
+    public RhythmTree(int[] subDiv) throws IllegalArgumentException {
         Queue<RhythmNode> constructQueue = new ArrayDeque<RhythmNode>();
 
-        root = new RhythmNode(this,null,CountClass.ZERO,CountClass.ONE);
+        root = new RhythmNode(this, null, CountClass.ZERO, CountClass.ONE);
         constructQueue.add(root);
 
         RhythmNode currentNode;
@@ -41,13 +42,13 @@ public class RhythmTree implements Iterable<Note> {
             } else {
                 throw new IllegalArgumentException("List cannot be converted to a rhythm tree, not enough divisions");
             }
-            if(aSubDiv != 1) {
+            if (aSubDiv != 1) {
                 currentNode.subdivide(aSubDiv);
                 constructQueue.addAll(currentNode.getChildren());
             }
         }
 
-        if(constructQueue.size() != 0){
+        if (constructQueue.size() != 0) {
             throw new IllegalArgumentException("List cannot be converted to a rhythm tree, leftover divisions");
         }
     }
@@ -55,6 +56,7 @@ public class RhythmTree implements Iterable<Note> {
     /**
      * Returns a nicely-formatted string
      * representing this rhythmTree.
+     *
      * @return A String of this rhythmTree.
      */
     public String toString() {
@@ -63,6 +65,7 @@ public class RhythmTree implements Iterable<Note> {
 
     /**
      * Getter for the root RhythmNode which fills the whole measure.
+     *
      * @return Gets the root RhythmNode of this RhythmTree.
      */
     public RhythmNode getRoot() {
@@ -70,11 +73,26 @@ public class RhythmTree implements Iterable<Note> {
     }
 
     /**
+     * Recursively creates a List of all RhythmNodes in this RhythmTree.
+     *
+     * @return A List of all RhythmNodes in this RhythmTree.
+     */
+    public List<RhythmNode> toList() {
+        return root.toList();
+    }
+
+    /**
      * Converts this RhythmTree to a List of Integer subdivisions
+     *
      * @return A List of Integer subdivisions.
      */
-    public ArrayList<Integer> toList() {
-        return root.toList();
+    public List<Integer> toSubdivisionList() {
+        List<RhythmNode> nodes = toList();
+        List<Integer> toReturn = new ArrayList<>();
+        for (RhythmNode node : nodes) {
+            toReturn.add(node.getSubdivisions());
+        }
+        return toReturn;
     }
 
     /**
@@ -88,46 +106,8 @@ public class RhythmTree implements Iterable<Note> {
     }
 
     @Override
-    public Iterator<Note> iterator() {
-        return null;
-       // ArrayList<RhythmNode> nodes = toList();
+    public Iterator<RhythmNode> iterator() {
+        List<RhythmNode> nodes = toList();
+        return toList().iterator();
     }
 }
-
-
-/*
-    @Override
-    public Iterator<RhythmNode> iterator() {
-        Iterator<RhythmNode> it = new Iterator<Frame>() {
-            private RhythmNode node = root;
-
-            @Override
-            public boolean hasNext() {
-                RhythmNode nextNode           = null;
-                int parentsChildNumber  = -1;
-                nextNode= node.getParent();
-                for(int i = 0; i < nextNode.getChildren().size(); i++) {
-                    if(nextNode.children.get(i).equals(node)) {
-                        parentsChildNumber = i;
-                    }
-                }
-                if(parentsChildNumber < nextNode.children.size()) {
-
-                }
-                return currentIndex < currentSize && arrayList[currentIndex] != null;
-            }
-
-            @Override
-            public MusicEvent next() {
-                return arrayList[currentIndex++];
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
-        return it;
-        return null;
-    }
-*/

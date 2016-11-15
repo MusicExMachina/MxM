@@ -4,6 +4,7 @@ import model.basic.Count;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import model.basic.CountClass;
@@ -98,7 +99,7 @@ public class RhythmNode {
      * Returns the subdivision number of this RhythmNode.
      * @return The number of children of this RhythmNode.
      */
-    public int getValue() {
+    public int getSubdivisions() {
         return children.size();
     }
 
@@ -116,6 +117,14 @@ public class RhythmNode {
      */
     public Note getNote() {
         return note;
+    }
+
+    /**
+     * "Colors" a RhythmNode with a specific Note.
+     * @param note The Note to color this RhythmNode with.
+     */
+    public void color(Note note) {
+        note = note;
     }
 
     /**
@@ -137,9 +146,6 @@ public class RhythmNode {
             }
             else throw new Error("This RhythmNode is already subdivided!");
         }
-        else if(times == 1) {
-            //tree.addFrame(timing);
-        }
         else if(times < 0)
             throw new Error("Trying to subdivide this RhythmNode" + times + " times!");
 
@@ -147,12 +153,12 @@ public class RhythmNode {
     }
 
     /**
-     * Converts this RhythmNode to a List of Integer subdivisions
-     * @return A List of Integer subdivisions.
+     * Recursively creates a List of all RhythmNodes in this RhythmTree.
+     * @return A List of all RhythmNodes in this RhythmTree.
      */
-    public ArrayList<Integer> toList() {
-        ArrayList<Integer> toReturn = new ArrayList<>();
-        toReturn.add(getValue());
+    public List<RhythmNode> toList() {
+        LinkedList<RhythmNode> toReturn = new LinkedList<>();
+        toReturn.add(this);
         for(RhythmNode child : children)
         {
             toReturn.addAll(child.toList());

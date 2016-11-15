@@ -60,6 +60,19 @@ public class Count implements Comparator<Count>, Comparable<Count> {
         }
     }
 
+    public Count(int measure, CountClass countClass) {
+        if(denominator > 0) {
+            this.numerator   = countClass.getNumerator();
+            this.denominator = countClass.getDenominator();
+            reduce();
+            this.measure     = measure;
+            this.countClass  = countClass;
+        }
+        else {
+            throw new Error("Cannot create a Count with a denominator less than or equal to zero.");
+        }
+    }
+
     /**
      * A constructor for Count taking in a measure, a numerator
      * and a denominator. Note that these do not need to be

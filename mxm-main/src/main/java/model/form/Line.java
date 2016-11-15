@@ -1,6 +1,7 @@
 package model.form;
 
 import model.basic.Count;
+import model.rhythmTree.RhythmNode;
 import model.rhythmTree.RhythmTree;
 import model.trainable.Instrument;
 import sun.reflect.generics.tree.Tree;
@@ -26,26 +27,33 @@ public class Line implements Iterable<Note>{
         this.notes = new TreeMap<>();
     }
 
-    public void add(Note note) {
-        // If this is the wrong instrument for this note
-        if(note.getInstrument() != instrument) {
-            throw new Error("LINE:\tWrong instrument!");
-        }
+    public void add(RhythmTree tree) {
+        for(RhythmNode node : tree) {
+            Note note = node.getNote();
+            if(note != null) {
+                // If this is the wrong instrument for this note
+                if(note.getInstrument() != instrument) {
+                    throw new Error("LINE:\tWrong instrument!");
+                }
 
-        // Gets the note before and after this note
-        Note previousNote = notes.floorEntry(note.getStart()).getValue();
-        Note followingNote = notes.ceilingEntry(note.getStart()).getValue();
+                // Gets the note before and after this note
+                Note previousNote = notes.floorEntry(note.getStart()).getValue();
+                Note followingNote = notes.ceilingEntry(note.getStart()).getValue();
 
-        // If this note starts before the last one ends
-        if(previousNote != null && note.getStart().compareTo(previousNote.getEnd()) < 0) {
-            throw new Error("LINE:\tTrying to add a Note which overlaps the others!");
+                // If this note starts before the last one ends
+                if(previousNote != null && note.getStart().compareTo(previousNote.getEnd()) < 0) {
+                    throw new Error("LINE:\tTrying to add a Note which overlaps the others!");
+                }
+                // If the next note starts befor this new note ends
+                if(followingNote != null && note.getEnd().compareTo(followingNote.getStart()) < 0) {
+                    throw new Error("LINE:\tTrying to add a Note which overlaps the others!");
+                }
+                notes.put(note.getStart(),note);
+            }
         }
-        // If the next note starts befor this new note ends
-        if(followingNote != null && note.getEnd().compareTo(followingNote.getStart()) < 0) {
-            throw new Error("LINE:\tTrying to add a Note which overlaps the others!");
-        }
-        notes.put(note.getStart(),note);
     }
+
+    public Instrument getInstrument() { return instrument; }
 
     public Rhythm getRhythm() {
         return rhythm;
@@ -53,6 +61,24 @@ public class Line implements Iterable<Note>{
 
     public Contour getContour() {
         return contour;
+    }
+
+    public float getLastTime() {
+        if(notes.size() > 0 ) {
+            return notes.firstKey().toFloat();
+        }
+        else {
+            return 0f;
+        }
+    }
+
+    @Override
+    public String toString() {
+        String toReturn = instrument.toString();
+        for(Note note : this) {
+            toReturn += note.toString() + " ";
+        }
+        return toReturn;
     }
 
     @Override

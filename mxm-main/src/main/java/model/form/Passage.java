@@ -82,6 +82,16 @@ public class Passage implements Iterable<Frame> {
         //line.add(note);
     }
 
+
+    public void add(Collection<Line> lines) {
+        for(Line line : lines) {
+            lines.add(line);
+            for(Note note : line) {
+                add(note);
+            }
+        }
+    }
+
     /**
      * Gets the TimeSignature at a given time in this Passage.
      * @param time The time at which to sample.
@@ -107,6 +117,15 @@ public class Passage implements Iterable<Frame> {
      */
     public Frame getFrameAt(Count time) {
         return frames.floorEntry(time).getValue();
+    }
+
+    @Override
+    public String toString() {
+        String toReturn = "";
+        for(Line line : lines) {
+            toReturn += "Line : " + line.toString();
+        }
+        return toReturn;
     }
 
     /**
