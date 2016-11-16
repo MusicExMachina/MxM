@@ -50,7 +50,7 @@ public class CountTest {
 */
     @Test
     public void illegalCount() {
-        Count IllegalDivision = new Count(1, 0); //Can't divide by 0
+        //Count IllegalDivision = new Count(1, 0); //Can't divide by 0
     }
 
 

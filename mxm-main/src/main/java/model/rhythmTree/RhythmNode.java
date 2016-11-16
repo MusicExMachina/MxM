@@ -4,8 +4,9 @@ import model.basic.Count;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import model.form.Frame;
+
 import model.form.Note;
 
 /**
@@ -35,8 +36,8 @@ public class RhythmNode {
     /** The duration of this RhythmNode */
     private Count duration;
 
-    /** The frame of this RhythmNode. */
-    private Frame frame;
+    /** The Note (if this is a leaf RhythmNode) */
+    private Note note;
 
     /**
      * The RhythmNode constructor, used by the subdivide function in an almost-factory method.
@@ -52,7 +53,6 @@ public class RhythmNode {
         this.children   = new ArrayList<>();
         this.timing     = timing;
         this.duration   = duration;
-        this.frame      = new Frame(timing);
     }
 
     /**
@@ -98,7 +98,7 @@ public class RhythmNode {
      * Returns the subdivision number of this RhythmNode.
      * @return The number of children of this RhythmNode.
      */
-    public int getValue() {
+    public int getSubdivisions() {
         return children.size();
     }
 
@@ -111,11 +111,19 @@ public class RhythmNode {
     }
 
     /**
-     * Returns the Frame of this RhythmNode.
-     * @return The Frame of this RhythmNode.
+     * Returns the Note of this RhythmNode.
+     * @return The Note of this RhythmNode.
      */
-    public Frame getFrame() {
-        return frame;
+    public Note getNote() {
+        return note;
+    }
+
+    /**
+     * "Colors" a RhythmNode with a specific Note.
+     * @param note The Note to color this RhythmNode with.
+     */
+    public void color(Note note) {
+        this.note = note;
     }
 
     /**
@@ -137,9 +145,6 @@ public class RhythmNode {
             }
             else throw new Error("This RhythmNode is already subdivided!");
         }
-        else if(times == 1) {
-            //tree.addFrame(timing);
-        }
         else if(times < 0)
             throw new Error("Trying to subdivide this RhythmNode" + times + " times!");
 
@@ -147,12 +152,12 @@ public class RhythmNode {
     }
 
     /**
-     * Converts this RhythmNode to a List of Integer subdivisions
-     * @return A List of Integer subdivisions.
+     * Recursively creates a List of all RhythmNodes in this RhythmTree.
+     * @return A List of all RhythmNodes in this RhythmTree.
      */
-    public ArrayList<Integer> toList() {
-        ArrayList<Integer> toReturn = new ArrayList<>();
-        toReturn.add(getValue());
+    public List<RhythmNode> toList() {
+        LinkedList<RhythmNode> toReturn = new LinkedList<>();
+        toReturn.add(this);
         for(RhythmNode child : children)
         {
             toReturn.addAll(child.toList());
@@ -166,16 +171,17 @@ public class RhythmNode {
      * @return A String of this rhythmTree.
      */
     public String toString() {
+        if(children.size() == 0) {
+            if(note == null) {
+                return "o";
+            }
+            else {
+                return note.getPitch().toString();
+            }
+        }
         String toReturn = "(";
         for(RhythmNode node : children) {
             toReturn += node.toString();
-        }
-        if(children.size() == 0) {
-            String thisNode = "[ ";
-            for(Note note : frame) {
-                thisNode += note.getPitch().toString() + " ";
-            }
-            return thisNode + "]";
         }
         toReturn += ")";
         return toReturn;

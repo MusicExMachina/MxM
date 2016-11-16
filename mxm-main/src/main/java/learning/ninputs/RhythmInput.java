@@ -33,11 +33,11 @@ public class RhythmInput {
      */
     public DataSet buildDataSet(){
 
-        ArrayList<ArrayList<Integer>> rhythmLists = new ArrayList<>();
+        ArrayList<List<Integer>> rhythmLists = new ArrayList<>();
         int numPossibleStates = 0;
         int maxTreeLength = 0;
         for(RhythmTree rhythm : rhythms){
-            ArrayList<Integer> l = rhythm.toList();
+            List<Integer> l = rhythm.toSubdivisionList();
             rhythmLists.add(l);
             numPossibleStates+=l.size();
             if(l.size()>maxTreeLength){
@@ -51,7 +51,7 @@ public class RhythmInput {
 
         //Create DS from input and output, put into Matrix
         for (int i = 0; i < rhythmLists.size(); i++) {
-            ArrayList<Integer> rhythm = rhythmLists.get(i);
+            List<Integer> rhythm = rhythmLists.get(i);
             //Pad the lists with 0s in front (will be removed later)
             for (int j = rhythm.size(); j < maxTreeLength; j++) {
                 rhythm.add(0, 0);
