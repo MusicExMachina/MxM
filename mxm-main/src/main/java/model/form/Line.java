@@ -27,7 +27,7 @@ public class Line implements Iterable<Note>{
         this.notes = new TreeMap<>();
     }
 
-    public void add(RhythmTree tree) {
+    public void add(int measure,RhythmTree tree) {
         for(RhythmNode node : tree) {
             Note note = node.getNote();
             if(note != null) {
@@ -37,22 +37,22 @@ public class Line implements Iterable<Note>{
                     throw new Error("LINE:\tWrong instrument!");
                 }
                 */
-
-                // Gets the note before and after this note
-                Note previousNote = notes.floorEntry(note.getStart()).getValue();
-                Note followingNote = notes.ceilingEntry(note.getStart()).getValue();
-
+                /*
                 // If this note starts before the last one ends
-                if(previousNote != null && note.getStart().compareTo(previousNote.getEnd()) < 0) {
+                if(notes.floorEntry(note.getStart()) != null &&
+                        note.getStart().compareTo(notes.floorEntry(note.getStart()).getValue().getEnd()) < 0) {
                     throw new Error("LINE:\tTrying to add a Note which overlaps the others!");
                 }
                 // If the next note starts befor this new note ends
-                if(followingNote != null && note.getEnd().compareTo(followingNote.getStart()) < 0) {
+                if(notes.ceilingEntry(note.getStart()) != null &&
+                        note.getEnd().compareTo(notes.ceilingEntry(note.getStart()).getValue().getStart()) < 0) {
                     throw new Error("LINE:\tTrying to add a Note which overlaps the others!");
                 }
+                */
                 notes.put(note.getStart(),note);
             }
         }
+        rhythm.add(measure,tree);
     }
 
     public Instrument getInstrument() { return instrument; }

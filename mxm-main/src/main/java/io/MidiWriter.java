@@ -21,10 +21,9 @@ class MidiWriter {
     public Sequence run(Passage passage) {
         try {
             Sequence s = new Sequence(Sequence.PPQ,24);
-            Iterator<Line> itr = passage.iterator();
-            while(itr.hasNext()) {
+            for(Line line : passage) {
                 Track track = s.createTrack();
-                for(Note note : itr.next()) {
+                for(Note note : line) {
                     
                 }
             }

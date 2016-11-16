@@ -21,8 +21,17 @@ public class Rhythm implements Iterable<RhythmTree> {
             trees.put(measure,tree);
         }
         else {
-            throw new Error("RHYTHM:\tTrying to add a RhythmTree on top of another at measure " + measure + "!");
+            //throw new Error("RHYTHM:\tTrying to add a RhythmTree on top of another at measure " + measure + "!");
         }
+    }
+
+    @Override
+    public String toString() {
+        String toReturn = "";
+        for(Integer measure : trees.keySet()) {
+            toReturn += "Measure " + measure + " tree : " + trees.get(measure).toString() + "\n";
+        }
+        return toReturn;
     }
 
     @Override

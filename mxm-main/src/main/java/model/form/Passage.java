@@ -48,10 +48,8 @@ public class Passage implements Iterable<Line> {
     }
 
 
-    public void add(Collection<Line> lines) {
-        for(Line line : lines) {
-            lines.add(line);
-        }
+    public void add(Line line) {
+        lines.add(line);
     }
 
     /**
@@ -77,7 +75,7 @@ public class Passage implements Iterable<Line> {
     public String toString() {
         String toReturn = "";
         for(Line line : lines) {
-            toReturn += "Line : " + line.toString();
+            toReturn += "Line : " + line.toString() + "\n";
         }
         return toReturn;
     }

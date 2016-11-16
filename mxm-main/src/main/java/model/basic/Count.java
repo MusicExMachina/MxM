@@ -40,7 +40,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
         this.numerator   = measure;
         this.denominator = 1;
         this.measure     = numerator / denominator;
-        this.countClass  = new CountClass(numerator,denominator);
+        //this.countClass  = new CountClass(0,1);
     }
 
     /**
@@ -56,7 +56,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
             this.denominator = denominator;
             reduce();
             this.measure     = numerator / denominator;
-            this.countClass  = new CountClass(numerator,denominator);
+            //this.countClass  = new CountClass(numerator,denominator);
         }
         else {
             throw new Error("Cannot create a Count with a denominator less than or equal to zero.");
@@ -69,7 +69,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
             this.denominator = countClass.getDenominator();
             reduce();
             this.measure     = measure;
-            this.countClass  = countClass;
+            //this.countClass  = countClass;
         }
         else {
             throw new Error("Cannot create a Count with a denominator less than or equal to zero.");
@@ -136,7 +136,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
      * @return A nicely-formatted String of this Count.
      */
     public String toString() {
-        return getMeasure() + " & " + countClass.toString();
+        return getMeasure() + " & " + (numerator%denominator) + "/" + denominator;//countClass.toString();
     }
 
     /**

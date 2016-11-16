@@ -50,6 +50,9 @@ public class Note {
      * @return The start time of this Note.
      */
     public Count getStart() {
+        if(start == null) {
+            return Count.ZERO;
+        }
         return start.getTiming();
     }
 
@@ -58,6 +61,9 @@ public class Note {
      * @return The end time of this Note.
      */
     public Count getEnd() {
+        if(end == null) {
+            return start.getTiming();
+        }
         return end.getTiming();
     }
 
