@@ -13,7 +13,7 @@ import java.util.TreeMap;
 /**
  * Lines are horizontal arrangements of Notes that are heard as a continuous horizontal slice.
  */
-public class Line implements Iterable<Note>{
+public class Line implements Iterable<Note> {
 
     private Rhythm rhythm;
     private Contour contour;
@@ -74,6 +74,10 @@ public class Line implements Iterable<Note>{
         }
     }
 
+    /**
+     * Returns a nicely-formatted string representing this line.
+     * @return A string representing this line.
+     */
     @Override
     public String toString() {
         String toReturn = instrument.toString();
@@ -83,6 +87,10 @@ public class Line implements Iterable<Note>{
         return toReturn;
     }
 
+    /**
+     * Returns an iterator over all the notes in this line.
+     * @return An iterator over all the notes in this line.
+     */
     @Override
     public Iterator<Note> iterator() {
         return notes.values().iterator();
