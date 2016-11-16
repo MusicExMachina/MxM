@@ -23,9 +23,9 @@ public class MidiTest {
             //Sequence sequence = MidiTools.load("C:/users/celenp/desktop/test.mid");
             //Sequence sequence = MidiTools.load("schubertImpromptu.mid");
             MidiTools.parse(sequence);
-            MidiTools.play(sequence);
+            //MidiTools.play(sequence);
             System.out.println(sequence.toString());
-            Thread.sleep(100000);
+            //Thread.sleep(100000);
 
         } catch (Exception e) {
             e.printStackTrace();
