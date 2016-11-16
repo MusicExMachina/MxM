@@ -90,7 +90,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
             this.denominator = denominator;
             reduce();
             this.measure     = numerator / denominator;
-            this.countClass  = new CountClass(numerator,denominator);
+            //this.countClass  = new CountClass(numerator,denominator);
         }
         else {
             throw new Error("Cannot create a Count with a deno");
