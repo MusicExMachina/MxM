@@ -47,7 +47,7 @@ public class MidiNote implements Comparator<MidiNote>, Comparable<MidiNote>{
     public Instrument getInstrument() {
         return instrument;
     }
-/*
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,5 +68,4 @@ public class MidiNote implements Comparator<MidiNote>, Comparable<MidiNote>{
         result = 31 * result + (end != +0.0f ? Float.floatToIntBits(end) : 0);
         return result;
     }
-    */
 }

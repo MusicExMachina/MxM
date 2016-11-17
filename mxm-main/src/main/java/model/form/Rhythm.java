@@ -1,5 +1,6 @@
 package model.form;
 
+import io.MidiMeasure;
 import model.rhythmTree.RhythmTree;
 
 import java.util.Iterator;
@@ -27,15 +28,14 @@ public class Rhythm implements Iterable<RhythmTree> {
     /**
      * Adds a new rhythm tree to this rhythm, or throws an error, if
      * there is already a rhythm tree of this measure in this rhythm.
-     * @param measure The measure of this rhythm tree.
-     * @param tree The rhythm tree itself.
+     * @param midiMeasure the "midi measure" to add to this rhythm.
      */
-    public void add(int measure, RhythmTree tree) {
-        if(!trees.containsKey(measure)) {
-            trees.put(measure,tree);
+    public void add(MidiMeasure midiMeasure) {
+        if(!trees.containsKey(midiMeasure.getMeasure())) {
+            trees.put(midiMeasure.getMeasure(),midiMeasure.getRhythmTree());
         }
         else {
-            throw new Error("RHYTHM:\tTrying to add a RhythmTree on top of another at measure " + measure + "!");
+            throw new Error("RHYTHM:\tTrying to add a RhythmTree on top of another at measure " + midiMeasure.getMeasure() + "!");
         }
     }
 

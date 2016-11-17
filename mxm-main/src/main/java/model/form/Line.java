@@ -1,5 +1,6 @@
 package model.form;
 
+import io.MidiMeasure;
 import model.basic.Count;
 import model.rhythmTree.RhythmNode;
 import model.rhythmTree.RhythmTree;
@@ -15,11 +16,23 @@ import java.util.TreeMap;
  */
 public class Line implements Iterable<Note> {
 
+    /** The rhythm that underlies this line. */
     private Rhythm rhythm;
+
+    /** The contour that underlies this line. */
     private Contour contour;
+
+    /** The instrument that plays this line. */
     private Instrument instrument;
+
+    /** The notes played in this line. */
     private TreeMap<Count,Note> notes;
 
+    /**
+     * The line constructor starts only with the instrument
+     * playing this passage, as measures are added later.
+     * @param instrument
+     */
     public Line(Instrument instrument) {
         this.rhythm = new Rhythm();
         this.contour = new Contour();
@@ -27,8 +40,8 @@ public class Line implements Iterable<Note> {
         this.notes = new TreeMap<>();
     }
 
-    public void add(int measure,RhythmTree tree) {
-        for(RhythmNode node : tree) {
+    public void add(MidiMeasure midiMeasure) {
+        for(RhythmNode node : midiMeasure.getRhythmTree()) {
             Note note = node.getNote();
             if(note != null) {
                 /*
@@ -52,7 +65,7 @@ public class Line implements Iterable<Note> {
                 notes.put(note.getStart(),note);
             }
         }
-        rhythm.add(measure,tree);
+        rhythm.add(midiMeasure);
     }
 
     public Instrument getInstrument() { return instrument; }

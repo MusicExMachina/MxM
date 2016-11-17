@@ -554,7 +554,9 @@ class MidiParser {
                     subdivideNode(rhythmTree.getRoot(), measure, measure + 1.0f, notesInMeasure, unendedNotes);
                     rhythmTrees.add(rhythmTree);
 
-                    line.add(measure,rhythmTree);
+                    MidiMeasure midiMeasure = new MidiMeasure(measure,rhythmTree);
+
+                    line.add(midiMeasure);
                 }
                 measure++;
             }
