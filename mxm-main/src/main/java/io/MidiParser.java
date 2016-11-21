@@ -86,28 +86,19 @@ class MidiParser {
         midiFrames = new HashMap<>();
         instSwitchFloats = new HashMap<>();
 
-        System.out.println("MIDI:\tParsing MidiEvents...");
+        System.out.println("MIDI PARSER:\tParsing MidiEvents...");
         parseAll();
-        System.out.println("MIDI:\t...Finished parsing MidiEvents.");
+        System.out.println("MIDI PARSER:\t...Finished parsing MidiEvents.");
 
-        System.out.println("MIDI:\tInterpreting MidiEvents...");
+        System.out.println("MIDI PARSER:\tInterpreting MidiEvents...");
         interpretAll();
-        System.out.println("MIDI:\t...Finished interpreting MidiEvents.");
+        System.out.println("MIDI PARSER:\t...Finished interpreting MidiEvents.");
 
         splitIntoProtoLines();
 
-        System.out.println("MIDI:\tConverting to Counts...");
+        System.out.println("MIDI PARSER:\tConverting to Counts...");
         convertToCounts();
-        System.out.println("MIDI:\t...Finished converting to Counts.");
-
-        /*
-        for(Track track : rhythmTrees.keySet()) {
-            System.out.println("TRACK: " + instSwitchFloats.get(track).firstEntry().getValue());
-            for(Integer measureNum : rhythmTrees.get(track).keySet()) {
-                System.out.println("\t" + measureNum + " | " +rhythmTrees.get(track).get(measureNum).toString());
-            }
-        }
-        */
+        System.out.println("MIDI PARSER:\t...Finished converting to Counts.");
 
         //System.out.println(passage);
         for(Line line : passage) {

@@ -8,7 +8,7 @@ import java.util.Comparator;
 /**
  * Created by celenp on 11/15/2016.
  */
-public class MidiNote implements Comparator<MidiNote>, Comparable<MidiNote>{
+class MidiNote implements Comparator<MidiNote>, Comparable<MidiNote>{
 
     private Instrument instrument;
     private Pitch pitch;
