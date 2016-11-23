@@ -9,7 +9,7 @@ import java.util.TreeMap;
 /**
  * Created by celenp on 11/15/2016.
  */
-public class MidiLine implements Iterable<MidiNote> {
+class MidiLine implements Iterable<MidiNote> {
 
     public Instrument getInstrument() {
         return instrument;
