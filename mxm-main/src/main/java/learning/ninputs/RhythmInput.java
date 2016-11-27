@@ -53,8 +53,8 @@ public class RhythmInput {
             }
         }
 
-        INDArray input = Nd4j.zeros(rhythmLists.size(), maxTreeLength, numPossibleStates);
-        INDArray output = Nd4j.zeros(rhythmLists.size(), numPossibleStates);
+        INDArray input = Nd4j.zeros(rhythmLists.size(), numPossibleStates, maxTreeLength);
+        INDArray output = Nd4j.zeros(rhythmLists.size(), numPossibleStates, maxTreeLength);
         int count = 0;
 
         //Create DS from input and output, put into Matrix
@@ -75,8 +75,8 @@ public class RhythmInput {
 //                    partialList[k] = rhythm.get(k);
 //                }
 
-                input.putScalar(new int[]{i, j, rhythm.get(j)-1}, 1);
-                output.putScalar(new int[]{i, rhythm.get(j+1)-1}, 1);
+                input.putScalar(new int[]{i, rhythm.get(j)-1, j}, 1);
+                output.putScalar(new int[]{i, rhythm.get(j+1)-1, j}, 1);
                 count++;
             }
 //            input.putScalar(new int[]{0, DIVISION_TOKEN, count}, 1);
