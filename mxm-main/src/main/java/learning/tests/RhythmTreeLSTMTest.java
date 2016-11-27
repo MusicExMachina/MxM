@@ -22,6 +22,9 @@ public class RhythmTreeLSTMTest {
         r.addRhythm(a);
         r.addRhythm(b);
 
+        System.out.print(r);
+
+
         RhythmTreeLSTM network = new RhythmTreeLSTM(r.buildDataSet(),20,2);
         network.run();
     }

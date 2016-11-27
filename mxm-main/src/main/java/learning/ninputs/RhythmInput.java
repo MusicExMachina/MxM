@@ -17,7 +17,7 @@ public class RhythmInput {
      */
     private List<RhythmTree> rhythms;
 
-    public static final int DIVISION_TOKEN = -1;
+    public static final int DIVISION_TOKEN = 0;
 
     /**
      * Create a blank rhythm input object
@@ -42,32 +42,45 @@ public class RhythmInput {
         for(RhythmTree rhythm : rhythms){
             ArrayList<Integer> l = rhythm.toList();
             rhythmLists.add(l);
-            numPossibleStates+=l.size();
+            numPossibleStates = 0;
+            for(Integer r : l){
+                if(r>numPossibleStates){
+                    numPossibleStates=r;
+                }
+            }
             if(l.size()>maxTreeLength){
                 maxTreeLength = l.size();
             }
         }
 
-        INDArray input = Nd4j.zeros(1, maxTreeLength, numPossibleStates);
-        INDArray output = Nd4j.zeros(1, numPossibleStates, numPossibleStates);
+        INDArray input = Nd4j.zeros(rhythmLists.size(), maxTreeLength, numPossibleStates);
+        INDArray output = Nd4j.zeros(rhythmLists.size(), numPossibleStates);
         int count = 0;
 
         //Create DS from input and output, put into Matrix
         for (int i = 0; i < rhythmLists.size(); i++) {
             ArrayList<Integer> rhythm = rhythmLists.get(i);
-
+            ArrayList<Integer> modRhythm = new ArrayList<>();
+            for(Integer r : rhythm){
+                if(r == 0){
+                    modRhythm.add(1);
+                }else{
+                    modRhythm.add(r);
+                }
+            }
+            rhythm = modRhythm;
             for (int j = 0; j < rhythm.size()-1; j++) {
 //                int[] partialList = new int[j];
 //                for (int k = 0; k<j; k++) {
 //                    partialList[k] = rhythm.get(k);
 //                }
 
-                input.putScalar(new int[]{0, rhythm.get(j), count}, 1);
-                output.putScalar(new int[]{0, rhythm.get(j+1), count}, 1);
+                input.putScalar(new int[]{i, j, rhythm.get(j)-1}, 1);
+                output.putScalar(new int[]{i, rhythm.get(j+1)-1}, 1);
                 count++;
             }
-            input.putScalar(new int[]{0, DIVISION_TOKEN, count}, 1);
-            count++;
+//            input.putScalar(new int[]{0, DIVISION_TOKEN, count}, 1);
+//            count++;
         }
         return new DataSet(input, output);
     }
