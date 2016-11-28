@@ -1,5 +1,6 @@
 package learning;
 
+import model.rhythmTree.RhythmTree;
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
@@ -111,8 +112,8 @@ public class ModifiedTextLSTM {
         }
 
         // Create input and output arrays
-        INDArray input  = Nd4j.zeros(inputData.length, possibleDivs.size(), maxInputLen);
-        INDArray labels = Nd4j.zeros(inputData.length, possibleDivs.size(), maxInputLen);
+        INDArray input  = Nd4j.zeros(inputData.length, possibleDivs.size(), maxInputLen+1);
+        INDArray labels = Nd4j.zeros(inputData.length, possibleDivs.size(), maxInputLen+1);
 
         for (int c = 0; c < inputData.length; c++) {
             int samplePos = 0;
@@ -128,6 +129,7 @@ public class ModifiedTextLSTM {
                 labels.putScalar(new int[]{c, possibleDivs.indexOf(nextDiv), samplePos}, 1);
                 samplePos++;
             }
+
         }
         trainingData = new DataSet(input, labels);
         System.out.println("...completed initialization.");
@@ -145,7 +147,7 @@ public class ModifiedTextLSTM {
         // This establishes all the settings for the neural network
         NeuralNetConfiguration.Builder builder = new NeuralNetConfiguration.Builder();
         builder.iterations(10);
-        builder.learningRate(0.001);
+        builder.learningRate(0.01);
         builder.optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT);
         builder.seed(123);
         builder.biasInit(0);
@@ -224,12 +226,28 @@ public class ModifiedTextLSTM {
             network.rnnClearPreviousState();
 
             INDArray testInit = Nd4j.zeros(possibleDivs.size());
-            testInit.putScalar(possibleDivs.indexOf(3), 1);
-
+            testInit.putScalar(possibleDivs.indexOf(3), 0);
+            int nextIndex = 3;
 
             INDArray output = network.rnnTimeStep(testInit);
 
-            for (int j = 0; j < 10; j++) {
+            ArrayList<Integer> treeList = new ArrayList<Integer>();
+            treeList.add(nextIndex);
+
+            boolean validTree = true;
+
+            int[] treeArr = new int[treeList.size()];
+            for(int i = 0; i<treeArr.length; i++){
+                treeArr[i] = treeList.get(i);
+            }
+
+            try{
+                RhythmTree r = new RhythmTree(treeArr);
+            }catch(Exception e){
+                validTree = false;
+            }
+
+            while (!validTree) {
 
                 // first process the last output of the network to a concrete
                 // neuron, the neuron with the highest output cas the highest
@@ -247,10 +265,29 @@ public class ModifiedTextLSTM {
                 INDArray nextInput = Nd4j.zeros(possibleDivs.size());
                 nextInput.putScalar(sampledCharacterIdx, 1);
                 output = network.rnnTimeStep(nextInput);
+                nextIndex = possibleDivs.get(sampledCharacterIdx);
+
+                treeList.add(nextIndex);
+
+                treeArr = new int[treeList.size()];
+                for (int i = 0; i < treeArr.length; i++) {
+                    treeArr[i] = treeList.get(i);
+                }
+                try {
+                    validTree = true;
+                    RhythmTree r = new RhythmTree(treeArr);
+                    System.out.println(r);
+                } catch (Exception e) {
+                    validTree = false;
+                }
 
             }
             System.out.print("\n");
             System.out.println("...completed training.");
+            for(Integer i : treeList){
+                System.out.print(i);
+            }
+            System.out.println();
         }
     }
 
