@@ -103,9 +103,16 @@ public class ModifiedTextLSTM {
         possibleDivs = new ArrayList<Integer>();
         possibleDivs.addAll(possibleDivsSet);
 
+        int maxInputLen = 0;
+        for(int[] i : inputData){
+            if (i.length > maxInputLen){
+                maxInputLen = i.length;
+            }
+        }
+
         // Create input and output arrays
-        INDArray input  = Nd4j.zeros(inputData.length, possibleDivs.size(), inputData.length);
-        INDArray labels = Nd4j.zeros(inputData.length, possibleDivs.size(), inputData.length);
+        INDArray input  = Nd4j.zeros(inputData.length, possibleDivs.size(), maxInputLen);
+        INDArray labels = Nd4j.zeros(inputData.length, possibleDivs.size(), maxInputLen);
 
         for (int c = 0; c < inputData.length; c++) {
             int samplePos = 0;
@@ -116,6 +123,7 @@ public class ModifiedTextLSTM {
                 }else{
                     continue;
                 }
+                //System.out.println("" + c + ", " + currentDiv + ", " + samplePos);
                 input.putScalar(new int[]{c, possibleDivs.indexOf(currentDiv), samplePos}, 1);
                 labels.putScalar(new int[]{c, possibleDivs.indexOf(nextDiv), samplePos}, 1);
                 samplePos++;
@@ -221,7 +229,7 @@ public class ModifiedTextLSTM {
 
             INDArray output = network.rnnTimeStep(testInit);
 
-            for (int j = 0; j < inputData.length; j++) {
+            for (int j = 0; j < 10; j++) {
 
                 // first process the last output of the network to a concrete
                 // neuron, the neuron with the highest output cas the highest
