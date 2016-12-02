@@ -6,7 +6,6 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.factory.Nd4j;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,11 +35,11 @@ public class RhythmInput {
      */
     public DataSet buildDataSet(){
 
-        ArrayList<ArrayList<Integer>> rhythmLists = new ArrayList<>();
+        ArrayList<List<Integer>> rhythmLists = new ArrayList<>();
         int numPossibleStates = 0;
         int maxTreeLength = 0;
         for(RhythmTree rhythm : rhythms){
-            ArrayList<Integer> l = rhythm.toList();
+            List<Integer> l = rhythm.toSubdivisionList();
             rhythmLists.add(l);
             numPossibleStates = 0;
             for(Integer r : l){

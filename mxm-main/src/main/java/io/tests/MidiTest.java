@@ -18,11 +18,13 @@ public class MidiTest {
         try {
             //MidiTools.printSequencerInfo();
             //Sequence sequence = MidiTools.download("http://www.midiworld.com/download/4522");
-            Sequence sequence = MidiTools.download("http://www.mfiles.co.uk/downloads/edvard-grieg-peer-gynt1-morning-mood.mid");
-            //Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
+            //Sequence sequence = MidiTools.download("http://www.mfiles.co.uk/downloads/edvard-grieg-peer-gynt1-morning-mood.mid");
+            Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
             //Sequence sequence = MidiTools.load("C:/users/celenp/desktop/test.mid");
+            //Sequence sequence = MidiTools.load("schubertImpromptu.mid");
             MidiTools.parse(sequence);
-            MidiTools.play(sequence);
+            //MidiTools.play(sequence);
+            System.out.println(sequence.toString());
             //Thread.sleep(100000);
 
         } catch (Exception e) {

@@ -3,129 +3,119 @@ package model.form;
 import model.basic.Tempo;
 import model.basic.Count;
 import model.basic.TimeSignature;
-import model.trainable.Instrument;
 
 import java.util.*;
 
 /**
- * After we're done creating a RhythmTree, we put all of its frames into a Passage. Passages are essentially
- * great big Frame holders, and provide users with the ability to look up what's happening at any given Count.
+ * Passages are simply contemporaneous (or not) collections of
+ * lines. They are this project's main way of transporting "music"
+ * and the internal structures of the music. Note that a passage
+ * is unified by its temporal nature- time signatures, tempos, and
+ * the like.
  */
-public class Passage implements Iterable<Frame> {
+public class Passage implements Iterable<Line> {
 
-    /** TimeSignatures throughout this passage. */
-    private NavigableMap<Count,TimeSignature> timeSignatures;
-    /** All tempi in this Passage. */
+    /** Time signature (changes) throughout this passage. */
+    private NavigableMap<Integer,TimeSignature> timeSigs;
+
+    /** Tempo (changes) throughout this passage. */
     private NavigableMap<Count,Tempo> tempi;
-    /** All lines being played in this Passage. */
+
+    /** All lines being played in this passage. */
     private List<Line> lines;
-    /** All lines being played in this Passage by a specific instrument. */
-    private HashMap<Instrument,List<Line>> linesByInstrument;
-    /** All frames in this Passage. */
-    private NavigableMap<Count,Frame> frames;
 
     /**
-     * The Passage constructor.
+     * The passage constructor, which takes no input and
+     * simply initializes the internal containers.
      */
     public Passage() {
-        this.timeSignatures = new TreeMap<>();
+        this.timeSigs = new TreeMap<>();
         this.tempi = new TreeMap<>();
         this.lines = new ArrayList<>();
-        this.linesByInstrument = new HashMap<>();
-        this.frames = new TreeMap<>();
     }
 
     /**
-     * Adds a TimeSignature (change) to the Passage at a given time (that must be on beat 1 of a measure).
+     * Adds a time signature (change) to the passage at a
+     * given measure, or throws an error, if that measure
+     * already has a time signature change.
      * @param timeSignature The TimeSignature to add to this Passage.
-     * @param time The time at which to add this TimeSignature.
+     * @param measure The time at which to add this TimeSignature.
      */
-    public void addTimeSignature(TimeSignature timeSignature,Count time) {
-        if(time.getBeat() == 0) {
-            timeSignatures.put(time,timeSignature);
+    public void addTimeSignature(TimeSignature timeSignature,Integer measure) {
+        if(!timeSigs.containsKey(measure)) {
+            timeSigs.put(measure,timeSignature);
         }
         else {
-            throw new Error("PASSAGE:\tTime signature does not line up with the beginning of a measure!");
+            throw new Error("PASSAGE:\tTrying to add a time signature change on top of another one!");
         }
     }
 
     /**
-     * Adds a Tempo (change) to this Passage at a given time.
-     * @param tempo The Tempo to add to this Passage.
-     * @param time The time at which to add this Tempo.
+     * Adds a tempo (change) to this passage at a given time,
+     * or throws an error if this overlaps another tempo change.
+     * @param tempo The tempo to add to this passage.
+     * @param time The time at which to add this tempo.
      */
     public void addTempoChange(Tempo tempo, Count time) {
-        tempi.put(time,tempo);
+        if(!tempi.containsKey(time)) {
+            tempi.put(time,tempo);
+        }
+        else {
+            throw new Error("PASSAGE:\tTrying to add a tempo change on top of another tempo change!");
+        }
     }
 
     /**
-     * Adds a Note to this Passage.
-     * @param note The Note to add to this Passage.
+     * Adds a line to this passage, or throws an error
+     * if it is already included.
+     * @param line The line to add to this passage.
      */
-    private void add(Note note) {
-        Count time = note.getStart();
-        Frame frame = getFrameAt(time);
-        Instrument instrument = note.getInstrument();
-
-        // If there's no frame available
-        if(frame == null) {
-            frame = new Frame(time);
-            frames.put(time,frame);
+    public void add(Line line) {
+        if(!lines.contains(line)) {
+            lines.add(line);
         }
-        frame.add(note);
-
-        // If we've not had this instrument here before
-        if(!linesByInstrument.containsKey(instrument)) {
-            linesByInstrument.put(instrument,new ArrayList<Line>());
+        else {
+            throw new Error("PASSAGE:\tTrying to add a redundant line to this passage!");
         }
-
-        // Get all the Lines played by this instrument
-        Iterator<Line> itr = linesByInstrument.get(instrument).iterator();
-        while(itr.hasNext()) {
-            Line line = itr.next();
-        }
-        //line.add(note);
     }
 
     /**
-     * Gets the TimeSignature at a given time in this Passage.
+     * Gets the time signature at a given time in this passage.
      * @param time The time at which to sample.
-     * @return The TimeSignature at this time.
+     * @return The time signature at this time.
      */
     public TimeSignature getTimeSignatureAt(Count time) {
-        return timeSignatures.floorEntry(time).getValue();
+        return timeSigs.floorEntry(time.getMeasure()).getValue();
     }
 
     /**
-     * Gets the Tempo at a given time in this Passage.
+     * Gets the tempo at a given time in this passage.
      * @param time The time at which to sample.
-     * @return The Tempo at this time.
+     * @return The tempo at this time.
      */
     public Tempo getTempoAt(Count time) {
         return tempi.floorEntry(time).getValue();
     }
 
     /**
-     * Gets the Frame at a given time in this Passage.
-     * @param time The time at which to sample.
-     * @return The Frame at this time.
-     */
-    public Frame getFrameAt(Count time) {
-        return frames.floorEntry(time).getValue();
-    }
-
-    /**
-     * Returns an Iterator over all Frames in this Passage.
-     * @return An Iterator over all Frames in this Passage.
+     * Returns a nicely-formatted string representing this passage.
+     * @return A string representing this passage.
      */
     @Override
-    public Iterator<Frame> iterator() {
-        return frames.values().iterator();
+    public String toString() {
+        String toReturn = "";
+        for(Line line : this) {
+            toReturn += "Line : " + line.toString() + "\n";
+        }
+        return toReturn;
     }
 
     /**
-     * Returns an Iterator over all Lines in this Passage.
-     * @return An Iterator over all Lines in this Passage.
+     * Returns an iterator over all lines in this passage.
+     * @return An iterator over all lines in this passage.
      */
-    public Iterator<Line> lineIterator() { return lines.iterator(); }
+    @Override
+    public Iterator<Line> iterator() {
+        return lines.iterator();
+    }
 }

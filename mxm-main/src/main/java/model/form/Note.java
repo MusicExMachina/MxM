@@ -1,10 +1,8 @@
 package model.form;
 
-import model.basic.Articulation;
-import model.basic.Technique;
 import model.basic.Pitch;
 import model.basic.Count;
-import model.trainable.Instrument;
+import model.rhythmTree.RhythmNode;
 
 /**
  * The Note class represents (in essence) a Pitch with a given length. Articulation
@@ -21,38 +19,22 @@ import model.trainable.Instrument;
  */
 public class Note {
 
-    /** The quality of this note's attack. */
-    private final Articulation articulation;
+    /** The Pitch of this Note. */
+    private Pitch pitch;
 
-    /** The Instrument which produced this Note. */
-    private final Instrument instrument;
+    /** The start RhythmNode of this Note. */
+    private RhythmNode start;
 
-    /** The Technique of this note's production. */
-    private final Technique technique;
-
-    /** The Pitch of this note. */
-    private final Pitch pitch;
-
-    /** When this note is articulated. */
-    private final Count start;
-
-    /** How long this note is sustained for. */
-    private final Count length;
+    /** The end RhythmNode of this Note. */
+    private RhythmNode end;
 
     /**
      * A noteQualities Note constructor utilizing the
      * default Technique and Articulation.
      * @param pitch The Pitch of this Note.
-     * @param start The start time of this Note.
-     * @param length The length of this Note.
      */
-    public Note(Pitch pitch, Count start, Count length, Instrument instrument) {
+    public Note(Pitch pitch) {
         this.pitch          = pitch;
-        this.start          = start;
-        this.length         = length;
-        this.instrument     = instrument;
-        this.articulation   = Articulation.DEFAULT;
-        this.technique      = Technique.DEFAULT;
     }
 
     /**
@@ -68,7 +50,10 @@ public class Note {
      * @return The start time of this Note.
      */
     public Count getStart() {
-        return start;
+        if(start == null) {
+            return Count.ZERO;
+        }
+        return start.getTiming();
     }
 
     /**
@@ -76,40 +61,28 @@ public class Note {
      * @return The end time of this Note.
      */
     public Count getEnd() {
-        return start.plus(length);
+        if(end == null) {
+            return start.getTiming();
+        }
+        return end.getTiming();
     }
 
     /**
-     * Gets the length of this Note.
-     * @return The length of this Note.
+     * Sets the start time of this Note.
+     * @return The start time of this Note.
      */
-    public Count getLength() {
-        return length;
+    public void setStart(RhythmNode node) {
+        start = node;
     }
 
     /**
-     * Gets the Articulation of this Note.
-     * @return The Articulation of this Note.
+     * Sets the end time of this Note.
+     * @return The end time of this Note.
      */
-    public Articulation getArticulation() {
-        return articulation;
+    public void setEnd(RhythmNode node) {
+        end = node;
     }
 
-    /**
-     * Gets the Instrument of this Note.
-     * @return The Instrument of this Note.
-     */
-    public Instrument getInstrument() {
-        return instrument;
-    }
-
-    /**
-     * Gets the Technique of this Note.
-     * @return The Technique of this Note.
-     */
-    public Technique getTechnique() {
-        return technique;
-    }
 
     /**
      * Returns a nicely-formatted String of this Note.
@@ -117,6 +90,6 @@ public class Note {
      */
     @Override
     public String toString() {
-        return "(" + pitch.toString() + " " + length.toString() + ")";
+        return "(" + pitch.toString() + " @" + getStart().toString() + ")";
     }
 }

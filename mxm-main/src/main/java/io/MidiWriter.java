@@ -1,9 +1,13 @@
 package io;
 
+import model.form.Line;
+import model.form.Note;
 import model.form.Passage;
+import model.trainable.*;
 
 import javax.sound.midi.*;
 import java.io.File;
+import java.util.Iterator;
 
 /**
  * MidiWriter is a class which does exactly what you'd expect.
@@ -13,7 +17,20 @@ import java.io.File;
  * absorbed into MidiTools, but is separated for the code cleanness.
  */
 class MidiWriter {
+
     public Sequence run(Passage passage) {
+        try {
+            Sequence s = new Sequence(Sequence.PPQ,24);
+            for(Line line : passage) {
+                Track track = s.createTrack();
+                for(Note note : line) {
+                    
+                }
+            }
+        }
+        catch (InvalidMidiDataException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -88,8 +105,8 @@ class MidiWriter {
             MidiTools.play(s);
 
             //****  write the MIDI sequence to a MIDI file  ****
-            //File f = new File("midifile.mid");
-            //MidiSystem.write(s,1,f);
+            File f = new File("midifile.mid");
+            MidiSystem.write(s,1,f);
 
         } //try
         catch(Exception e)
