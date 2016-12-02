@@ -20,15 +20,18 @@ import java.util.List;
  */
 public class SimpleRhythmGeneration {
 
-    public static void main(String[] args) throws IOException, InvalidMidiDataException, MidiUnavailableException {
+    public static void main(String[] args) throws IOException, InvalidMidiDataException, MidiUnavailableException, InterruptedException {
         Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
         Passage pass = MidiTools.parse(sequence);
 
         //MidiTools.play(sequence);
         //System.out.println(sequence.toString());
 
+        Thread.sleep(1000);
         ArrayList<List<Integer>> listOfTrees = new ArrayList<>();
         for (Line line : pass) {
+            //System.out.println("test");
+            //System.out.println(line.getRhythm());
             for (RhythmTree rt : line.getRhythm()){
                 listOfTrees.add(rt.toSubdivisionList());
             }
@@ -42,7 +45,7 @@ public class SimpleRhythmGeneration {
             }
         }
 
-        ModifiedTextLSTM network = new ModifiedTextLSTM(treeArr,50,2);
-        network.run();
+        //ModifiedTextLSTM network = new ModifiedTextLSTM(treeArr,50,2);
+        //network.run();
     }
 }
