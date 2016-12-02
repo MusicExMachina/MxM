@@ -58,7 +58,7 @@ public class RhythmInput {
 
         //Create DS from input and output, put into Matrix
         for (int i = 0; i < rhythmLists.size(); i++) {
-            ArrayList<Integer> rhythm = rhythmLists.get(i);
+            List<Integer> rhythm = rhythmLists.get(i);
             ArrayList<Integer> modRhythm = new ArrayList<>();
             for(Integer r : rhythm){
                 if(r == 0){
