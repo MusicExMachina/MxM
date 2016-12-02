@@ -226,8 +226,8 @@ public class ModifiedTextLSTM {
             network.rnnClearPreviousState();
 
             INDArray testInit = Nd4j.zeros(possibleDivs.size());
-            testInit.putScalar(possibleDivs.indexOf(3), 0);
-            int nextIndex = 3;
+            testInit.putScalar(possibleDivs.indexOf(2), 0);
+            int nextIndex = 2;
 
             INDArray output = network.rnnTimeStep(testInit);
 
