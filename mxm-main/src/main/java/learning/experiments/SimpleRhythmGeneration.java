@@ -27,11 +27,9 @@ public class SimpleRhythmGeneration {
         //MidiTools.play(sequence);
         //System.out.println(sequence.toString());
 
-        Thread.sleep(1000);
+        System.out.print("HERE WE GO-------");
         ArrayList<List<Integer>> listOfTrees = new ArrayList<>();
         for (Line line : pass) {
-            //System.out.println("test");
-            //System.out.println(line.getRhythm());
             for (RhythmTree rt : line.getRhythm()){
                 listOfTrees.add(rt.toSubdivisionList());
             }
