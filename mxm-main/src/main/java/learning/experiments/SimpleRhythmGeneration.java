@@ -13,7 +13,7 @@ import java.io.IOException;
 public class SimpleRhythmGeneration {
 
     public static void main(String[] args) throws IOException, InvalidMidiDataException, MidiUnavailableException {
-        Sequence sequence = MidiTools.download("schubertImpromptu.mid");
+        Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
         MidiTools.parse(sequence);
         MidiTools.play(sequence);
         System.out.println(sequence.toString());
