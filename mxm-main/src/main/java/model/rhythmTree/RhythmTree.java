@@ -1,6 +1,7 @@
 package model.rhythmTree;
 
 import model.basic.Count;
+import model.form.Note;
 
 import java.awt.*;
 import java.util.*;
@@ -39,11 +40,48 @@ public class RhythmTree implements Iterable<RhythmNode> {
             if (constructQueue.size() != 0) {
                 currentNode = constructQueue.poll();
             } else {
+                for (int subdiv: subDiv){
+                    System.out.print(subdiv);
+                }
+                System.out.println();
                 throw new IllegalArgumentException("List cannot be converted to a rhythm tree, not enough divisions");
             }
             if (aSubDiv != 1) {
                 currentNode.subdivide(aSubDiv);
                 constructQueue.addAll(currentNode.getChildren());
+            }
+        }
+
+        if (constructQueue.size() != 0) {
+            throw new IllegalArgumentException("List cannot be converted to a rhythm tree, leftover divisions");
+        }
+    }
+
+    /**
+     * Quick constructor to make painted rhythm tree (mainly for testing)
+     * @param subDiv list of subdivisions in Breadth First order
+     */
+    public RhythmTree(int[] subDiv, Note[] colors) throws IllegalArgumentException {
+        Queue<RhythmNode> constructQueue = new ArrayDeque<RhythmNode>();
+
+        root = new RhythmNode(this, null, Count.ZERO, Count.ONE);
+        constructQueue.add(root);
+
+        RhythmNode currentNode;
+
+        for (int i = 0; i < subDiv.length; i++) {
+            int aSubDiv = subDiv[i];
+            if (constructQueue.size() != 0) {
+                currentNode = constructQueue.poll();
+            } else {
+                throw new IllegalArgumentException("List cannot be converted to a rhythm tree, not enough divisions");
+            }
+            if (aSubDiv != 1) {
+                currentNode.subdivide(aSubDiv);
+                constructQueue.addAll(currentNode.getChildren());
+            }
+            if (aSubDiv==1){
+                currentNode.color(colors[i]);
             }
         }
 
