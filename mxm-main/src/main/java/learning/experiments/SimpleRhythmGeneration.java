@@ -21,7 +21,8 @@ import java.util.List;
 public class SimpleRhythmGeneration {
 
     public static void main(String[] args) throws IOException, InvalidMidiDataException, MidiUnavailableException, InterruptedException {
-        Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
+        //Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
+        Sequence sequence = MidiTools.load("/Users/jpatsenker/MusicExMachina/MxM_2/mxm-main/src/main/resources/schubertImpromptu.mid");
         Passage pass = MidiTools.parse(sequence);
 
         //MidiTools.play(sequence);
@@ -39,7 +40,7 @@ public class SimpleRhythmGeneration {
                         rhythmList.add(i);
                     }
                 }
-                if(rhythmList.size()>10){
+                if(rhythmList.size() >5){
                     listOfTrees.add(rhythmList);
                     System.out.println(rhythmList);
                 }
