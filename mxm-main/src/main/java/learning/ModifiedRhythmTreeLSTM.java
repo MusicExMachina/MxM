@@ -212,4 +212,97 @@ public class ModifiedRhythmTreeLSTM {
     }
 
 
+    /**
+     * A method to encapsulate the training process
+     */
+    private void train() {
+        System.out.println("Beginning training...");
+        for (int epoch = 0; epoch < 100; epoch++) {
+
+            System.out.println("Epoch " + epoch);
+
+            // train the data
+            network.fit(trainingData);
+
+            network.rnnClearPreviousState();
+
+            INDArray testInit = Nd4j.zeros(possibleDivs.size());
+            testInit.putScalar(possibleDivs.indexOf(2), 0);
+            int nextIndex = 2;
+
+            INDArray output = network.rnnTimeStep(testInit);
+
+            ArrayList<Integer> treeList = new ArrayList<Integer>();
+            treeList.add(nextIndex);
+
+            boolean validTree = true;
+
+            int[] treeArr = new int[treeList.size()];
+            for(int i = 0; i<treeArr.length; i++){
+                treeArr[i] = treeList.get(i);
+            }
+
+            try{
+                RhythmTree r = new RhythmTree(treeArr);
+            }catch(Exception e){
+                validTree = false;
+            }
+
+            while (!validTree) {
+
+                // first process the last output of the network to a concrete
+                // neuron, the neuron with the highest output cas the highest
+                // chance to get chosen
+                double[] outputProbDistribution = new double[possibleDivs.size()];
+                for (int k = 0; k < outputProbDistribution.length; k++) {
+                    outputProbDistribution[k] = output.getDouble(k);
+                }
+                int sampledCharacterIdx = findIndexOfHighestValue(outputProbDistribution);
+
+                // print the chosen output
+                System.out.print(possibleDivs.get(sampledCharacterIdx));
+
+                // use the last output as input
+                INDArray nextInput = Nd4j.zeros(possibleDivs.size());
+                nextInput.putScalar(sampledCharacterIdx, 1);
+                output = network.rnnTimeStep(nextInput);
+                nextIndex = possibleDivs.get(sampledCharacterIdx);
+
+                treeList.add(nextIndex);
+
+                treeArr = new int[treeList.size()];
+                for (int i = 0; i < treeArr.length; i++) {
+                    treeArr[i] = treeList.get(i);
+                }
+                try {
+                    validTree = true;
+                    RhythmTree r = new RhythmTree(treeArr);
+                    System.out.println(r);
+                } catch (Exception e) {
+                    validTree = false;
+                }
+
+            }
+            System.out.print("\n");
+            System.out.println("...completed training.");
+            for(Integer i : treeList){
+                System.out.print(i);
+            }
+            System.out.println();
+        }
+    }
+
+    private static int findIndexOfHighestValue(double[] distribution) {
+        int maxValueIndex = 0;
+        double maxValue = 0;
+        for (int i = 0; i < distribution.length; i++) {
+            if(distribution[i] > maxValue) {
+                maxValue = distribution[i];
+                maxValueIndex = i;
+            }
+        }
+        return maxValueIndex;
+    }
+
+
 }
