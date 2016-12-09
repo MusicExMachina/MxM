@@ -89,5 +89,53 @@ public class ModifiedRhythmTreeLSTM {
         // Do something with the output
     }
 
+    /**
+     * A method for initialization of our data. In here, we look
+     * over our input, extract all possible values, and set them
+     * aside for the configuration method.
+     */
+    private void initialize() {
+        System.out.println("Beginning initialization...");
+        // Extract all of the possible states
+        LinkedHashSet<Integer> possibleDivsSet = new LinkedHashSet<>();
+        for (int c=1; c<21; c++) {
+            possibleDivsSet.add(c);
+        }
+        possibleDivs = new ArrayList<Integer>();
+        possibleDivs.addAll(possibleDivsSet);
+
+        int maxInputLen = 0;
+        for(int[] i : inputData){
+            if (i.length > maxInputLen){
+                maxInputLen = i.length;
+            }
+        }
+
+        // Create input and output arrays
+        INDArray input  = Nd4j.zeros(inputData.length, possibleDivs.size(), maxInputLen + 1);
+        INDArray labels = Nd4j.zeros(inputData.length, possibleDivs.size(), maxInputLen+1);
+
+        for (int c = 0; c < inputData.length; c++) {
+            int samplePos = 0;
+            for (int currentDiv : inputData[c]) {
+                int nextDiv;
+                if(samplePos < inputData[c].length-1) {
+                    nextDiv = inputData[c][samplePos + 1];
+                }else{
+                    continue;
+                }
+                //System.out.println("" + c + ", " + currentDiv + ", " + samplePos);
+                input.putScalar(new int[]{c, possibleDivs.indexOf(currentDiv), samplePos}, 1);
+                labels.putScalar(new int[]{c, possibleDivs.indexOf(nextDiv), samplePos}, 1);
+                samplePos++;
+            }
+
+        }
+        trainingData = new DataSet(input, labels);
+        System.out.println("...completed initialization.");
+    }
+
+
+
 
 }
