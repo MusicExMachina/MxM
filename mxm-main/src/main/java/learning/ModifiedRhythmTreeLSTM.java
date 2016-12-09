@@ -135,7 +135,81 @@ public class ModifiedRhythmTreeLSTM {
         System.out.println("...completed initialization.");
     }
 
+    /**
+     * An encapsulation method for configuring the neural net.
+     * This method is gigantic by necessity as DL4J has individual
+     * initialization methods per variable. Note that this method's
+     * only tangible outcome is that it creates "configuration."
+     */
+    private void configure() {
+        System.out.println("Beginning configuration...");
+        // Create and initialize a NeuralNetConfiguration.Builder
+        // This establishes all the settings for the neural network
+        NeuralNetConfiguration.Builder builder = new NeuralNetConfiguration.Builder();
+        builder.iterations(10);
+        builder.learningRate(0.01);
+        builder.optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT);
+        builder.seed(123);
+        builder.biasInit(0);
+        builder.miniBatch(false);
+        builder.updater(Updater.RMSPROP);
+        builder.weightInit(WeightInit.XAVIER);
 
+        // A mouthful of a class that essentially turns the configuration
+        // builder we've initialized into a listBuilder, which is capable
+        // of doing stuff for multi-layered neural networks
+        NeuralNetConfiguration.ListBuilder listBuilder = builder.list();
+
+        // Set up inputs and outputs for each layer.
+        for(int i = 0; i < hiddenLayerCount; i++) {
+            // Create and initialize a GravesLSTM.Builder
+            // This establishes each layer's settings
+            GravesLSTM.Builder hiddenLayerBuilder = new GravesLSTM.Builder();
+            if(i == 0) {
+                hiddenLayerBuilder.nIn(possibleDivs.size());
+            } else {
+                hiddenLayerBuilder.nIn(hiddenLayerWidth);
+            }
+            hiddenLayerBuilder.nOut(hiddenLayerWidth);
+            hiddenLayerBuilder.activation("tanh");
+
+            // Builds and adds this layer with index "i"
+            listBuilder.layer(i, hiddenLayerBuilder.build());
+        }
+
+        // Create and initialize the RnnOutputLayer.Builder,
+        // which does exactly what you'd think it does
+        RnnOutputLayer.Builder outputLayerBuilder = new RnnOutputLayer.Builder(LossFunctions.LossFunction.MCXENT);
+        outputLayerBuilder.activation("softmax");
+        outputLayerBuilder.nIn(hiddenLayerWidth);
+        outputLayerBuilder.nOut(possibleDivs.size());
+        listBuilder.layer(hiddenLayerCount, outputLayerBuilder.build());
+
+        // Finish the last two settings for the now-infamous
+        // NeuralNetConfiguration.ListBuilder
+        listBuilder.pretrain(false);
+        listBuilder.backprop(true);
+
+        // Construct our MultiLayerConfig off of the our favorite
+        // NeuralNetConfiguration.ListBuilder.
+        configuration = listBuilder.build();
+        System.out.println("...completed configuration.");
+    }
+
+    /**
+     * Builds the actual network, utilizing the configuration we
+     * already have, and initializes it. The last step before any
+     * sort of training is done.
+     */
+    private void build() {
+        System.out.println("Beginning building...");
+        // Construct a neural network off of the configuration,
+        // then initialize it and set how often it should print.
+        network = new MultiLayerNetwork(configuration);
+        network.init();
+        network.setListeners(new ScoreIterationListener(1));
+        System.out.println("...completed building.");
+    }
 
 
 }
