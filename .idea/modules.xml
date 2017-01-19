@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MxM.iml" filepath="$PROJECT_DIR$/MxM.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mxm-main/mxm-main.iml" filepath="$PROJECT_DIR$/mxm-main/mxm-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mxm-core/mxm-main.iml" filepath="$PROJECT_DIR$/mxm-core/mxm-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mxm-gui/mxm-gui.iml" filepath="$PROJECT_DIR$/mxm-gui/mxm-gui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mxm-impromptu/mxm-impromptu.iml" filepath="$PROJECT_DIR$/mxm-impromptu/mxm-impromptu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mxm-midi/mxm-midi.iml" filepath="$PROJECT_DIR$/mxm-midi/mxm-midi.iml" />
     </modules>
   </component>
 </project>

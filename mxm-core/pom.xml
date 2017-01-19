@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.patrickcelentano</groupId>
+        <groupId>com.musicexmachina.core</groupId>
         <artifactId>mxm-parent</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.patrickcelentano</groupId>
-    <artifactId>mxm-main</artifactId>
+    <groupId>com.musicexmachina.core</groupId>
+    <artifactId>mxm-core</artifactId>
     <version>0.1-SNAPSHOT</version>
 
     <name>MxM Main Module (MxMmM)</name>
