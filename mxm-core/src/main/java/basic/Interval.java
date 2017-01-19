@@ -125,7 +125,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      */
     @Override
     public int compareTo(Interval other) {
-        return new Integer(size).compareTo(new Integer(other.size));
+        return new Integer(size).compareTo(other.size);
     }
 
     /**

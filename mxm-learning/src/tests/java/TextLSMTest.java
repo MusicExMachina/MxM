@@ -1,5 +1,3 @@
-package learning.tests;
-
 import learning.TextLSTM;
 import org.junit.Test;
 

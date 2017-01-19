@@ -1,5 +1,3 @@
-package learning.tests;
-
 import networks.RhythmTreeLSTM;
 import learning.ninputs.RhythmInput;
 import rhythmTree.RhythmTree;

@@ -3,5 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mxm-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mxm-gui" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mxm-learning" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mxm-midi" charset="UTF-8" />
   </component>
 </project>
