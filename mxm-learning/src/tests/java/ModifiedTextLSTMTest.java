@@ -1,5 +1,3 @@
-package tests;
-
 import networks.ModifiedTextLSTM;
 import org.junit.Test;
 
