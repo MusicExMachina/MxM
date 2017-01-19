@@ -4,7 +4,7 @@
 [Documentation](https://patrickcelentano.github.io/MxM/index.html)
 
 What is MxM?
-	MxM (Musica ex Machina) is a music machine learning project which will create new music based on the stylistic decisions of training input. Ideally, if one fed in passages written by Bach, the output would be indistinguishable from Bach. If one fed in Debussy, the output would be indistinguishable from Debussy.
+	MxM (Music ex Machina) is a music machine learning project which will create new music based on the stylistic decisions of training input. Ideally, if one fed in passages written by Bach, the output would be indistinguishable from Bach. If one fed in Debussy, the output would be indistinguishable from Debussy.
 
 How does MxM work?
 	More concretely, Our current plan is to use two, independent LSTM RNNs (Long Short-Term Memory Recurrent Neural Networks). We will at first generate our own input from scratch, but will soon move to accepting the ever-popular MIDI file in order to more easily accept new input.
