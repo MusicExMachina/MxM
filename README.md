@@ -1,5 +1,5 @@
 # MxM
-[![Build Status](https://travis-ci.org/PatrickCelentano/MxM.svg?branch=master)](https://travis-ci.org/PatrickCelentano/MxM)
+[![Build Status](https://travis-ci.org/MusicExMachina/MxM.svg?branch=master)](https://travis-ci.org/MusicExMachina/MxM)
 
 [Documentation](https://patrickcelentano.github.io/MxM/index.html)
 
