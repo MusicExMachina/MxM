@@ -1,6 +1,6 @@
 package tools;
 
-import form.Line;
+import form.Part;
 import form.Note;
 import form.Passage;
 
@@ -19,7 +19,7 @@ class MidiWriter {
     public Sequence run(Passage passage) {
         try {
             Sequence s = new Sequence(Sequence.PPQ,24);
-            for(Line line : passage) {
+            for(Part line : passage) {
                 Track track = s.createTrack();
                 for(Note note : line) {
                     

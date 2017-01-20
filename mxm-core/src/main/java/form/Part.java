@@ -1,6 +1,5 @@
 package form;
 
-import io.MidiMeasure;
 import basic.Count;
 import rhythmTree.RhythmNode;
 import trainable.Instrument;
@@ -11,7 +10,7 @@ import java.util.TreeMap;
 /**
  * Lines are horizontal arrangements of Notes that are heard as a continuous horizontal slice.
  */
-public class Line implements Iterable<Note> {
+public class Part implements Iterable<Note> {
 
     /** The rhythm that underlies this line. */
     private Rhythm rhythm;
@@ -30,7 +29,7 @@ public class Line implements Iterable<Note> {
      * playing this passage, as measures are added later.
      * @param instrument
      */
-    public Line(Instrument instrument) {
+    public Part(Instrument instrument) {
         this.rhythm = new Rhythm();
         this.contour = new Contour();
         this.instrument = instrument;

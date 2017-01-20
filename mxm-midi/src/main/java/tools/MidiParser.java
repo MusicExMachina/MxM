@@ -1,7 +1,8 @@
 package tools;
 
 import basic.Pitch;
-import form.Line;
+import form.MidiMeasure;
+import form.Part;
 import form.Note;
 import rhythmTree.RhythmNode;
 import rhythmTree.RhythmTree;
@@ -59,8 +60,8 @@ class MidiParser {
     // Proto-lines
     private List<MidiLine> protoLines;
 
-    // The RhythmTrees for each Line
-    private HashMap<Line,TreeMap<Integer,RhythmTree>> rhythmTrees;
+    // The RhythmTrees for each Part
+    private HashMap<Part,TreeMap<Integer,RhythmTree>> rhythmTrees;
 
     /**
      * The main method of tools.MidiParser, which is the entire
@@ -101,7 +102,7 @@ class MidiParser {
         System.out.println("MIDI PARSER:\t...Finished converting to Counts.");
 
         //System.out.println(passage);
-        for(Line line : passage) {
+        for(Part line : passage) {
             System.out.println(line.getRhythm());
         }
         return passage;
@@ -527,7 +528,7 @@ class MidiParser {
         for(MidiLine protoLine : protoLines) {
 
             // Create an array to hold all of the "open" lines in this Track
-            Line line = new Line(protoLine.getInstrument());
+            Part line = new Part(protoLine.getInstrument());
 
             List<RhythmTree> rhythmTrees = new ArrayList<>();
             List<Note> unendedNotes = new ArrayList<>();
