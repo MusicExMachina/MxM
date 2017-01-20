@@ -13,7 +13,7 @@ import java.util.*;
  * is unified by its temporal nature- time signatures, tempos, and
  * the like.
  */
-public class Passage implements Iterable<Line> {
+public class Passage implements Iterable<Part> {
 
     /** Time signature (changes) throughout this passage. */
     private NavigableMap<Integer,TimeSignature> timeSigs;
@@ -22,7 +22,7 @@ public class Passage implements Iterable<Line> {
     private NavigableMap<Count,Tempo> tempi;
 
     /** All lines being played in this passage. */
-    private List<Line> lines;
+    private List<Part> lines;
 
     /**
      * The passage constructor, which takes no input and
@@ -70,7 +70,7 @@ public class Passage implements Iterable<Line> {
      * if it is already included.
      * @param line The line to add to this passage.
      */
-    public void add(Line line) {
+    public void add(Part line) {
         if(!lines.contains(line)) {
             lines.add(line);
         }
@@ -104,8 +104,8 @@ public class Passage implements Iterable<Line> {
     @Override
     public String toString() {
         String toReturn = "";
-        for(Line line : this) {
-            toReturn += "Line : " + line.toString() + "\n";
+        for(Part line : this) {
+            toReturn += "Part : " + line.toString() + "\n";
         }
         return toReturn;
     }
@@ -115,7 +115,7 @@ public class Passage implements Iterable<Line> {
      * @return An iterator over all lines in this passage.
      */
     @Override
-    public Iterator<Line> iterator() {
+    public Iterator<Part> iterator() {
         return lines.iterator();
     }
 }

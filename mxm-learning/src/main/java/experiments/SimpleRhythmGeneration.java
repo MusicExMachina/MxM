@@ -1,6 +1,6 @@
 package experiments;
 
-import form.Line;
+import form.Part;
 import form.Passage;
 import networks.ModifiedTextLSTM;
 import rhythmTree.RhythmTree;
@@ -28,7 +28,7 @@ public class SimpleRhythmGeneration {
 
         System.out.print("HERE WE GO-------");
         ArrayList<List<Integer>> listOfTrees = new ArrayList<>();
-        for (Line line : pass) {
+        for (Part line : pass) {
             for (RhythmTree rt : line.getRhythm()){
                 ArrayList<Integer> rhythmList = new ArrayList<>();
                 for(Integer i : rt.toSubdivisionList()) {

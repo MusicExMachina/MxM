@@ -1,5 +1,5 @@
 import networks.RhythmTreeLSTM;
-import learning.ninputs.RhythmInput;
+import ninputs.RhythmInput;
 import rhythmTree.RhythmTree;
 import org.junit.Test;
 

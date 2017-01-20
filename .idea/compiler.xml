@@ -6,15 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="mxm-core" />
+        <module name="mxm-gui" />
         <module name="mxm-learning" />
         <module name="mxm-main" />
+        <module name="mxm-midi" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="MxM" target="1.7" />
-      <module name="mxm" target="1.7" />
+      <module name="mxm" target="1.5" />
       <module name="mxm-core" target="1.7" />
-      <module name="mxm-gui" target="1.7" />
+      <module name="mxm-gui" target="1.5" />
       <module name="mxm-learning" target="1.7" />
       <module name="mxm-midi" target="1.7" />
     </bytecodeTargetLevel>

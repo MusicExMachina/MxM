@@ -1,15 +1,15 @@
 package experiments;
 
-import io.MidiMeasure;
-import io.MidiTools;
+import form.MidiMeasure;
+import form.Part;
 import basic.Count;
 import basic.Pitch;
 import basic.Tempo;
 import basic.TimeSignature;
-import form.Line;
 import form.Note;
 import form.Passage;
 import rhythmTree.RhythmTree;
+import tools.MidiTools;
 import trainable.Instrument;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -43,7 +43,7 @@ public class ManualRhythmBuilder {
                                         new int[]{2,2,2,2,2,1,1,1,1,1,1},
                                         new int[]{2,2,2,2,1,1,2,1,1,2,1,1,2,2,1,1,2,1,1}};
 
-        Line l = new Line(Instrument.ACOUSTIC_GRAND_PIANO);
+        Part l = new Part(Instrument.ACOUSTIC_GRAND_PIANO);
         for (int i = 0; i < schubert.length; i++) {
             int[] aGrieg = schubert[i];
             Note[] cs = new Note[schubert[i].length];

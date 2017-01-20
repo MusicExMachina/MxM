@@ -1,5 +1,3 @@
-package tests;
-
 import tools.MidiTools;
 import org.junit.Test;
 
