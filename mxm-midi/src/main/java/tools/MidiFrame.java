@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 /**
  * MidiFrames store contemporaneous midi notes in a vertical stack. This is essentially
- * a dressed-up tree set, but it makes tools.MidiParser a great deal easier.
+ * a dressed-up tree set, but it makes tools.MidiReader a great deal easier.
  */
 class MidiFrame implements Comparable<MidiFrame>, Comparator<MidiFrame>, Iterable<MidiNote> {
 

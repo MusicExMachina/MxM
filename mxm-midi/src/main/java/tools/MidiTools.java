@@ -99,8 +99,8 @@ public abstract class MidiTools
      */
     public static Passage parse(Sequence sequence) {
         // Spawn off a parser object
-        MidiParser midiParser = new MidiParser();
-        return midiParser.run(sequence);
+        MidiReader midiReader = new MidiReader();
+        return midiReader.run(sequence);
     }
 
     /**
