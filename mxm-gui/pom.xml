@@ -14,11 +14,22 @@
 
     <name>Impromptu</name>
 
+
     <dependencies>
         <dependency>
             <groupId>com.musicexmachina</groupId>
             <artifactId>mxm-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.musicexmachina</groupId>
+            <artifactId>mxm-midi</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.nd4j</groupId>
+            <artifactId>nd4j-api</artifactId>
+            <version>0.7.2</version>
         </dependency>
     </dependencies>
 
