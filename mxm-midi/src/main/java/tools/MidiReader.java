@@ -14,13 +14,13 @@ import javax.sound.midi.*;
 import java.util.*;
 
 /**
- * tools.MidiParser is a class which does exactly what you'd expect.
- * Note that each tools.MidiParser parses exactly *one* midi Sequence.
+ * tools.MidiReader is a class which does exactly what you'd expect.
+ * Note that each tools.MidiReader parses exactly *one* midi Sequence.
  * This means that the tools.MidiTools class instantiates one for every
  * single file to be read. This class could potentially be
  * absorbed into tools.MidiTools, but is separated for the code cleanness.
  */
-class MidiParser {
+class MidiReader {
 
     /* A few of the most useful tools.MidiTools messages */
     private static final int SEQUENCE_NUMBER    = 0x00;
@@ -64,7 +64,7 @@ class MidiParser {
     private HashMap<Part,TreeMap<Integer,RhythmTree>> rhythmTrees;
 
     /**
-     * The main method of tools.MidiParser, which is the entire
+     * The main method of tools.MidiReader, which is the entire
      * essence of this class. In fact, this class could be
      * summed up in a single method, but it is simply too
      * cumbersome to do so.
