@@ -3,3 +3,8 @@ script: mvn test
 cache:
   directories:
   - $HOME/.m2
+
+after_sucess:
+  - cd $TRAVIS_BUILD_DIR
+  - chmod +x docsDeploy.sh
+  - ./docsDeploy.sh
