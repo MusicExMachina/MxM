@@ -74,7 +74,6 @@ public class Count implements Comparator<Count>, Comparable<Count> {
             this.denominator = denominator;
             reduce();
             this.measure     = numerator / denominator;
-            //this.countClass  = new CountClass(numerator,denominator);
         }
         else {
             throw new Error("Cannot create a Count with a deno");
@@ -88,6 +87,22 @@ public class Count implements Comparator<Count>, Comparable<Count> {
      */
     public int getMeasure() {
         return measure;
+    }
+
+    /**
+     * A getter for this Count's numerator.
+     * @return This Count's numerator.
+     */
+    public int getNumerator() {
+        return numerator;
+    }
+
+    /**
+     * A getter for this Count's denominator.
+     * @return This Count's denominator.
+     */
+    public int getDenominator() {
+        return denominator;
     }
 
     /**

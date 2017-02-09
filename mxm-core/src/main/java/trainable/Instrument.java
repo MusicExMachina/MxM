@@ -1,7 +1,6 @@
 package trainable;
 
 import basic.Pitch;
-import basic.Technique;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -147,7 +146,6 @@ public class Instrument {
 
     private String name;
     private Set<Pitch> possiblePitches;
-    private Set<Technique> possibleTechniques;
 
     public Instrument(String name) {
         this.name = name;
