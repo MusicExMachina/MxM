@@ -17,11 +17,15 @@ public class RhythmTree implements Iterable<RhythmNode> {
     /** Saves the root RhythmNode. */
     private RhythmNode root;
 
+    /** The measure of this RhythmTree. */
+    private int measure;
+
     /**
      * The rhythmTree default constructor
      */
     public RhythmTree(Integer measure) {
-        root = new RhythmNode(this, null, new Count(measure), new Count(measure + 1));
+        this.measure = measure;
+        this.root = new RhythmNode(this, null, new Count(measure), new Count(measure + 1));
     }
 
     /**
@@ -91,6 +95,22 @@ public class RhythmTree implements Iterable<RhythmNode> {
     }
 
     /**
+     * Getter for the root RhythmNode which fills the whole measure.
+     * @return Gets the root RhythmNode of this RhythmTree.
+     */
+    public RhythmNode getRoot() {
+        return root;
+    }
+
+    /**
+     * Getter for the measure number of this RhythmTree.
+     * @return The measure of this RhythmTree.
+     */
+    public int getMeasure() {
+        return measure;
+    }
+
+    /**
      * Returns a nicely-formatted string
      * representing this rhythmTree.
      *
@@ -98,15 +118,6 @@ public class RhythmTree implements Iterable<RhythmNode> {
      */
     public String toString() {
         return root.toString();
-    }
-
-    /**
-     * Getter for the root RhythmNode which fills the whole measure.
-     *
-     * @return Gets the root RhythmNode of this RhythmTree.
-     */
-    public RhythmNode getRoot() {
-        return root;
     }
 
     /**

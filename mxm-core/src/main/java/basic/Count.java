@@ -74,7 +74,6 @@ public class Count implements Comparator<Count>, Comparable<Count> {
             this.denominator = denominator;
             reduce();
             this.measure     = numerator / denominator;
-            //this.countClass  = new CountClass(numerator,denominator);
         }
         else {
             throw new Error("Cannot create a Count with a deno");
@@ -91,11 +90,27 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     }
 
     /**
+     * A getter for this Count's numerator.
+     * @return This Count's numerator.
+     */
+    public int getNumerator() {
+        return numerator;
+    }
+
+    /**
+     * A getter for this Count's denominator.
+     * @return This Count's denominator.
+     */
+    public int getDenominator() {
+        return denominator;
+    }
+
+    /**
      * Converts this Count to a float.
      * @return This Count's float value.
      */
     public float toFloat() {
-        return numerator/denominator;
+        return (float)numerator/denominator;
     }
 
     /**
@@ -103,7 +118,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
      * @return This Count's double value.
      */
     public double toDouble() {
-        return numerator/denominator;
+        return (double)numerator/denominator;
     }
 
     /**

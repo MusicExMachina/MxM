@@ -8,7 +8,7 @@ import java.util.*;
 
 /**
  * Passages are simply contemporaneous (or not) collections of
- * lines. They are this project's main way of transporting "music"
+ * parts. They are this project's main way of transporting "music"
  * and the internal structures of the music. Note that a passage
  * is unified by its temporal nature- time signatures, tempos, and
  * the like.
@@ -21,8 +21,8 @@ public class Passage implements Iterable<Part> {
     /** Tempo (changes) throughout this passage. */
     private NavigableMap<Count,Tempo> tempi;
 
-    /** All lines being played in this passage. */
-    private List<Part> lines;
+    /** All parts being played in this passage. */
+    private List<Part> parts;
 
     /**
      * The passage constructor, which takes no input and
@@ -31,7 +31,7 @@ public class Passage implements Iterable<Part> {
     public Passage() {
         this.timeSigs = new TreeMap<>();
         this.tempi = new TreeMap<>();
-        this.lines = new ArrayList<>();
+        this.parts = new ArrayList<>();
     }
 
     /**
@@ -66,16 +66,16 @@ public class Passage implements Iterable<Part> {
     }
 
     /**
-     * Adds a line to this passage, or throws an error
+     * Adds a part to this passage, or throws an error
      * if it is already included.
-     * @param line The line to add to this passage.
+     * @param part The part to add to this passage.
      */
-    public void add(Part line) {
-        if(!lines.contains(line)) {
-            lines.add(line);
+    public void add(Part part) {
+        if(!parts.contains(part)) {
+            parts.add(part);
         }
         else {
-            throw new Error("PASSAGE:\tTrying to add a redundant line to this passage!");
+            throw new Error("PASSAGE:\tTrying to add a redundant part to this passage!");
         }
     }
 
@@ -97,25 +97,33 @@ public class Passage implements Iterable<Part> {
         return tempi.floorEntry(time).getValue();
     }
 
+    public Iterator<Integer> timeSignatureIterator() {
+        return timeSigs.keySet().iterator();
+    }
+
+    public Iterator<Count> tempoChangeIterator() {
+        return tempi.keySet().iterator();
+    }
+
     /**
      * Returns a nicely-formatted string representing this passage.
      * @return A string representing this passage.
      */
     @Override
     public String toString() {
-        String toReturn = "";
-        for(Part line : this) {
-            toReturn += "Part : " + line.toString() + "\n";
+        String toReturn = "Passage :\n";
+        for(Part part : this) {
+            toReturn += "\tPart : \n" + part.toString();
         }
         return toReturn;
     }
 
     /**
-     * Returns an iterator over all lines in this passage.
-     * @return An iterator over all lines in this passage.
+     * Returns an iterator over all parts in this passage.
+     * @return An iterator over all parts in this passage.
      */
     @Override
     public Iterator<Part> iterator() {
-        return lines.iterator();
+        return parts.iterator();
     }
 }

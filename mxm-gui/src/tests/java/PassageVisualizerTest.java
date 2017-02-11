@@ -1,17 +1,12 @@
+import form.Passage;
 import org.junit.Test;
 
 import javax.sound.midi.Sequence;
 
-/**
- *
- */
-public class MidiTest {
+public class PassageVisualizerTest {
 
-    /**
-     * Tests that you can read
-     */
     @Test
-    public void basicTest() {
+    public void displayTest(){
         try {
             //MidiTools.printSequencerInfo();
             //Sequence sequence = MidiTools.download("http://www.midiworld.com/download/4522");
@@ -19,34 +14,16 @@ public class MidiTest {
             //Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
             //Sequence sequence = MidiTools.load("C:/users/celenp/desktop/test.mid");
             Sequence sequence = MidiTools.load("C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-midi\\src\\tests\\resources\\midi_schubertImpromptu.mid");
-            MidiTools.parse(sequence);
+            Passage passage = MidiTools.parse(sequence);
             //MidiTools.play(sequence);
             System.out.println(sequence.toString());
             //Thread.sleep(100000);
+            PassageVisualizer rtv = new PassageVisualizer(passage);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Tests that you can read
-     */
-    @Test
-    public void playTest() {
-        System.out.print("A");
-        try {
-            System.out.print("B");
-            //Sequence sequence1 = MidiTools.download("http://www.midiworld.com/midis/other/n1/EspanjaPrelude.mid");
-            Sequence sequence2 = MidiTools.download("http://www.midiworld.com/download/4573");
-            System.out.print("C");
-            //MidiTools.play(sequence1);
-            MidiTools.play(sequence2);
-            System.out.print("D");
-            Thread.sleep(100000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 }

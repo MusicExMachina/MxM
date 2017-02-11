@@ -134,19 +134,18 @@ public class RhythmNode {
     public List<RhythmNode> subdivide(int times) {
 
         // Ensure we're not trying something stupid
-        if(times > 1) {
-            if(children.size()==0) {
-                // Add "times" many children
-                Count newDuration = this.duration.dividedBy(times);
-                for (int i = 0; i < times; i++) {
-                    Count newTiming = this.timing.plus(newDuration.times(i));
-                    children.add(new RhythmNode(tree,this,newTiming,newDuration));
-                }
+        if(children.size()==0 && times > 1) {
+            // Add "times" many children
+            Count newDuration = this.duration.dividedBy(times);
+            for (int i = 0; i < times; i++) {
+                Count newTiming = this.timing.plus(newDuration.times(i));
+                children.add(new RhythmNode(tree,this,newTiming,newDuration));
             }
-            else throw new Error("This RhythmNode is already subdivided!");
         }
-        else if(times < 0)
+        else if(times <= 1)
             throw new Error("Trying to subdivide this RhythmNode" + times + " times!");
+        else
+            throw new Error("This RhythmNode is already subdivided!");
 
         return children;
     }

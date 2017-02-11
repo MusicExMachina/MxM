@@ -23,18 +23,24 @@ public class Note {
     private Pitch pitch;
 
     /** The start RhythmNode of this Note. */
-    private RhythmNode start;
+    private Count start;
 
     /** The end RhythmNode of this Note. */
-    private RhythmNode end;
+    private Count end;
+
+    /** The end RhythmNode of this Note. */
+    private Count length;
 
     /**
      * A noteQualities Note constructor utilizing the
      * default Technique and Articulation.
      * @param pitch The Pitch of this Note.
      */
-    public Note(Pitch pitch) {
-        this.pitch          = pitch;
+    public Note(Count start, Count end, Pitch pitch) {
+        this.pitch = pitch;
+        this.start = start;
+        this.end = end;
+        this.length = end.minus(start);
     }
 
     /**
@@ -50,10 +56,15 @@ public class Note {
      * @return The start time of this Note.
      */
     public Count getStart() {
-        if(start == null) {
-            return Count.ZERO;
-        }
-        return start.getTiming();
+        return start;
+    }
+
+    /**
+     * Gets the start time of this Note.
+     * @return The start time of this Note.
+     */
+    public Count getLength() {
+        return length;
     }
 
     /**
@@ -61,28 +72,8 @@ public class Note {
      * @return The end time of this Note.
      */
     public Count getEnd() {
-        if(end == null) {
-            return start.getTiming();
-        }
-        return end.getTiming();
+        return end;
     }
-
-    /**
-     * Sets the start time of this Note.
-     * @return The start time of this Note.
-     */
-    public void setStart(RhythmNode node) {
-        start = node;
-    }
-
-    /**
-     * Sets the end time of this Note.
-     * @return The end time of this Note.
-     */
-    public void setEnd(RhythmNode node) {
-        end = node;
-    }
-
 
     /**
      * Returns a nicely-formatted String of this Note.

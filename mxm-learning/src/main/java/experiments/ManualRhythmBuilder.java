@@ -1,6 +1,5 @@
 package experiments;
 
-import form.MidiMeasure;
 import form.Part;
 import basic.Count;
 import basic.Pitch;
@@ -9,7 +8,7 @@ import basic.TimeSignature;
 import form.Note;
 import form.Passage;
 import rhythmTree.RhythmTree;
-import tools.MidiTools;
+import MidiTools;
 import trainable.Instrument;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -51,7 +50,7 @@ public class ManualRhythmBuilder {
                 cs[j] = new Note(Pitch.getInstance(60));
             }
             RhythmTree r = new RhythmTree(aGrieg, cs);
-            l.add(new MidiMeasure(i, r));
+            //l.add(new MidiMeasure(i, r));
         }
         System.out.println(l.getRhythm());
 

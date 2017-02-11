@@ -1,8 +1,5 @@
-package tests;
-
 import rhythmTree.RhythmTree;
 import org.junit.Test;
-import RhythmTreeVisualizer;
 
 /**
  * Created by jpatsenker on 9/26/16.

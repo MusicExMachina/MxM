@@ -1,5 +1,3 @@
-package tools;
-
 import form.Part;
 import form.Note;
 import form.Passage;
@@ -8,11 +6,11 @@ import javax.sound.midi.*;
 import java.io.File;
 
 /**
- * tools.MidiWriter is a class which does exactly what you'd expect.
- * Note that each tools.MidiWriter composes exactly *one* midi Sequence.
- * This means that the tools.MidiTools class instantiates one for every
+ * MidiWriter is a class which does exactly what you'd expect.
+ * Note that each MidiWriter composes exactly *one* midi Sequence.
+ * This means that the MidiTools class instantiates one for every
  * single Passage to be written. This class could potentially be
- * absorbed into tools.MidiTools, but is separated for the code cleanness.
+ * absorbed into MidiTools, but is separated for the code cleanness.
  */
 class MidiWriter {
 
