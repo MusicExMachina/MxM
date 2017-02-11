@@ -13,10 +13,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="mxm-core" />
-    <orderEntry type="library" name="Maven: com.musicexmachina:mxm-core:0.0.1-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="mxm-midi" />
-    <orderEntry type="library" name="Maven: junit:junit:4.12" level="project" />
-    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Maven: com.musicexmachina:mxm-core:0.0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.nd4j:nd4j-api:0.7.2" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.10" level="project" />
     <orderEntry type="library" name="Maven: org.nd4j:jackson:0.7.2" level="project" />
@@ -35,5 +33,7 @@
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:javacpp:1.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.nd4j:nd4j-context:0.7.2" level="project" />
+    <orderEntry type="library" name="Maven: junit:junit:4.12" level="project" />
+    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
   </component>
 </module>
