@@ -1,4 +1,4 @@
-package networks;
+package noutputs;
 
 import noutputs.Distribution;
 

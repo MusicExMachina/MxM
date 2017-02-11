@@ -9,10 +9,11 @@
         <groupId>com.musicexmachina</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>mxm-impromptu</artifactId>
-    <packaging>jar</packaging>
 
-    <name>Impromptu</name>
+    <name>MxM Learning</name>
+    <artifactId>mxm-learning</artifactId>
+    <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
 
     <dependencyManagement>
         <dependencies>
@@ -32,21 +33,14 @@
     <dependencies>
         <dependency>
             <groupId>com.musicexmachina</groupId>
-            <artifactId>mxm-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.musicexmachina</groupId>
             <artifactId>mxm-midi</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
         <!-- ND4J backend. You need one in every DL4J project. Normally define artifactId as either "nd4j-native-platform" or "nd4j-cuda-7.5-platform" -->
         <dependency>
             <groupId>org.nd4j</groupId>
             <artifactId>${nd4j.backend}</artifactId>
         </dependency>
-
         <!-- Core DL4J functionality -->
         <dependency>
             <groupId>org.deeplearning4j</groupId>
@@ -58,71 +52,6 @@
             <groupId>org.deeplearning4j</groupId>
             <artifactId>deeplearning4j-nlp</artifactId>
             <version>${dl4j.version}</version>
-        </dependency>
-
-        <!-- deeplearning4j-gui is used for HistogramIterationListener + visualization: see http://deeplearning4j.org/visualization -->
-        <dependency>
-            <groupId>org.deeplearning4j</groupId>
-            <artifactId>deeplearning4j-ui</artifactId>
-            <version>${dl4j.version}</version>
-        </dependency>
-
-        <!-- Force guava versions for using UI/HistogramIterationListener -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-
-        <!-- datavec-data-codec: used only in video example for loading video data -->
-        <dependency>
-            <artifactId>datavec-data-codec</artifactId>
-            <groupId>org.datavec</groupId>
-            <version>${datavec.version}</version>
-        </dependency>
-
-        <!-- Used in the feedforward/classification/MLP* and feedforward/regression/RegressionMathFunctions example -->
-        <dependency>
-            <groupId>jfree</groupId>
-            <artifactId>jfreechart</artifactId>
-            <version>${jfreechart.version}</version>
-        </dependency>
-
-        <!-- Arbiter: used for hyperparameter optimization examples -->
-        <dependency>
-            <groupId>org.deeplearning4j</groupId>
-            <artifactId>arbiter-deeplearning4j</artifactId>
-            <version>${arbiter.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.deeplearning4j</groupId>
-            <artifactId>deeplearning4j-core</artifactId>
-            <version>0.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.musicexmachina</groupId>
-            <artifactId>mxm-midi</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.musicexmachina</groupId>
-            <artifactId>mxm-midi</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.musicexmachina.core</groupId>
-            <artifactId>mxm-core</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.musicexmachina</groupId>
-            <artifactId>mxm-midi</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

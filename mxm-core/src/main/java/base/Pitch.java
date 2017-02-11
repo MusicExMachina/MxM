@@ -1,13 +1,13 @@
-package basic;
+package base;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * Pitch is a simple class which utilizes the interning design pattern to create only one
+ * base.Pitch is a simple class which utilizes the interning design pattern to create only one
  * hundred twenty different values- all possible MIDI pitches. Pitches are usually found on
- * Notes, though they may be used in Collections. Note that there should never be more than
+ * Notes, though they may be used in Collections. base.Note that there should never be more than
  * these 120 Pitches, and that an iterator() has been provided for easy access.
  */
 public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
@@ -41,24 +41,24 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Gets an instance of a given Pitch size. This method
-     * creates the interning design pattern per Pitch.
-     * @param value The (midi) value of this Pitch
-     * @return An Pitch of this size.
+     * Gets an instance of a given base.Pitch size. This method
+     * creates the interning design pattern per base.Pitch.
+     * @param value The (midi) value of this base.Pitch
+     * @return An base.Pitch of this size.
      */
     public static Pitch getInstance(int value) {
         if(value >= MIN_PITCH&& value < MAX_PITCH) {
             return ALL.get(value - MIN_PITCH);
         }
         else {
-            throw new Error("INTERVAL:\tInterval out of range.");
+            throw new Error("INTERVAL:\tbase.Interval out of range.");
         }
     }
 
-    /** The PitchClass of this Pitch. */
+    /** The base.PitchClass of this base.Pitch. */
     private PitchClass pitchClass;
     
-    /** The midi value of this Pitch. */
+    /** The midi value of this base.Pitch. */
     private int value;
 
     private Pitch(int value) {
@@ -67,26 +67,26 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Gets the PitchClass of this Pitch.
-     * @return The PitchClass of this Pitch.
+     * Gets the base.PitchClass of this base.Pitch.
+     * @return The base.PitchClass of this base.Pitch.
      */
     public PitchClass getPitchClass() {
         return pitchClass;
     }
 
     /**
-     * Transposes a Pitch by a given interval.
-     * @param interval The Interval to transpose by.
-     * @return The new, resulting Pitch.
+     * Transposes a base.Pitch by a given interval.
+     * @param interval The base.Interval to transpose by.
+     * @return The new, resulting base.Pitch.
      */
     public Pitch transpose(Interval interval) {
         return new Pitch(value + interval.getSize());
     }
 
     /**
-     * Gets the Interval between this Pitch and another.
-     * @param other The other Pitch to subtract from this one.
-     * @return THe Interval between this Pitch and another.
+     * Gets the base.Interval between this base.Pitch and another.
+     * @param other The other base.Pitch to subtract from this one.
+     * @return THe base.Interval between this base.Pitch and another.
      */
     public Interval minus(Pitch other) {
         return Interval.getInstance(other.value - this.value);
@@ -97,8 +97,8 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Normalizes this PitchClass between 0 and 1.
-     * @return This PitchClass in the range [0,1).
+     * Normalizes this base.PitchClass between 0 and 1.
+     * @return This base.PitchClass in the range [0,1).
      */
     public float normalized() {
         return (float)(value - MIN_PITCH)/(float)(MAX_PITCH - MIN_PITCH);
@@ -106,16 +106,16 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
     /**
      * Returns a nicely-formatted String
-     * of this Pitch (for debug).
-     * @return A nicely-formatted String of this Pitch.
+     * of this base.Pitch (for debug).
+     * @return A nicely-formatted String of this base.Pitch.
      */
     public String toString() {
         return pitchClass.toString() + (value/12 - 1);
     }
 
     /**
-     * Compares this Pitch to another Pitch.
-     * @param other The other Pitch.
+     * Compares this base.Pitch to another base.Pitch.
+     * @param other The other base.Pitch.
      * @return The comparison.
      */
     @Override
@@ -125,8 +125,8 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
     /**
      * Compares two Pitches.
-     * @param p1 The first Pitch.
-     * @param p2 The second Pitch.
+     * @param p1 The first base.Pitch.
+     * @param p2 The second base.Pitch.
      * @return The comparison.
      */
     @Override
@@ -135,9 +135,9 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Checks if this Pitch equals another Object.
+     * Checks if this base.Pitch equals another Object.
      * @param o The other Object.
-     * @return If this Pitch is equal to the Object.
+     * @return If this base.Pitch is equal to the Object.
      */
     @Override
     public boolean equals(Object o) {
@@ -146,7 +146,7 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
     /**
      * A simple hash code for storage of Pitches in special Collections.
-     * @return The hash code for this Pitch.
+     * @return The hash code for this base.Pitch.
      */
     @Override
     public int hashCode() {

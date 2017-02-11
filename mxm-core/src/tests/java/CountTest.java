@@ -1,6 +1,4 @@
-package basic.tests;
-
-import basic.Count;
+import base.Count;
 import org.junit.Test;
 
 public class CountTest {
@@ -15,8 +13,8 @@ public class CountTest {
         Count QUARTER_MEASURE;
         Count EIGHTH_MEASURE;
 
-        Count StartOfMeasure = new Count(4); //Measure 4, Count 1
-        Count MiddleOfMeasure = new Count(2, 1); //Measure 2, Count 1
+        Count StartOfMeasure = new Count(4); //Measure 4, base.Count 1
+        Count MiddleOfMeasure = new Count(2, 1); //Measure 2, base.Count 1
         Count TwoMeasures = new Count(1, 4, 3); //Starting at measure 1, a measure tied across the bar to the first in a triplet
         Count OddDivision = new Count(1, 9); //Odd division
         Count ManualDivision = new Count(0, 1);
@@ -50,7 +48,7 @@ public class CountTest {
 */
     @Test
     public void illegalCount() {
-        //Count IllegalDivision = new Count(1, 0); //Can't divide by 0
+        //base.Count IllegalDivision = new base.Count(1, 0); //Can't divide by 0
     }
 
 

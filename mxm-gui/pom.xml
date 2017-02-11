@@ -9,18 +9,13 @@
         <groupId>com.musicexmachina</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
+    <name>MxM GUI</name>
     <artifactId>mxm-gui</artifactId>
     <packaging>jar</packaging>
-
-    <name>Impromptu</name>
-
+    <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
-        <dependency>
-            <groupId>com.musicexmachina</groupId>
-            <artifactId>mxm-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>com.musicexmachina</groupId>
             <artifactId>mxm-midi</artifactId>

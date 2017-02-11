@@ -1,7 +1,6 @@
 package form;
 
-import basic.Count;
-import trainable.Instrument;
+import base.*;
 
 import java.util.Iterator;
 import java.util.TreeMap;
@@ -16,7 +15,7 @@ public class Part implements Iterable<Note> {
     private Instrument instrument;
 
     /** The notes played in this line. */
-    private TreeMap<Count,Note> notes;
+    private TreeMap<Count, Note> notes;
 
     /**
      * The line constructor starts only with the instrument
