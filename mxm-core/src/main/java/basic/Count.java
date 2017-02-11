@@ -110,7 +110,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
      * @return This Count's float value.
      */
     public float toFloat() {
-        return numerator/denominator;
+        return (float)numerator/denominator;
     }
 
     /**
@@ -118,7 +118,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
      * @return This Count's double value.
      */
     public double toDouble() {
-        return numerator/denominator;
+        return (double)numerator/denominator;
     }
 
     /**

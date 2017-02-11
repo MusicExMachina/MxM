@@ -34,7 +34,7 @@ public class Note {
      * @param pitch The Pitch of this Note.
      */
     public Note(Pitch pitch) {
-        this.pitch          = pitch;
+        this.pitch = pitch;
     }
 
     /**

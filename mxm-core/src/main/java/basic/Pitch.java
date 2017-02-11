@@ -92,6 +92,10 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
         return Interval.getInstance(other.value - this.value);
     }
 
+    public int getValue() {
+        return value;
+    }
+
     /**
      * Normalizes this PitchClass between 0 and 1.
      * @return This PitchClass in the range [0,1).

@@ -1,7 +1,6 @@
 package tools;
 
 import basic.Pitch;
-import form.MidiMeasure;
 import form.Part;
 import form.Note;
 import rhythmTree.RhythmNode;
@@ -60,9 +59,6 @@ class MidiReader {
     // Proto-lines
     private List<MidiLine> protoLines;
 
-    // The RhythmTrees for each Part
-    private HashMap<Part,TreeMap<Integer,RhythmTree>> rhythmTrees;
-
     /**
      * The main method of tools.MidiReader, which is the entire
      * essence of this class. In fact, this class could be
@@ -101,10 +97,11 @@ class MidiReader {
         convertToCounts();
         System.out.println("MIDI PARSER:\t...Finished converting to Counts.");
 
-        //System.out.println(passage);
-        for(Part line : passage) {
-            System.out.println(line.getRhythm());
-        }
+        System.out.println("MIDI PARSER:\tParsed "+ protoLines.size() +" parts.");
+
+        //for(Part line : passage) {
+        //    System.out.println(line.getRhythm());
+        //}
         return passage;
     }
 
@@ -530,7 +527,6 @@ class MidiReader {
             // Create an array to hold all of the "open" lines in this Track
             Part line = new Part(protoLine.getInstrument());
 
-            List<RhythmTree> rhythmTrees = new ArrayList<>();
             List<Note> unendedNotes = new ArrayList<>();
 
             int measure = (int)Math.floor(protoLine.getStart());
@@ -544,11 +540,7 @@ class MidiReader {
                     RhythmTree rhythmTree = new RhythmTree(measure);
                     // Given measure bounds, build a rhythm tree off of those notes
                     subdivideNode(rhythmTree.getRoot(), measure, measure + 1.0f, notesInMeasure, unendedNotes);
-                    rhythmTrees.add(rhythmTree);
-
-                    MidiMeasure midiMeasure = new MidiMeasure(measure,rhythmTree);
-
-                    line.add(midiMeasure);
+                    line.add(rhythmTree);
                 }
                 measure++;
             }

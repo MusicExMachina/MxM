@@ -27,14 +27,14 @@ public class Rhythm implements Iterable<RhythmTree> {
     /**
      * Adds a new rhythm tree to this rhythm, or throws an error, if
      * there is already a rhythm tree of this measure in this rhythm.
-     * @param midiMeasure the "midi measure" to add to this rhythm.
+     * @param rhythmTree the RhythmTree to add to this rhythm.
      */
-    public void add(MidiMeasure midiMeasure) {
-        if(!trees.containsKey(midiMeasure.getMeasure())) {
-            trees.put(midiMeasure.getMeasure(),midiMeasure.getRhythmTree());
+    public void add(RhythmTree rhythmTree) {
+        if(!trees.containsKey(rhythmTree.getMeasure())) {
+            trees.put(rhythmTree.getMeasure(),rhythmTree);
         }
         else {
-            throw new Error("RHYTHM:\tTrying to add a RhythmTree on top of another at measure " + midiMeasure.getMeasure() + "!");
+            throw new Error("RHYTHM:\tTrying to add a RhythmTree on top of another at measure " + rhythmTree.getMeasure() + "!");
         }
     }
 

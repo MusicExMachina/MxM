@@ -2,6 +2,7 @@ package form;
 
 import basic.Count;
 import rhythmTree.RhythmNode;
+import rhythmTree.RhythmTree;
 import trainable.Instrument;
 
 import java.util.Iterator;
@@ -14,9 +15,6 @@ public class Part implements Iterable<Note> {
 
     /** The rhythm that underlies this line. */
     private Rhythm rhythm;
-
-    /** The contour that underlies this line. */
-    private Contour contour;
 
     /** The instrument that plays this line. */
     private Instrument instrument;
@@ -31,15 +29,15 @@ public class Part implements Iterable<Note> {
      */
     public Part(Instrument instrument) {
         this.rhythm = new Rhythm();
-        this.contour = new Contour();
         this.instrument = instrument;
         this.notes = new TreeMap<>();
     }
 
-    public void add(MidiMeasure midiMeasure) {
-        for(RhythmNode node : midiMeasure.getRhythmTree()) {
+    public void add(RhythmTree rhythmTree) {
+        for(RhythmNode node : rhythmTree) {
             Note note = node.getNote();
             if(note != null) {
+                notes.put(note.getStart(),note);
                 /*
                 // If this is the wrong instrument for this note
                 if(note.getInstrument() != instrument) {
@@ -58,10 +56,8 @@ public class Part implements Iterable<Note> {
                     throw new Error("LINE:\tTrying to add a Note which overlaps the others!");
                 }
                 */
-                notes.put(note.getStart(),note);
             }
         }
-        rhythm.add(midiMeasure);
     }
 
     public Instrument getInstrument() { return instrument; }
@@ -70,12 +66,8 @@ public class Part implements Iterable<Note> {
         return rhythm;
     }
 
-    public Contour getContour() {
-        return contour;
-    }
-
     public float getLastTime() {
-        if(notes.size() > 0 ) {
+        if(notes.size() > 0) {
             return notes.firstKey().toFloat();
         }
         else {
@@ -89,11 +81,11 @@ public class Part implements Iterable<Note> {
      */
     @Override
     public String toString() {
-        String toReturn = instrument.toString();
+        String toReturn = instrument.toString() + "\n\t\t";
         for(Note note : this) {
             toReturn += note.toString() + " ";
         }
-        return toReturn;
+        return toReturn + "\n";
     }
 
     /**
