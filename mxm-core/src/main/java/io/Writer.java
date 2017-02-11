@@ -2,6 +2,7 @@ package io;
 
 import basic.Count;
 import basic.Tempo;
+import basic.TimeSignature;
 import form.Note;
 import form.Part;
 import form.Passage;
@@ -20,24 +21,24 @@ public class Writer
 
             writer.println("> Passage\n");
             writer.println("  - Title");
-            writer.println("      Sonata in C");
+            writer.println("      PASSAGE TITLE");
             writer.println("");
             writer.println("  - Composer");
-            writer.println("      Wolfgang Amadeus Mozart");
+            writer.println("      COMPOSER NAME");
             writer.println("");
             writer.println("  - Period");
-            writer.println("      Classical");
+            writer.println("      PERIOD");
             writer.println("");
 
             writer.println("  > Time Signatures");
             Iterator<Integer> timeSigItr = passage.timeSignatureIterator();
             while (timeSigItr.hasNext()) {
                 Count count = new Count(timeSigItr.next());
-                Tempo tempo = passage.getTempoAt(count);
-                String measureString = StringUtils.rightPad(String.valueOf(tempo.getBPM()),4);
-                String numString = StringUtils.rightPad(String.valueOf(count.getNumerator()),4);
-                String denomString = StringUtils.rightPad(String.valueOf(count.getDenominator()),4);
-                writer.println(measureString + "      " + numString + "  /  " + denomString);
+                TimeSignature timeSig = passage.getTimeSignatureAt(count);
+                String measureString = StringUtils.rightPad(String.valueOf(count.getMeasure()),4);
+                String numString = StringUtils.rightPad(String.valueOf(timeSig.getNumerator()),4);
+                String denomString = StringUtils.rightPad(String.valueOf(timeSig.getDenominator()),4);
+                writer.println("      " + measureString + "    " + numString + "  /  " + denomString);
             }
             writer.println("");
 

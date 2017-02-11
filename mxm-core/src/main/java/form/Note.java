@@ -37,6 +37,9 @@ public class Note {
      * @param pitch The Pitch of this Note.
      */
     public Note(Count start, Count end, Pitch pitch) {
+        if(end == null) {
+            end = start;
+        }
         this.pitch = pitch;
         this.start = start;
         this.end = end;
