@@ -1,5 +1,7 @@
 package base;
 
+import analysis.PitchClass;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -7,7 +9,7 @@ import java.util.Iterator;
 /**
  * base.Pitch is a simple class which utilizes the interning design pattern to create only one
  * hundred twenty different values- all possible MIDI pitches. Pitches are usually found on
- * Notes, though they may be used in Collections. base.Note that there should never be more than
+ * Notes, though they may be used in Collections. form.Note that there should never be more than
  * these 120 Pitches, and that an iterator() has been provided for easy access.
  */
 public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
@@ -55,7 +57,7 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
         }
     }
 
-    /** The base.PitchClass of this base.Pitch. */
+    /** The analysis.PitchClass of this base.Pitch. */
     private PitchClass pitchClass;
     
     /** The midi value of this base.Pitch. */
@@ -67,8 +69,8 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Gets the base.PitchClass of this base.Pitch.
-     * @return The base.PitchClass of this base.Pitch.
+     * Gets the analysis.PitchClass of this base.Pitch.
+     * @return The analysis.PitchClass of this base.Pitch.
      */
     public PitchClass getPitchClass() {
         return pitchClass;
@@ -97,8 +99,8 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Normalizes this base.PitchClass between 0 and 1.
-     * @return This base.PitchClass in the range [0,1).
+     * Normalizes this analysis.PitchClass between 0 and 1.
+     * @return This analysis.PitchClass in the range [0,1).
      */
     public float normalized() {
         return (float)(value - MIN_PITCH)/(float)(MAX_PITCH - MIN_PITCH);

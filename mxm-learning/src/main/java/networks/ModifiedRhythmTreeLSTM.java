@@ -141,7 +141,7 @@ public class ModifiedRhythmTreeLSTM {
 //    /**
 //     * An encapsulation method for configuring the neural net.
 //     * This method is gigantic by necessity as DL4J has individual
-//     * initialization methods per variable. base.Note that this method's
+//     * initialization methods per variable. form.Note that this method's
 //     * only tangible outcome is that it creates "configuration."
 //     */
 //    private void configure() {

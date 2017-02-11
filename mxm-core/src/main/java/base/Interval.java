@@ -1,5 +1,7 @@
 package base;
 
+import analysis.IntervalClass;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -7,7 +9,7 @@ import java.util.Iterator;
 /**
  * base.Interval is a simple class which utilizes the interning design pattern to create only two
  * hundred forty different values- all possible MIDI basic differences. Intervals are usually
- * used for analysis, though they may be used in Collections. base.Note that there should never be
+ * used for analysis, though they may be used in Collections. form.Note that there should never be
  * more than these 240 Intervals, and that an iterator() has been provided for easy access.
  * Also note that Intervals may be negative, though IntervalClasses never are.
  */
@@ -37,7 +39,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
         return ALL.iterator();
     }
 
-    /** The immutable noteQualities base.IntervalClass of this base.Interval. */
+    /** The immutable noteQualities analysis.IntervalClass of this base.Interval. */
     private IntervalClass intervalClass;
 
     /** The immutable size of this interval in half-steps. */
@@ -73,8 +75,8 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
     }
 
     /**
-     * A getter for the base.IntervalClass of this base.Interval.
-     * @return The base.IntervalClass of this base.Interval.
+     * A getter for the analysis.IntervalClass of this base.Interval.
+     * @return The analysis.IntervalClass of this base.Interval.
      */
     public IntervalClass getIntervalClass() {
         return intervalClass;

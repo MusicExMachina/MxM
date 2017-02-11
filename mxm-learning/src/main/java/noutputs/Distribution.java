@@ -11,21 +11,21 @@ import java.util.Random;
  */
 public class Distribution<T> {
 
-    /** The total number of occurences of all types in this Distribution. */
-    int totalOccurences;
+    /** The total number of occurrences of all types in this distribution. */
+    private int totalOccurrences;
 
-    /** The occurences of each type in this Distribution. */
-    private HashMap<T,Integer> occurences;
+    /** The occurrences of each type in this distribution. */
+    private HashMap<T,Integer> occurrences;
 
-    /** The thresholds for each individual item in the Distribution. */
+    /** The thresholds for each individual item in the distribution. */
     private HashMap<T,Double> thresholds;
 
     /**
      * Constructor for a new Distribution of type T.
      */
     public Distribution() {
-        totalOccurences = 0;
-        occurences = new HashMap<>();
+        totalOccurrences = 0;
+        occurrences = new HashMap<>();
         thresholds = new HashMap<>();
     }
 
@@ -34,17 +34,17 @@ public class Distribution<T> {
      * @param toAdd The type to be added (to).
      */
     public void add(T toAdd) {
-        if (occurences.containsKey(toAdd)) {
-            Integer integer = occurences.get(toAdd);
-            occurences.put(toAdd, integer + 1);
+        if (occurrences.containsKey(toAdd)) {
+            Integer integer = occurrences.get(toAdd);
+            occurrences.put(toAdd, integer + 1);
         } else {
-            occurences.put(toAdd, 1);
+            occurrences.put(toAdd, 1);
         }
-        totalOccurences++;
+        totalOccurrences++;
 
         double runningTotal = 0.0d;
-        for (T key : occurences.keySet()) {
-            runningTotal += (double) occurences.get(key) / totalOccurences;
+        for (T key : occurrences.keySet()) {
+            runningTotal += (double) occurrences.get(key) / totalOccurrences;
             thresholds.put(key, runningTotal);
         }
     }
@@ -55,17 +55,17 @@ public class Distribution<T> {
      * @param number The number of times to add this type.
      */
     public void add(T toAdd, int number) {
-        if (occurences.containsKey(toAdd)) {
-            Integer integer = occurences.get(toAdd);
-            occurences.put(toAdd, integer + number);
+        if (occurrences.containsKey(toAdd)) {
+            Integer integer = occurrences.get(toAdd);
+            occurrences.put(toAdd, integer + number);
         } else {
-            occurences.put(toAdd, number);
+            occurrences.put(toAdd, number);
         }
-        totalOccurences += number;
+        totalOccurrences += number;
 
         double runningTotal = 0.0d;
-        for (T key : occurences.keySet()) {
-            runningTotal += (double) occurences.get(key) / totalOccurences;
+        for (T key : occurrences.keySet()) {
+            runningTotal += (double) occurrences.get(key) / totalOccurrences;
             thresholds.put(key, runningTotal);
         }
     }
@@ -76,11 +76,11 @@ public class Distribution<T> {
      */
     public Distribution<T> plus(Distribution<T> other) {
         Distribution<T> newDistribution = new Distribution<>();
-        for(T key : occurences.keySet()) {
-            newDistribution.add(key,occurences.get(key));
+        for(T key : occurrences.keySet()) {
+            newDistribution.add(key, occurrences.get(key));
         }
-        for(T key : other.occurences.keySet()) {
-            newDistribution.add(key,other.occurences.get(key));
+        for(T key : other.occurrences.keySet()) {
+            newDistribution.add(key,other.occurrences.get(key));
         }
         return newDistribution;
     }
@@ -93,14 +93,14 @@ public class Distribution<T> {
         Distribution<T> newDistribution = new Distribution<>();
         HashMap<T,Integer> newOccurences = new HashMap<>();
 
-        for(T key : occurences.keySet()) {
+        for(T key : occurrences.keySet()) {
             newOccurences.put(key,0);
         }
-        for(T key : other.occurences.keySet()) {
+        for(T key : other.occurrences.keySet()) {
             // If this exists in both distributions, then
             // start off with a "1". If it doesn't, then
             // start off with a "0".
-            if(this.occurences.containsKey(key)) {
+            if(this.occurrences.containsKey(key)) {
                 newOccurences.put(key,1);
             }
             else {
@@ -109,11 +109,11 @@ public class Distribution<T> {
         }
 
         // Multiply everything togerher
-        for(T key : occurences.keySet()) {
-            newOccurences.put(key,newOccurences.get(key) * occurences.get(key));
+        for(T key : occurrences.keySet()) {
+            newOccurences.put(key,newOccurences.get(key) * occurrences.get(key));
         }
-        for(T key : other.occurences.keySet()) {
-            newOccurences.put(key,newOccurences.get(key) * other.occurences.get(key));
+        for(T key : other.occurrences.keySet()) {
+            newOccurences.put(key,newOccurences.get(key) * other.occurrences.get(key));
         }
 
         // Put it in the new Distribution
@@ -127,13 +127,28 @@ public class Distribution<T> {
         return newDistribution;
     }
 
+    /**
+     * Chooses the highest-ranked T in this Distribution.
+     * @return The chosen value from this Distribution.
+     */
+    public T pickHighest() {
+        T highestT = null;
+        Integer highestValue = Integer.MIN_VALUE;
+        for(T occurence : occurrences.keySet()) {
+            if(occurrences.get(occurence) > highestValue) {
+                highestT = occurence;
+                highestValue = occurrences.get(occurence);
+            }
+        }
+        return highestT;
+    }
 
     /**
      * Chooses type T randomly from this Distribution.
      * @param seed A random seed with which to seed this Distribution.
      * @return The chosen value from this Distribution.
      */
-    public T choose(int seed) {
+    public T pickRandom(int seed) {
         Random random = new Random(seed);
         Double value = random.nextDouble();
 
@@ -155,30 +170,17 @@ public class Distribution<T> {
     public float chiSquared(Distribution<T> idealDistribution) {
         float sum = 0;
 
-        for(T type : occurences.keySet()) {
+        for(T type : occurrences.keySet()) {
             int ideal = 0;
-            int actual = occurences.get(type);
-            if(idealDistribution.occurences.containsKey(type)) {
-                ideal = idealDistribution.occurences.get(type);
+            int actual = occurrences.get(type);
+            if(idealDistribution.occurrences.containsKey(type)) {
+                ideal = idealDistribution.occurrences.get(type);
             }
             int differenceSquared = (ideal-actual) * (ideal-actual);
             // Can be infinity!
             sum += (float)differenceSquared/(float)ideal;
         }
 
-        return sum;
-    }
-
-    /**
-     * Checks what percent of these Distributions are identical, where
-     * 0 would mean they are essentially disjoint sets, and 1 would mean
-     * they are identical percentage-wise.
-     * @param idealDistribution The ideal Distribution.
-     * @return The result of this Chi Squared Analysis.
-     */
-    public float percentDifferent(Distribution<T> idealDistribution) {
-        float sum = 0;
-        //TODO: finish this
         return sum;
     }
 }
