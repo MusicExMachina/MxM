@@ -4,7 +4,7 @@ import form.Part;
 import form.Passage;
 import networks.ModifiedTextLSTM;
 import rhythmTree.RhythmTree;
-import tools.MidiTools;
+import MidiTools;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
@@ -19,11 +19,11 @@ import java.util.List;
 public class SimpleRhythmGeneration {
 
     public static void main(String[] args) throws IOException, InvalidMidiDataException, MidiUnavailableException, InterruptedException {
-        //Sequence sequence = tools.MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
+        //Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
         Sequence sequence = MidiTools.load("/Users/jpatsenker/MusicExMachina/MxM_2/mxm-main/src/main/resources/midi_schubertImpromptu.mid");
         Passage pass = MidiTools.parse(sequence);
 
-        //tools.MidiTools.play(sequence);
+        //MidiTools.play(sequence);
         //System.out.println(sequence.toString());
 
         System.out.print("HERE WE GO-------");

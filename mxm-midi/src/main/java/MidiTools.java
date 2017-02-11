@@ -1,5 +1,3 @@
-package tools;
-
 import com.sun.media.sound.StandardMidiFileReader;
 import com.sun.media.sound.StandardMidiFileWriter;
 import form.Passage;
@@ -100,15 +98,15 @@ public abstract class MidiTools
     public static Passage parse(Sequence sequence) {
         // Spawn off a parser object
         MidiReader midiReader = new MidiReader();
-        return midiReader.run(sequence);
+        return midiReader.read(sequence);
     }
 
     /**
      * Takes in a Passage and writes a midi Sequence from
-     * it. The Sequence can then be played using tools.MidiTools.play()
-     * or saved to a midi file using tools.MidiTools.save()
+     * it. The Sequence can then be played using MidiTools.play()
+     * or saved to a midi file using MidiTools.save()
      * @param passage The Passage to make into a Sequence.
-     * @return The created tools.MidiTools Sequence.
+     * @return The created MidiTools Sequence.
      */
     public static Sequence write(Passage passage) {
         // Spawn off a parser object

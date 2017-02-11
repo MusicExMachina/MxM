@@ -8,7 +8,7 @@ import basic.TimeSignature;
 import form.Note;
 import form.Passage;
 import rhythmTree.RhythmTree;
-import tools.MidiTools;
+import MidiTools;
 import trainable.Instrument;
 
 import javax.sound.midi.InvalidMidiDataException;

@@ -2,7 +2,6 @@ import form.Note;
 import form.Part;
 import form.Passage;
 import io.Writer;
-import tools.MidiTools;
 
 import javax.sound.midi.Sequence;
 import javax.swing.*;
@@ -42,10 +41,10 @@ public class PassageVisualizer extends JFrame {
                 Color color = Color.getHSBColor(rand.nextFloat(),1,1);
                 for(Note note: part) {
                     g.setColor(color);
-                    g.drawRect(Math.round(note.getStart().toFloat()*50f),
-                            Math.round(800f - note.getPitch().normalized()*800f),
-                            5,
-                            5);
+                    g.fillRect( Math.round(note.getStart().toFloat()*32f),
+                                Math.round(600f - note.getPitch().normalized()*600f),
+                                Math.round(note.getLength().toFloat()*32f),
+                                5);
                 }
             }
         }
@@ -53,16 +52,16 @@ public class PassageVisualizer extends JFrame {
 
     public static void main(String[] args) {
         try {
-            //tools.MidiTools.printSequencerInfo();
-            //Sequence sequence = tools.MidiTools.download("http://www.midiworld.com/download/4522");
-            //Sequence sequence = tools.MidiTools.download("http://www.mfiles.co.uk/downloads/edvard-grieg-peer-gynt1-morning-mood.mid");
-            //Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
-            Sequence sequence = MidiTools.download("http://www.bachcentral.com/WTCBkI/Prelude1.mid");
-            //Sequence sequence = tools.MidiTools.load("C:/users/celenp/desktop/test.mid");
-            //Sequence sequence = tools.MidiTools.load("C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-midi\\src\\tests\\resources\\midi_schubertImpromptu.mid");
+            //MidiTools.printSequencerInfo();
+            //Sequence sequence = MidiTools.download("http://www.midiworld.com/download/4522");
+            //Sequence sequence = MidiTools.download("http://www.mfiles.co.uk/downloads/edvard-grieg-peer-gynt1-morning-mood.mid");
+            Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
+            //Sequence sequence = MidiTools.download("http://www.bachcentral.com/WTCBkI/Prelude1.mid");
+            //Sequence sequence = MidiTools.load("C:/users/celenp/desktop/test.mid");
+            //Sequence sequence = MidiTools.load("C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-midi\\src\\tests\\resources\\midi_schubertImpromptu.mid");
             Passage passage = MidiTools.parse(sequence);
             Writer.write(passage,"C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-gui\\src\\tests\\resources\\output");
-            //tools.MidiTools.play(sequence);
+            MidiTools.play(sequence);
             PassageVisualizer rtv = new PassageVisualizer(passage);
             Thread.sleep(100000);
 
