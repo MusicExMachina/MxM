@@ -1,4 +1,4 @@
-import base.Note;
+import form.Note;
 import form.Part;
 import form.Passage;
 
@@ -7,7 +7,7 @@ import java.io.File;
 
 /**
  * MidiWriter is a class which does exactly what you'd expect.
- * base.Note that each MidiWriter composes exactly *one* midi Sequence.
+ * form.Note that each MidiWriter composes exactly *one* midi Sequence.
  * This means that the MidiTools class instantiates one for every
  * single form.Passage to be written. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.

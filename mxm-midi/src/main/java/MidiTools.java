@@ -73,7 +73,7 @@ public abstract class MidiTools
     }
 
     /**
-     * Saves a given midi sequence to a file. base.Note that this
+     * Saves a given midi sequence to a file. form.Note that this
      * may need some fine tuning for each of the three midi
      * file types.
      * @param sequence The midi Sequence to write to a file.

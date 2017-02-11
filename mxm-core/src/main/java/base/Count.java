@@ -3,28 +3,28 @@ package base;
 import java.util.Comparator;
 
 /**
- * A base.Count is the fundamental measurement of  musical time. base.Note that Counts are essentially
+ * A Count is the fundamental measurement of  musical time. form.Note that Counts are essentially
  * just fractions. They're not really that special. They are, however, immutable, in order to
  * avoid accidental headaches down the line.
  */
 public class Count implements Comparator<Count>, Comparable<Count> {
 
-    /** A zero base.Count. */
+    /** A zero Count */
     public static final Count ZERO = new Count(0);
 
-    /** A zero base.Count. */
+    /** A zero Count */
     public static final Count ONE = new Count(1);
 
-    /** An "infinite" base.Count */
-    public static final Count INFINITY = new Count(Integer.MAX_VALUE); // TODO: Optimize this? 0/0?
+    /** An "infinite" Count */
+    public static final Count INFINITY = new Count(Integer.MAX_VALUE);
 
-    /** The fractional numerator of this base.Count. */
+    /** The fractional numerator of this Count */
     private int numerator;
 
-    /** The fractional denominator of this base.Count. */
+    /** The fractional denominator of this Count */
     private int denominator;
 
-    /** The measure of this base.Count. */
+    /** The measure of this Count */
     private int measure;
 
     /**
@@ -42,7 +42,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
 
     /**
      * A constructor for base.Count taking in a numerator and
-     * denominator. base.Note that these do not need to be reduced,
+     * denominator. form.Note that these do not need to be reduced,
      * as the constructor itself will do the reducing.
      * @param numerator The desired numerator.
      * @param denominator The desired denominator.
@@ -62,7 +62,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
 
     /**
      * A constructor for base.Count taking in a measure, a numerator
-     * and a denominator. base.Note that these do not need to be
+     * and a denominator. form.Note that these do not need to be
      * reduced, as the constructor itself will do the reducing.
      * @param measure The desired measure.
      * @param numerator The desired numerator.

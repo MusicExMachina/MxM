@@ -7,7 +7,7 @@ import java.util.*;
 
 /**
  * MidiReader is a class which does exactly what you'd expect.
- * base.Note that each MidiReader parses exactly *one* midi Sequence.
+ * form.Note that each MidiReader parses exactly *one* midi Sequence.
  * This means that the MidiTools class instantiates one for every
  * single file to be read. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
@@ -116,7 +116,7 @@ class MidiReader {
             instChangeLong.put(track,new TreeMap<Long, Instrument>());
 
             // Set the initial instrument of this track (it may change)
-            // base.Note that -1 here just means anything else will override it
+            // form.Note that -1 here just means anything else will override it
             //TreeMap<Long,base.Instrument> init = new TreeMap<>();
             //init.put(-1L,base.Instrument.DEFAULT);
             //instChangeLong.put(track,init);
@@ -343,7 +343,7 @@ class MidiReader {
     private void parseTempoMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         Integer ppqn = (data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff);
-        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter base.Note - I think this is right
+        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter form.Note - I think this is right
     }
 
     /**
@@ -541,7 +541,7 @@ class MidiReader {
 
     /**
      * Converts the all events into fractions-of-a-measure
-     * format. base.Note that this is a touchy, time-consuming
+     * format. form.Note that this is a touchy, time-consuming
      * process prone to minor errors, and thus, this function
      * is likely to require tweaking going forward.
      */
@@ -649,7 +649,7 @@ class MidiReader {
 
     /**
      * A useful method that interpolates a tick between established
-     * time points. base.Note that this is similar to the way that pixels
+     * time points. form.Note that this is similar to the way that pixels
      * are interpolated in digital images.
      * @param tick The tick representing the time to be interpolated.
      * @return The float value of this tick as fractions of a measure.

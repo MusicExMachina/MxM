@@ -1,8 +1,8 @@
 import base.Count;
-import base.Note;
+import form.Note;
 import form.Part;
 import form.Passage;
-import form.TimeSignature;
+import base.TimeSignature;
 import io.Writer;
 
 import javax.sound.midi.Sequence;
