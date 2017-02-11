@@ -1,34 +1,34 @@
-package basic;
+package base;
 
 import java.util.Comparator;
 
 /**
- * A Count is the fundamental measurement of  musical time. Note that Counts are essentially
+ * A base.Count is the fundamental measurement of  musical time. base.Note that Counts are essentially
  * just fractions. They're not really that special. They are, however, immutable, in order to
  * avoid accidental headaches down the line.
  */
 public class Count implements Comparator<Count>, Comparable<Count> {
 
-    /** A zero Count. */
+    /** A zero base.Count. */
     public static final Count ZERO = new Count(0);
 
-    /** A zero Count. */
+    /** A zero base.Count. */
     public static final Count ONE = new Count(1);
 
-    /** An "infinite" Count */
+    /** An "infinite" base.Count */
     public static final Count INFINITY = new Count(Integer.MAX_VALUE); // TODO: Optimize this? 0/0?
 
-    /** The fractional numerator of this Count. */
+    /** The fractional numerator of this base.Count. */
     private int numerator;
 
-    /** The fractional denominator of this Count. */
+    /** The fractional denominator of this base.Count. */
     private int denominator;
 
-    /** The measure of this Count. */
+    /** The measure of this base.Count. */
     private int measure;
 
     /**
-     * A constructor for Count taking in just a measure
+     * A constructor for base.Count taking in just a measure
      * number. Use of this is likely to be rare, but this
      * avoids having annoying 1-denominator constructor calls.
      * @param measure The desired measure.
@@ -41,8 +41,8 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     }
 
     /**
-     * A constructor for Count taking in a numerator and
-     * denominator. Note that these do not need to be reduced,
+     * A constructor for base.Count taking in a numerator and
+     * denominator. base.Note that these do not need to be reduced,
      * as the constructor itself will do the reducing.
      * @param numerator The desired numerator.
      * @param denominator The desired denominator.
@@ -56,13 +56,13 @@ public class Count implements Comparator<Count>, Comparable<Count> {
             //this.countClass  = new CountClass(numerator,denominator);
         }
         else {
-            throw new Error("Cannot create a Count with a denominator less than or equal to zero.");
+            throw new Error("Cannot create a base.Count with a denominator less than or equal to zero.");
         }
     }
 
     /**
-     * A constructor for Count taking in a measure, a numerator
-     * and a denominator. Note that these do not need to be
+     * A constructor for base.Count taking in a measure, a numerator
+     * and a denominator. base.Note that these do not need to be
      * reduced, as the constructor itself will do the reducing.
      * @param measure The desired measure.
      * @param numerator The desired numerator.
@@ -76,46 +76,46 @@ public class Count implements Comparator<Count>, Comparable<Count> {
             this.measure     = numerator / denominator;
         }
         else {
-            throw new Error("Cannot create a Count with a deno");
+            throw new Error("Cannot create a base.Count with a deno");
         }
     }
 
     /**
      * Gets the measure number, i.e., the "whole
      * number" part of the internal fraction.
-     * @return This Count's measure number.
+     * @return This base.Count's measure number.
      */
     public int getMeasure() {
         return measure;
     }
 
     /**
-     * A getter for this Count's numerator.
-     * @return This Count's numerator.
+     * A getter for this base.Count's numerator.
+     * @return This base.Count's numerator.
      */
     public int getNumerator() {
         return numerator;
     }
 
     /**
-     * A getter for this Count's denominator.
-     * @return This Count's denominator.
+     * A getter for this base.Count's denominator.
+     * @return This base.Count's denominator.
      */
     public int getDenominator() {
         return denominator;
     }
 
     /**
-     * Converts this Count to a float.
-     * @return This Count's float value.
+     * Converts this base.Count to a float.
+     * @return This base.Count's float value.
      */
     public float toFloat() {
         return (float)numerator/denominator;
     }
 
     /**
-     * Converts this Count to a double.
-     * @return This Count's double value.
+     * Converts this base.Count to a double.
+     * @return This base.Count's double value.
      */
     public double toDouble() {
         return (double)numerator/denominator;
@@ -123,18 +123,18 @@ public class Count implements Comparator<Count>, Comparable<Count> {
 
     /**
      * Returns a nicely-formatted String
-     * of this Count (for debug).
-     * @return A nicely-formatted String of this Count.
+     * of this base.Count (for debug).
+     * @return A nicely-formatted String of this base.Count.
      */
     public String toString() {
         return getMeasure() + " & " + (numerator%denominator) + "/" + denominator;//countClass.toString();
     }
 
     /**
-     * An addition function which returns a new Count
-     * whose value is this Count plus other.
-     * @param other The other Count.
-     * @return The new sum Count.
+     * An addition function which returns a new base.Count
+     * whose value is this base.Count plus other.
+     * @param other The other base.Count.
+     * @return The new sum base.Count.
      */
     public Count plus(Count other) {
         int newNumerator    = this.numerator * other.denominator + other.numerator*this.denominator;
@@ -143,10 +143,10 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     }
 
     /**
-     * A subtraction function which returns a new Count
-     * whose value is this Count minus other.
-     * @param other The other Count.
-     * @return The new difference Count.
+     * A subtraction function which returns a new base.Count
+     * whose value is this base.Count minus other.
+     * @param other The other base.Count.
+     * @return The new difference base.Count.
      */
     public Count minus(Count other) {
         int newNumerator    = this.numerator * other.denominator - other.numerator*this.denominator;
@@ -156,28 +156,28 @@ public class Count implements Comparator<Count>, Comparable<Count> {
 
     /**
      * A multiplication function which returns a new
-     * Count whose value is a scalar times this Count.
+     * base.Count whose value is a scalar times this base.Count.
      * @param scalar The integer scalar to multiply by.
-     * @return The new Count.
+     * @return The new base.Count.
      */
     public Count times(int scalar) {
         return new Count(numerator*scalar,denominator);
     }
 
     /**
-     * A division function which returns a new Count
-     * whose value is this Count divided by a scalar.
+     * A division function which returns a new base.Count
+     * whose value is this base.Count divided by a scalar.
      * @param scalar The integer scalar to divide by.
-     * @return The new Count.
+     * @return The new base.Count.
      */
     public Count dividedBy(int scalar) {
         return new Count(numerator,denominator*scalar);
     }
 
     /**
-     * Reduces the Count's internal fraction, a vital
+     * Reduces the base.Count's internal fraction, a vital
      * method which is run exactly once- every time a
-     * new Count is created. This could be lumped in
+     * new base.Count is created. This could be lumped in
      * the constructor, but why do that?
      */
     private void reduce() {
@@ -187,7 +187,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
         int b = denominator;
 
         if(a == 0 && b==0) {
-            throw new IllegalArgumentException("Undefined Count: (0,0)");
+            throw new IllegalArgumentException("Undefined base.Count: (0,0)");
         }else if(a==0){
             denominator /= b;
             return;
@@ -212,8 +212,8 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     }
 
     /**
-     * Compares this Count to another, purely based on size.
-     * @param other the other Count to compare this one to.
+     * Compares this base.Count to another, purely based on size.
+     * @param other the other base.Count to compare this one to.
      * @return The comparison between the two.
      */
     @Override
@@ -223,8 +223,8 @@ public class Count implements Comparator<Count>, Comparable<Count> {
 
     /**
      * Compares two Counts, purely based on size.
-     * @param c1 The first Count.
-     * @param c2 The second Count.
+     * @param c1 The first base.Count.
+     * @param c2 The second base.Count.
      * @return The comparison between the two.
      */
     @Override
@@ -252,7 +252,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     /**
      * A simple hash code in order to allow storage
      * in certain Collections, like HashSets.
-     * @return The hash code for this Count.
+     * @return The hash code for this base.Count.
      */
     @Override
     public int hashCode() {

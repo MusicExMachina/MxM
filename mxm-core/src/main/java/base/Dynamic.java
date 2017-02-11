@@ -1,9 +1,9 @@
-package basic;
+package base;
 
 import java.util.Comparator;
 
 /**
- * Dynamic is a glorified int wrapper, which allows for a little more dress
+ * base.Dynamic is a glorified int wrapper, which allows for a little more dress
  * and prevents problems down the line with arguments to constructors.
  */
 public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
@@ -16,7 +16,7 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
     public static int MAX_DYNAMIC = 100;
 
     /**
-     * Stores the loudness of this Dynamic
+     * Stores the loudness of this base.Dynamic
      */
     private final byte value;
 
@@ -34,16 +34,16 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
     }
 
     /**
-     * Copy constructor for Dynamic.
-     * @param other The other Dynamic.
+     * Copy constructor for base.Dynamic.
+     * @param other The other base.Dynamic.
      */
     public Dynamic(Dynamic other) {
         this.value = other.value;
     }
 
     /**
-     * Compares this Dynamic to another Dynamic.
-     * @param other The other Dynamic.
+     * Compares this base.Dynamic to another base.Dynamic.
+     * @param other The other base.Dynamic.
      * @return The comparison.
      */
     @Override
@@ -53,8 +53,8 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
 
     /**
      * Compares two Dynamics.
-     * @param p1 The first Dynamic.
-     * @param p2 The second Dynamic.
+     * @param p1 The first base.Dynamic.
+     * @param p2 The second base.Dynamic.
      * @return The comparison.
      */
     @Override
@@ -63,9 +63,9 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
     }
 
     /**
-     * Checks if this Dynamic equals another Object.
+     * Checks if this base.Dynamic equals another Object.
      * @param o The other Object.
-     * @return If this Dynamic is equal to the Object.
+     * @return If this base.Dynamic is equal to the Object.
      */
     @Override
     public boolean equals(Object o) {
@@ -77,7 +77,7 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
 
     /**
      * A simple hash code for storage of Dynamics in special Collections.
-     * @return The hash code for this Dynamic.
+     * @return The hash code for this base.Dynamic.
      */
     @Override
     public int hashCode() {

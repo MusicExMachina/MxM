@@ -1,9 +1,9 @@
-package basic;
+package form;
 
 import java.util.Comparator;
 
 /**
- * Tempo is a glorified int wrapper, which allows for a little more dress
+ * form.Tempo is a glorified int wrapper, which allows for a little more dress
  * and prevents problems down the line with arguments to constructors.
  */
 public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
@@ -12,8 +12,8 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
     private final int value;
 
     /**
-     * Constructor taking in a Tempo speed.
-     * @param value The Tempo's speed.
+     * Constructor taking in a form.Tempo speed.
+     * @param value The form.Tempo's speed.
      */
     public Tempo(int value) {
         if(value > 0 ) {
@@ -25,7 +25,7 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
     }
 
     /**
-     * Returns the number of beats per minute this Tempo represents.
+     * Returns the number of beats per minute this form.Tempo represents.
      * @return The BPM of this tempo.
      */
     public int getBPM() {
@@ -33,16 +33,16 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
     }
 
     /**
-     * Returns a nicely-formatted String of this Tempo (for debug).
-     * @return This Tempo's String representation.
+     * Returns a nicely-formatted String of this form.Tempo (for debug).
+     * @return This form.Tempo's String representation.
      */
     public String toString() {
         return value + " bpm";
     }
 
     /**
-     * Compares this Tempo to another Tempo.
-     * @param other The other Tempo.
+     * Compares this form.Tempo to another form.Tempo.
+     * @param other The other form.Tempo.
      * @return The comparison.
      */
     @Override
@@ -52,8 +52,8 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
 
     /**
      * Compares two Tempi.
-     * @param p1 The first Tempo.
-     * @param p2 The second Tempo.
+     * @param p1 The first form.Tempo.
+     * @param p2 The second form.Tempo.
      * @return The comparison.
      */
     @Override
@@ -62,9 +62,9 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
     }
 
     /**
-     * Checks if this Tempo equals another Object.
+     * Checks if this form.Tempo equals another Object.
      * @param o The other Object.
-     * @return If this Tempo is equal to the Object.
+     * @return If this form.Tempo is equal to the Object.
      */
     @Override
     public boolean equals(Object o) {
@@ -76,7 +76,7 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
 
     /**
      * A simple hash code for storage of Tempi in special Collections.
-     * @return The hash code for this Tempo.
+     * @return The hash code for this form.Tempo.
      */
     @Override
     public int hashCode() {

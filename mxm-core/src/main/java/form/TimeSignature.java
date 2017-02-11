@@ -1,4 +1,4 @@
-package basic;
+package form;
 
 /**
  * TimeSignatures are exactly what they sound like in the Western music theory
@@ -6,20 +6,20 @@ package basic;
  * levels (3/4 versus 6/8) and will eventually  be useful in determining how
  * transitions between TimeSignatures work.
  *
- * Note: These are in many ways structurally similar to Counts. The major difference
- * is that there's no reason to ever reduce a TimeSignature from say, 4/4 to 2/2.
+ * base.Note: These are in many ways structurally similar to Counts. The major difference
+ * is that there's no reason to ever reduce a form.TimeSignature from say, 4/4 to 2/2.
  */
 public class TimeSignature {
 
-    /** The fractional numerator of this TimeSignature */
+    /** The fractional numerator of this form.TimeSignature */
     private int numerator;
 
-    /** The fractional denominator of this TimeSignature */
+    /** The fractional denominator of this form.TimeSignature */
     private int denominator;
 
     /**
-     * A constructor for TimeSignature taking in a numerator and
-     * denominator. Note that these do not need to be reduced,
+     * A constructor for form.TimeSignature taking in a numerator and
+     * denominator. base.Note that these do not need to be reduced,
      * as TimeSignatures can be almost anything you want them
      * to be.
      * @param numerator The desired numerator.
@@ -31,21 +31,21 @@ public class TimeSignature {
             this.denominator = denominator;
         }
         else {
-            throw new Error("Cannot create a TimeSignature with a numerator or denominator below or equal to zero.");
+            throw new Error("Cannot create a form.TimeSignature with a numerator or denominator below or equal to zero.");
         }
     }
 
     /**
-     * Gets the denominator of this TimeSignature.
-     * @return This TimeSignature's denominator.
+     * Gets the denominator of this form.TimeSignature.
+     * @return This form.TimeSignature's denominator.
      */
     public int getNumerator() {
         return numerator;
     }
 
     /**
-     * Gets the denominator of this TimeSignature.
-     * @return This TimeSignature's denominator.
+     * Gets the denominator of this form.TimeSignature.
+     * @return This form.TimeSignature's denominator.
      */
     public int getDenominator() {
         return denominator;
@@ -105,15 +105,15 @@ public class TimeSignature {
 
     /**
      * Returns a nicely-formatted String
-     * of this TimeSignature (for debug).
-     * @return This TimeSignature's String representation.
+     * of this form.TimeSignature (for debug).
+     * @return This form.TimeSignature's String representation.
      */
     public String toString() {
         return getNumerator() + "/" + getDenominator() + " time ";
     }
 
     /**
-     * A noteQualities (generated) equals() method for TimeSignature.
+     * A noteQualities (generated) equals() method for form.TimeSignature.
      * @param o The Object to compare this to.
      * @return If these two Objects are equal.
      */
@@ -130,7 +130,7 @@ public class TimeSignature {
     /**
      * A simple hash code in order to allow storage
      * in certain Collections, like HashSets.
-     * @return The hash code for this TimeSignature.
+     * @return The hash code for this form.TimeSignature.
      */
     @Override
     public int hashCode() {

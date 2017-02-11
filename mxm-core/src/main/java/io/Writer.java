@@ -1,16 +1,13 @@
 package io;
 
-import basic.Count;
-import basic.Tempo;
-import basic.TimeSignature;
-import form.Note;
-import form.Part;
-import form.Passage;
-import org.apache.commons.lang3.StringUtils;
+import base.*;
+import form.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class Writer
 {
@@ -19,7 +16,7 @@ public class Writer
 
             PrintWriter writer = new PrintWriter(filename+".mxm", "UTF-8");
 
-            writer.println("> Passage\n");
+            writer.println("> form.Passage\n");
             writer.println("  - Title");
             writer.println("      PASSAGE TITLE");
             writer.println("");
@@ -57,8 +54,8 @@ public class Writer
 
             writer.println("  > Parts\n");
             for(Part part : passage) {
-                writer.println("    - Part\n");
-                writer.println("      - Instrument");
+                writer.println("    - form.Part\n");
+                writer.println("      - base.Instrument");
                 writer.println("        " + part.getInstrument().toString() + "\n");
                 writer.println("      > Notes\n");
 

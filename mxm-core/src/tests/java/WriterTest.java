@@ -1,5 +1,3 @@
-import form.Passage;
-import io.Writer;
 import org.junit.Test;
 
 /**
@@ -9,6 +7,6 @@ public class WriterTest {
 
     @Test
     public void WriterTest() {
-        //Writer.write(new Passage());
+        //io.Writer.write(new form.Passage());
     }
 }

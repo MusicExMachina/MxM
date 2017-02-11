@@ -14,7 +14,6 @@ import java.util.List;
 
 public abstract class MidiTools
 {
-
     /**
      * Prints some useful information about this system's
      * Midi sequencer, synthesizer, and so forth.
@@ -74,7 +73,7 @@ public abstract class MidiTools
     }
 
     /**
-     * Saves a given midi sequence to a file. Note that this
+     * Saves a given midi sequence to a file. base.Note that this
      * may need some fine tuning for each of the three midi
      * file types.
      * @param sequence The midi Sequence to write to a file.
@@ -88,8 +87,8 @@ public abstract class MidiTools
     }
 
     /**
-     * Takes in a midi Sequence and writes a Passage. The
-     * Passage may then be parsed in a number of ways, including
+     * Takes in a midi Sequence and writes a form.Passage. The
+     * form.Passage may then be parsed in a number of ways, including
      * forming RhythmTrees, etc. as Passages carry *more* useful
      * musical information than Sequences alone.
      * @param sequence
@@ -102,10 +101,10 @@ public abstract class MidiTools
     }
 
     /**
-     * Takes in a Passage and writes a midi Sequence from
+     * Takes in a form.Passage and writes a midi Sequence from
      * it. The Sequence can then be played using MidiTools.play()
      * or saved to a midi file using MidiTools.save()
-     * @param passage The Passage to make into a Sequence.
+     * @param passage The form.Passage to make into a Sequence.
      * @return The created MidiTools Sequence.
      */
     public static Sequence write(Passage passage) {

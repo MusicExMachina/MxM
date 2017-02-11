@@ -1,15 +1,13 @@
 package form;
 
-import basic.Tempo;
-import basic.Count;
-import basic.TimeSignature;
+import base.Count;
 
 import java.util.*;
 
 /**
  * Passages are simply contemporaneous (or not) collections of
  * parts. They are this project's main way of transporting "music"
- * and the internal structures of the music. Note that a passage
+ * and the internal structures of the music. base.Note that a passage
  * is unified by its temporal nature- time signatures, tempos, and
  * the like.
  */
@@ -18,8 +16,8 @@ public class Passage implements Iterable<Part> {
     /** Time signature (changes) throughout this passage. */
     private NavigableMap<Integer,TimeSignature> timeSigs;
 
-    /** Tempo (changes) throughout this passage. */
-    private NavigableMap<Count,Tempo> tempi;
+    /** form.Tempo (changes) throughout this passage. */
+    private NavigableMap<Count, Tempo> tempi;
 
     /** All parts being played in this passage. */
     private List<Part> parts;
@@ -38,8 +36,8 @@ public class Passage implements Iterable<Part> {
      * Adds a time signature (change) to the passage at a
      * given measure, or throws an error, if that measure
      * already has a time signature change.
-     * @param timeSignature The TimeSignature to add to this Passage.
-     * @param measure The time at which to add this TimeSignature.
+     * @param timeSignature The form.TimeSignature to add to this form.Passage.
+     * @param measure The time at which to add this form.TimeSignature.
      */
     public void addTimeSignature(TimeSignature timeSignature,int measure) {
         if(!timeSigs.containsKey(measure)) {
@@ -111,9 +109,9 @@ public class Passage implements Iterable<Part> {
      */
     @Override
     public String toString() {
-        String toReturn = "Passage :\n";
+        String toReturn = "form.Passage :\n";
         for(Part part : this) {
-            toReturn += "\tPart : \n" + part.toString();
+            toReturn += "\tform.Part : \n" + part.toString();
         }
         return toReturn;
     }

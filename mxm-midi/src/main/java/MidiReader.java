@@ -1,18 +1,13 @@
-import basic.Count;
-import basic.Pitch;
-import basic.Tempo;
-import form.Note;
-import form.Part;
-import form.Passage;
-import basic.TimeSignature;
-import trainable.Instrument;
+import base.*;
+import base.Instrument;
+import form.*;
 
 import javax.sound.midi.*;
 import java.util.*;
 
 /**
  * MidiReader is a class which does exactly what you'd expect.
- * Note that each MidiReader parses exactly *one* midi Sequence.
+ * base.Note that each MidiReader parses exactly *one* midi Sequence.
  * This means that the MidiTools class instantiates one for every
  * single file to be read. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
@@ -47,7 +42,7 @@ class MidiReader {
 
     private TreeMap<Long,Integer> tempiLong;
     private TreeMap<Float,Tempo> tempiFloat;
-    private TreeMap<Count,Tempo> tempiCount;
+    private TreeMap<Count, Tempo> tempiCount;
 
     private TreeMap<Long,Float> timePoints;
 
@@ -60,9 +55,9 @@ class MidiReader {
     private HashMap<Track,TreeMap<Pitch,TreeSet<Float>>> noteOffsFloat;
     private HashMap<Track,TreeMap<Pitch,TreeSet<Count>>> noteOffsCount;
 
-    private HashMap<Track,TreeMap<Long,Instrument>> instChangeLong;
-    private HashMap<Track,TreeMap<Float,Instrument>> instChangeFloat;
-    private HashMap<Track,TreeMap<Count,Instrument>> instChangeCount;
+    private HashMap<Track,TreeMap<Long, Instrument>> instChangeLong;
+    private HashMap<Track,TreeMap<Float, Instrument>> instChangeFloat;
+    private HashMap<Track,TreeMap<Count, Instrument>> instChangeCount;
 
 
     /**
@@ -71,7 +66,7 @@ class MidiReader {
      * summed up in a single method, but it is simply too
      * cumbersome to do so.
      * @param sequence The midi Sequence to parse.
-     * @return The Passage representing this Sequence.
+     * @return The form.Passage representing this Sequence.
      */
     public Passage read(Sequence sequence) {
 
@@ -121,11 +116,11 @@ class MidiReader {
             instChangeLong.put(track,new TreeMap<Long, Instrument>());
 
             // Set the initial instrument of this track (it may change)
-            // Note that -1 here just means anything else will override it
-            //TreeMap<Long,Instrument> init = new TreeMap<>();
-            //init.put(-1L,Instrument.DEFAULT);
+            // base.Note that -1 here just means anything else will override it
+            //TreeMap<Long,base.Instrument> init = new TreeMap<>();
+            //init.put(-1L,base.Instrument.DEFAULT);
             //instChangeLong.put(track,init);
-            // TODO: Instrument change stuff
+            // TODO: base.Instrument change stuff
 
             // For every MidiTools event
             for (int i = 0; i < track.size(); i++) {
@@ -319,9 +314,9 @@ class MidiReader {
         switch (message.getCommand()) {
             case BANK_SELECT:
                 if(!instChangeLong.containsKey(track)) {
-                    instChangeLong.put(track,new TreeMap<Long, Instrument>());
+                    instChangeLong.put(track,new TreeMap<Long, base.Instrument>());
                 }
-                instChangeLong.get(track).put(tick,Instrument.getGeneralMIDIInstrument(message.getMessage()[3]));
+                instChangeLong.get(track).put(tick,base.Instrument.getGeneralMIDIInstrument(message.getMessage()[3]));
                 break;
         }
         */
@@ -335,7 +330,7 @@ class MidiReader {
      * @param tick The tick of this event's timing.
      */
     private void parseProgramChangeMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
-        instChangeLong.get(track).put(tick,Instrument.getGeneralMIDIInstrument(message.getData1()));
+        instChangeLong.get(track).put(tick, base.Instrument.getGeneralMIDIInstrument(message.getData1()));
     }
 
     /**
@@ -348,7 +343,7 @@ class MidiReader {
     private void parseTempoMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         Integer ppqn = (data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff);
-        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter Note - I think this is right
+        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter base.Note - I think this is right
     }
 
     /**
@@ -499,7 +494,7 @@ class MidiReader {
         }
 
         for(Track track : instChangeLong.keySet()) {
-            instChangeFloat.put(track,new TreeMap<Float,Instrument>());
+            instChangeFloat.put(track,new TreeMap<Float, Instrument>());
             for(Long switchTick : instChangeLong.get(track).keySet()) {
                 instChangeFloat.get(track).put(interpolate(switchTick), instChangeLong.get(track).get(switchTick));
             }
@@ -546,7 +541,7 @@ class MidiReader {
 
     /**
      * Converts the all events into fractions-of-a-measure
-     * format. Note that this is a touchy, time-consuming
+     * format. base.Note that this is a touchy, time-consuming
      * process prone to minor errors, and thus, this function
      * is likely to require tweaking going forward.
      */
@@ -637,7 +632,7 @@ class MidiReader {
             if(!noteOnsCount.get(track).isEmpty() && !instChangeCount.get(track).isEmpty()) {
                 Instrument instrument = instChangeCount.get(track).firstEntry().getValue();
                 Part part = new Part(instrument);
-                // TODO: Instrument changes
+                // TODO: base.Instrument changes
 
                 for(Map.Entry<Count, TreeSet<Pitch>> pair : noteOnsCount.get(track).entrySet()) {
                     Count start = pair.getKey();
@@ -654,7 +649,7 @@ class MidiReader {
 
     /**
      * A useful method that interpolates a tick between established
-     * time points. Note that this is similar to the way that pixels
+     * time points. base.Note that this is similar to the way that pixels
      * are interpolated in digital images.
      * @param tick The tick representing the time to be interpolated.
      * @return The float value of this tick as fractions of a measure.
@@ -679,12 +674,17 @@ class MidiReader {
         }
     }
 
+    /**
+     *
+     * @param time
+     * @return
+     */
     private Count closestCount(float time) {
         // Now we get to calculate where in the measure this lies
         int measure = (int)Math.floor(time);
         float remainder = time - measure;
 
-        // We need a Count that's sufficiently close to the remainder
+        // We need a base.Count that's sufficiently close to the remainder
         int numerator = 1;
         int denominator = 1;
 

@@ -1,15 +1,13 @@
-import basic.Count;
-import basic.TimeSignature;
-import form.Note;
+import base.Count;
+import base.Note;
 import form.Part;
 import form.Passage;
+import form.TimeSignature;
 import io.Writer;
 
 import javax.sound.midi.Sequence;
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Time;
-import java.util.Iterator;
 import java.util.Random;
 
 /**
