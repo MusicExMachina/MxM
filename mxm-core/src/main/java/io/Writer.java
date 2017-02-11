@@ -16,7 +16,7 @@ public class Writer
 
             PrintWriter writer = new PrintWriter(filename+".mxm", "UTF-8");
 
-            writer.println("> form.Passage\n");
+            writer.println("> Passage\n");
             writer.println("  - Title");
             writer.println("      PASSAGE TITLE");
             writer.println("");
@@ -54,8 +54,8 @@ public class Writer
 
             writer.println("  > Parts\n");
             for(Part part : passage) {
-                writer.println("    - form.Part\n");
-                writer.println("      - base.Instrument");
+                writer.println("    - Part\n");
+                writer.println("      - Instrument");
                 writer.println("        " + part.getInstrument().toString() + "\n");
                 writer.println("      > Notes\n");
 

@@ -1,5 +1,3 @@
-package basic.tests;
-
 import base.Count;
 import org.junit.Test;
 
