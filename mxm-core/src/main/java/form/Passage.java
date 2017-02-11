@@ -41,12 +41,12 @@ public class Passage implements Iterable<Part> {
      * @param timeSignature The TimeSignature to add to this Passage.
      * @param measure The time at which to add this TimeSignature.
      */
-    public void addTimeSignature(TimeSignature timeSignature,Integer measure) {
+    public void addTimeSignature(TimeSignature timeSignature,int measure) {
         if(!timeSigs.containsKey(measure)) {
             timeSigs.put(measure,timeSignature);
         }
         else {
-            throw new Error("PASSAGE:\tTrying to add a time signature change on top of another one!");
+            //throw new Error("PASSAGE:\tTrying to add a time signature change on top of another one!");
         }
     }
 

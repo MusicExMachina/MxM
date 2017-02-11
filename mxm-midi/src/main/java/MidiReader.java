@@ -44,20 +44,25 @@ class MidiReader {
     private TreeMap<Long,TimeSignature> timeSigsLong;
     private TreeMap<Float,TimeSignature> timeSigsFloat;
     private TreeMap<Count,TimeSignature> timeSigsCount;
-    private TreeMap<Long,Integer> ppqnsLong;
+
+    private TreeMap<Long,Integer> tempiLong;
     private TreeMap<Float,Tempo> tempiFloat;
-    private TreeMap<Count,Tempo> tempiCoount;
+    private TreeMap<Count,Tempo> tempiCount;
+
     private TreeMap<Long,Float> timePoints;
 
     /* Track events */
     private HashMap<Track,TreeMap<Long,TreeSet<Pitch>>> noteOnsLong;
     private HashMap<Track,TreeMap<Float,TreeSet<Pitch>>> noteOnsFloat;
     private HashMap<Track,TreeMap<Count,TreeSet<Pitch>>> noteOnsCount;
+
     private HashMap<Track,TreeMap<Pitch,TreeSet<Long>>> noteOffsLong;
     private HashMap<Track,TreeMap<Pitch,TreeSet<Float>>> noteOffsFloat;
     private HashMap<Track,TreeMap<Pitch,TreeSet<Count>>> noteOffsCount;
+
     private HashMap<Track,TreeMap<Long,Instrument>> instChangeLong;
     private HashMap<Track,TreeMap<Float,Instrument>> instChangeFloat;
+    private HashMap<Track,TreeMap<Count,Instrument>> instChangeCount;
 
 
     /**
@@ -100,7 +105,7 @@ class MidiReader {
     private void parseAll() {
 
         timeSigsLong = new TreeMap<>();
-        ppqnsLong = new TreeMap<>();
+        tempiLong = new TreeMap<>();
 
         noteOnsLong = new HashMap<>();
         noteOffsLong = new HashMap<>();
@@ -116,9 +121,10 @@ class MidiReader {
             instChangeLong.put(track,new TreeMap<Long, Instrument>());
 
             // Set the initial instrument of this track (it may change)
-            TreeMap<Long,Instrument> init = new TreeMap<Long, Instrument>();
-            init.put(0L,Instrument.DEFAULT);
-            instChangeLong.put(track,init);
+            // Note that -1 here just means anything else will override it
+            //TreeMap<Long,Instrument> init = new TreeMap<>();
+            //init.put(-1L,Instrument.DEFAULT);
+            //instChangeLong.put(track,init);
             // TODO: Instrument change stuff
 
             // For every MidiTools event
@@ -342,7 +348,7 @@ class MidiReader {
     private void parseTempoMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         Integer ppqn = (data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff);
-        ppqnsLong.put(tick,ppqn); // Pulses Per Quarter Note
+        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter Note - I think this is right
     }
 
     /**
@@ -397,14 +403,14 @@ class MidiReader {
         timeSigsFloat = new TreeMap<>();
         tempiFloat = new TreeMap<>();
         timePoints = new TreeMap<>();
-        timePoints.put((long)0,0.0f);
+        timePoints.put(0L,0.0f);
 
         noteOnsFloat = new HashMap<>();
         noteOffsFloat = new HashMap<>();
         instChangeFloat = new HashMap<>();
 
         // Add the first time signature, if there is one
-        if (timeSigsLong.firstEntry() != null) {
+        if (!timeSigsLong.isEmpty()) {
             timeSigsFloat.put(0f, timeSigsLong.firstEntry().getValue());
         }
         // Else, make it 4/4, because why not?
@@ -413,9 +419,29 @@ class MidiReader {
             System.out.println("MIDI PARSER: No time signature... defaulting to 4/4");
         }
 
+        // Add the first tempo, if there is one
+        if (tempiLong.firstEntry() != null) {
+            tempiFloat.put(0f, new Tempo(tempiLong.firstEntry().getValue()));
+        }
+        // Else, make it 120, because why not?
+        else {
+            tempiFloat.put(0f, new Tempo(120));
+            System.out.println("MIDI PARSER: No tempo... defaulting to 120bpm");
+        }
+
         // For every tick in this midi sequence
         // (Don't worry, we skip ahead efficiently)
         while (tick <= finalTick) {
+
+            // Update the time signature if need be
+            if(timeSigsLong.get(tick) != null) {
+                timeSigsFloat.put(time, timeSigsLong.get(tick));
+            }
+            // Update the tempo if need be
+            if(tempiLong.get(tick) != null) {
+                tempiFloat.put(time, new Tempo(tempiLong.get(tick)));
+            }
+
 
             // Information
             TimeSignature timeSig = timeSigsLong.floorEntry(tick).getValue();
@@ -439,9 +465,9 @@ class MidiReader {
             }
 
             // If there's a PPQN change, add that in
-            if (ppqnsLong.containsKey(tick)) {
+            if (tempiLong.containsKey(tick)) {
                 // TODO: Is this right? I think it might not be...
-                tempiFloat.put(time, new Tempo(ppqnsLong.get(tick)));
+                tempiFloat.put(time, new Tempo(tempiLong.get(tick)));
             }
 
             // Check for the next changes in key signature or pulses per quarter note.
@@ -453,8 +479,8 @@ class MidiReader {
             if (timeSigsLong.ceilingEntry(tick) != null) {
                 nextTimeSigChangeTick = timeSigsLong.ceilingEntry(tick).getKey();
             }
-            if (ppqnsLong.ceilingEntry(tick) != null) {
-                nextPPQNChangeTick = ppqnsLong.ceilingEntry(tick).getKey();
+            if (tempiLong.ceilingEntry(tick) != null) {
+                nextPPQNChangeTick = tempiLong.ceilingEntry(tick).getKey();
             }
 
             // If the next upcoming event is the end of the piece, mark it with a time point
@@ -511,8 +537,11 @@ class MidiReader {
         }
 
         // Free up the previous stage's note-on and note-off collections
+        timeSigsLong.clear();
+        tempiLong.clear();
         noteOnsLong.clear();
         noteOffsLong.clear();
+        instChangeLong.clear();
     }
 
     /**
@@ -523,8 +552,26 @@ class MidiReader {
      */
     private void convertToCounts() {
 
+        timeSigsCount = new TreeMap<>();
+        tempiCount = new TreeMap<>();
+
         noteOnsCount = new HashMap<>();
         noteOffsCount = new HashMap<>();
+        instChangeCount = new HashMap<>();
+
+        // For each time signature change
+        for (Float timeSigChangeTime : timeSigsFloat.keySet()) {
+            // The best-matching count to put this event on
+            Count count = closestCount(timeSigChangeTime);
+            timeSigsCount.put(count,timeSigsFloat.get(timeSigChangeTime));
+        }
+
+        // For each tempo change
+        for (Float tempoChangeTime : tempiFloat.keySet()) {
+            // The best-matching count to put this event on
+            Count count = closestCount(tempoChangeTime);
+            tempiCount.put(count,tempiFloat.get(tempoChangeTime));
+        }
 
         // TODO: Make a "tracks" set?
         // For every track
@@ -533,6 +580,14 @@ class MidiReader {
             // Add a space for the new collection
             noteOnsCount.put(track, new TreeMap<Count, TreeSet<Pitch>>());
             noteOffsCount.put(track, new TreeMap<Pitch, TreeSet<Count>>());
+            instChangeCount.put(track, new TreeMap<Count, Instrument>());
+
+            // For each note-on frame
+            for (Float instChangeTime : instChangeFloat.get(track).keySet()) {
+                // The best-matching count to put this event on
+                Count count = closestCount(instChangeTime);
+                instChangeCount.get(track).put(count,instChangeFloat.get(track).get(instChangeTime));
+            }
 
             // For each note-on frame
             for (Float noteOnFloat : noteOnsFloat.get(track).keySet()) {
@@ -557,10 +612,12 @@ class MidiReader {
                 }
             }
         }
-
         // Clear old collections
+        timeSigsFloat.clear();
+        tempiFloat.clear();
         noteOnsFloat.clear();
         noteOffsFloat.clear();
+        instChangeFloat.clear();
     }
 
     /**
@@ -568,20 +625,30 @@ class MidiReader {
      */
     private void makeParts() {
 
+        for(Count timeSigChange : timeSigsCount.keySet()) {
+            passage.addTimeSignature(timeSigsCount.get(timeSigChange),timeSigChange.getMeasure());
+        }
+        for(Count tempoChange : tempiCount.keySet()) {
+            passage.addTempoChange(tempiCount.get(tempoChange),tempoChange);
+        }
+
         // For every track
         for(Track track : noteOnsCount.keySet()) {
-            Instrument instrument = Instrument.ACCORDION;
-            Part part = new Part(instrument);
+            if(!noteOnsCount.get(track).isEmpty() && !instChangeCount.get(track).isEmpty()) {
+                Instrument instrument = instChangeCount.get(track).firstEntry().getValue();
+                Part part = new Part(instrument);
+                // TODO: Instrument changes
 
-            for(Map.Entry<Count, TreeSet<Pitch>> pair : noteOnsCount.get(track).entrySet()) {
-                Count start = pair.getKey();
-                for(Pitch pitch : pair.getValue()) {
-                    Count end = noteOffsCount.get(track).get(pitch).ceiling(start);
-                    part.add(new Note(start,end,pitch));
+                for(Map.Entry<Count, TreeSet<Pitch>> pair : noteOnsCount.get(track).entrySet()) {
+                    Count start = pair.getKey();
+                    for(Pitch pitch : pair.getValue()) {
+                        Count end = noteOffsCount.get(track).get(pitch).ceiling(start);
+                        part.add(new Note(start,end,pitch));
+                    }
                 }
+                // Add the part to the passage
+                passage.add(part);
             }
-            // Add the part to the passage
-            passage.add(part);
         }
     }
 
