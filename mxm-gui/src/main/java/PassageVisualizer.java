@@ -61,7 +61,7 @@ public class PassageVisualizer extends JFrame {
             //Sequence sequence = tools.MidiTools.load("C:/users/celenp/desktop/test.mid");
             //Sequence sequence = tools.MidiTools.load("C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-midi\\src\\tests\\resources\\midi_schubertImpromptu.mid");
             Passage passage = MidiTools.parse(sequence);
-            Writer.write(passage);
+            Writer.write(passage,"C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-gui\\src\\tests\\resources\\output");
             //tools.MidiTools.play(sequence);
             PassageVisualizer rtv = new PassageVisualizer(passage);
             Thread.sleep(100000);
