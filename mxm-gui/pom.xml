@@ -9,16 +9,22 @@
         <groupId>com.musicexmachina</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
+    <name>MxM GUI</name>
     <artifactId>mxm-gui</artifactId>
     <packaging>jar</packaging>
-
-    <name>Impromptu</name>
+    <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>com.musicexmachina</groupId>
-            <artifactId>mxm-core</artifactId>
+            <artifactId>mxm-midi</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.nd4j</groupId>
+            <artifactId>nd4j-api</artifactId>
+            <version>0.7.2</version>
         </dependency>
     </dependencies>
 

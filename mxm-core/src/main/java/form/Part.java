@@ -1,8 +1,6 @@
 package form;
 
-import basic.Count;
-import rhythmTree.RhythmNode;
-import trainable.Instrument;
+import base.*;
 
 import java.util.Iterator;
 import java.util.TreeMap;
@@ -12,17 +10,12 @@ import java.util.TreeMap;
  */
 public class Part implements Iterable<Note> {
 
-    /** The rhythm that underlies this line. */
-    private Rhythm rhythm;
-
-    /** The contour that underlies this line. */
-    private Contour contour;
 
     /** The instrument that plays this line. */
     private Instrument instrument;
 
     /** The notes played in this line. */
-    private TreeMap<Count,Note> notes;
+    private TreeMap<Count, Note> notes;
 
     /**
      * The line constructor starts only with the instrument
@@ -30,52 +23,18 @@ public class Part implements Iterable<Note> {
      * @param instrument
      */
     public Part(Instrument instrument) {
-        this.rhythm = new Rhythm();
-        this.contour = new Contour();
         this.instrument = instrument;
         this.notes = new TreeMap<>();
     }
 
-    public void add(MidiMeasure midiMeasure) {
-        for(RhythmNode node : midiMeasure.getRhythmTree()) {
-            Note note = node.getNote();
-            if(note != null) {
-                /*
-                // If this is the wrong instrument for this note
-                if(note.getInstrument() != instrument) {
-                    throw new Error("LINE:\tWrong instrument!");
-                }
-                */
-                /*
-                // If this note starts before the last one ends
-                if(notes.floorEntry(note.getStart()) != null &&
-                        note.getStart().compareTo(notes.floorEntry(note.getStart()).getValue().getEnd()) < 0) {
-                    throw new Error("LINE:\tTrying to add a Note which overlaps the others!");
-                }
-                // If the next note starts befor this new note ends
-                if(notes.ceilingEntry(note.getStart()) != null &&
-                        note.getEnd().compareTo(notes.ceilingEntry(note.getStart()).getValue().getStart()) < 0) {
-                    throw new Error("LINE:\tTrying to add a Note which overlaps the others!");
-                }
-                */
-                notes.put(note.getStart(),note);
-            }
-        }
-        rhythm.add(midiMeasure);
+    public void add(Note note) {
+        notes.put(note.getStart(),note);
     }
 
     public Instrument getInstrument() { return instrument; }
 
-    public Rhythm getRhythm() {
-        return rhythm;
-    }
-
-    public Contour getContour() {
-        return contour;
-    }
-
     public float getLastTime() {
-        if(notes.size() > 0 ) {
+        if(notes.size() > 0) {
             return notes.firstKey().toFloat();
         }
         else {
@@ -89,11 +48,11 @@ public class Part implements Iterable<Note> {
      */
     @Override
     public String toString() {
-        String toReturn = instrument.toString();
+        String toReturn = instrument.toString() + "\n\t\t";
         for(Note note : this) {
             toReturn += note.toString() + " ";
         }
-        return toReturn;
+        return toReturn + "\n";
     }
 
     /**

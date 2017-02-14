@@ -1,28 +1,28 @@
 package form;
 
-import basic.Tempo;
-import basic.Count;
-import basic.TimeSignature;
+import base.Count;
+import base.Tempo;
+import base.TimeSignature;
 
 import java.util.*;
 
 /**
  * Passages are simply contemporaneous (or not) collections of
- * lines. They are this project's main way of transporting "music"
- * and the internal structures of the music. Note that a passage
+ * parts. They are this project's main way of transporting "music"
+ * and the internal structures of the music. form.Note that a passage
  * is unified by its temporal nature- time signatures, tempos, and
  * the like.
  */
 public class Passage implements Iterable<Part> {
 
     /** Time signature (changes) throughout this passage. */
-    private NavigableMap<Integer,TimeSignature> timeSigs;
+    private NavigableMap<Integer, TimeSignature> timeSigs;
 
-    /** Tempo (changes) throughout this passage. */
-    private NavigableMap<Count,Tempo> tempi;
+    /** base.Tempo (changes) throughout this passage. */
+    private NavigableMap<Count, Tempo> tempi;
 
-    /** All lines being played in this passage. */
-    private List<Part> lines;
+    /** All parts being played in this passage. */
+    private List<Part> parts;
 
     /**
      * The passage constructor, which takes no input and
@@ -31,22 +31,22 @@ public class Passage implements Iterable<Part> {
     public Passage() {
         this.timeSigs = new TreeMap<>();
         this.tempi = new TreeMap<>();
-        this.lines = new ArrayList<>();
+        this.parts = new ArrayList<>();
     }
 
     /**
      * Adds a time signature (change) to the passage at a
      * given measure, or throws an error, if that measure
      * already has a time signature change.
-     * @param timeSignature The TimeSignature to add to this Passage.
-     * @param measure The time at which to add this TimeSignature.
+     * @param timeSignature The base.TimeSignature to add to this form.Passage.
+     * @param measure The time at which to add this base.TimeSignature.
      */
-    public void addTimeSignature(TimeSignature timeSignature,Integer measure) {
+    public void addTimeSignature(TimeSignature timeSignature,int measure) {
         if(!timeSigs.containsKey(measure)) {
             timeSigs.put(measure,timeSignature);
         }
         else {
-            throw new Error("PASSAGE:\tTrying to add a time signature change on top of another one!");
+            //throw new Error("PASSAGE:\tTrying to add a time signature change on top of another one!");
         }
     }
 
@@ -66,16 +66,16 @@ public class Passage implements Iterable<Part> {
     }
 
     /**
-     * Adds a line to this passage, or throws an error
+     * Adds a part to this passage, or throws an error
      * if it is already included.
-     * @param line The line to add to this passage.
+     * @param part The part to add to this passage.
      */
-    public void add(Part line) {
-        if(!lines.contains(line)) {
-            lines.add(line);
+    public void add(Part part) {
+        if(!parts.contains(part)) {
+            parts.add(part);
         }
         else {
-            throw new Error("PASSAGE:\tTrying to add a redundant line to this passage!");
+            throw new Error("PASSAGE:\tTrying to add a redundant part to this passage!");
         }
     }
 
@@ -97,25 +97,33 @@ public class Passage implements Iterable<Part> {
         return tempi.floorEntry(time).getValue();
     }
 
+    public Iterator<Integer> timeSignatureIterator() {
+        return timeSigs.keySet().iterator();
+    }
+
+    public Iterator<Count> tempoChangeIterator() {
+        return tempi.keySet().iterator();
+    }
+
     /**
      * Returns a nicely-formatted string representing this passage.
      * @return A string representing this passage.
      */
     @Override
     public String toString() {
-        String toReturn = "";
-        for(Part line : this) {
-            toReturn += "Part : " + line.toString() + "\n";
+        String toReturn = "form.Passage :\n";
+        for(Part part : this) {
+            toReturn += "\tform.Part : \n" + part.toString();
         }
         return toReturn;
     }
 
     /**
-     * Returns an iterator over all lines in this passage.
-     * @return An iterator over all lines in this passage.
+     * Returns an iterator over all parts in this passage.
+     * @return An iterator over all parts in this passage.
      */
     @Override
     public Iterator<Part> iterator() {
-        return lines.iterator();
+        return parts.iterator();
     }
 }

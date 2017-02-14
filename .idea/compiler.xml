@@ -15,9 +15,9 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="MxM" target="1.7" />
-      <module name="mxm" target="1.5" />
+      <module name="mxm" target="1.7" />
       <module name="mxm-core" target="1.7" />
-      <module name="mxm-gui" target="1.5" />
+      <module name="mxm-gui" target="1.7" />
       <module name="mxm-learning" target="1.7" />
       <module name="mxm-midi" target="1.7" />
     </bytecodeTargetLevel>

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>MxM: tools.MidiTools Class Reference</title>
+<title>MxM: MidiTools Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -84,7 +84,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>io</b></li><li class="navelem"><a class="el" href="classio_1_1_midi_tools.html">tools.MidiTools</a></li>  </ul>
+<li class="navelem"><b>io</b></li><li class="navelem"><a class="el" href="classio_1_1_midi_tools.html">MidiTools</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -92,7 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classio_1_1_midi_tools-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">tools.MidiTools Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">MidiTools Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -106,9 +106,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:ab3b413fb3f7f796e0c40f1065d9dbe98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a005ae461c90faa197c28ee796bdb437f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1_midi_tools.html#a005ae461c90faa197c28ee796bdb437f">save</a> (Sequence sequence, String fileName)  throws IOException </td></tr>
 <tr class="separator:a005ae461c90faa197c28ee796bdb437f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76a79d432b6ac7e7e293629925c28cb4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classmodel_1_1form_1_1_passage.html">Passage</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1_midi_tools.html#a76a79d432b6ac7e7e293629925c28cb4">parse</a> (Sequence sequence)</td></tr>
+<tr class="memitem:a76a79d432b6ac7e7e293629925c28cb4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classmodel_1_1form_1_1_passage.html">form.Passage</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1_midi_tools.html#a76a79d432b6ac7e7e293629925c28cb4">parse</a> (Sequence sequence)</td></tr>
 <tr class="separator:a76a79d432b6ac7e7e293629925c28cb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7bb935cd1f46be52a34a5e32bc7f1a0"><td class="memItemLeft" align="right" valign="top">static Sequence&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1_midi_tools.html#ae7bb935cd1f46be52a34a5e32bc7f1a0">write</a> (<a class="el" href="classmodel_1_1form_1_1_passage.html">Passage</a> passage)</td></tr>
+<tr class="memitem:ae7bb935cd1f46be52a34a5e32bc7f1a0"><td class="memItemLeft" align="right" valign="top">static Sequence&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1_midi_tools.html#ae7bb935cd1f46be52a34a5e32bc7f1a0">write</a> (<a class="el" href="classmodel_1_1form_1_1_passage.html">form.Passage</a> passage)</td></tr>
 <tr class="separator:ae7bb935cd1f46be52a34a5e32bc7f1a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a7b8cc1e005b9b52159d419ef24f635"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1_midi_tools.html#a1a7b8cc1e005b9b52159d419ef24f635">play</a> (Sequence sequence)  throws MidiUnavailableException, InvalidMidiDataException </td></tr>
 <tr class="separator:a1a7b8cc1e005b9b52159d419ef24f635"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -198,7 +198,7 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="classmodel_1_1form_1_1_passage.html">Passage</a> parse </td>
+          <td class="memname">static <a class="el" href="classmodel_1_1form_1_1_passage.html">form.Passage</a> parse </td>
           <td>(</td>
           <td class="paramtype">Sequence&#160;</td>
           <td class="paramname"><em>sequence</em></td><td>)</td>
@@ -211,7 +211,7 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Takes in a midi Sequence and writes a Passage. The Passage may then be parsed in a number of ways, including forming RhythmTrees, etc. as Passages carry <em>more</em> useful musical information than Sequences alone. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Takes in a midi Sequence and writes a form.Passage. The form.Passage may then be parsed in a number of ways, including forming RhythmTrees, etc. as Passages carry <em>more</em> useful musical information than Sequences alone. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">sequence</td><td></td></tr>
   </table>
@@ -313,7 +313,7 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Saves a given midi sequence to a file. Note that this may need some fine tuning for each of the three midi file types. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Saves a given midi sequence to a file. form.Note that this may need some fine tuning for each of the three midi file types. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">sequence</td><td>The midi Sequence to write to a file. </td></tr>
     <tr><td class="paramname">fileName</td><td>The filename of the file we want. </td></tr>
@@ -339,7 +339,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">static Sequence write </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmodel_1_1form_1_1_passage.html">Passage</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classmodel_1_1form_1_1_passage.html">form.Passage</a>&#160;</td>
           <td class="paramname"><em>passage</em></td><td>)</td>
           <td></td>
         </tr>
@@ -350,18 +350,18 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Takes in a Passage and writes a midi Sequence from it. The Sequence can then be played using <a class="el" href="classio_1_1_midi_tools.html#a1a7b8cc1e005b9b52159d419ef24f635">tools.MidiTools.play()</a> or saved to a midi file using <a class="el" href="classio_1_1_midi_tools.html#a005ae461c90faa197c28ee796bdb437f">tools.MidiTools.save()</a> </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Takes in a form.Passage and writes a midi Sequence from it. The Sequence can then be played using <a class="el" href="classio_1_1_midi_tools.html#a1a7b8cc1e005b9b52159d419ef24f635">MidiTools.play()</a> or saved to a midi file using <a class="el" href="classio_1_1_midi_tools.html#a005ae461c90faa197c28ee796bdb437f">MidiTools.save()</a> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">passage</td><td>The Passage to make into a Sequence. </td></tr>
+    <tr><td class="paramname">passage</td><td>The form.Passage to make into a Sequence. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The created <a class="el" href="classio_1_1_midi_tools.html">tools.MidiTools</a> Sequence. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The created <a class="el" href="classio_1_1_midi_tools.html">MidiTools</a> Sequence. </dd></dl>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/Aaron/Desktop/MxM/mxm-main/src/main/java/io/tools.MidiTools.java</li>
+<li>C:/Users/Aaron/Desktop/MxM/mxm-main/src/main/java/io/MidiTools.java</li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.11-->
