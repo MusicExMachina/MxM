@@ -63,7 +63,7 @@ public class Writer
 
                     String startStr = startNumStr + "/ " + startDenomStr;
                     String endStr = endNumStr + "/ " + endDenomStr;
-                    String pitchStr = padRight(String.valueOf(note.getEnd().getDenominator()),5);
+                    String pitchStr = padRight(String.valueOf(note.getPitch().getValue()),5);
 
                     writer.println("          " + startStr + "    " + endStr + "    " +  pitchStr);
                 }
