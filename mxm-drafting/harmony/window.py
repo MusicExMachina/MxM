@@ -16,7 +16,19 @@ class Window:
 		self.time_end = time_end
 		self.importance = {}
 		self.create_importance_dict()
+		self.pimportance = {}
+		self.window_multipliers = {}
 
 	def create_importance_dict(self):
 		for note in self.notes:
 			self.importance[note] = note.get_importance()
+
+	def calculate_window_multipliers(self):
+		for n in self.importance:
+			self.window_multipliers[n] = 1 #NONE
+
+	def get_pitch_importance(self):
+		self.calculate_window_multipliers()
+		map(lambda p: self.pimportance[p] = 0, range(0,11)) #for 11 pitch classes
+		map(lambda x: self.pimportance[x.pitch] += self.importance[x] * self.window_multiplier[x], self.importance)
+		
