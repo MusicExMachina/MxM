@@ -1,4 +1,4 @@
-!/bin/sh
+#!/bin/sh
 
 echo "Beginning documentation generation"
 
