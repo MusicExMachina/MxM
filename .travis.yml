@@ -4,28 +4,7 @@ cache:
   directories:
   - $HOME/.m2
 
-# Environment variables
-env:
-  global:
-    - GH_REPO_NAME: MxM
-#    - DOXYFILE: $TRAVIS_BUILD_DIR/doxygen/Doxyfile>
-    - GH_REPO_REF: github.com/MusicExMachina/MxM.git
-
-# Install dependencies
-#addons:
-#  apt:
-#    packages:
-#      - doxygen
-#      - doxygen-doc
-#      - doxygen-latex
-#      - doxygen-gui
-#      - graphviz
-
-# Build your code e.g. by calling make
-script:
-  - make
-
-# after_sucess:
-  # - cd $TRAVIS_BUILD_DIR
-  # - chmod +x docsDeploy.sh
-  # - ./docsDeploy.sh
+after_sucess:
+  - cd $TRAVIS_BUILD_DIR
+  - chmod +x docsDeploy.sh
+  - ./docsDeploy.sh
