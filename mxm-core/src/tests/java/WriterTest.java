@@ -1,8 +1,5 @@
 import org.junit.Test;
 
-/**
- * Created by celenp on 2/8/2017.
- */
 public class WriterTest {
 
     @Test
