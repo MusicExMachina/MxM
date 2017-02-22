@@ -43,7 +43,7 @@ public class MidiTest {
             //MidiTools.play(sequence1);
             MidiTools.play(sequence2);
             System.out.print("D");
-            Thread.sleep(100000);
+            //Thread.sleep(100000);
         } catch (Exception e) {
             e.printStackTrace();
         }
