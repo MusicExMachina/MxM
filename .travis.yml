@@ -25,7 +25,7 @@ addons:
 script:
   - make
 
-after_sucess:
-  - cd $TRAVIS_BUILD_DIR
-  - chmod +x docsDeploy.sh
-  - ./docsDeploy.sh
+# after_sucess:
+  # - cd $TRAVIS_BUILD_DIR
+  # - chmod +x docsDeploy.sh
+  # - ./docsDeploy.sh
