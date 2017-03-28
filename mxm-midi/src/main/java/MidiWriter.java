@@ -25,47 +25,18 @@ class MidiWriter {
     public Sequence run(Passage passage) {
         try {
             this.passage = passage;
-            sequence = new Sequence(javax.sound.midi.Sequence.PPQ,24);
+            this.sequence = new Sequence(javax.sound.midi.Sequence.PPQ,24);
+
+            // Create and initialize the control track (for tempi and time signatures)
             Track controlTrack = sequence.createTrack();
+            initTrack(controlTrack);
 
-            //****  General MIDI sysex -- turn on General MIDI sound set  ****
-            byte[] b = {(byte)0xF0, 0x7E, 0x7F, 0x09, 0x01, (byte)0xF7};
-            SysexMessage sm = new SysexMessage();
-            sm.setMessage(b, 6);
-            MidiEvent me = new MidiEvent(sm,(long)0);
-            controlTrack.add(me);
-
-            //****  set track name (meta event)  ****
-            MetaMessage mt = new MetaMessage();
-            String TrackName = "Control Track";
-            mt.setMessage(0x03 ,TrackName.getBytes(), TrackName.length());
-            me = new MidiEvent(mt,(long)0);
-            controlTrack.add(me);
-
-            //****  set omni on  ****
-            ShortMessage mm = new ShortMessage();
-            mm.setMessage(0xB0, 0x7D,0x00);
-            me = new MidiEvent(mm,(long)0);
-            controlTrack.add(me);
-
-            //****  set poly on  ****
-            mm = new ShortMessage();
-            mm.setMessage(0xB0, 0x7F,0x00);
-            me = new MidiEvent(mm,(long)0);
-            controlTrack.add(me);
-
-            //****  set instrument to Piano  ****
-            mm = new ShortMessage();
-            mm.setMessage(0xC0, 0x00, 0x00);
-            me = new MidiEvent(mm,(long)0);
-            controlTrack.add(me);
-
+            // Add all of the timeSignature changes
             Iterator<Integer> timeSigItr = passage.timeSignatureIterator();
             while(timeSigItr.hasNext()) {
                 Count time = new Count(timeSigItr.next());
                 Tempo tempo = passage.getTempoAt(time);
                 int ppqn = 60000000 * tempo.getBPM();
-
 
                 byte[] data = message.getData();
                 int numerator   = data[0];
@@ -87,6 +58,7 @@ class MidiWriter {
                 controlTrack.add(me);
             }
 
+            // Add all of the tempo changes
             Iterator<Count> tempoItr = passage.tempoChangeIterator();
             while(tempoItr.hasNext()) {
                 Count time = tempoItr.next();
@@ -101,7 +73,7 @@ class MidiWriter {
                 controlTrack.add(me);
             }
 
-
+            // For every part in the passage, create a 
             int trackNumber = 0;
             for(Part line : passage) {
                 Track track = sequence.createTrack();
@@ -160,10 +132,45 @@ class MidiWriter {
         return sequence;
     }
 
+    private void initTrack(Track track) throws InvalidMidiDataException {
+        //****  General MIDI sysex -- turn on General MIDI sound set  ****
+        byte[] b = {(byte)0xF0, 0x7E, 0x7F, 0x09, 0x01, (byte)0xF7};
+        SysexMessage sm = new SysexMessage();
+        sm.setMessage(b, 6);
+        MidiEvent me = new MidiEvent(sm,(long)0);
+        track.add(me);
+
+        //****  set track name (meta event)  ****
+        MetaMessage mt = new MetaMessage();
+        String TrackName = "Control Track";
+        mt.setMessage(0x03 ,TrackName.getBytes(), TrackName.length());
+        me = new MidiEvent(mt,(long)0);
+        track.add(me);
+
+        //****  set omni on  ****
+        ShortMessage mm = new ShortMessage();
+        mm.setMessage(0xB0, 0x7D,0x00);
+        me = new MidiEvent(mm,(long)0);
+        track.add(me);
+
+        //****  set poly on  ****
+        mm = new ShortMessage();
+        mm.setMessage(0xB0, 0x7F,0x00);
+        me = new MidiEvent(mm,(long)0);
+        track.add(me);
+
+        //****  set instrument to Piano  ****
+        mm = new ShortMessage();
+        mm.setMessage(0xC0, 0x00, 0x00);
+        me = new MidiEvent(mm,(long)0);
+        track.add(me);
+    }
+
     public static void main(String argv[]) throws IOException, InvalidMidiDataException, MidiUnavailableException {
         Sequence sequence = MidiTools.download("http://www.mfiles.co.uk/downloads/edvard-grieg-peer-gynt1-morning-mood.mid");
         Passage passage = MidiTools.parse(sequence);
         Sequence out = MidiTools.write(passage);
         MidiTools.play(out);
     }
+
 }
