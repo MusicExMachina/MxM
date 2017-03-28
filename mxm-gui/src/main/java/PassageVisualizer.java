@@ -18,7 +18,7 @@ public class PassageVisualizer extends JFrame {
     private Passage passage;
 
     public PassageVisualizer(Passage passage){
-        super("Rhythm Tree Visualizer");
+        super("Passage Visualizer");
 
         this.passage = passage;
 
@@ -74,6 +74,7 @@ public class PassageVisualizer extends JFrame {
             //Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/bach/lttlef.mid");
             //Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/bach/bwv159-4.mid");
             Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/dvorak/dvs93.mid");
+            //Sequence sequence = MidiTools.download("http://tedmuller.us/Piano/FlightOfTheBumblebee/FlightOfTheBumblebee.mid");
             Passage passage = MidiTools.parse(sequence);
             Writer.write(passage,"C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-gui\\src\\tests\\resources\\output");
             MidiTools.play(sequence);
