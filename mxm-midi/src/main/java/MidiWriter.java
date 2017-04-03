@@ -19,7 +19,7 @@ import java.util.Iterator;
  */
 class MidiWriter {
 
-    private Passage passage;
+    private Passage passage = null;
     private Sequence sequence = null;
 
     public Sequence run(Passage passage) {
@@ -73,57 +73,14 @@ class MidiWriter {
                 controlTrack.add(me);
             }
 
-            // For every part in the passage, create a 
-            int trackNumber = 0;
+            // For every part in the passage, create a track, and fill it with all the notes in that track
             for(Part line : passage) {
                 Track track = sequence.createTrack();
-                trackNumber++;
-
-                //****  set track name (meta event)  ****
-                mt = new MetaMessage();
-                TrackName = "Track #" + trackNumber;
-                mt.setMessage(0x03 ,TrackName.getBytes(), TrackName.length());
-                me = new MidiEvent(mt,(long)0);
-                track.add(me);
-
-                //****  set omni on  ****
-                mm = new ShortMessage();
-                mm.setMessage(0xB0, 0x7D,0x00);
-                me = new MidiEvent(mm,(long)0);
-                track.add(me);
-
-                //****  set poly on  ****
-                mm = new ShortMessage();
-                mm.setMessage(0xB0, 0x7F,0x00);
-                me = new MidiEvent(mm,(long)0);
-                track.add(me);
-
-                //****  set instrument to Piano  ****
-                mm = new ShortMessage();
-                mm.setMessage(0xC0, 0x00, 0x00);
-                me = new MidiEvent(mm,(long)0);
-                track.add(me);
-
+                initTrack(track);
                 for(Note note : line) {
-                    //****  note on - middle C  ****
-                    mm = new ShortMessage();
-                    mm.setMessage(0x90,(byte)note.getPitch().getValue(),0x60);
-                    me = new MidiEvent(mm,(long)note.getStart().toFloat()*100);
-                    track.add(me);
-
-                    //****  note off - middle C - 120 ticks later  ****
-                    mm = new ShortMessage();
-                    mm.setMessage(0x80,(byte)note.getPitch().getValue(),0x40);
-                    me = new MidiEvent(mm,(long)note.getEnd().toFloat()*100);
-                    track.add(me);
+                    addNote(note, track);
                 }
-
-                //****  set end of track (meta event) 19 ticks later  ****
-                mt = new MetaMessage();
-                byte[] bet = {}; // empty array
-                mt.setMessage(0x2F,bet,0);
-                me = new MidiEvent(mt, (long)100000); // TEMPORARY
-                track.add(me);
+                endTrack(track);
             }
         }
         catch (InvalidMidiDataException e) {
@@ -163,6 +120,30 @@ class MidiWriter {
         mm = new ShortMessage();
         mm.setMessage(0xC0, 0x00, 0x00);
         me = new MidiEvent(mm,(long)0);
+        track.add(me);
+    }
+
+    private void addNote(Note note, Track track) throws InvalidMidiDataException {
+
+        //****  note on - middle C  ****
+        ShortMessage mm = new ShortMessage();
+        mm.setMessage(0x90,(byte)note.getPitch().getValue(),0x60);
+        MidiEvent me = new MidiEvent(mm,(long)note.getStart().toFloat()*100);
+        track.add(me);
+
+        //****  note off - middle C - 120 ticks later  ****
+        mm = new ShortMessage();
+        mm.setMessage(0x80,(byte)note.getPitch().getValue(),0x40);
+        me = new MidiEvent(mm,(long)note.getEnd().toFloat()*100);
+        track.add(me);
+    }
+
+    private void endTrack(Track track) throws InvalidMidiDataException {
+        //****  set end of track (meta event) 19 ticks later  ****
+        MetaMessage mt = new MetaMessage();
+        byte[] bet = {}; // empty array
+        mt.setMessage(0x2F,bet,0);
+        MidiEvent me = new MidiEvent(mt, (long)100000); // TEMPORARY
         track.add(me);
     }
 
