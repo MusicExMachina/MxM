@@ -99,28 +99,26 @@ class MidiReader {
      */
     private void parseAll() {
 
-        timeSigsLong = new TreeMap<>();
-        tempiLong = new TreeMap<>();
-
-        noteOnsLong = new HashMap<>();
-        noteOffsLong = new HashMap<>();
+        // Create all of the long (tick)-based timelines
+        timeSigsLong   = new TreeMap<>();
+        tempiLong      = new TreeMap<>();
+        noteOnsLong    = new HashMap<>();
+        noteOffsLong   = new HashMap<>();
         instChangeLong = new HashMap<>();
 
         // For every MidiTools track
         for (Track track : sequence.getTracks()) {
-            // TODO: Add the track to "tracks"
-
             // Create note ons and note offs for each track
             noteOnsLong.put(track,new TreeMap<Long, TreeSet<Pitch>>());
             noteOffsLong.put(track,new TreeMap<Pitch, TreeSet<Long>>());
             instChangeLong.put(track,new TreeMap<Long, Instrument>());
 
             // Set the initial instrument of this track (it may change)
-            // form.Note that -1 here just means anything else will override it
+            // Note that "-1" here just means anything else will override it
             //TreeMap<Long,base.Instrument> init = new TreeMap<>();
             //init.put(-1L,base.Instrument.DEFAULT);
             //instChangeLong.put(track,init);
-            // TODO: base.Instrument change stuff
+            // TODO: Instrument change stuff
 
             // For every MidiTools event
             for (int i = 0; i < track.size(); i++) {
@@ -129,21 +127,15 @@ class MidiReader {
                 MidiMessage message = event.getMessage();
                 Long tick           = event.getTick();
 
-                if (message instanceof ShortMessage) {
-                    // Cast it to a MidiTools short message and parse
+                // Parse the message based on what type of message it is
+                if (message instanceof ShortMessage)
                     parseShortMessage(track, event,(ShortMessage)message,tick);
-                }
-                else if (message instanceof MetaMessage) {
-                    // Cast it to a MidiTools short message and parse
+                else if (message instanceof MetaMessage)
                     parseMetaMessage(track, event,(MetaMessage)message,tick);
-                }
-                else if (message instanceof SysexMessage) {
-                    // Cast it to a MidiTools short message and parse
+                else if (message instanceof SysexMessage)
                     parseSysexMessage(track, event,(SysexMessage)message,tick);
-                }
-                else {
+                else
                     System.out.println("MIDI:\tUnrecognized type of MIDI message!");
-                }
             }
         }
     }
