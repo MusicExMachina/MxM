@@ -13,7 +13,7 @@ public class Writer
     public static void write(Passage passage, String filename) {
         try {
 
-            PrintWriter writer = new PrintWriter("output.mxm", "UTF-8");
+            PrintWriter writer = new PrintWriter(filename + ".mxm", "UTF-8");
 
             writer.println("> Passage");
             writer.println("  - Title");
