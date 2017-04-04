@@ -74,7 +74,7 @@ class MidiWriter {
                     case 2:     cc = 1;     break;
                     case 4:     cc = 2;     break;
                     case 8:     cc = 3;     break;
-                    case 16:     cc = 4;     break;
+                    case 16:    cc = 4;     break;
                 }
 
                 mt = new MetaMessage();
