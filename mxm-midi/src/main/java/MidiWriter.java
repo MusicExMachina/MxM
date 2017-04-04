@@ -20,14 +20,22 @@ import java.util.TreeMap;
  */
 class MidiWriter {
 
+    /* The "resolution," i.e. the number of ticks per measure. */
     private static int resolution = 24;
+
+    /* The passage that we're reading from. */
     private Passage passage = null;
+
+    /* The sequence that we're writing to. */
     private Sequence sequence = null;
 
+    /* A series of floats mapped to Longs representing different measures' start times in ticks. */
     private TreeMap<Float,Long> timePoints;
 
+    // Writes the information contained in a passage down to a sequence
     public Sequence run(Passage passage) {
         try {
+            // Initialize our variables
             this.passage = passage;
             this.sequence = new Sequence(javax.sound.midi.Sequence.PPQ,resolution);
             this.timePoints = new TreeMap<>();
@@ -35,15 +43,15 @@ class MidiWriter {
             // Put a starting point in
             timePoints.put(0f,(long)0);
 
+            // Constantly reused variables
+            MetaMessage mt;
+            MidiEvent me;
+
             // Create and initialize the control track (for tempi and time signatures)
             Track controlTrack = sequence.createTrack();
             initTrack(controlTrack);
 
-            MetaMessage mt;
-            MidiEvent me;
-
-            // Set the default time sig
-
+            // Set the default time signature... should be removed
             mt = new MetaMessage();
             byte[] bt = {0x04, 0x04, (byte)resolution, (byte)8}; // Should work... should.
             mt.setMessage(0x58 ,bt, 3);
@@ -51,22 +59,25 @@ class MidiWriter {
             controlTrack.add(me);
 
 
+            // The measure that the time signature last changed
             int lastTimeSigChange = 0;
-            // Add all of the timeSignature changes
+            // The size of those measures in ticks
+            long lastMeasureSize = 0;
+
+            // The iterator over all the passage's time signatures
             Iterator<Integer> timeSigItr = passage.timeSignatureIterator();
+
+            // Add all of the timeSignature changes
             while(timeSigItr.hasNext()) {
-                int measure = timeSigItr.next();
-                Count count = new Count(measure);
-                TimeSignature timeSignature = passage.getTimeSignatureAt(count);
+                int curMeasure = timeSigItr.next();
+                int measuresPassed = curMeasure - lastTimeSigChange;
 
-                long ticksPassed = timePoints.lastEntry().getValue();
-                //timePoints.put((float)measure,(long)(measure-lastTimeSigChange)*resolution*timeSignature.getNumerator()/timeSignature.getDenominator()*4));
+                TimeSignature timeSignature = passage.getTimeSignatureAt(new Count(curMeasure));
 
-                lastTimeSigChange = measure;
-                timePoints.put(0f,(long)0);
+                long newTimePoint = timePoints.lastEntry().getValue() + measuresPassed * lastMeasureSize;
 
-                System.out.println("Time sig set to " + timeSignature + " at " + count);
-                // Set time sig
+                timePoints.put((float)curMeasure,newTimePoint);
+                System.out.println(curMeasure + "  " + newTimePoint + "  " + timeSignature);
 
                 int cc = 1;
                 switch(timeSignature.getDenominator()) {
@@ -77,12 +88,19 @@ class MidiWriter {
                     case 16:    cc = 4;     break;
                 }
 
+                // Create a time signature change event
                 mt = new MetaMessage();
-                byte[] bytes = {(byte)timeSignature.getNumerator(), (byte)cc, (byte)resolution, (byte)8}; // Should work... should.
+                byte[] bytes = {(byte)timeSignature.getNumerator(), (byte)cc, (byte)resolution, (byte)8};
                 mt.setMessage(0x58 ,bytes, 3);
-                me = new MidiEvent(mt,(long)(resolution *count.toFloat()));
+                me = new MidiEvent(mt,newTimePoint);
                 controlTrack.add(me);
+
+                lastMeasureSize = resolution*timeSignature.getNumerator()/timeSignature.getDenominator();
+                lastTimeSigChange = curMeasure;
             }
+
+            // Create a time point waaaaaaay after the end of the piece to ensure our interpolator can work
+            timePoints.put((float)lastTimeSigChange+10000,timePoints.lastEntry().getValue()+lastMeasureSize*10000);
 
             // Add all of the tempo changes
             Iterator<Count> tempoItr = passage.tempoChangeIterator();
@@ -95,7 +113,7 @@ class MidiWriter {
                 mt = new MetaMessage();
                 byte[] bytes = {(byte)(ppqn >> 16), (byte)(ppqn >> 8), (byte)(ppqn >> 0)}; // Should work... should.
                 mt.setMessage(0x51, bytes, 3);
-                me = new MidiEvent(mt,(long)(resolution *time.toFloat()));
+                me = new MidiEvent(mt,interpolate(time.toFloat()));
                 controlTrack.add(me);
             }
 
@@ -162,8 +180,8 @@ class MidiWriter {
         ShortMessage off = new ShortMessage();
         on.setMessage(ShortMessage.NOTE_ON, 0, note.getPitch().getValue(), 60);
         off.setMessage(ShortMessage.NOTE_OFF, 0, note.getPitch().getValue(), 0);
-        track.add(new MidiEvent(on, (long)(resolution * note.getStart().toFloat())));
-        track.add(new MidiEvent(off, (long)(resolution * note.getEnd().toFloat())));
+        track.add(new MidiEvent(on, interpolate(note.getStart().toFloat())));
+        track.add(new MidiEvent(off, interpolate(note.getEnd().toFloat())));
     }
 
     private void endTrack(Track track) throws InvalidMidiDataException {
