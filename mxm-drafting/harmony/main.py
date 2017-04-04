@@ -1,5 +1,7 @@
-import sklearn
-from note import Note
+import sklearn.cluster as cls
+from wscheduler import WindowScheduler
+from passage_parser import PassageParser
+import sys
 from passage import Passage
 from window import Window
 
@@ -8,7 +10,7 @@ from window import Window
 p = Passage()
 
 ###PARSE PASSAGE###
-with Parser(sys.argv[1]) as parser:
+with PassageParser(sys.argv[1]) as parser:
 	p = parser.createPassage()
 
 oneBeatWindows = {}
@@ -23,19 +25,19 @@ for t in range(p.start*4, p.end*4):
 
 
 #create windows of length half measure
-for t in range(p.start*2, p.end*2):
-        twoBeatWindows[t] = Window(p, float(t)/2.0, float(t+1)/2.0)
+for t in range(p.start*4, p.end*4):
+	twoBeatWindows[t] = Window(p, float(t)/4.0, float(t+2)/4.0)
 
 
 #create windows of length full measure
-for t in range(p.start, p.end):
-        fourBeatWindows[t] = Window(p, float(t), float(t+1))
+for t in range(p.start*4, p.end*4):
+	fourBeatWindows[t] = Window(p, float(t)/4.0, float(t+4)/4.0)
 
 
 #get coherent windows
-w = WindowScheduler([].extend(oneBeatWindows).extend(twoBeatWindows).extend(fourbeatWindows))
+w = WindowScheduler([].extend(oneBeatWindows).extend(twoBeatWindows).extend(fourBeatWindows))
 
-coherentWindows = w.scheduleWindows()
+coherentWindows = w.select_windows()
 
 
 #create matrix of windows/feature extraction
@@ -51,8 +53,12 @@ for c in coherentWindows:
 
 #run k-means
 
-clusters = sklearn.kmeans(windowMatrix, 24)
 
+clusters = cls.k_means(coherentWindows, 12)
+
+#TODO: Outlier analysis - strip harmonies that are barely used get core harmonies (maybe)
+
+#TODO: Cross-Validation (LOOCV) & Model Selection to choose cluster number: (max 24) is probably too large
 
 #show clusters (PCA or something)
 
