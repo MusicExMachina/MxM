@@ -11,7 +11,7 @@ p = Passage()
 
 ###PARSE PASSAGE###
 with PassageParser(sys.argv[1]) as parser:
-	p = parser.createPassage()
+	p = parser.read()
 
 oneBeatWindows = {}
 twoBeatWindows = {}
