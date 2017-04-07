@@ -5,7 +5,10 @@ from note import Note
 class PassageParser:
 	"""
 	Parse a passage from a .mxm file
+<<<<<<< HEAD
 	test edit
+=======
+>>>>>>> b800c3fd17f3129b271eb00dc137d71397376e2f
 	"""
 
 	def __init__(self, f):
