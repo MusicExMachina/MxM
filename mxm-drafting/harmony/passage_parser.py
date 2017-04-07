@@ -5,6 +5,7 @@ from note import Note
 class PassageParser:
 	"""
 	Parse a passage from a .mxm file
+	test edit
 	"""
 
 	def __init__(self, f):
