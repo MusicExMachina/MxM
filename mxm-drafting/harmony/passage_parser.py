@@ -1,5 +1,5 @@
-from harmony.passage import Passage
-from harmony.note import Note
+from passage import Passage
+from note import Note
 
 
 class PassageParser:
