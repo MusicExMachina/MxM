@@ -4,6 +4,7 @@ def var(data):
 	:param data: a list of floats
 	:return:
 	"""
+	#print data
 	m = float(sum(data)) / float(len(data))
 	return sum(map(lambda d: (d - m) ** 2, data)) / len(data)
 
@@ -34,6 +35,9 @@ class WindowScheduler():
 				self.owindows[2].append(self.windows[i])
 			elif lens[i] == .25:
 				self.owindows[1].append(self.windows[i])
+		print len(self.owindows[1])
+		print len(self.owindows[2])
+		print len(self.owindows[4])
 
 	def calc_window_info(self):
 		"""
@@ -62,20 +66,26 @@ class WindowScheduler():
 		OPT(i) = max{OPT(i-1) + var(a_(i-1)), OPT(i-2) + var(b_(i-2))*2, OPT(i-4) + var(c_(i-1))*4}
 		"""
 
-		opt = [0 for i in range(self.start, self.end)]
+		opt = [0 for i in range(int(self.start*4), int(self.end*4))]
+		#print len(opt)
 		windowSet = [[] for i in range(len(opt))]
 		for i in range(1, len(opt)):
-			options = []
-			woptions = []
+			#print i
+			options = [0,0,0,0,0]
+			woptions = {1:[], 2:[], 4:[]}
 			if i >= 1:
-				options.append(opt[i - 1] + maximize(self.owindows[1][i - 1]))
-				woptions.extend(windowSet[i-1]).append(self.owindows[i])
+				options[1] = opt[i - 1] + maximize(map(lambda x: x.pitch, self.owindows[1][i - 1].notes))
+				woptions[1].extend(windowSet[i-1])
+				woptions[1].append(self.owindows[1][i])
 			if i >= 2:
-				options.append(opt[i - 2] + maximize(self.owindows[1][i / 2.0 - 1]))
-				woptions.extend(windowSet[i-2]).append(self.owindows[i/2.0])
+				options[2] = opt[i - 2] + maximize(map(lambda x: x.pitch, self.owindows[2][i - 2].notes))
+				woptions[2].extend(windowSet[i-2])
+				woptions[2].append(self.owindows[2][i-2])
 			if i >= 4:
-				options.append(opt[i - 4] + maximize(self.owindows[1][i / 4.0 - 1]))
-				woptions.extend(windowSet[i-2]).append(self.owindows[i/4.0])
-
-			windowSet[i] = woptions.index(max(options))
+				options[4] = opt[i - 4] + maximize(map(lambda x: x.pitch, self.owindows[4][i - 4].notes))
+				woptions[4].extend(windowSet[i-4])
+				woptions[4].append(self.owindows[4][i-4])
+			opt[i] = max(options)
+			windowSet[i] = woptions[options.index(max(options))]
+			#print windowSet
 		return windowSet[-1]

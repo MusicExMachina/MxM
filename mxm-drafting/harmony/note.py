@@ -1,5 +1,5 @@
 def importanceFuncSimple(l, s):
-	return l*s
+	return l
 
 class Note:
 
