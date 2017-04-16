@@ -7,9 +7,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 
-
+/**
+ * Writer allows Passages to be written into .mxm files, an internal format
+ * which stores all the information of a passage in a human-readable text
+ * file, formatted such that it can be read again by the Reader class.
+ */
 public class Writer
 {
+    /**
+     * Write takes a Passage and writes it to a file of the given name.
+     * @param passage The Passage to write to a .mxm file
+     * @param filename The name of the file (before .mxm is added)
+     */
     public static void write(Passage passage, String filename) {
         try {
 
@@ -73,6 +82,15 @@ public class Writer
             // do something
         }
     }
+
+    /**
+     * Takes string and pads it with spaces to ensure it is at least a
+     * given length, with the text occupying the left portion of the
+     * returned string.
+     * @param string The String to pad
+     * @param size The number of characters total
+     * @return The resultant String
+     */
     private static String padRight(String string, int size) {
         String toReturn = string;
         while(toReturn.length() < size) {
@@ -80,6 +98,15 @@ public class Writer
         }
         return toReturn;
     }
+
+    /**
+     * Takes string and pads it with spaces to ensure it is at least a
+     * given length, with the text occupying the right portion of the
+     * returned string.
+     * @param string The String to pad
+     * @param size The number of characters total
+     * @return The resultant String
+     */
     private static String padLeft(String string, int size) {
         String toReturn = string;
         while(toReturn.length() < size) {
