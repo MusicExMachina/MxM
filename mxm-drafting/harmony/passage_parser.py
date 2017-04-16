@@ -53,11 +53,12 @@ class PassageParser:
 	def create_passage(self):
 		passage = Passage()
 		line = self.read()
-		while line != None:
+		while line is not None:
 			nst = float(line.split()[0])/float(line.split()[2])
 			nend = float(line.split()[3])/float(line.split()[5])
 			passage.add_notes(Note(line.split()[6]%12, nst, nend - nst))
 			line = self.read()
+		return passage
 
 
 """
