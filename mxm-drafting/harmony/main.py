@@ -7,35 +7,38 @@ from window import Window
 
 
 
-p = Passage()
+p = None
 
 ###PARSE PASSAGE###
 with PassageParser(sys.argv[1]) as parser:
-	p = parser.read()
+	p = parser.create_passage()
 
-oneBeatWindows = {}
-twoBeatWindows = {}
-fourBeatWindows = {}
+oneBeatWindows = []
+twoBeatWindows = []
+fourBeatWindows = []
 
 ###ASSUMING 4/4 (C) MEASURES###
 
 #create windows of length one beat
-for t in range(p.start*4, p.end*4):
-	oneBeatWindows[t] = Window(p, float(t)/4.0, float(t+1)/4.0)
+for t in range(p.start * 4, p.end * 4):
+	oneBeatWindows.append(Window(p, float(t)/4.0, float(t+1)/4.0))
 
 
 #create windows of length half measure
-for t in range(p.start*4, p.end*4):
-	twoBeatWindows[t] = Window(p, float(t)/4.0, float(t+2)/4.0)
+for t in range(p.start * 4, p.end * 4):
+	twoBeatWindows.append(Window(p, float(t)/4.0, float(t+2)/4.0))
 
 
 #create windows of length full measure
 for t in range(p.start*4, p.end*4):
-	fourBeatWindows[t] = Window(p, float(t)/4.0, float(t+4)/4.0)
+	fourBeatWindows.append(Window(p, float(t)/4.0, float(t+4)/4.0))
 
 
 #get coherent windows
-w = WindowScheduler([].extend(oneBeatWindows).extend(twoBeatWindows).extend(fourBeatWindows))
+wins = oneBeatWindows
+wins.extend(twoBeatWindows)
+wins.extend(fourBeatWindows)
+w = WindowScheduler(wins)
 
 coherentWindows = w.select_windows()
 

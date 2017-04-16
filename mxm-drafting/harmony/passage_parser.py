@@ -30,14 +30,17 @@ class PassageParser:
 		self.fd.readline() #"> Time Signatures"
 		#GET TIME SIG HERE
 		line = self.fd.readline().lstrip()
-		while line[0] != ">":
+		while line is not '':
 			line = self.fd.readline().lstrip()
+			#print line is None
+			#print "st", repr(line), "end"
 
 		#GET TEMPOs HERE
 		line = self.fd.readline().lstrip()
-		while line[0] != ">":
+		while line is not '':
 			line = self.fd.readline().lstrip()
-		return self.fd
+		self.fd.readline()
+		return self
 
 	def __exit__(self, type, value, traceback):
 		self.fd.close()
@@ -46,18 +49,23 @@ class PassageParser:
 		line = self.fd.readline().lstrip().rstrip()
 		if line[0:6] == "- Part":
 			self.fd.readline().rstrip().lstrip()
+			instrument = self.fd.readline().rstrip().lstrip()
 			assert self.fd.readline().rstrip().lstrip() == "> Notes"
 			line = self.fd.readline().lstrip().rstrip()
 		return line
 
 	def create_passage(self):
-		passage = Passage()
+		passage = Passage(None)
 		line = self.read()
-		while line is not None:
+		while line != '':
+			#print repr(line)
 			nst = float(line.split()[0])/float(line.split()[2])
 			nend = float(line.split()[3])/float(line.split()[5])
-			passage.add_notes(Note(line.split()[6]%12, nst, nend - nst))
+			#print nst, nend, int(line.split()[6])%12
+			passage.add_notes(Note(int(line.split()[6])%12, nst, nend - nst))
 			line = self.read()
+			#print repr(line)
+		passage.calculate_passage_details()
 		return passage
 
 
