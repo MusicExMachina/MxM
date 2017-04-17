@@ -20,84 +20,43 @@ import java.util.TreeMap;
  */
 class MidiWriter {
 
+    /* The "resolution," i.e. the number of ticks per measure. */
     private static int resolution = 24;
+
+    /* The passage that we're reading from. */
     private Passage passage = null;
+
+    /* The sequence that we're writing to. */
     private Sequence sequence = null;
 
+    /* A series of floats mapped to Longs representing different measures' start times in ticks. */
     private TreeMap<Float,Long> timePoints;
 
+    // Writes the information contained in a passage down to a sequence
     public Sequence run(Passage passage) {
         try {
+            // Initialize our variables
             this.passage = passage;
             this.sequence = new Sequence(javax.sound.midi.Sequence.PPQ,resolution);
             this.timePoints = new TreeMap<>();
 
-            // Put a starting point in
-            timePoints.put(0f,(long)0);
+            // Constantly reused variables
+            MetaMessage metaMessage;
+            MidiEvent event;
 
             // Create and initialize the control track (for tempi and time signatures)
             Track controlTrack = sequence.createTrack();
             initTrack(controlTrack);
 
-            MetaMessage mt;
-            MidiEvent me;
-
-            // Set the default time sig
-
-            mt = new MetaMessage();
+            // Set the default time signature... should be removed
+            metaMessage = new MetaMessage();
             byte[] bt = {0x04, 0x04, (byte)resolution, (byte)8}; // Should work... should.
-            mt.setMessage(0x58 ,bt, 3);
-            me = new MidiEvent(mt,(long)0);
-            controlTrack.add(me);
+            metaMessage.setMessage(0x58 ,bt, 3);
+            event = new MidiEvent(metaMessage,(long)resolution);
+            controlTrack.add(event);
 
-
-            int lastTimeSigChange = 0;
-            // Add all of the timeSignature changes
-            Iterator<Integer> timeSigItr = passage.timeSignatureIterator();
-            while(timeSigItr.hasNext()) {
-                int measure = timeSigItr.next();
-                Count count = new Count(measure);
-                TimeSignature timeSignature = passage.getTimeSignatureAt(count);
-
-                long ticksPassed = timePoints.lastEntry().getValue();
-                //timePoints.put((float)measure,(long)(measure-lastTimeSigChange)*resolution*timeSignature.getNumerator()/timeSignature.getDenominator()*4));
-
-                lastTimeSigChange = measure;
-                timePoints.put(0f,(long)0);
-
-                System.out.println("Time sig set to " + timeSignature + " at " + count);
-                // Set time sig
-
-                int cc = 1;
-                switch(timeSignature.getDenominator()) {
-                    case 1:     cc = 0;     break;
-                    case 2:     cc = 1;     break;
-                    case 4:     cc = 2;     break;
-                    case 8:     cc = 3;     break;
-                    case 16:    cc = 4;     break;
-                }
-
-                mt = new MetaMessage();
-                byte[] bytes = {(byte)timeSignature.getNumerator(), (byte)cc, (byte)resolution, (byte)8}; // Should work... should.
-                mt.setMessage(0x58 ,bytes, 3);
-                me = new MidiEvent(mt,(long)(resolution *count.toFloat()));
-                controlTrack.add(me);
-            }
-
-            // Add all of the tempo changes
-            Iterator<Count> tempoItr = passage.tempoChangeIterator();
-            while(tempoItr.hasNext()) {
-                Count time = tempoItr.next();
-                Tempo tempo = passage.getTempoAt(time);
-                int ppqn = 60000000 / tempo.getBPM();
-
-                // Set tempo
-                mt = new MetaMessage();
-                byte[] bytes = {(byte)(ppqn >> 16), (byte)(ppqn >> 8), (byte)(ppqn >> 0)}; // Should work... should.
-                mt.setMessage(0x51, bytes, 3);
-                me = new MidiEvent(mt,(long)(resolution *time.toFloat()));
-                controlTrack.add(me);
-            }
+            writeTimeSignatures(controlTrack);
+            writeTempoChanges(controlTrack);
 
             System.out.println("MIDI READER:\tAdded a new track (from a Part)");
             // For every part in the passage, create a track, and fill it with all the notes in that track
@@ -162,8 +121,8 @@ class MidiWriter {
         ShortMessage off = new ShortMessage();
         on.setMessage(ShortMessage.NOTE_ON, 0, note.getPitch().getValue(), 60);
         off.setMessage(ShortMessage.NOTE_OFF, 0, note.getPitch().getValue(), 0);
-        track.add(new MidiEvent(on, (long)(resolution * note.getStart().toFloat())));
-        track.add(new MidiEvent(off, (long)(resolution * note.getEnd().toFloat())));
+        track.add(new MidiEvent(on, interpolate(note.getStart().toFloat())));
+        track.add(new MidiEvent(off, interpolate(note.getEnd().toFloat())));
     }
 
     private void endTrack(Track track) throws InvalidMidiDataException {
@@ -182,6 +141,7 @@ class MidiWriter {
 
         // If we're right on the time point we want
         if(Float.compare(earlierTime,laterTime) == 0) {
+            System.out.println("Interpolated "+time+" to exactly "+(timePoints.get(earlierTime)));
             return timePoints.get(earlierTime);
         }
         // If we have to interpolate
@@ -190,10 +150,78 @@ class MidiWriter {
             // represent, and lerp between them to figure out where "tick" is
             long earlierTimePoint  = timePoints.get(earlierTime);
             long laterTimePoint    = timePoints.get(laterTime);
-            long relativePosition  = (long)((time - earlierTime) / (laterTime - earlierTime));
-            return (relativePosition * (laterTimePoint - earlierTimePoint )) + earlierTimePoint;
+            float relativePosition  = ((time - earlierTime) / (laterTime - earlierTime));
+            System.out.println("Interpolated "+time+" to "+(relativePosition * (laterTimePoint - earlierTimePoint )) + earlierTimePoint);
+            return (long)(relativePosition * (laterTimePoint - earlierTimePoint )) + earlierTimePoint;
         }
     }
+
+    private void writeTimeSignatures(Track track) throws InvalidMidiDataException {
+        // Put a starting point in
+        timePoints.put(0f,(long)0);
+
+        // The measure that the time signature last changed
+        int lastTimeSigChange = 0;
+        // The size of those measures in ticks
+        long lastMeasureSize = 0;
+
+        // The iterator over all the passage's time signatures
+        Iterator<Integer> timeSigItr = passage.timeSignatureIterator();
+
+        // Add all of the timeSignature changes
+        while(timeSigItr.hasNext()) {
+            int curMeasure = timeSigItr.next();
+            int measuresPassed = curMeasure - lastTimeSigChange;
+
+            TimeSignature timeSignature = passage.getTimeSignatureAt(new Count(curMeasure));
+
+            long newTimePoint = timePoints.lastEntry().getValue() + measuresPassed * lastMeasureSize;
+
+            timePoints.put((float)curMeasure,newTimePoint);
+            System.out.println(curMeasure + "  " + newTimePoint + "  " + timeSignature);
+
+            int cc = 0;
+            switch(timeSignature.getDenominator()) {
+                case 1:     cc = 0;     break;
+                case 2:     cc = 1;     break;
+                case 4:     cc = 2;     break;
+                case 8:     cc = 3;     break;
+                case 16:    cc = 4;     break;
+            }
+
+            byte[] bytes = {(byte)timeSignature.getNumerator(), (byte)cc, (byte)resolution, (byte)8};
+
+            // Create a time signature change event
+            MetaMessage metaMessage = new MetaMessage();
+            metaMessage.setMessage(0x58 ,bytes, 3);
+            MidiEvent event = new MidiEvent(metaMessage,newTimePoint);
+            track.add(event);
+
+            lastMeasureSize = resolution*timeSignature.getNumerator()/timeSignature.getDenominator();
+            lastTimeSigChange = curMeasure;
+        }
+
+        // Create a time point waaaaaaay after the end of the piece to ensure our interpolator can work
+        timePoints.put((float)lastTimeSigChange+10000,timePoints.lastEntry().getValue()+lastMeasureSize*10000);
+    }
+
+    private void writeTempoChanges(Track track) throws InvalidMidiDataException {
+        // Add all of the tempo changes
+        Iterator<Count> tempoItr = passage.tempoChangeIterator();
+        while(tempoItr.hasNext()) {
+            Count time = tempoItr.next();
+            Tempo tempo = passage.getTempoAt(time);
+            int ppqn = 60000000 / tempo.getBPM();
+
+            // Set tempo
+            MetaMessage metaMessage = new MetaMessage();
+            byte[] bytes = new byte[]{(byte) (ppqn >> 16), (byte) (ppqn >> 8), (byte) (ppqn)}; // Should work... should.
+            metaMessage.setMessage(0x51, bytes, 3);
+            MidiEvent event = new MidiEvent(metaMessage,interpolate(time.toFloat()));
+            track.add(event);
+        }
+    }
+
 
 
     public static void main(String argv[]) throws IOException, InvalidMidiDataException, MidiUnavailableException {
