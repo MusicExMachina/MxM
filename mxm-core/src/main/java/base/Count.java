@@ -3,9 +3,10 @@ package base;
 import java.util.Comparator;
 
 /**
- * A Count is the fundamental measurement of  musical time. form.Note that Counts are essentially
- * just fractions. They're not really that special. They are, however, immutable, in order to
- * avoid accidental headaches down the line.
+ * A Count is the fundamental measurement of  musical time. form.Note
+ * that Counts are essentially just fractions. They're not really that
+ * special. They are, however, immutable, in order to avoid accidental
+ * headaches down the line.
  */
 public class Count implements Comparator<Count>, Comparable<Count> {
 
