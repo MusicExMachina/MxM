@@ -1,6 +1,8 @@
+package base;
+
 import base.Count;
 import org.junit.Test;
 
-public class TempoTest {
+public class DynamicTest {
 
 }

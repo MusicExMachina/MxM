@@ -1,6 +1,8 @@
+package form;
+
 import base.Count;
 import org.junit.Test;
 
-public class DynamicTest {
+public class NoteTest {
 
 }

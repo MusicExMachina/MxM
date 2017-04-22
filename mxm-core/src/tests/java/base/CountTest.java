@@ -1,3 +1,5 @@
+package base;
+
 import base.Count;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;

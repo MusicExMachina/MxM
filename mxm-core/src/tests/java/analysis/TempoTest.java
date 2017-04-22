@@ -1,6 +1,8 @@
+package analysis;
+
 import base.Count;
 import org.junit.Test;
 
-public class TimeSignatureTest {
+public class TempoTest {
 
 }

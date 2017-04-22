@@ -9,21 +9,21 @@ import java.util.List;
 
 
 /**
- *
+ * A suite of tests of basic MxM MIDI functionality.
  */
 public class MidiTest {
 
-    /*
-    * Tests MidiTools' ability to read download midi files from the internet.
+    /**
+    * Tests MidiTools' ability to load midi files.
      */
     @Test
-    public void loadTest() {
-        String path = "src/tests/resources/";
+    public void sequentialLoadTest() {
+        String pathStr = "src/tests/resources/";
 
         // Get the path to the resource we want
         Path curPath = Paths.get("").toAbsolutePath();
         String curPathStr = curPath.toString();
-        Path path = Paths.get(curPathStr, path);
+        Path path = Paths.get(curPathStr, pathStr);
         Charset charset = Charset.forName("UTF-8");
 
         // Get the resources folder
@@ -35,7 +35,7 @@ public class MidiTest {
                 String fileName = allFiles[i].getName();
                 if(fileName.contains("midi")) {
                     try {
-                        MidiTools.download(path + fileName);
+                        MidiTools.load(path + "\\" + fileName);
                     } catch (IOException e) {
                         System.err.println("Could not open "+fileName+"!");
                         System.err.println(e);
@@ -44,14 +44,53 @@ public class MidiTest {
                         System.err.println(e);
                     }
                 }
-            } else if (allFiles[i].isDirectory()) {
-                System.out.println("Directory " + allFiles[i].getName());
             }
         }
     }
 
-    /*
-    * Tests MidiTools' ability to read download midi files from the internet.
+    /**
+    * Tests MidiTools' ability to load midi files.
+     */
+    @Test
+    public void concurrentLoadTest() {
+        String pathStr = "src/tests/resources/";
+
+        // Get the path to the resource we want
+        Path curPath = Paths.get("").toAbsolutePath();
+        String curPathStr = curPath.toString();
+        Path path = Paths.get(curPathStr, pathStr);
+        Charset charset = Charset.forName("UTF-8");
+
+        // Get the resources folder
+        File folder = new File(path.toString());
+        File[] allFiles = folder.listFiles();
+        List<String> allFilenames = new ArrayList<>();
+
+        for (int i = 0; i < allFiles.length; i++) {
+            if (allFiles[i].isFile()) {
+                String fileName = allFiles[i].getName();
+                if(fileName.contains("midi")) {
+                    allFilenames.add(path + "\\" + fileName);
+                }
+            }
+        }
+
+        try {
+            MidiTools.loadAll(allFilenames);
+        }
+        catch (IOException e) {
+            System.err.println("Could not open file!");
+            System.err.println(e);
+        }
+        catch (InvalidMidiDataException e) {
+            System.err.println("Could not load midi file!");
+            System.err.println(e);
+        }
+    }
+
+
+    /**
+    * Tests MidiTools' ability to download midi files from the internet.
      */
     @Test
     public void sequentialDownloadTest() {
@@ -82,8 +121,8 @@ public class MidiTest {
         }
     }
 
-    /*
-    * Tests MidiTools' ability to read download midi files from the internet.
+    /**
+    * Tests MidiTools' ability to download midi files from the internet.
      */
     @Test
     public void concurrentDownloadTest() {
