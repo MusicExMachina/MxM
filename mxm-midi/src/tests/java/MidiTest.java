@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 import java.io.*;
 import java.nio.file.*;
 import java.nio.charset.Charset;
@@ -88,7 +89,6 @@ public class MidiTest {
         }
     }
 
-
     /**
     * Tests MidiTools' ability to download midi files from the internet.
      */
@@ -151,6 +151,60 @@ public class MidiTest {
         } catch (InvalidMidiDataException e) {
             System.err.println("Could not download midi file! (from "+line+")");
             System.err.println(e);
+        }
+    }
+
+    /**
+     * Tests MidiTools' ability to play the first midi file in the resources folder.
+     */
+    @Test
+    public void playTest() {
+        String pathStr = "src/tests/resources/";
+
+        // Get the path to the resource we want
+        Path curPath = Paths.get("").toAbsolutePath();
+        String curPathStr = curPath.toString();
+        Path path = Paths.get(curPathStr, pathStr);
+        Charset charset = Charset.forName("UTF-8");
+
+        // Get the resources folder
+        File folder = new File(path.toString());
+        File[] allFiles = folder.listFiles();
+
+        try {
+            MidiTools.play(MidiTools.load(allFiles[0].getPath()));
+        } catch (MidiUnavailableException e) {
+            e.printStackTrace();
+        } catch (InvalidMidiDataException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Tests MidiTools' ability to parse the first midi file in the resources folder.
+     */
+    @Test
+    public void parseTest() {
+        String pathStr = "src/tests/resources/";
+
+        // Get the path to the resource we want
+        Path curPath = Paths.get("").toAbsolutePath();
+        String curPathStr = curPath.toString();
+        Path path = Paths.get(curPathStr, pathStr);
+        Charset charset = Charset.forName("UTF-8");
+
+        // Get the resources folder
+        File folder = new File(path.toString());
+        File[] allFiles = folder.listFiles();
+
+        try {
+            MidiTools.parse(MidiTools.load(allFiles[0].getPath()));
+        } catch (InvalidMidiDataException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
