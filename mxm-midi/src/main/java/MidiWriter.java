@@ -8,6 +8,7 @@ import io.Writer;
 
 import javax.sound.midi.*;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -225,13 +226,14 @@ class MidiWriter {
 
 
     public static void main(String argv[]) throws IOException, InvalidMidiDataException, MidiUnavailableException {
-        Sequence sequence = MidiTools.download("https://www.8notes.com/school/midi/violin/bach_bourree.mid");
+        //Sequence sequence = MidiTools.download("https://www.8notes.com/school/midi/violin/bach_bourree.mid");
+        Sequence sequence = MidiTools.load(Paths.get("").toAbsolutePath()+"/mxm-midi/src/tests/resources/midi_schubert_impromptu.mid");
         Passage passage = MidiTools.parse(sequence);
         Writer.write(passage,"input");
 
-        Sequence out = MidiTools.write(passage);
-        Passage outputPassage = MidiTools.parse(out);
-        Writer.write(outputPassage,"output");
+        //Sequence out = MidiTools.write(passage);
+        //Passage outputPassage = MidiTools.parse(out);
+        //Writer.write(outputPassage,"output");
         //MidiTools.play(out);
     }
 

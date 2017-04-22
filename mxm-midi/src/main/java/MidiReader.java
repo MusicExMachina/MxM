@@ -197,7 +197,7 @@ class MidiReader {
                 //System.out.println("MIDI PARSER:\tInstrument name");
                 break;
             case LYRIC_TEXT:
-                System.out.println("MIDI PARSER:\tLyric text");
+                //System.out.println("MIDI PARSER:\tLyric text");
                 break;
             case MARKER_TEXT:
                 //System.out.println("MIDI PARSER:\tMarker text");
@@ -226,7 +226,7 @@ class MidiReader {
                 System.out.println("MIDI PARSER:\tSequencer-specific");
                 break;
             default:
-                System.out.println("MIDI PARSER:\tUnrecognized MidiTools MetaMessage " + message.getData());
+                System.out.println("MIDI PARSER:\tUnrecognized MetaMessage " + Arrays.toString(message.getData()));
                 break;
         }
     }
@@ -372,7 +372,7 @@ class MidiReader {
         byte[] data = message.getData();
         String string = new String(data);
         // Remove any awkward newlines from the text
-        System.out.println("MIDI PARSER:\tReading text: " + string.replace("\n", "").replace("\r", ""));
+        System.out.println("MIDI PARSER:\tText: \"" + string.replace("\n", "").replace("\r", "")+"\"");
     }
 
     /**
@@ -626,12 +626,13 @@ class MidiReader {
             if(!noteOnsCount.get(track).isEmpty() && !instChangeCount.get(track).isEmpty()) {
                 Instrument instrument = instChangeCount.get(track).firstEntry().getValue();
                 Part part = new Part(instrument);
-                // TODO: base.Instrument changes
+                // TODO: Instrument changes
 
                 for(Map.Entry<Count, TreeSet<Pitch>> pair : noteOnsCount.get(track).entrySet()) {
                     Count start = pair.getKey();
                     for(Pitch pitch : pair.getValue()) {
                         Count end = noteOffsCount.get(track).get(pitch).ceiling(start);
+                        System.out.println(new Note(start,end,pitch));
                         part.add(new Note(start,end,pitch));
                     }
                 }

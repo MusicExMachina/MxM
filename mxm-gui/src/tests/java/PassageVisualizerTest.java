@@ -13,7 +13,7 @@ public class PassageVisualizerTest {
             //Sequence sequence = MidiTools.download("http://www.mfiles.co.uk/downloads/edvard-grieg-peer-gynt1-morning-mood.mid");
             //Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
             //Sequence sequence = MidiTools.load("C:/users/celenp/desktop/test.mid");
-            Sequence sequence = MidiTools.load("C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-midi\\src\\tests\\resources\\midi_schubert_Impromptu.mid");
+            Sequence sequence = MidiTools.load("C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-midi\\src\\tests\\resources\\midi_schubert_impromptu.mid");
             Passage passage = MidiTools.parse(sequence);
             //MidiTools.play(sequence);
             System.out.println(sequence.toString());
