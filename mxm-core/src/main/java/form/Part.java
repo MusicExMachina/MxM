@@ -6,7 +6,8 @@ import java.util.Iterator;
 import java.util.TreeMap;
 
 /**
- * Lines are horizontal arrangements of Notes that are heard as a continuous horizontal slice.
+ * Lines are horizontal arrangements of Notes that are heard as a
+ * continuous horizontal slice.
  */
 public class Part implements Iterable<Note> {
 

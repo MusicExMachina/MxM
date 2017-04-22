@@ -1,52 +1,117 @@
 import org.junit.Test;
 
-import javax.sound.midi.Sequence;
+import javax.sound.midi.InvalidMidiDataException;
+import java.io.*;
+import java.nio.file.*;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
  */
 public class MidiTest {
 
-    /**
-     * Tests that you can read
+    /*
+    * Tests MidiTools' ability to read download midi files from the internet.
      */
     @Test
-    public void basicTest() {
-        try {
-            //MidiTools.printSequencerInfo();
-            //Sequence sequence = MidiTools.download("http://www.midiworld.com/download/4522");
-            Sequence sequence = MidiTools.download("http://www.mfiles.co.uk/downloads/edvard-grieg-peer-gynt1-morning-mood.mid");
-            //Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
-            //Sequence sequence = MidiTools.load("C:/users/celenp/desktop/test.mid");
-            //Sequence sequence = MidiTools.load("C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-midi\\src\\tests\\resources\\midi_schubertImpromptu.mid");
-            MidiTools.parse(sequence);
-            //MidiTools.play(sequence);
-            //System.out.println(sequence.toString());
-            //Thread.sleep(100000);
+    public void loadTest() {
+        String path = "src/tests/resources/";
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Get the path to the resource we want
+        Path curPath = Paths.get("").toAbsolutePath();
+        String curPathStr = curPath.toString();
+        Path path = Paths.get(curPathStr, path);
+        Charset charset = Charset.forName("UTF-8");
+
+        // Get the resources folder
+        File folder = new File(path.toString());
+        File[] allFiles = folder.listFiles();
+
+        for (int i = 0; i < allFiles.length; i++) {
+            if (allFiles[i].isFile()) {
+                String fileName = allFiles[i].getName();
+                if(fileName.contains("midi")) {
+                    try {
+                        MidiTools.download(path + fileName);
+                    } catch (IOException e) {
+                        System.err.println("Could not open "+fileName+"!");
+                        System.err.println(e);
+                    } catch (InvalidMidiDataException e) {
+                        System.err.println("Could not load midi file! (from "+fileName+")");
+                        System.err.println(e);
+                    }
+                }
+            } else if (allFiles[i].isDirectory()) {
+                System.out.println("Directory " + allFiles[i].getName());
+            }
         }
     }
 
-    /**
-     * Tests that you can read
+    /*
+    * Tests MidiTools' ability to read download midi files from the internet.
      */
     @Test
-    public void playTest() {
-        System.out.print("A");
-        try {
-            System.out.print("B");
-            //Sequence sequence1 = MidiTools.download("http://www.midiworld.com/midis/other/n1/EspanjaPrelude.mid");
-            Sequence sequence2 = MidiTools.download("http://www.midiworld.com/download/4573");
-            System.out.print("C");
-            //MidiTools.play(sequence1);
-            MidiTools.play(sequence2);
-            System.out.print("D");
-            //Thread.sleep(100000);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void sequentialDownloadTest() {
+
+        // The file that holds all the urls we're going to download from
+        String filename = "src/tests/resources/url_sources.txt";
+
+        // Get the path to the resource we want
+        Path curPath = Paths.get("").toAbsolutePath();
+        String curPathStr = curPath.toString();
+        Path path = Paths.get(curPathStr, filename);
+        Charset charset = Charset.forName("UTF-8");
+
+        // Read each line in the sources file
+        String line = "";
+        try (BufferedReader reader = Files.newBufferedReader(path, charset)) {
+            while ((line = reader.readLine()) != null ) {
+                // We don't need to save this data
+                MidiTools.download(line);
+            }
+        }
+        catch (IOException e) {
+            System.err.println("Could not open "+filename+"!");
+            System.err.println(e);
+        } catch (InvalidMidiDataException e) {
+            System.err.println("Could not download midi file! (from "+line+")");
+            System.err.println(e);
         }
     }
 
+    /*
+    * Tests MidiTools' ability to read download midi files from the internet.
+     */
+    @Test
+    public void concurrentDownloadTest() {
+
+        // The file that holds all the urls we're going to download from
+        String filename = "src/tests/resources/url_sources.txt";
+
+        // Get the path to the resource we want
+        Path curPath = Paths.get("").toAbsolutePath();
+        String curPathStr = curPath.toString();
+        Path path = Paths.get(curPathStr, filename);
+        Charset charset = Charset.forName("UTF-8");
+
+        // Read each line in the sources file
+        List<String> lines = new ArrayList<>();
+        String line = "";
+        try (BufferedReader reader = Files.newBufferedReader(path, charset)) {
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+            MidiTools.downloadAll(lines);
+        }
+        catch (IOException e) {
+            System.err.println("Could not open "+filename+"!");
+            System.err.println(e);
+        } catch (InvalidMidiDataException e) {
+            System.err.println("Could not download midi file! (from "+line+")");
+            System.err.println(e);
+        }
+    }
 }

@@ -256,6 +256,8 @@ class MidiReader {
         int velocityValue   = message.getData2();
         Pitch pitch         = Pitch.getInstance(pitchValue);
 
+        //System.out.println(tick + "\t" + pitch);
+
         // If this was a note-off message in disguise
         if(velocityValue == 0) {
             parseNoteOffMessage(track,event,message,tick);

@@ -1,16 +1,13 @@
 import com.sun.media.sound.StandardMidiFileReader;
-import com.sun.media.sound.StandardMidiFileWriter;
 import form.Passage;
 
 import javax.sound.midi.*;
-import javax.sound.midi.Instrument;
 import javax.sound.midi.spi.MidiFileReader;
-import javax.sound.midi.spi.MidiFileWriter;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.ArrayList;
 
 public abstract class MidiTools
 {
@@ -49,7 +46,7 @@ public abstract class MidiTools
     }
 
     /**
-     * Loads a midi Sequence from a given filename.
+     * Loads a midi Sequence from a given file name.
      * @param fileName The filename of the file we want.
      * @return A midi Sequence loaded in from this file.
      * @throws IOException If the reading fails for some reason.
@@ -58,6 +55,23 @@ public abstract class MidiTools
     public static Sequence load (String fileName) throws IOException, InvalidMidiDataException {
         MidiFileReader reader = new StandardMidiFileReader();
         return reader.getSequence(new FileInputStream(fileName));
+    }
+
+    /**
+     * Loads a number of midi sequences from a list of file names.
+     * @param fileNames The filename of the file we want.
+     * @return A midi Sequence loaded in from this file.
+     * @throws IOException If the reading fails for some reason.
+     * @throws InvalidMidiDataException  If the midi data is flawed.
+     */
+    public static List<Sequence> loadAll (List<String> fileNames) throws IOException, InvalidMidiDataException {
+        List<Sequence> toReturn = new ArrayList<>();
+        // TODO: Parallelize this
+        for(String fileName : fileNames) {
+            MidiFileReader reader = new StandardMidiFileReader();
+            toReturn.add(reader.getSequence(new FileInputStream(fileName)));
+        }
+        return toReturn;
     }
 
     /**
@@ -73,17 +87,20 @@ public abstract class MidiTools
     }
 
     /**
-     * Saves a given midi sequence to a file. form.Note that this
-     * may need some fine tuning for each of the three midi
-     * file types.
-     * @param sequence The midi Sequence to write to a file.
-     * @param fileName The filename of the file we want.
-     * @throws IOException If the writing fails for some reason.
+     * Downloads a number of midi files from some remote location.
+     * @param urls The urls of the files we want to download.
+     * @return A midi Sequence downloaded from this URL.
+     * @throws IOException If the reading fails for some reason.
+     * @throws InvalidMidiDataException If the midi data is flawed.
      */
-    public static void save(Sequence sequence, String fileName) throws IOException {
-        MidiFileWriter writer = new StandardMidiFileWriter();
-        int midiType = MidiSystem.getMidiFileTypes(sequence)[0];
-        writer.write(sequence,midiType,new File(fileName));
+    public static List<Sequence> downloadAll (List<String> urls) throws IOException, InvalidMidiDataException {
+        List<Sequence> toReturn = new ArrayList<>();
+        // TODO: Parallelize this
+        for(String url : urls) {
+            MidiFileReader reader = new StandardMidiFileReader();
+            toReturn.add(reader.getSequence(new URL(url)));
+        }
+        return toReturn;
     }
 
     /**

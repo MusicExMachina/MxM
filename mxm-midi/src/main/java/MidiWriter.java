@@ -232,7 +232,7 @@ class MidiWriter {
         Sequence out = MidiTools.write(passage);
         Passage outputPassage = MidiTools.parse(out);
         Writer.write(outputPassage,"output");
-        MidiTools.play(out);
+        //MidiTools.play(out);
     }
 
 }

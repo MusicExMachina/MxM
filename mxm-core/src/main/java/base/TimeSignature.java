@@ -6,7 +6,7 @@ package base;
  * levels (3/4 versus 6/8) and will eventually  be useful in determining how
  * transitions between TimeSignatures work.
  *
- * form.Note: These are in many ways structurally similar to Counts. The major difference
+ * Note: These are in many ways structurally similar to Counts. The major difference
  * is that there's no reason to ever reduce a base.TimeSignature from say, 4/4 to 2/2.
  */
 public class TimeSignature {
