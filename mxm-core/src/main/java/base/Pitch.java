@@ -29,7 +29,7 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
     // Initialize all pitches
     static {
-        for(int midiValue = MIN_PITCH; midiValue < MAX_PITCH; midiValue++) {
+        for(int midiValue = MIN_PITCH; midiValue <= MAX_PITCH; midiValue++) {
             ALL.add(new Pitch(midiValue));
         }
     }
@@ -49,7 +49,7 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
      * @return An base.Pitch of this size.
      */
     public static Pitch getInstance(int value) {
-        if(value >= MIN_PITCH&& value < MAX_PITCH) {
+        if(value >= MIN_PITCH&& value <= MAX_PITCH) {
             return ALL.get(value - MIN_PITCH);
         }
         else {
