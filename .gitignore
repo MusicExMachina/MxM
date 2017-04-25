@@ -39,6 +39,9 @@ buildNumber.properties
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
 
+#other ide stuff
+*/.idea/*
+
 # Sensitive or high-churn files:
 .idea/dataSources.ids
 .idea/dataSources.xml
