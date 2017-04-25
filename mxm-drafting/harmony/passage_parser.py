@@ -61,8 +61,7 @@ class PassageParser:
 			#print repr(line)
 			nst = float(line.split()[0])/float(line.split()[2])
 			nend = float(line.split()[3])/float(line.split()[5])
-			#print nst, nend, int(line.split()[6])%12
-			passage.add_notes(Note(int(line.split()[6])%12, nst, nend - nst))
+			passage.add_notes(Note(int(line.split()[6])%12, nend - nst, nst, int(line.split()[6])))
 			line = self.read()
 			#print repr(line)
 		passage.calculate_passage_details()

@@ -1,3 +1,4 @@
+import math
 from passage import Passage
 
 class Window:
@@ -14,16 +15,19 @@ class Window:
 		:param time_end:
 		:return:
 		"""
+		#print time_start, time_end
 		self.notes = []
+		#print "WINDOW", time_start, time_end
 		for note in passage.notes:
-			# print note.notestart
-			# print note.notestart+note.length
-			# print note.length
-			# print note.pitch
-			if note.notestart >= time_start or note.notestart+note.length < time_end:
+			#print note.pitch
+			#print note.notestart
+			#print note.notestart+note.length
+			#print note.length
+			if note.notestart >= time_start and note.notestart < time_end:
+				#print "HERE", note.notestart, note.length
 				self.notes.append(note)
-			if note.notestart < time_start and note.notestart+note.length >= time_end:
-				pass
+			if note.notestart < time_start and note.notestart+note.length >= time_start:
+				self.notes.append(note)
 		self.time_start = time_start
 		self.time_end = time_end
 		self.time_len = time_end-time_start
@@ -46,9 +50,7 @@ class Window:
 		:return:
 		"""
 		for n in self.importance:
-			self.window_multipliers[n] = 1 #NONE
-
-
+			self.window_multipliers[n] = 1/float(self.time_len) #NONE
 
 	def get_pitch_importance(self):
 		"""
@@ -56,11 +58,32 @@ class Window:
 		:return:
 		"""
 		self.calculate_window_multipliers()
+		tlen = 0
+		ptype = {}
+		avg = 0
 		for p in range(12):
-			self.pimportance[p] = 0
+			self.pimportance[p] = {}
+			self.pimportance[p]["mposition"] = 0
+			self.pimportance[p]["length"] = 0
+			#self.pimportance[p]["rposition"] = 0
+			ptype[p] = 0
+		for note in self.notes:
+			avg += note.actual_pitch
+		avg /= float(len(self.notes) + .001)
+
+		for note in self.notes:
+			self.pimportance[note.pitch]["mposition"] += abs(note.actual_pitch - avg)
+
 		#for 12 pitch classes
 		for x in self.importance:
-			self.pimportance[x.pitch] += self.importance[x] * self.window_multipliers[x]
+			self.pimportance[x.pitch]["length"] += self.importance[x]# * self.window_multipliers[x]
+			ptype[x.pitch] += 1
+			tlen += self.importance[x]
+
+		for p in range(12):
+			#self.pimportance[p] = self.pimportance[p]/(ptype[p] + .0001)
+			self.pimportance[p]["length"] /= float(tlen) + .001
+			#self.pimportance[p]["mposition"] /= float(tlen)
 
 	def get_t_start(self):
 		return self.time_start
@@ -70,3 +93,9 @@ class Window:
 
 	def get_t_len(self):
 		return self.time_len
+
+	def __str__(self):
+		return str(self.notes)
+
+	def __repr__(self):
+		return self.__str__()

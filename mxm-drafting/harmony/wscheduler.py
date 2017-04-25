@@ -4,8 +4,7 @@ def var(data):
 	:param data: a list of floats
 	:return:
 	"""
-	#print data
-	m = float(sum(data)) / float(len(data))
+	m = float(sum(data)) / float(len(data)+1)
 	return sum(map(lambda d: (d - m) ** 2, data)) / len(data)
 
 
@@ -35,9 +34,9 @@ class WindowScheduler():
 				self.owindows[2].append(self.windows[i])
 			elif lens[i] == .25:
 				self.owindows[1].append(self.windows[i])
-		print len(self.owindows[1])
-		print len(self.owindows[2])
-		print len(self.owindows[4])
+		#print len(self.owindows[1])
+		#print len(self.owindows[2])
+		#print len(self.owindows[4])
 
 	def calc_window_info(self):
 		"""
@@ -73,6 +72,7 @@ class WindowScheduler():
 			#print i
 			options = [0,0,0,0,0]
 			woptions = {1:[], 2:[], 4:[]}
+			#print map(lambda x: x.pitch, self.owindows[1][i - 1].notes)
 			if i >= 1:
 				options[1] = opt[i - 1] + maximize(map(lambda x: x.pitch, self.owindows[1][i - 1].notes))
 				woptions[1].extend(windowSet[i-1])

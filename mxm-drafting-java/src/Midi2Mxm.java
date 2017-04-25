@@ -13,9 +13,9 @@ import java.io.IOException;
 public class Midi2Mxm {
 
     public static void main(String[] args) throws IOException, InvalidMidiDataException {
-        Sequence sequence = MidiTools.load("mxm-drafting/harmony/test_data/bach_common_time/prelude1.mid");
+        Sequence sequence = MidiTools.download("http://www.kunstderfuge.com/-/midi.asp?file=bach/sankey/well-tempered-clavier-i_bwv-846_(c)sankey.mid");
         Passage passage = MidiTools.parse(sequence);
-        Writer.write(passage, "input");
+        Writer.write(passage, "mxm-drafting/harmony/test_data/bach_common_time/pf2");
     }
 
 
