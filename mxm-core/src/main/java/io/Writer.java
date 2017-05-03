@@ -26,16 +26,17 @@ public class Writer
 
             writer.println("> Passage");
             writer.println("  - Title");
-            writer.println("      PASSAGE TITLE");
+            writer.println("      " + passage.getName());
             writer.println("  - Composer");
-            writer.println("      COMPOSER NAME");
-            writer.println("  - Period");
-            writer.println("      PERIOD");
+            writer.println("      " + passage.getComposer());
+            writer.println("");
 
+
+            // Write all of the time signature information
             writer.println("  > Time Signatures");
             Iterator<Integer> timeSigItr = passage.timeSignatureIterator();
             while (timeSigItr.hasNext()) {
-                Count count = new Count(timeSigItr.next());
+                Count count             = new Count(timeSigItr.next());
                 TimeSignature timeSig   = passage.getTimeSignatureAt(count);
                 String measureString    = padRight(String.valueOf(count.getMeasure()),4);
                 String numString        = String.valueOf(timeSig.getNumerator());
@@ -43,6 +44,9 @@ public class Writer
                 writer.println("      " + measureString + "            " + numString + " / " + denomString);
             }
             writer.println("");
+
+
+
 
             writer.println("  > Tempi");
             Iterator<Count> tempoChangeItr = passage.tempoChangeIterator();
@@ -61,18 +65,27 @@ public class Writer
             for(Part part : passage) {
                 writer.println("    - Part");
                 writer.println("      - Instrument");
-                writer.println("        " + part.getInstrument().toString() + "");
+                writer.println("          " + part.getInstrument().toString() + "");
                 writer.println("      > Notes");
 
+                int lastMeasure = 0;
                 for(Note note : part) {
-                    String startNumStr      = padRight(String.valueOf(note.getStart().getNumerator()),5);
+
+                    int measure = note.getStart().getMeasure();
+
+                    if(measure != lastMeasure) {
+                        writer.println("          m. " + padRight(String.valueOf(measure),3) + "------------------------------");
+                        lastMeasure = measure;
+                    }
+
+                    String startNumStr      = padLeft(String.valueOf(note.getStart().getNumerator() % note.getStart().getDenominator()),4);
                     String startDenomStr    = padRight(String.valueOf(note.getStart().getDenominator()),5);
-                    String endNumStr        = padRight(String.valueOf(note.getEnd().getNumerator()),5);
+                    String endNumStr        = padLeft(String.valueOf(note.getEnd().getNumerator() % note.getEnd().getDenominator()),4);
                     String endDenomStr      = padRight(String.valueOf(note.getEnd().getDenominator()),5);
 
-                    String startStr = startNumStr + "/ " + startDenomStr;
-                    String endStr = endNumStr + "/ " + endDenomStr;
-                    String pitchStr = padRight(String.valueOf(note.getPitch().getValue()),5);
+                    String startStr = startNumStr + " / " + startDenomStr;
+                    String endStr = endNumStr + " / " + endDenomStr;
+                    String pitchStr = String.valueOf(note.getPitch().getValue());
 
                     writer.println("          " + startStr + "    " + endStr + "    " +  pitchStr);
                 }

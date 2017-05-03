@@ -15,6 +15,12 @@ import java.util.*;
  */
 public class Passage implements Iterable<Part> {
 
+    /** The name of this passage. */
+    private String name;
+
+    /** The composer of this passage. */
+    private String composer;
+
     /** Time signature (changes) throughout this passage. */
     private NavigableMap<Integer, TimeSignature> timeSigs;
 
@@ -32,6 +38,22 @@ public class Passage implements Iterable<Part> {
         this.timeSigs = new TreeMap<>();
         this.tempi = new TreeMap<>();
         this.parts = new ArrayList<>();
+    }
+
+    /**
+     * Getter for the name of this Passage.
+     * @return the name of this Passage.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Getter for the composer of this Passage.
+     * @return the composer of this Passage.
+     */
+    public String getComposer() {
+        return composer;
     }
 
     /**

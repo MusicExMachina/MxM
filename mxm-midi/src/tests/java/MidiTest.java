@@ -8,7 +8,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * A suite of tests of basic MxM MIDI functionality.
  */

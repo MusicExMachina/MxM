@@ -46,8 +46,8 @@ public class Count implements Comparator<Count>, Comparable<Count> {
         if(denominator > 0) {
             this.numerator   = numerator;
             this.denominator = denominator;
-            reduce();
             this.measure     = numerator / denominator;
+            reduce();
             //this.countClass  = new CountClass(numerator,denominator);
         }
         else {
@@ -181,12 +181,14 @@ public class Count implements Comparator<Count>, Comparable<Count> {
         int a = numerator;
         int b = denominator;
 
-        if(a == 0 && b==0) {
-            throw new IllegalArgumentException("Undefined base.Count: (0,0)");
-        }else if(a==0){
+        if(a == 0 && b == 0) {
+            throw new IllegalArgumentException("Undefined Count: (0,0)");
+        }
+        else if(a == 0){
             denominator /= b;
             return;
-        }else if(b == 0){
+        }
+        else if(b == 0){
             numerator /= a;
             return;
         }
@@ -239,7 +241,9 @@ public class Count implements Comparator<Count>, Comparable<Count> {
 
         Count count = (Count) o;
 
-        if (numerator != count.numerator) return false;
+        if (numerator != count.numerator)
+            return false;
+
         return denominator == count.denominator;
 
     }

@@ -44,11 +44,11 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      * @return An analysis.IntervalClass of this size.
      */
     public static IntervalClass getInstance(int size) {
-        if(size >= MIN_INTERVALCLASS && size < MAX_INTERVALCLASS) {
+        if(size >= MIN_INTERVALCLASS && size <= MAX_INTERVALCLASS) {
             return ALL.get(size);
         }
         else {
-            throw new Error("INTERVAL CLASS:\tbase.Interval class out of range.");
+            throw new Error("INTERVAL CLASS:\tInterval class out of range.");
         }
     }
 

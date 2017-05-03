@@ -31,30 +31,34 @@ class MidiReader {
     private static final int KEY_SIGNATURE      = 0x59;
     private static final int SEQUENCER_SPECIFIC = 0x7F;
 
-    /* Input & output */
+    /* Input and output */
     private Sequence sequence;
     private Passage passage;
 
-    /* Master track events */
+    /* Time signature change events in various time formats */
     private TreeMap<Long,TimeSignature> timeSigsLong;
     private TreeMap<Float,TimeSignature> timeSigsFloat;
     private TreeMap<Count,TimeSignature> timeSigsCount;
 
+    /* Tempo change events in various time formats */
     private TreeMap<Long,Integer> tempiLong;
     private TreeMap<Float,Tempo> tempiFloat;
     private TreeMap<Count, Tempo> tempiCount;
 
+    /* Measure markers in longs */
     private TreeMap<Long,Float> timePoints;
 
-    /* Track events */
+    /* Note on events in various time formats */
     private HashMap<Track,TreeMap<Long,TreeSet<Pitch>>> noteOnsLong;
     private HashMap<Track,TreeMap<Float,TreeSet<Pitch>>> noteOnsFloat;
     private HashMap<Track,TreeMap<Count,TreeSet<Pitch>>> noteOnsCount;
 
+    /* Note off events in various time formats */
     private HashMap<Track,TreeMap<Pitch,TreeSet<Long>>> noteOffsLong;
     private HashMap<Track,TreeMap<Pitch,TreeSet<Float>>> noteOffsFloat;
     private HashMap<Track,TreeMap<Pitch,TreeSet<Count>>> noteOffsCount;
 
+    /* Instrument change events in various time formats */
     private HashMap<Track,TreeMap<Long, Instrument>> instChangeLong;
     private HashMap<Track,TreeMap<Float, Instrument>> instChangeFloat;
     private HashMap<Track,TreeMap<Count, Instrument>> instChangeCount;
@@ -197,7 +201,7 @@ class MidiReader {
                 //System.out.println("MIDI PARSER:\tInstrument name");
                 break;
             case LYRIC_TEXT:
-                System.out.println("MIDI PARSER:\tLyric text");
+                //System.out.println("MIDI PARSER:\tLyric text");
                 break;
             case MARKER_TEXT:
                 //System.out.println("MIDI PARSER:\tMarker text");
@@ -226,7 +230,7 @@ class MidiReader {
                 System.out.println("MIDI PARSER:\tSequencer-specific");
                 break;
             default:
-                System.out.println("MIDI PARSER:\tUnrecognized MidiTools MetaMessage " + message.getData());
+                System.out.println("MIDI PARSER:\tUnrecognized MetaMessage " + Arrays.toString(message.getData()));
                 break;
         }
     }
@@ -372,7 +376,7 @@ class MidiReader {
         byte[] data = message.getData();
         String string = new String(data);
         // Remove any awkward newlines from the text
-        System.out.println("MIDI PARSER:\tReading text: " + string.replace("\n", "").replace("\r", ""));
+        System.out.println("MIDI PARSER:\tText: \"" + string.replace("\n", "").replace("\r", "")+"\"");
     }
 
     /**
@@ -626,12 +630,13 @@ class MidiReader {
             if(!noteOnsCount.get(track).isEmpty() && !instChangeCount.get(track).isEmpty()) {
                 Instrument instrument = instChangeCount.get(track).firstEntry().getValue();
                 Part part = new Part(instrument);
-                // TODO: base.Instrument changes
+                // TODO: Instrument changes
 
                 for(Map.Entry<Count, TreeSet<Pitch>> pair : noteOnsCount.get(track).entrySet()) {
                     Count start = pair.getKey();
                     for(Pitch pitch : pair.getValue()) {
                         Count end = noteOffsCount.get(track).get(pitch).ceiling(start);
+                        System.out.println(new Note(start,end,pitch));
                         part.add(new Note(start,end,pitch));
                     }
                 }

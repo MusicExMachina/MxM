@@ -66,11 +66,11 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      * @return An base.Interval of this size.
      */
     public static Interval getInstance(int value) {
-        if(value >= MIN_INTERVAL&& value < MAX_INTERVAL) {
+        if(value >= MIN_INTERVAL && value < MAX_INTERVAL) {
             return ALL.get(value - MIN_INTERVAL);
         }
         else {
-            throw new Error("INTERVAL:\tbase.Interval out of range.");
+            throw new Error("INTERVAL:\tInterval out of range.");
         }
     }
 
