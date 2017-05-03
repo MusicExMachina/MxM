@@ -13,6 +13,9 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     /** A zero Count */
     public static final Count ZERO = new Count(0);
 
+    /** A full measure Count */
+    public static final Count ONE = new Count(1);
+
     /** The fractional numerator of this Count */
     private int numerator;
 
