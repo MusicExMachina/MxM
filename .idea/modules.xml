@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/mxm-core/mxm-core.iml" filepath="$PROJECT_DIR$/mxm-core/mxm-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/mxm-gui/mxm-gui.iml" filepath="$PROJECT_DIR$/mxm-gui/mxm-gui.iml" />
       <module fileurl="file://$PROJECT_DIR$/mxm-learning/mxm-learning.iml" filepath="$PROJECT_DIR$/mxm-learning/mxm-learning.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mxm-lilypond/mxm-lilypond.iml" filepath="$PROJECT_DIR$/mxm-lilypond/mxm-lilypond.iml" />
       <module fileurl="file://$PROJECT_DIR$/mxm-midi/mxm-midi.iml" filepath="$PROJECT_DIR$/mxm-midi/mxm-midi.iml" />
     </modules>
   </component>

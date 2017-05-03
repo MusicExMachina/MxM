@@ -31,30 +31,34 @@ class MidiReader {
     private static final int KEY_SIGNATURE      = 0x59;
     private static final int SEQUENCER_SPECIFIC = 0x7F;
 
-    /* Input & output */
+    /* Input and output */
     private Sequence sequence;
     private Passage passage;
 
-    /* Master track events */
+    /* Time signature change events in various time formats */
     private TreeMap<Long,TimeSignature> timeSigsLong;
     private TreeMap<Float,TimeSignature> timeSigsFloat;
     private TreeMap<Count,TimeSignature> timeSigsCount;
 
+    /* Tempo change events in various time formats */
     private TreeMap<Long,Integer> tempiLong;
     private TreeMap<Float,Tempo> tempiFloat;
     private TreeMap<Count, Tempo> tempiCount;
 
+    /* Measure markers in longs */
     private TreeMap<Long,Float> timePoints;
 
-    /* Track events */
+    /* Note on events in various time formats */
     private HashMap<Track,TreeMap<Long,TreeSet<Pitch>>> noteOnsLong;
     private HashMap<Track,TreeMap<Float,TreeSet<Pitch>>> noteOnsFloat;
     private HashMap<Track,TreeMap<Count,TreeSet<Pitch>>> noteOnsCount;
 
+    /* Note off events in various time formats */
     private HashMap<Track,TreeMap<Pitch,TreeSet<Long>>> noteOffsLong;
     private HashMap<Track,TreeMap<Pitch,TreeSet<Float>>> noteOffsFloat;
     private HashMap<Track,TreeMap<Pitch,TreeSet<Count>>> noteOffsCount;
 
+    /* Instrument change events in various time formats */
     private HashMap<Track,TreeMap<Long, Instrument>> instChangeLong;
     private HashMap<Track,TreeMap<Float, Instrument>> instChangeFloat;
     private HashMap<Track,TreeMap<Count, Instrument>> instChangeCount;
