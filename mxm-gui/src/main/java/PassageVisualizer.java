@@ -3,7 +3,7 @@ import form.Note;
 import form.Part;
 import form.Passage;
 import base.TimeSignature;
-import io.Writer;
+import io.MxmWriter;
 
 import javax.sound.midi.Sequence;
 import javax.swing.*;
@@ -76,7 +76,7 @@ public class PassageVisualizer extends JFrame {
             Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/dvorak/dvs93.mid");
             //Sequence sequence = MidiTools.download("http://tedmuller.us/Piano/FlightOfTheBumblebee/FlightOfTheBumblebee.mid");
             Passage passage = MidiTools.parse(sequence);
-            Writer.write(passage,"C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-gui\\src\\tests\\resources\\output");
+            MxmWriter.write(passage,"C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-gui\\src\\tests\\resources\\output");
             MidiTools.play(sequence);
             PassageVisualizer rtv = new PassageVisualizer(passage);
             Thread.sleep(100000);

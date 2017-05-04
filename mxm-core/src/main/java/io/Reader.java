@@ -1,24 +1,13 @@
 package io;
 
 import form.Passage;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.util.Collection;
 
 /**
- * Created by celenp on 3/27/2017.
+ * Reader is a public interface for any class that takes a file as input and outputs a passage. This means that there
+ * may be MIDI readers, MxM readers, LilyPond readers, MusicXML readers, ABC readers, and so on.
  */
-public class Reader {
-    public static void read(String filename) {
-        try {
-            FileReader reader = new FileReader(filename);
-
-            //reader.
-
-            //for(String line : reader.)
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+public interface Reader {
+    Passage read(String filename);
+    Collection<Passage> read(Collection<String> filenames);
 }

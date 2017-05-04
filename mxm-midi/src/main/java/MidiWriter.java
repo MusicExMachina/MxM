@@ -4,7 +4,7 @@ import base.TimeSignature;
 import form.Note;
 import form.Part;
 import form.Passage;
-import io.Writer;
+import io.MxmWriter;
 
 import javax.sound.midi.*;
 import java.io.IOException;
@@ -229,11 +229,11 @@ class MidiWriter {
         //Sequence sequence = MidiTools.download("https://www.8notes.com/school/midi/violin/bach_bourree.mid");
         Sequence sequence = MidiTools.load(Paths.get("").toAbsolutePath()+"/mxm-midi/src/tests/resources/midi_schubert_impromptu.mid");
         Passage passage = MidiTools.parse(sequence);
-        Writer.write(passage,"input");
+        MxmWriter.write(passage,"input");
 
         //Sequence out = MidiTools.write(passage);
         //Passage outputPassage = MidiTools.parse(out);
-        //Writer.write(outputPassage,"output");
+        //MxmWriter.write(outputPassage,"output");
         //MidiTools.play(out);
     }
 
