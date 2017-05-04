@@ -4,9 +4,8 @@ import base.Count;
 import base.TimeSignature;
 import form.Passage;
 
-import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * This writer has a number of recursive methods that

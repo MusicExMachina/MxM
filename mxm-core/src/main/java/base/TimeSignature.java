@@ -34,10 +34,12 @@ public class TimeSignature {
         // Duple Time
         ALL.add(new TimeSignature(1,1, new int[]{}));
         ALL.add(new TimeSignature(2,2, new int[]{}));
+        ALL.add(new TimeSignature(2,4, new int[]{}));
         ALL.add(new TimeSignature(4,4, new int[]{}));
         ALL.add(new TimeSignature(8,8, new int[]{}));
 
         // Triple Time
+        ALL.add(new TimeSignature(3,2, new int[]{3}));
         ALL.add(new TimeSignature(3,4, new int[]{3}));
 
         // Compound Time
