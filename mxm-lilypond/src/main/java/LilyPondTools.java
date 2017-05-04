@@ -1,4 +1,3 @@
-import javax.sound.midi.InvalidMidiDataException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -11,11 +10,33 @@ import java.nio.file.Paths;
  */
 public class LilyPondTools {
 
-    public static void main(String args[]) {
-        engrave();
+    public static void engrave(String fileName) {
+        try {
+            // Run LilyPond
+            String lilyPondPath     = "C:\\Program Files (x86)\\LilyPond\\usr\\bin\\lilypond.exe";
+            Path path               = Paths.get("").toAbsolutePath();
+            Runtime runtime         = Runtime.getRuntime();
+
+            // Wait for LilyPond to do its thing
+            String command          = lilyPondPath + " " + path + "\\" + fileName;
+            Process process         = runtime.exec(command);
+            process.waitFor();
+
+            // Get the LilyPond's command line output
+            StringBuilder output    = new StringBuilder();
+            BufferedReader reader   = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            String line;
+            while ((line = reader.readLine())!= null) {
+                output.append(line).append("\n");
+            }
+            System.out.println("LilyPond: " + output);
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
-    public static void engrave() {
+    public static void engraveAll() {
         try {
             // Run LilyPond
             String lilyPondPath     = "C:\\Program Files (x86)\\LilyPond\\usr\\bin\\lilypond.exe";
@@ -35,8 +56,7 @@ public class LilyPondTools {
                     if(fileName.contains(".ly")) {
                         try {
                             // Wait for LilyPond to do its thing
-                            String command = lilyPondPath+ " --pdf " + path + "\\" + fileName;
-                            System.out.println(command);
+                            String command          = lilyPondPath + " " + path + "\\" + fileName;
                             Process process         = runtime.exec(command);
                             process.waitFor();
 

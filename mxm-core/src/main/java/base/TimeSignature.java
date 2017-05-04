@@ -1,5 +1,8 @@
 package base;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /**
  * TimeSignatures are exactly what they sound like in the Western music theory
  * sense. These are useful as they define how RhythmTrees divide on the first few
@@ -11,11 +14,85 @@ package base;
  */
 public class TimeSignature {
 
-    /** The fractional numerator of this base.TimeSignature */
+    /** The fractional numerator of this time signature */
     private int numerator;
 
-    /** The fractional denominator of this base.TimeSignature */
+    /** The fractional denominator of this time signature */
     private int denominator;
+
+    /** The preferred number of subdivisions at this subdivision level */
+    private int[] preferredSubdivision;
+
+    /** The preferred note size at each subdivision level (in 4/4 counts) */
+    private Count[] preferredNoteLength;
+
+    /** An ArrayList of all valid Pitches */
+    private static final ArrayList<TimeSignature> ALL = new ArrayList<TimeSignature>();
+
+    // Initialize all pitches
+    static {
+        // Duple Time
+        ALL.add(new TimeSignature(1,1, new int[]{}));
+        ALL.add(new TimeSignature(2,2, new int[]{}));
+        ALL.add(new TimeSignature(4,4, new int[]{}));
+        ALL.add(new TimeSignature(8,8, new int[]{}));
+
+        // Triple Time
+        ALL.add(new TimeSignature(3,4, new int[]{3}));
+
+        // Compound Time
+        ALL.add(new TimeSignature(3,8, new int[]{3}));
+        ALL.add(new TimeSignature(6,8, new int[]{2,3}));
+        ALL.add(new TimeSignature(9,8, new int[]{3,3}));
+        ALL.add(new TimeSignature(12,8, new int[]{2,2,3}));
+
+        // Complex Time
+        ALL.add(new TimeSignature(5,4, new int[]{5}));
+        ALL.add(new TimeSignature(7,4, new int[]{7}));
+        ALL.add(new TimeSignature(11,4, new int[]{11}));
+        ALL.add(new TimeSignature(5,8, new int[]{5}));
+        ALL.add(new TimeSignature(7,8, new int[]{7}));
+        ALL.add(new TimeSignature(11,8, new int[]{11}));
+
+    }
+
+    public static void main(String args[]) {
+        Iterator<TimeSignature> itr = iterator();
+        while(itr.hasNext()) {
+            TimeSignature ts = itr.next();
+            String str = ts + "\t";
+            for(int i = 0; i < 5; i++)
+                str += " \t" + ts.getPreferredNoteLength(i);
+            System.out.println(str);
+        }
+    }
+    /**
+     * Gets an iterator which enumerates all valid time signatures.
+     * @return An iterator over all valid times signatures
+     */
+    public static Iterator<TimeSignature> iterator() {
+        return ALL.iterator();
+    }
+
+    /**
+     * Gets an instance of a time signature with a given numerator
+     * and denominator. Note that
+     * @param numerator The numerator of this time signature
+     * @param denominator The denominator of this time Signature
+     * @return A time signature with this description
+     */
+    public static TimeSignature getInstance(int numerator, int denominator) {
+        // TODO: Make this a more effective search, perhaps hash
+        Iterator<TimeSignature> iterator = iterator();
+        while(iterator.hasNext()) {
+            TimeSignature timeSig = iterator.next();
+            if( timeSig.numerator == numerator &&
+                timeSig.denominator == denominator)
+                    return timeSig;
+        }
+        throw new Error("TIME SIGNATURE:\tThis time signature (" +
+                numerator + "/" + denominator + ") does not exist!");
+    }
 
     /**
      * A constructor for base.TimeSignature taking in a numerator and
@@ -25,13 +102,15 @@ public class TimeSignature {
      * @param numerator The desired numerator.
      * @param denominator The desired denominator.
      */
-    public TimeSignature(int numerator, int denominator) {
-        if(numerator > 0 && denominator > 0) {
-            this.numerator   = numerator;
-            this.denominator = denominator;
-        }
-        else {
-            throw new Error("Cannot create a base.TimeSignature with a numerator or denominator below or equal to zero.");
+    private TimeSignature(int numerator, int denominator, int[] preferredSubdivision) {
+        this.numerator              = numerator;
+        this.denominator            = denominator;
+        this.preferredSubdivision   = preferredSubdivision;
+        this.preferredNoteLength    = new Count[preferredSubdivision.length+1];
+        this.preferredNoteLength[0] = getMeasureSize();
+
+        for(int i = 1; i < preferredNoteLength.length; i++) {
+            this.preferredNoteLength[i] = preferredNoteLength[i - 1].dividedBy(getPreferredSubdivision(i - 1));
         }
     }
 
@@ -51,56 +130,25 @@ public class TimeSignature {
         return denominator;
     }
 
-    /**
-     * The preferred subdivision at each given subdivision level.
-     * @return The prefered number of subdivisions at each level.
-     */
+    public Count getMeasureSize() { return new Count(numerator,denominator); }
+
     public int getPreferredSubdivision(int level) {
-        switch(level) {
-            case 0:
-                // 2/2, 3/2
-                if(denominator == 2) {
-                    return numerator;
-                }
-                // 2/4, 3/4, 4/4, 5/4, 6/4
-                else if(denominator == 4) {
-                    return numerator;
-                }
-                // 3/8, 6/8, 9/8, 12/8
-                if(numerator % 3 == 0 && denominator == 8) {
-                    return 2;
-                }
-                // 2/8, 4/8, 8/8
-                else if(numerator % 2 == 0 && denominator == 8) {
-                    return 2;
-                }
-                // 5/8, 7/8
-                else {
-                    return numerator;
-                }
-            case 1:
-                // 2/2, 3/2
-                if(denominator == 2) {
-                    return numerator;
-                }
-                // 2/4, 3/4, 4/4, 5/4, 6/4
-                if(denominator == 4) {
-                    return 2;
-                }
-                // 3/8, 6/8, 9/8, 12/8
-                else if(numerator % 3 == 0 && denominator == 8) {
-                    return 3;
-                }
-                // 2/8, 4/8, 8/8
-                else if(numerator % 2 == 0 && denominator == 8) {
-                    return 2;
-                }
-                // 5/8, 7/8
-                else {
-                    return 2;
-                }
-        }
-        return 2;
+        if(level < 0)
+            throw new Error("TIME SIGNATURE:\t cannot access subdivision level " + level);
+        if(level >= preferredSubdivision.length)
+            return 2;
+        else
+            return preferredSubdivision[level];
+    }
+
+    public Count getPreferredNoteLength(int level) {
+        if(level < 0)
+            throw new Error("TIME SIGNATURE:\t cannot access subdivision level " + level);
+        if(level >= preferredNoteLength.length)
+            // Take the last one and keep subdividing by two until we reach the desired level
+            return preferredNoteLength[preferredNoteLength.length-1].dividedBy(2 << (level - preferredNoteLength.length));
+        else
+            return preferredNoteLength[level];
     }
 
     /**
