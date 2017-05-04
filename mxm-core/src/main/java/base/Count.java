@@ -17,10 +17,10 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     public static final Count ONE = new Count(1);
 
     /** The fractional numerator of this Count */
-    private int numerator;
+    protected int numerator;
 
     /** The fractional denominator of this Count */
-    private int denominator;
+    protected int denominator;
 
     /** The measure of this Count */
     private int measure;

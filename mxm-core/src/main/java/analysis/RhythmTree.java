@@ -1,11 +1,9 @@
 package analysis;
 
 import base.Count;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Queue;
-import java.util.TreeMap;
 
 /**
  * A conceptualization of rhythm as gradual, equal subdivisions of some concrete amount of time.

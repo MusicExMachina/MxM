@@ -355,12 +355,12 @@ class MidiReader {
         byte[] data = message.getData();
         int numerator   = data[0];
         int denominator = 2 << (data[1] - 1);
-        TimeSignature timeSignature  = new TimeSignature(4,4);
+        TimeSignature timeSignature  = TimeSignature.getInstance(4,4);
         if(numerator == 0 || denominator == 0) {
             System.out.println("MIDI PARSER:\tImproper time signature message, reverting to 4/4");
         }
         else {
-            timeSignature = new TimeSignature(numerator, denominator);
+            timeSignature = TimeSignature.getInstance(numerator, denominator);
         }
         timeSigsLong.put(tick,timeSignature);
     }
@@ -408,7 +408,7 @@ class MidiReader {
         }
         // Else, make it 4/4, because why not?
         else {
-            timeSigsFloat.put(0f, new TimeSignature(4, 4));
+            timeSigsFloat.put(0f, TimeSignature.getInstance(4, 4));
             System.out.println("MIDI PARSER: No time signature... defaulting to 4/4");
         }
 
