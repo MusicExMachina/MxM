@@ -1,7 +1,11 @@
 package io;
 
-import base.*;
-import form.*;
+import base.Count;
+import base.Tempo;
+import base.TimeSignature;
+import form.Note;
+import form.Part;
+import form.Passage;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,8 +16,7 @@ import java.util.Iterator;
  * which stores all the information of a passage in a human-readable text
  * file, formatted such that it can be read again by the MxmReader class.
  */
-public class MxmWriter
-{
+public class MxmWriter implements Writer{
     /**
      * Write takes a Passage and writes it to a file of the given name.
      * @param passage The Passage to write to a .mxm file
@@ -21,7 +24,6 @@ public class MxmWriter
      */
     public static void write(Passage passage, String filename) {
         try {
-
             PrintWriter writer = new PrintWriter(filename + ".mxm", "UTF-8");
 
             writer.println("> Passage");

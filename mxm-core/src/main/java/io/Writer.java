@@ -8,6 +8,15 @@ import java.util.Collection;
  * may be MIDI writers, MxM writers, LilyPond writers, MusicXML writers, ABC writers, and so on.
  */
 public interface Writer {
-    void write(Passage passage, String filename);
-    void write(Collection<Passage> passage, String filenamePrefix);
+    static void write(Passage passage, String filename) {
+
+    }
+
+    static void write(Collection<Passage> passages, String filenamePrefix) {
+        int counter = 0;
+        for(Passage passage : passages) {
+            write(passage,filenamePrefix + "_" + counter);
+            counter++;
+        }
+    }
 }
