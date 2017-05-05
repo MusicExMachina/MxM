@@ -15,6 +15,8 @@ public class RhythmTree {
     /** Saves the root RhythmNode **/
     private RhythmNode root;
 
+    /** The time signature of this RhythmTree **/
+
     /**
      * The rhythmTree default constructor
      */

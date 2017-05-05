@@ -96,11 +96,11 @@ public class TextLSTM {
     private void initialize() {
         System.out.println("Beginning initialization...");
         // Extract all of the possible states
-        LinkedHashSet<Character> possibleCharsSet = new LinkedHashSet<Character>();
+        LinkedHashSet<Character> possibleCharsSet = new LinkedHashSet<>();
         for (char c : inputString) {
             possibleCharsSet.add(c);
         }
-        possibleChars = new ArrayList<Character>();
+        possibleChars = new ArrayList<>();
         possibleChars.addAll(possibleCharsSet);
 
         // Create input and output arrays
@@ -112,7 +112,7 @@ public class TextLSTM {
         // the first character of the string).
         int samplePos = 0;
         for (char currentChar : inputString) {
-            // Some fancypants math over here to do the above
+            // Some fancy-pants math over here to do the above
             char nextChar = inputString[(samplePos + 1) % (inputString.length)];
             // The input neuron for current-char is 1 at "samplePos"
             input.putScalar(new int[] { 0, possibleChars.indexOf(currentChar), samplePos }, 1);
@@ -156,7 +156,8 @@ public class TextLSTM {
             GravesLSTM.Builder hiddenLayerBuilder = new GravesLSTM.Builder();
             if(i == 0) {
                 hiddenLayerBuilder.nIn(possibleChars.size());
-            } else {
+            }
+            else {
                 hiddenLayerBuilder.nIn(hiddenLayerWidth);
             }
             hiddenLayerBuilder.nOut(hiddenLayerWidth);
@@ -207,7 +208,6 @@ public class TextLSTM {
         System.out.println("Beginning training...");
         // some epochs
         for (int epoch = 0; epoch < 100; epoch++) {
-
             System.out.println("Epoch " + epoch);
 
             // train the data

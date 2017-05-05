@@ -11,5 +11,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="mxm-core" />
+    <orderEntry type="module" module-name="mxm-midi" />
   </component>
 </module>

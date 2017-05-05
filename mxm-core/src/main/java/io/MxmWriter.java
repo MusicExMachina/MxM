@@ -9,6 +9,7 @@ import form.Passage;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.Iterator;
 
 /**
@@ -16,13 +17,14 @@ import java.util.Iterator;
  * which stores all the information of a passage in a human-readable text
  * file, formatted such that it can be read again by the MxmReader class.
  */
-public class MxmWriter implements Writer{
+public class MxmWriter implements Writer<Passage>{
     /**
      * Write takes a Passage and writes it to a file of the given name.
      * @param passage The Passage to write to a .mxm file
      * @param filename The name of the file (before .mxm is added)
      */
-    public static void write(Passage passage, String filename) {
+    @Override
+    public void write(Passage passage, String filename) {
         try {
             PrintWriter writer = new PrintWriter(filename + ".mxm", "UTF-8");
 
@@ -92,6 +94,11 @@ public class MxmWriter implements Writer{
         } catch (IOException e) {
             // do something
         }
+    }
+
+    @Override
+    public void write(Collection<Passage> types, String filename) {
+
     }
 
     /**

@@ -12,17 +12,17 @@ public class Instrument {
 
     private static final ArrayList<Instrument> GeneralMIDIInstrumentSet = new ArrayList<>();
 
-    public static final Instrument ACOUSTIC_GRAND_PIANO = new Instrument("Acoustic Grand Piano");
-    public static final Instrument BRIGHT_ACOUSTIC_PIANO = new Instrument("Bright Acoustic Piano");
-    public static final Instrument ELECTRIC_GRAND_PIANO = new Instrument("Electric Grand Piano");
-    public static final Instrument HONKY_TONK_PIANO = new Instrument("Honky-Tonk Piano");
-    public static final Instrument ELECTRIC_PIANO1 = new Instrument("Electric Piano 1");
-    public static final Instrument ELECTRIC_PIANO2 = new Instrument("Electric Piano 2");
-    public static final Instrument HARPSICHORD = new Instrument("Harpsichord");
-    public static final Instrument CLAVI = new Instrument("Clavichord");
-    public static final Instrument CELESTA = new Instrument("Celesta");
-    public static final Instrument GLOCKENSPIEL = new Instrument("Glockenspiel");
-    public static final Instrument MUSIC_BOX = new Instrument("Music Box");
+    public static final Instrument ACOUSTIC_GRAND_PIANO     = new Instrument("Acoustic Grand Piano");
+    public static final Instrument BRIGHT_ACOUSTIC_PIANO    = new Instrument("Bright Acoustic Piano");
+    public static final Instrument ELECTRIC_GRAND_PIANO     = new Instrument("Electric Grand Piano");
+    public static final Instrument HONKY_TONK_PIANO         = new Instrument("Honky-Tonk Piano");
+    public static final Instrument ELECTRIC_PIANO1          = new Instrument("Electric Piano 1");
+    public static final Instrument ELECTRIC_PIANO2          = new Instrument("Electric Piano 2");
+    public static final Instrument HARPSICHORD              = new Instrument("Harpsichord");
+    public static final Instrument CLAVI                    = new Instrument("Clavichord");
+    public static final Instrument CELESTA                  = new Instrument("Celesta");
+    public static final Instrument GLOCKENSPIEL             = new Instrument("Glockenspiel");
+    public static final Instrument MUSIC_BOX                = new Instrument("Music Box");
     public static final Instrument VIBES = new Instrument("Vibraphone");
     public static final Instrument MARIMBA = new Instrument("Marimba");
     public static final Instrument XYLOPHONE = new Instrument("Xylophone");
