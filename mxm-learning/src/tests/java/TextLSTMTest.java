@@ -7,7 +7,7 @@ import org.junit.Test;
 public class TextLSTMTest {
     @Test
     public void basicTest() {
-        TextLSTM network = new TextLSTM("This is a sample text string. ",50,2);
+        TextLSTM network = new TextLSTM("School ain't cool.",50,2);
         network.run();
     }
 }

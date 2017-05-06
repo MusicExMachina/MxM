@@ -121,6 +121,7 @@ public class TextLSTM {
             samplePos++;
         }
         trainingData = new DataSet(input, labels);
+        System.out.println(input.toString());
         System.out.println("...completed initialization.");
     }
 
@@ -197,7 +198,7 @@ public class TextLSTM {
         // then initialize it and set how often it should print.
         network = new MultiLayerNetwork(configuration);
         network.init();
-        network.setListeners(new ScoreIterationListener(1));
+        network.setListeners(new ScoreIterationListener(10));
         System.out.println("...completed building.");
     }
 
@@ -206,45 +207,50 @@ public class TextLSTM {
      */
     private void train() {
         System.out.println("Beginning training...");
-        // some epochs
+
+        // Each epoch is another iteration of training
         for (int epoch = 0; epoch < 100; epoch++) {
             System.out.println("Epoch " + epoch);
 
-            // train the data
+            // We're going to fit the network to how well it models training data-
+            // i.e. how well it can take inputs and predict labels (outputs)
             network.fit(trainingData);
             
-            // clear current stance from the last example
+            // We need to clear the state (weightings) of the previous epoch
             network.rnnClearPreviousState();
 
-            // put the first character into the rrn as an initialisation
+            // Initialize this LSTM with the first value of the training data
             INDArray testInit = Nd4j.zeros(possibleChars.size());
             testInit.putScalar(possibleChars.indexOf(inputString[0]), 1);
 
-            // run one step -> IMPORTANT: rnnTimeStep() must be called, not
-            // output()
-            // the output shows what the net thinks what should come next
+            // Since this is an RNN, we need to call rnnTimeStep(), not output().
+            // This is because rnnTimeStep() is optimized to save previous inputs,
+            // rather than needing to load everything each time we predict a new
+            // output. Note that we start with the training data's first entry
             INDArray output = network.rnnTimeStep(testInit);
 
-            // now the net should guess LEARNSTRING.length more characters
+            // Now we predict inputstring.length more characters (the same length
+            // as our training data, so network.fit(trainingData) can compare.
             for (int j = 0; j < inputString.length; j++) {
 
-                // first process the last output of the network to a concrete
-                // neuron, the neuron with the highest output cas the highest
-                // chance to get chosen
+                // We must choose an output from the probability distribution, i.e.
+                // if 'e' had the highest value, we choose 'e' as our output.
                 double[] outputProbDistribution = new double[possibleChars.size()];
                 for (int k = 0; k < outputProbDistribution.length; k++) {
                     outputProbDistribution[k] = output.getDouble(k);
                 }
                 int sampledCharacterIdx = findIndexOfHighestValue(outputProbDistribution);
 
-                // print the chosen output
+                // Print what output we chose
                 System.out.print(possibleChars.get(sampledCharacterIdx));
 
-                // use the last output as input
+                // Use this output as the next input by placing it in a one-dimensional
+                // nextInput array, with 0s for everything we didn't choose.
                 INDArray nextInput = Nd4j.zeros(possibleChars.size());
                 nextInput.putScalar(sampledCharacterIdx, 1);
-                output = network.rnnTimeStep(nextInput);
 
+                // Repeat the process with the new output becoming input
+                output = network.rnnTimeStep(nextInput);
             }
             System.out.print("\n");
             System.out.println("...completed training.");
