@@ -17,12 +17,11 @@ import org.nd4j.linalg.lossfunctions.LossFunctions;
 import java.util.*;
 
 /**
- * A single voice-generation LSTM. This is the first
- * foray into generating larger, more complex pieces
- * of music by starting with a single note-after-note
- * line played by a single instrument.
+ * A simple Text LSTM. The purpose of this class is not so much for MxM's functioning as to demonstrate how DL4J works,
+ * and, moreover, to demonstrate that it does work. If, for instance, this class fails to run on your machine, you will
+ * know it is a problem with running DL4J, not specifics pertaining to the class, etc. etc.
  */
-public class TextLSTM {
+public class SimpleTextLSTM {
 
     // Neural network dimensions
     private int hiddenLayerWidth;
@@ -43,7 +42,7 @@ public class TextLSTM {
      * @param hiddenLayerWidth The width of hidden layers to use
      * @param hiddenLayerNum The number of hidden layers to use
      */
-    public TextLSTM(String inputString, int hiddenLayerWidth, int hiddenLayerNum) {
+    public SimpleTextLSTM(String inputString, int hiddenLayerWidth, int hiddenLayerNum) {
 
         // Take in all of the arguments
         this.inputString        = inputString.toCharArray();
