@@ -33,7 +33,7 @@ class MidiReader {
 
     /* Input and output */
     private Sequence sequence;
-    private Passage passage;
+    private Score passage;
 
     /* Time signature change events in various time formats */
     private TreeMap<Long,TimeSignature> timeSigsLong;
@@ -70,12 +70,12 @@ class MidiReader {
      * summed up in a single method, but it is simply too
      * cumbersome to do so.
      * @param sequence The midi Sequence to parse.
-     * @return The form.Passage representing this Sequence.
+     * @return The form.Score representing this Sequence.
      */
-    public Passage read(Sequence sequence) {
+    public Score read(Sequence sequence) {
 
         this.sequence = sequence;
-        passage = new Passage();
+        passage = new Score();
 
         System.out.println("MIDI PARSER:\tParsing midi events...");
         parseAll();

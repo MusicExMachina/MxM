@@ -3,7 +3,7 @@ import base.Tempo;
 import base.TimeSignature;
 import form.Note;
 import form.Part;
-import form.Passage;
+import form.Score;
 
 import javax.sound.midi.*;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.util.TreeMap;
  * MidiWriter is a class which does exactly what you'd expect.
  * form.Note that each MidiWriter composes exactly *one* midi Sequence.
  * This means that the MidiTools class instantiates one for every
- * single form.Passage to be written. This class could potentially be
+ * single form.Score to be written. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
  */
 class MidiWriter {
@@ -24,7 +24,7 @@ class MidiWriter {
     private static int resolution = 24;
 
     /* The passage that we're reading from. */
-    private Passage passage = null;
+    private Score passage = null;
 
     /* The sequence that we're writing to. */
     private Sequence sequence = null;
@@ -33,7 +33,7 @@ class MidiWriter {
     private TreeMap<Float,Long> timePoints;
 
     // Writes the information contained in a passage down to a sequence
-    public Sequence run(Passage passage) {
+    public Sequence run(Score passage) {
         try {
             // Initialize our variables
             this.passage = passage;
@@ -227,12 +227,12 @@ class MidiWriter {
     public static void main(String argv[]) throws IOException, InvalidMidiDataException, MidiUnavailableException {
         //Sequence sequence = MidiTools.download("https://www.8notes.com/school/midi/violin/bach_bourree.mid");
         Sequence sequence = MidiTools.load(Paths.get("").toAbsolutePath()+"/mxm-midi/src/tests/resources/midi_schubert_impromptu.mid");
-        Passage passage = MidiTools.parse(sequence);
+        Score passage = MidiTools.parse(sequence);
         //MidiWriter writer = new MidiWriter();
         //writer.write(passage,"input");
 
         //Sequence out = MidiTools.write(passage);
-        //Passage outputPassage = MidiTools.parse(out);
+        //Score outputPassage = MidiTools.parse(out);
         //MxmWriter.write(outputPassage,"output");
         //MidiTools.play(out);
     }

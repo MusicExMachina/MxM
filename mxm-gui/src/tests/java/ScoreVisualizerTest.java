@@ -1,9 +1,9 @@
-import form.Passage;
+import form.Score;
 import org.junit.Test;
 
 import javax.sound.midi.Sequence;
 
-public class PassageVisualizerTest {
+public class ScoreVisualizerTest {
 
     @Test
     public void displayTest(){
@@ -14,7 +14,7 @@ public class PassageVisualizerTest {
             //Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
             //Sequence sequence = MidiTools.load("C:/users/celenp/desktop/test.mid");
             Sequence sequence = MidiTools.load("C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-midi\\src\\tests\\resources\\midi_schubert_impromptu.mid");
-            Passage passage = MidiTools.parse(sequence);
+            Score passage = MidiTools.parse(sequence);
             //MidiTools.play(sequence);
             System.out.println(sequence.toString());
             //Thread.sleep(100000);

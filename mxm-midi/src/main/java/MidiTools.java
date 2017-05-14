@@ -1,5 +1,5 @@
 import com.sun.media.sound.StandardMidiFileReader;
-import form.Passage;
+import form.Score;
 
 import javax.sound.midi.*;
 import javax.sound.midi.spi.MidiFileReader;
@@ -104,27 +104,27 @@ public abstract class MidiTools
     }
 
     /**
-     * Takes in a midi Sequence and writes a form.Passage. The
-     * form.Passage may then be parsed in a number of ways, including
+     * Takes in a midi Sequence and writes a form.Score. The
+     * form.Score may then be parsed in a number of ways, including
      * forming RhythmTrees, etc. as Passages carry *more* useful
      * musical information than Sequences alone.
      * @param sequence
      * @return
      */
-    public static Passage parse(Sequence sequence) {
+    public static Score parse(Sequence sequence) {
         // Spawn off a parser object
         MidiReader midiReader = new MidiReader();
         return midiReader.read(sequence);
     }
 
     /**
-     * Takes in a form.Passage and writes a midi Sequence from
+     * Takes in a form.Score and writes a midi Sequence from
      * it. The Sequence can then be played using MidiTools.play()
      * or saved to a midi file using MidiTools.save()
-     * @param passage The form.Passage to make into a Sequence.
+     * @param passage The form.Score to make into a Sequence.
      * @return The created MidiTools Sequence.
      */
-    public static Sequence write(Passage passage) {
+    public static Sequence write(Score passage) {
         // Spawn off a parser object
         MidiWriter midiWriter = new MidiWriter();
         return midiWriter.run(passage);

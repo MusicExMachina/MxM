@@ -1,6 +1,6 @@
 package io;
 
-import form.Passage;
+import form.Score;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,11 +10,11 @@ import java.util.Collection;
  * may be MIDI readers, MxM readers, LilyPond readers, MusicXML readers, ABC readers, and so on.
  */
 public interface Reader {
-    static Passage read(String filename) {
+    static Score read(String filename) {
         return null;
     }
-    static Collection<Passage> read(Collection<String> filenames) {
-        ArrayList<Passage> passages = new ArrayList<>();
+    static Collection<Score> read(Collection<String> filenames) {
+        ArrayList<Score> passages = new ArrayList<>();
         for(String filename : filenames) {
             passages.add(read(filename));
         }

@@ -5,7 +5,7 @@ import base.Tempo;
 import base.TimeSignature;
 import form.Note;
 import form.Part;
-import form.Passage;
+import form.Score;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,18 +17,18 @@ import java.util.Iterator;
  * which stores all the information of a passage in a human-readable text
  * file, formatted such that it can be read again by the MxmReader class.
  */
-public class MxmWriter implements Writer<Passage>{
+public class MxmWriter implements Writer<Score>{
     /**
-     * Write takes a Passage and writes it to a file of the given name.
-     * @param passage The Passage to write to a .mxm file
+     * Write takes a Score and writes it to a file of the given name.
+     * @param passage The Score to write to a .mxm file
      * @param filename The name of the file (before .mxm is added)
      */
     @Override
-    public void write(Passage passage, String filename) {
+    public void write(Score passage, String filename) {
         try {
             PrintWriter writer = new PrintWriter(filename + ".mxm", "UTF-8");
 
-            writer.println("> Passage");
+            writer.println("> Score");
             writer.println("  - Title");
             writer.println("      " + passage.getName());
             writer.println("  - Composer");
@@ -97,7 +97,7 @@ public class MxmWriter implements Writer<Passage>{
     }
 
     @Override
-    public void write(Collection<Passage> types, String filename) {
+    public void write(Collection<Score> types, String filename) {
 
     }
 

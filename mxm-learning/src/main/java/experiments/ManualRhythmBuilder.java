@@ -41,7 +41,7 @@ public class ManualRhythmBuilder {
 //        }
 //        System.out.println(l.getRhythm());
 //
-//        form.Passage p = new form.Passage();
+//        form.Score p = new form.Score();
 //
 //        p.add(l);
 //        p.addTimeSignature(new base.TimeSignature(4, 4), 0);
