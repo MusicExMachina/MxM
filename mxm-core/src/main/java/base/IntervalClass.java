@@ -1,22 +1,22 @@
-package analysis;
+package base;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * analysis.IntervalClass is a simple class which utilizes the interning design pattern to create only
+ * base.IntervalClass is a simple class which utilizes the interning design pattern to create only
  * twelve different values: PU, m2, M2, m3, M3, P4, TT, P5, m6, M6, m7, and M7. These are usually
- * found in Intervals, though may be used in Collections. form.Note that there should never be more than
+ * found in Intervals, though may be used in Collections. events.Note that there should never be more than
  * these 12 IntervalClasses, and that an iterator() has been provided for easy access. Also note
  * that IntervalClasses are always positive, as they represent a distance.
  */
 public class IntervalClass implements Comparator<IntervalClass>, Comparable<IntervalClass> {
 
-    /** The lowest interval class, better known as "unison." */
+    /** The lowest interval class, better known as "unison" */
     private static final int MIN_INTERVALCLASS = 0;
 
-    /** The highest interval class, better known as "a major seventh." */
+    /** The highest interval class, better known as "a major seventh" */
     private static final int MAX_INTERVALCLASS = 11;
 
     /** All possible IntervalClasses */
@@ -38,10 +38,10 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     }
 
     /**
-     * Gets an instance of a given analysis.IntervalClass size. This method
-     * creates the interning design pattern per analysis.IntervalClass.
-     * @param size The size (in half steps) of this analysis.IntervalClass
-     * @return An analysis.IntervalClass of this size.
+     * Gets an instance of a given base.IntervalClass size. This method
+     * creates the interning design pattern per base.IntervalClass.
+     * @param size The size (in half steps) of this base.IntervalClass
+     * @return An base.IntervalClass of this size.
      */
     public static IntervalClass getInstance(int size) {
         if(size >= MIN_INTERVALCLASS && size <= MAX_INTERVALCLASS) {
@@ -52,12 +52,12 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
         }
     }
 
-    /** The size of the analysis.IntervalClass. */
+    /** The size of the base.IntervalClass. */
     private int size;
 
     /**
-     * A constructor for analysis.IntervalClass which is private.
-     * @param size The size (0-11) of this analysis.IntervalClass.
+     * A constructor for base.IntervalClass which is private.
+     * @param size The size (0-11) of this base.IntervalClass.
      */
     private IntervalClass(int size) {
         this.size = size;
@@ -72,26 +72,26 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     }
 
     /**
-     * Creates a new analysis.IntervalClass that is the sum of these two.
-     * @param other The other analysis.IntervalClass to add to this one.
-     * @return  The new analysis.IntervalClass sum. form.Note: This loops.
+     * Creates a new base.IntervalClass that is the sum of these two.
+     * @param other The other base.IntervalClass to add to this one.
+     * @return  The new base.IntervalClass sum. events.Note: This loops.
      */
     public IntervalClass plus(IntervalClass other) {
         return ALL.get((this.size + other.size)%12);
     }
 
     /**
-     * Creates a new analysis.IntervalClass that is the difference of these two.
-     * @param other The other analysis.IntervalClass to subtract from this one.
-     * @return The new analysis.IntervalClass difference. form.Note: This loops.
+     * Creates a new base.IntervalClass that is the difference of these two.
+     * @param other The other base.IntervalClass to subtract from this one.
+     * @return The new base.IntervalClass difference. events.Note: This loops.
      */
     public IntervalClass minus(IntervalClass other) {
         return ALL.get((this.size - other.size + 12)%12);
     }
 
     /**
-     * Returns a nicely-formatted String of this analysis.IntervalClass (for debug).
-     * @return A nicely-formatted String of this analysis.IntervalClass.
+     * Returns a nicely-formatted String of this base.IntervalClass (for debug).
+     * @return A nicely-formatted String of this base.IntervalClass.
      */
     public String toString() {
         switch (size) {
@@ -106,8 +106,8 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     }
 
     /**
-     * Compares this analysis.IntervalClass to another, purely based on size.
-     * @param other the other analysis.IntervalClass to compare this one to.
+     * Compares this base.IntervalClass to another, purely based on size.
+     * @param other the other base.IntervalClass to compare this one to.
      * @return The comparison between the two.
      */
     @Override
@@ -117,8 +117,8 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * Compares two IntervalClasses, purely based on size.
-     * @param ic1 The first analysis.IntervalClass.
-     * @param ic2 The second analysis.IntervalClass.
+     * @param ic1 The first base.IntervalClass.
+     * @param ic2 The second base.IntervalClass.
      * @return The comparison between the two.
      */
     @Override
@@ -141,7 +141,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * A simple hash code in order to allow storage in certain Collections.
-     * @return The hash code for this analysis.IntervalClass.
+     * @return The hash code for this base.IntervalClass.
      */
     @Override
     public int hashCode() {

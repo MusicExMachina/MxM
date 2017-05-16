@@ -20,7 +20,7 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
             this.value = value;
         }
         else {
-            throw new Error("Invalid tempo range!");
+            throw new Error("Invalid tempo! (" + value + " bpm)");
         }
     }
 

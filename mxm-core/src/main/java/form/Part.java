@@ -1,6 +1,7 @@
 package form;
 
 import base.*;
+import events.Note;
 
 import java.util.Iterator;
 import java.util.TreeMap;
@@ -9,8 +10,7 @@ import java.util.TreeMap;
  * Lines are horizontal arrangements of Notes that are heard as a
  * continuous horizontal slice.
  */
-public class Part extends Passage {
-
+public class Part implements Iterable<Note> {
 
     /** The instrument that plays this line. */
     private Instrument instrument;
@@ -33,15 +33,6 @@ public class Part extends Passage {
     }
 
     public Instrument getInstrument() { return instrument; }
-
-    public float getLastTime() {
-        if(notes.size() > 0) {
-            return notes.firstKey().toFloat();
-        }
-        else {
-            return 0f;
-        }
-    }
 
     /**
      * Returns a nicely-formatted string representing this line.

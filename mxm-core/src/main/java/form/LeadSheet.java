@@ -1,14 +1,15 @@
 package form;
 
-import base.Chord;
-import base.Count;
+import events.ChordChange;
 
-import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * Created by celenp on 5/13/2017.
  */
 public class LeadSheet extends Passage {
 
-    TreeMap<Count, Chord> progression;
+    Part melody;
+    TreeSet<ChordChange> progression;
+
 }

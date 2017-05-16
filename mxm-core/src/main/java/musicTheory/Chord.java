@@ -1,7 +1,6 @@
-package base;
+package musicTheory;
 
-import analysis.ChordClass;
-import analysis.PitchClass;
+import base.PitchClass;
 
 /**
  * Created by celenp on 5/13/2017.

@@ -1,4 +1,4 @@
-package analysis;
+package base;
 
 /**
  * Created by celenp on 2/11/2017.

@@ -32,11 +32,11 @@ public class ManualRhythmBuilder {
 //        form.Part l = new form.Part(base.Instrument.ACOUSTIC_GRAND_PIANO);
 //        for (int i = 0; i < schubert.length; i++) {
 //            int[] aGrieg = schubert[i];
-//            form.Note[] cs = new form.Note[schubert[i].length];
+//            events.Note[] cs = new events.Note[schubert[i].length];
 //            for (int j = 0; j<schubert[i].length; j++){
-//                cs[j] = new form.Note(base.Pitch.getInstance(60));
+//                cs[j] = new events.Note(base.Pitch.getInstance(60));
 //            }
-//            RhythmTree r = new RhythmTree(aGrieg, cs);
+//            analysis.RhythmTree r = new analysis.RhythmTree(aGrieg, cs);
 //            //l.add(new MidiMeasure(i, r));
 //        }
 //        System.out.println(l.getRhythm());

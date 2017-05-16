@@ -1,13 +1,17 @@
 import base.*;
 import base.Instrument;
-import form.*;
+import events.Note;
+import base.Tempo;
+import base.TimeSignature;
+import form.Part;
+import form.Score;
 
 import javax.sound.midi.*;
 import java.util.*;
 
 /**
  * MidiReader is a class which does exactly what you'd expect.
- * form.Note that each MidiReader parses exactly *one* midi Sequence.
+ * events.Note that each MidiReader parses exactly *one* midi Sequence.
  * This means that the MidiTools class instantiates one for every
  * single file to be read. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
@@ -38,7 +42,7 @@ class MidiReader {
     /* Time signature change events in various time formats */
     private TreeMap<Long,TimeSignature> timeSigsLong;
     private TreeMap<Float,TimeSignature> timeSigsFloat;
-    private TreeMap<Count,TimeSignature> timeSigsCount;
+    private TreeMap<Count, TimeSignature> timeSigsCount;
 
     /* Tempo change events in various time formats */
     private TreeMap<Long,Integer> tempiLong;
@@ -341,7 +345,7 @@ class MidiReader {
     private void parseTempoMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         Integer ppqn = (data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff);
-        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter form.Note - I think this is right
+        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter events.Note - I think this is right
     }
 
     /**
@@ -539,7 +543,7 @@ class MidiReader {
 
     /**
      * Converts the all events into fractions-of-a-measure
-     * format. form.Note that this is a touchy, time-consuming
+     * format. events.Note that this is a touchy, time-consuming
      * process prone to minor errors, and thus, this function
      * is likely to require tweaking going forward.
      */
@@ -648,7 +652,7 @@ class MidiReader {
 
     /**
      * A useful method that interpolates a tick between established
-     * time points. form.Note that this is similar to the way that pixels
+     * time points. events.Note that this is similar to the way that pixels
      * are interpolated in digital images.
      * @param tick The tick representing the time to be interpolated.
      * @return The float value of this tick as fractions of a measure.

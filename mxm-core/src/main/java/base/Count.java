@@ -3,7 +3,7 @@ package base;
 import java.util.Comparator;
 
 /**
- * A Count is the fundamental measurement of  musical time. form.Note
+ * A Count is the fundamental measurement of  musical time. events.Note
  * that Counts are essentially just fractions. They're not really that
  * special. They are, however, immutable, in order to avoid accidental
  * headaches down the line.
@@ -40,7 +40,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
 
     /**
      * A constructor for base.Count taking in a numerator and
-     * denominator. form.Note that these do not need to be reduced,
+     * denominator. events.Note that these do not need to be reduced,
      * as the constructor itself will do the reducing.
      * @param numerator The desired numerator.
      * @param denominator The desired denominator.
@@ -60,7 +60,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
 
     /**
      * A constructor for base.Count taking in a measure, a numerator
-     * and a denominator. form.Note that these do not need to be
+     * and a denominator. events.Note that these do not need to be
      * reduced, as the constructor itself will do the reducing.
      * @param measure The desired measure.
      * @param numerator The desired numerator.

@@ -1,5 +1,5 @@
 import base.Count;
-import form.Note;
+import events.Note;
 import form.Part;
 import form.Score;
 import base.TimeSignature;

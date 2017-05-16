@@ -14,6 +14,6 @@ public class MxmWriterTest {
 
     @Test
     public void WriterTest() {
-        //io.MxmWriter.write(new form.Score());
+        //io.MxmWriter.java.write(new form.advanced.Score());
     }
 }

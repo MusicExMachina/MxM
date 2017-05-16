@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Passages are simply contemporaneous (or not) collections of
  * parts. They are this project's main way of transporting "music"
- * and the internal structures of the music. form.Note that a passage
+ * and the internal structures of the music. events.Note that a passage
  * is unified by its temporal nature- time signatures, tempos, and
  * the like.
  */

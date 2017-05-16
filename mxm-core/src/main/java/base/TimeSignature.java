@@ -98,7 +98,7 @@ public class TimeSignature {
 
     /**
      * A constructor for base.TimeSignature taking in a numerator and
-     * denominator. form.Note that these do not need to be reduced,
+     * denominator. events.Note that these do not need to be reduced,
      * as TimeSignatures can be almost anything you want them
      * to be.
      * @param numerator The desired numerator.

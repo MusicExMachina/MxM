@@ -12,7 +12,7 @@ import java.util.Queue;
  */
 public class RhythmTree {
 
-    /** Saves the root RhythmNode **/
+    /** Saves the root analysis.RhythmNode **/
     private RhythmNode root;
 
     /**
@@ -61,15 +61,15 @@ public class RhythmTree {
     }
 
     /**
-     * Getter for the root RhythmNode which fills the whole measure.
-     * @return Gets the root RhythmNode of this RhythmTree.
+     * Getter for the root analysis.RhythmNode which fills the whole measure.
+     * @return Gets the root analysis.RhythmNode of this analysis.RhythmTree.
      */
     public RhythmNode getRoot() {
         return root;
     }
 
     /**
-     * Converts this RhythmTree to a List of Integer subdivisions
+     * Converts this analysis.RhythmTree to a List of Integer subdivisions
      * @return A List of Integer subdivisions.
      */
     public ArrayList<Integer> toList() {

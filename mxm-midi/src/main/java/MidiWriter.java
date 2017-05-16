@@ -1,7 +1,7 @@
 import base.Count;
 import base.Tempo;
 import base.TimeSignature;
-import form.Note;
+import events.Note;
 import form.Part;
 import form.Score;
 
@@ -13,7 +13,7 @@ import java.util.TreeMap;
 
 /**
  * MidiWriter is a class which does exactly what you'd expect.
- * form.Note that each MidiWriter composes exactly *one* midi Sequence.
+ * events.Note that each MidiWriter composes exactly *one* midi Sequence.
  * This means that the MidiTools class instantiates one for every
  * single form.Score to be written. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
@@ -233,7 +233,7 @@ class MidiWriter {
 
         //Sequence out = MidiTools.write(passage);
         //Score outputPassage = MidiTools.parse(out);
-        //MxmWriter.write(outputPassage,"output");
+        //MxmWriter.java.write(outputPassage,"output");
         //MidiTools.play(out);
     }
 
