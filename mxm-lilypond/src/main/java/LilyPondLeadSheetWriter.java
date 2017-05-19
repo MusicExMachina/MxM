@@ -1,52 +1,65 @@
+import java.util.Calendar;
+
 /**
  * Created by celenp on 5/15/2017.
  */
 public class LilyPondLeadSheetWriter {
 
+    String songName = "Song";
+    String songStyle = "Default";
+    String composerName = "MxM";
+
     public static void main(String args[]) {
-        writeBookEntry();
+        LilyPondLeadSheetWriter writer = new LilyPondLeadSheetWriter();
+        writer.writeBookEntry();
     }
 
-    public static void writeBookEntry() {
-        String songName = "Song";
-        String songStyle = "Default";
-        String composerName = "MxM";
-        String tableOfContentsName = songName + "/" + composerName;
+    public void writeBookEntry() {
 
         // The bookpart block establishes this as a chapter-of-sorts in an overall book of pieces. Note that all the
         // Lilypond styling here is based on OpenBook, which may be found at https://github.com/veltzer/openbook
         System.out.println("\\bookpart {");
+        writeHeader();
+        writeScore();
+        writeCopyright();
+        System.out.println("}");
+    }
+
+    private void writeHeader() {
+        String tableOfContentsName = songName + "/" + composerName;
+
         System.out.println("\t\\tocItem \\markup \"" + tableOfContentsName + "\"");
         System.out.println("\t\\markup {");
         System.out.println("\t\t\\column {");
         System.out.println("\t\t\t\\override #'(baseline-skip . 3.5)");
         System.out.println("\t\t\t\\column {");
         System.out.println("\t\t\t\t\\huge \\larger \\bold");
-        System.out.println("\t\t\t\t\\fill-line { \\larger \"Song Name\" }");
+        System.out.println("\t\t\t\t\\fill-line { \\larger \"" + songName + "\" }");
         System.out.println("\t\t\t\t\\fill-line { \"Music by " + composerName + "\" }");
         System.out.println("\t\t\t\t\\fill-line { \"" + songStyle + "\" }");
         System.out.println("\t\t\t}");
         System.out.println("\t\t}");
         System.out.println("\t}");
         System.out.println("\t\\noPageBreak");
-        writeScore();
     }
 
-    public static void writeScore() {
+    private void writeScore() {
         System.out.println("\t\\score {");
         System.out.println("\t\t<<\t");
+        writeChords();
+        writeMelody();
+        writeLyrics();
+        System.out.println("\t\t>>");
+        System.out.println("\t\t\\layout { }");
+        System.out.println("\t}");
+    }
+
+    private void writeChords() {
         System.out.println("\t\t\\new ChordNames = \"Chords\"");
         System.out.println("\t\t\\with {\t\\remove \"Bar_engraver\" }");
         System.out.println("\t\t\\chordmode {");
         System.out.println("\t\t\t\\startChords");
         System.out.println("\t\t\t\\startSong");
-        printChords();
-        System.out.println("\t\t\t\\endSong");
-        System.out.println("\t\t\t\\endChords");
-        System.out.println("\t\t}");
-    }
-
-    public static void printChords() {
         System.out.println("\t\t\t% This is where a pickup measure goes: \"\\partial\"");
         System.out.println("\t\t\t\\mySegno");
         System.out.println("\t\t\t\\startPart");
@@ -60,5 +73,56 @@ public class LilyPondLeadSheetWriter {
         System.out.println("\t\t\t\t% These are the chords to the B section, and every line ends with \"\\myEndLine\"");
         System.out.println("\t\t\t}");
         System.out.println("\t\t\t\\endPart");
+        System.out.println("\t\t\t\\endSong");
+        System.out.println("\t\t\t\\endChords");
+        System.out.println("\t\t}");
     }
+
+    private void writeMelody() {
+        System.out.println("\t\t\\new Staff=\"Melody\" {");
+        System.out.println("\t\t\t\\new Voice=\"Voice\"");
+        System.out.println("\t\t\t\\relative c' {");
+        System.out.println("\t\t\t\t\\tempo \"Allegro\" 4 = 168");
+        System.out.println("\t\t\t\t\\time 4/4");
+        System.out.println("\t\t\t\t\\key c \\major");
+        System.out.println("\t\t\t\t% This is where a pickup measure goes: \"\\partial\"");
+        System.out.println("\t\t\t\t\\repeat volta 2 {");
+        System.out.println("\t\t\t\t\t% These are the notes for the A section");
+        System.out.println("\t\t\t\t}");
+        System.out.println("\t\t\t\t\\repeat volta 2 {");
+        System.out.println("\t\t\t\t\t% These are the notes for the B section");
+        System.out.println("\t\t\t\t}");
+        System.out.println("\t\t\t}");
+        System.out.println("\t\t}");
+    }
+
+    private void writeLyrics() {
+        System.out.println("\t\t\\new Lyrics=\"Lyrics\" \\lyricsto \"Voice\"");
+
+        // Each lyricmoded block contains all sections of music in order. Seperate blocks represent lyrics for
+        // each time through (if there's a repeat, we might see different lyrics the second time around).
+
+        System.out.println("\t\t\\lyricmode {");
+        System.out.println("\t\t\t% These are the lyrics to the song");
+        System.out.println("\t\t}");
+        System.out.println("\t\t\\new Lyrics=\"Lyrics\" \\lyricsto \"Voice\"");
+        System.out.println("\t\t\\lyricmode {");
+        System.out.println("\t\t\t% These are the lyrics the second time through");
+        System.out.println("\t\t}");
+        System.out.println("\t\t\\new Lyrics=\"Lyrics\" \\lyricsto \"Voice\"");
+        System.out.println("\t\t\\lyricmode {");
+        System.out.println("\t\t\t% And these are the lyrics the third time through");
+        System.out.println("\t\t}");
+    }
+
+    private void writeCopyright() {
+        String curYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        System.out.println("\t\\noPageBreak");
+        System.out.println("\t\\markup \\column {");
+        System.out.println("\t\t\\null");
+        System.out.println("\t\t\\fill-line { \\smaller \\smaller { \"Copyright © " +  curYear + " by " + composerName + "\" } }");
+        System.out.println("\t\t\\fill-line { \\smaller \\smaller { \"Typeset by MxM, derived from OpenBook\" } }");
+        System.out.println("\t}");
+    }
+
 }
