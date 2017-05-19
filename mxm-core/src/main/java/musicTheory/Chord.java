@@ -1,7 +1,9 @@
 package musicTheory;
 
+import base.IntervalClass;
 import base.PitchClass;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -12,13 +14,22 @@ import java.util.Iterator;
  */
 public class Chord implements Iterable<PitchClass> {
 
-    /* The most important pitch class in the chord. */
-    private PitchClass root;
+    /* A list of the chord factors, starting from the root, and moving upward in thirds, fourths, etc. */
+    private ArrayList<PitchClass> factors;
 
     private ChordClass chordClass;
 
+    /**
+     * The constructor for a chord involves a root pitch class (say, F#) and a ChordClass (say, ChordClass.MAJOR)
+     * @param root The root of this chord in a traditional music theory sense)
+     * @param chordClass The type of chord this is (Major? Minor? Sus2?)
+     */
     public Chord(PitchClass root, ChordClass chordClass) {
-        this.root = root;
+        /* For every interval in the ChordClass (which holds all intervals above
+            the root, add a chord factor that is also that high above the root */
+        for(IntervalClass intervalClass : chordClass) {
+            factors.add(root.transpose(intervalClass));
+        }
         this.chordClass = chordClass;
     }
 

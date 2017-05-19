@@ -13,6 +13,19 @@ import java.util.Iterator;
  */
 public class IntervalClass implements Comparator<IntervalClass>, Comparable<IntervalClass> {
 
+    public static final IntervalClass UNISON            = new IntervalClass(0);
+    public static final IntervalClass MINOR_SECOND      = new IntervalClass(1);
+    public static final IntervalClass MAJOR_SECOND      = new IntervalClass(2);
+    public static final IntervalClass MINOR_THIRD       = new IntervalClass(3);
+    public static final IntervalClass MAJOR_THIRD       = new IntervalClass(4);
+    public static final IntervalClass PERFECT_FOURTH    = new IntervalClass(5);
+    public static final IntervalClass TRITONE           = new IntervalClass(6);
+    public static final IntervalClass PERFECT_FIFTH     = new IntervalClass(7);
+    public static final IntervalClass MINOR_SIXTH       = new IntervalClass(8);
+    public static final IntervalClass MAJOR_SIXTH       = new IntervalClass(9);
+    public static final IntervalClass MINOR_SEVENTH     = new IntervalClass(10);
+    public static final IntervalClass MAJOR_SEVENTH     = new IntervalClass(11);
+
     /** The lowest interval class, better known as "unison" */
     private static final int MIN_INTERVALCLASS = 0;
 
@@ -22,12 +35,6 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     /** All possible IntervalClasses */
     private static final ArrayList<IntervalClass> ALL = new ArrayList<>();
 
-    // Initialize the "ALL" collection
-    static {
-        for(int intervalClassValue = MIN_INTERVALCLASS; intervalClassValue <= MAX_INTERVALCLASS; intervalClassValue++) {
-            ALL.add(new IntervalClass(intervalClassValue));
-        }
-    }
 
     /**
      * Gets an iterator which enumerates all valid IntervalClasses.
@@ -61,6 +68,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      */
     private IntervalClass(int size) {
         this.size = size;
+        ALL.add(this);
     }
 
     /**
