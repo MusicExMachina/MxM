@@ -5,14 +5,19 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * base.IntervalClass is a simple class which utilizes the interning design pattern to create only
- * twelve different values: PU, m2, M2, m3, M3, P4, TT, P5, m6, M6, m7, and M7. These are usually
- * found in Intervals, though may be used in Collections. events.Note that there should never be more than
- * these 12 IntervalClasses, and that an iterator() has been provided for easy access. Also note
- * that IntervalClasses are always positive, as they represent a distance.
+ * There are only twelve interval classes which represent the twelve possible (always positive) vector differences
+ * between pitch classes. For instance, MINOR_SECOND represents both a movement of a minor second upward, a major
+ * seventh downward, a minor ninth upward, so on and so forth such that octaves are always compressed.
  */
 public class IntervalClass implements Comparator<IntervalClass>, Comparable<IntervalClass> {
 
+    /** The lowest interval class, better known as "unison" */
+    private static final int MIN_INTERVALCLASS = 0;
+
+    /** The highest interval class, better known as "a major seventh" */
+    private static final int MAX_INTERVALCLASS = 11;
+
+    /** These twelve IntervalClasses are all that can exist. */
     public static final IntervalClass UNISON            = new IntervalClass(0);
     public static final IntervalClass MINOR_SECOND      = new IntervalClass(1);
     public static final IntervalClass MAJOR_SECOND      = new IntervalClass(2);
@@ -26,15 +31,8 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     public static final IntervalClass MINOR_SEVENTH     = new IntervalClass(10);
     public static final IntervalClass MAJOR_SEVENTH     = new IntervalClass(11);
 
-    /** The lowest interval class, better known as "unison" */
-    private static final int MIN_INTERVALCLASS = 0;
-
-    /** The highest interval class, better known as "a major seventh" */
-    private static final int MAX_INTERVALCLASS = 11;
-
     /** All possible IntervalClasses */
     private static final ArrayList<IntervalClass> ALL = new ArrayList<>();
-
 
     /**
      * Gets an iterator which enumerates all valid IntervalClasses.
@@ -72,49 +70,50 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     }
 
     /**
-     * A getter for the size of this base.Interval, in half-steps.
-     * @return The size of this base.Interval, in half-steps.
+     * A getter for the size of this interval class, in half-steps.
+     * @return The size of this interval class, in half-steps
      */
     public int getSize() {
         return size;
     }
 
     /**
-     * Creates a new base.IntervalClass that is the sum of these two.
-     * @param other The other base.IntervalClass to add to this one.
-     * @return  The new base.IntervalClass sum. events.Note: This loops.
+     * Returns the interval class that is the summation of this and another. For instance, MAJOR_THIRD.plus(MINOR_THIRD)
+     * would equal PERFECT_FIFTH and so forth. Note that this wraps around the octave such that a PERFECT_FIFTH plus a
+     * PERFECT_FOURTH would equal UNISON.
+     * @param other The other interval class to add to this one
+     * @return  The new interval class that corresponds to the addition of this interval class and other
      */
     public IntervalClass plus(IntervalClass other) {
         return ALL.get((this.size + other.size)%12);
     }
 
     /**
-     * Creates a new base.IntervalClass that is the difference of these two.
-     * @param other The other base.IntervalClass to subtract from this one.
-     * @return The new base.IntervalClass difference. events.Note: This loops.
+     * Creates a new interval class that is the difference between this and another. For instance, a MAJOR_THIRD minus a
+     * MINOR_SECOND would be a MINOR_THIRD and so forth. Note that this wraps around the octave such that a UNISON minus
+     * a MAJOR_SECOND equals a MINOR_SEVENTH.
+     * @param other The other interval class to subtract from this one
+     * @return The new interval class that corresponds to the difference between this and other
      */
     public IntervalClass minus(IntervalClass other) {
         return ALL.get((this.size - other.size + 12)%12);
     }
 
     /**
-     * Returns a nicely-formatted String of this base.IntervalClass (for debug).
-     * @return A nicely-formatted String of this base.IntervalClass.
+     * Returns a nicely-formatted String of this interval class (for debug).
+     * @return A nicely-formatted String of this interval class
      */
     public String toString() {
         switch (size) {
-            case 0:     return "PU";   case 1:     return "m2";
-            case 2:     return "M2";   case 3:     return "m3";
-            case 4:     return "M3";   case 5:     return "P4";
-            case 6:     return "TT";   case 7:     return "P5";
-            case 8:     return "m6";   case 9:     return "M6";
-            case 10:    return "m7";   case 11:    return "M7";
+            case 0:     return "PU";   case 1:     return "m2";     case 2:     return "M2";   case 3:     return "m3";
+            case 4:     return "M3";   case 5:     return "P4";     case 6:     return "TT";   case 7:     return "P5";
+            case 8:     return "m6";   case 9:     return "M6";     case 10:    return "m7";   case 11:    return "M7";
             default:    return "ERROR";
         }
     }
 
     /**
-     * Compares this base.IntervalClass to another, purely based on size.
+     * Compares this interval class to another, purely based on size.
      * @param other the other base.IntervalClass to compare this one to.
      * @return The comparison between the two.
      */
@@ -155,4 +154,5 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     public int hashCode() {
         return size;
     }
+
 }
