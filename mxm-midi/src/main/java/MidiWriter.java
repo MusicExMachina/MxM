@@ -1,7 +1,7 @@
 import base.Count;
 import base.Tempo;
 import base.TimeSignature;
-import events.Note;
+import events.eventTypes.Note;
 import form.Part;
 import form.Score;
 import io.Writer;
@@ -15,7 +15,7 @@ import java.util.TreeMap;
 
 /**
  * MidiWriter is a class which does exactly what you'd expect.
- * events.Note that each MidiWriter composes exactly *one* midi Sequence.
+ * events.eventTypes.Note that each MidiWriter composes exactly *one* midi Sequence.
  * This means that the MidiTools class instantiates one for every
  * single form.Score to be written. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.

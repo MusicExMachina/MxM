@@ -1,6 +1,7 @@
 package musicTheory;
 
-import base.PitchClass;
+import base.types.PitchClass;
+import musicTheory.types.KeyClass;
 
 /**
  * Created by celenp on 5/13/2017.

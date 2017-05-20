@@ -1,7 +1,7 @@
 package form;
 
 import base.*;
-import events.Note;
+import events.eventTypes.Note;
 
 import java.util.Iterator;
 import java.util.TreeMap;

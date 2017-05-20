@@ -7,13 +7,13 @@ import base.Count;
  */
 public abstract class MusicEvent {
 
-    /** The start RhythmNode of this events.Note. */
+    /** The start RhythmNode of this events.eventTypes.Note. */
     private Count start;
 
-    /** The end RhythmNode of this events.Note. */
+    /** The end RhythmNode of this events.eventTypes.Note. */
     private Count end;
 
-    /** The end RhythmNode of this events.Note. */
+    /** The end RhythmNode of this events.eventTypes.Note. */
     private Count length;
 
     public Count getStart() { return start; }

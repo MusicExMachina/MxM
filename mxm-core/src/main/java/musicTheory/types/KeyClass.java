@@ -1,4 +1,4 @@
-package musicTheory;
+package musicTheory.types;
 
 /**
  * Created by celenp on 5/16/2017.

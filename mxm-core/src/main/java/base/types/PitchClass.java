@@ -1,14 +1,13 @@
-package base;
+package base.types;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * base.PitchClass is a simple class which utilizes the interning design pattern to create only
- * twelve different values: C, C#, D, D#, E, F, G, G#, A, A#, and B. These are usually found
- * on a base.Pitch, though may be used in Collections. events.Note that there should never be more than
- * these 12 PitchClasses, and that an iterator() has been provided for easy access.
+ * Pitch class uses the interning design pattern to represent twelve different values: C, C#, D, D#, E, F, G, G#, A, A#,
+ * and B. These are usually found on a pitch. Take note that there should never be more than these 12 PitchClasses, and
+ * that an iterator() has been provided for easy access.
  */
 public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass> {
 
@@ -17,6 +16,34 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
 
     /** The highest basic class, better known as "B." */
     private static final int MAX_PITCHCLASS = 11;
+
+    public static PitchClass C_FLAT     = getInstance(11);
+    public static PitchClass C_NATURAL  = getInstance(0);
+    public static PitchClass C_SHARP    = getInstance(1);
+
+    public static PitchClass D_FLAT     = getInstance(1);
+    public static PitchClass D_NATURAL  = getInstance(2);
+    public static PitchClass D_SHARP    = getInstance(3);
+
+    public static PitchClass E_FLAT     = getInstance(3);
+    public static PitchClass E_NATURAL  = getInstance(4);
+    public static PitchClass E_SHARP    = getInstance(5);
+
+    public static PitchClass F_FLAT     = getInstance(4);
+    public static PitchClass F_NATURAL  = getInstance(5);
+    public static PitchClass F_SHARP    = getInstance(6);
+
+    public static PitchClass G_FLAT     = getInstance(6);
+    public static PitchClass G_NATURAL  = getInstance(7);
+    public static PitchClass G_SHARP    = getInstance(8);
+
+    public static PitchClass A_FLAT     = getInstance(8);
+    public static PitchClass A_NATURAL  = getInstance(9);
+    public static PitchClass A_SHARP    = getInstance(10);
+
+    public static PitchClass B_FLAT     = getInstance(10);
+    public static PitchClass B_NATURAL  = getInstance(11);
+    public static PitchClass B_SHARP    = getInstance(0);
 
     /** All possible PitchClasses */
     private static final ArrayList<PitchClass> ALL = new ArrayList<>();
@@ -37,10 +64,10 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     }
 
     /**
-     * Gets an instance of a given base.PitchClass size. This method
-     * creates the interning design pattern per base.PitchClass.
-     * @param value The value of this base.PitchClass.
-     * @return An base.PitchClass of this value.
+     * Gets an instance of a given base.types.PitchClass size. This method
+     * creates the interning design pattern per base.types.PitchClass.
+     * @param value The value of this base.types.PitchClass.
+     * @return An base.types.PitchClass of this value.
      */
     public static PitchClass getInstance(int value) {
         if(value >= MIN_PITCHCLASS && value <= MAX_PITCHCLASS) {
@@ -55,24 +82,24 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     private int value;
 
     /**
-     * The private constructor for base.PitchClass.
-     * @param value The value of this base.PitchClass.
+     * The private constructor for base.types.PitchClass.
+     * @param value The value of this base.types.PitchClass.
      */
     private PitchClass(int value) {
         this.value = (byte)value;
     }
 
     /**
-     * Transposes a base.PitchClass by a given interval.
+     * Transposes a base.types.PitchClass by a given interval.
      * @param intervalClass The base.Interval to transpose by.
-     * @return The new, resulting base.PitchClass.
+     * @return The new, resulting base.types.PitchClass.
      */
     public PitchClass transpose(IntervalClass intervalClass) {
         return PitchClass.getInstance((value + intervalClass.getSize() % 12));
     }
 
     /**
-     * Gets the base.Interval between this base.PitchClass and another.
+     * Gets the base.Interval between this base.types.PitchClass and another.
      * @param other The other base.Pitch to subtract from this one.
      * @return THe base.Interval between this base.Pitch and another.
      */
@@ -81,16 +108,16 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     }
 
     /**
-     * Normalizes this base.PitchClass between 0 and 1.
-     * @return This base.PitchClass in the range [0,1).
+     * Normalizes this base.types.PitchClass between 0 and 1.
+     * @return This base.types.PitchClass in the range [0,1).
      */
     public float normalized() {
         return (float)(value - MIN_PITCHCLASS)/(float)(MAX_PITCHCLASS - MIN_PITCHCLASS);
     }
 
     /**
-     * Returns a nicely-formatted String of this base.PitchClass (for debug).
-     * @return A nicely-formatted String of this base.PitchClass.
+     * Returns a nicely-formatted String of this base.types.PitchClass (for debug).
+     * @return A nicely-formatted String of this base.types.PitchClass.
      */
     public String toString() {
         switch (value) {
@@ -105,8 +132,8 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     }
 
     /**
-     * Compares this base.PitchClass to another base.PitchClass.
-     * @param other The other base.PitchClass.
+     * Compares this base.types.PitchClass to another base.types.PitchClass.
+     * @param other The other base.types.PitchClass.
      * @return The comparison.
      */
     @Override
@@ -116,8 +143,8 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
 
     /**
      * Compares two PitchClasses.
-     * @param pc1 The first base.PitchClass.
-     * @param pc2 The second base.PitchClass.
+     * @param pc1 The first base.types.PitchClass.
+     * @param pc2 The second base.types.PitchClass.
      * @return The comparison.
      */
     @Override
@@ -126,9 +153,9 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     }
 
     /**
-     * Checks if this base.PitchClass equals another Object.
+     * Checks if this base.types.PitchClass equals another Object.
      * @param o The other Object.
-     * @return If this base.PitchClass is equal to the Object.
+     * @return If this base.types.PitchClass is equal to the Object.
      */
     @Override
     public boolean equals(Object o) {
@@ -137,7 +164,7 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
 
     /**
      * A simple hash code for storage of PitchClasses in special Collections.
-     * @return The hash code for this base.PitchClass.
+     * @return The hash code for this base.types.PitchClass.
      */
     @Override
     public int hashCode() {

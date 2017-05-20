@@ -12,6 +12,7 @@ import java.util.Collection;
  */
 public abstract class Reader<T extends Passage> {
     public T read(String filename);
+
     public Collection<T> read(Collection<String> filenames) {
         ArrayList<T> toReturn = new ArrayList<>();
         for(String filename : filenames) {

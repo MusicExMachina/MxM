@@ -1,6 +1,6 @@
 import base.*;
 import base.Instrument;
-import events.Note;
+import events.eventTypes.Note;
 import form.Part;
 import form.Score;
 import io.Reader;
@@ -10,7 +10,7 @@ import java.util.*;
 
 /**
  * MidiReader is a class which does exactly what you'd expect.
- * events.Note that each MidiReader parses exactly *one* midi Sequence.
+ * events.eventTypes.Note that each MidiReader parses exactly *one* midi Sequence.
  * This means that the MidiTools class instantiates one for every
  * single file to be read. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
@@ -67,10 +67,8 @@ public class MidiReader implements Reader<Score> {
     private HashMap<Track,TreeMap<Count, Instrument>> instChangeCount;
 
     /**
-     * The main method of MidiReader, which is the entire
-     * essence of this class. In fact, this class could be
-     * summed up in a single method, but it is simply too
-     * cumbersome to do so.
+     * The main method of MidiReader, which is the entire essence of this class. In fact, this class could be summed up
+     * in a single method, but it is simply too cumbersome to do so.
      * @param sequence The midi Sequence to parse.
      * @return The form.Score representing this Sequence.
      */
@@ -343,7 +341,7 @@ public class MidiReader implements Reader<Score> {
     private void parseTempoMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         Integer ppqn = (data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff);
-        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter events.Note - I think this is right
+        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter events.eventTypes.Note - I think this is right
     }
 
     /**
@@ -541,7 +539,7 @@ public class MidiReader implements Reader<Score> {
 
     /**
      * Converts the all events into fractions-of-a-measure
-     * format. events.Note that this is a touchy, time-consuming
+     * format. events.eventTypes.Note that this is a touchy, time-consuming
      * process prone to minor errors, and thus, this function
      * is likely to require tweaking going forward.
      */
@@ -650,7 +648,7 @@ public class MidiReader implements Reader<Score> {
 
     /**
      * A useful method that interpolates a tick between established
-     * time points. events.Note that this is similar to the way that pixels
+     * time points. events.eventTypes.Note that this is similar to the way that pixels
      * are interpolated in digital images.
      * @param tick The tick representing the time to be interpolated.
      * @return The float value of this tick as fractions of a measure.

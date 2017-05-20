@@ -1,9 +1,7 @@
 import base.Pitch;
-import base.PitchClass;
-import io.Reader;
-import io.Writer;
+import base.types.PitchClass;
 import musicTheory.Chord;
-import musicTheory.ChordClass;
+import musicTheory.types.ChordClass;
 
 /**
  * Created by celenp on 5/16/2017.

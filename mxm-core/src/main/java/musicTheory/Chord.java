@@ -1,7 +1,8 @@
 package musicTheory;
 
-import base.IntervalClass;
-import base.PitchClass;
+import base.types.IntervalClass;
+import base.types.PitchClass;
+import musicTheory.types.ChordClass;
 
 import java.util.ArrayList;
 import java.util.Iterator;

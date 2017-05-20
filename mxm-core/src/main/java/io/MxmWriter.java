@@ -3,7 +3,7 @@ package io;
 import base.Count;
 import base.Tempo;
 import base.TimeSignature;
-import events.Note;
+import events.eventTypes.Note;
 import form.Part;
 import form.Score;
 

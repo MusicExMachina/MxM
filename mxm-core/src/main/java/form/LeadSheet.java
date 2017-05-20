@@ -1,6 +1,6 @@
 package form;
 
-import events.ChordChange;
+import events.eventTypes.ChordChange;
 
 import java.util.TreeSet;
 

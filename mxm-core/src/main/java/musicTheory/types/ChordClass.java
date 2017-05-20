@@ -1,6 +1,6 @@
-package musicTheory;
+package musicTheory.types;
 
-import base.IntervalClass;
+import base.types.IntervalClass;
 
 import java.util.Arrays;
 import java.util.Iterator;

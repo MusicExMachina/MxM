@@ -1,4 +1,4 @@
-package base;
+package base.types;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -43,10 +43,10 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     }
 
     /**
-     * Gets an instance of a given base.IntervalClass size. This method
-     * creates the interning design pattern per base.IntervalClass.
-     * @param size The size (in half steps) of this base.IntervalClass
-     * @return An base.IntervalClass of this size.
+     * Gets an instance of a given base.types.IntervalClass size. This method
+     * creates the interning design pattern per base.types.IntervalClass.
+     * @param size The size (in half steps) of this base.types.IntervalClass
+     * @return An base.types.IntervalClass of this size.
      */
     public static IntervalClass getInstance(int size) {
         if(size >= MIN_INTERVALCLASS && size <= MAX_INTERVALCLASS) {
@@ -57,12 +57,12 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
         }
     }
 
-    /** The size of the base.IntervalClass. */
+    /** The size of the base.types.IntervalClass. */
     private int size;
 
     /**
-     * A constructor for base.IntervalClass which is private.
-     * @param size The size (0-11) of this base.IntervalClass.
+     * A constructor for base.types.IntervalClass which is private.
+     * @param size The size (0-11) of this base.types.IntervalClass.
      */
     private IntervalClass(int size) {
         this.size = size;
@@ -114,7 +114,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * Compares this interval class to another, purely based on size.
-     * @param other the other base.IntervalClass to compare this one to.
+     * @param other the other base.types.IntervalClass to compare this one to.
      * @return The comparison between the two.
      */
     @Override
@@ -124,8 +124,8 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * Compares two IntervalClasses, purely based on size.
-     * @param ic1 The first base.IntervalClass.
-     * @param ic2 The second base.IntervalClass.
+     * @param ic1 The first base.types.IntervalClass.
+     * @param ic2 The second base.types.IntervalClass.
      * @return The comparison between the two.
      */
     @Override
@@ -148,7 +148,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * A simple hash code in order to allow storage in certain Collections.
-     * @return The hash code for this base.IntervalClass.
+     * @return The hash code for this base.types.IntervalClass.
      */
     @Override
     public int hashCode() {
