@@ -18,6 +18,7 @@ import java.util.Iterator;
  * file, formatted such that it can be read again by the MxmReader class.
  */
 public class MxmWriter implements Writer<Score>{
+
     /**
      * Write takes a Score and writes it to a file of the given name.
      * @param passage The Score to write to a .mxm file
@@ -132,4 +133,5 @@ public class MxmWriter implements Writer<Score>{
         }
         return toReturn;
     }
+
 }

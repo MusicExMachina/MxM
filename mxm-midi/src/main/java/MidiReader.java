@@ -1,10 +1,9 @@
 import base.*;
 import base.Instrument;
 import events.Note;
-import base.Tempo;
-import base.TimeSignature;
 import form.Part;
 import form.Score;
+import io.Reader;
 
 import javax.sound.midi.*;
 import java.util.*;
@@ -16,7 +15,7 @@ import java.util.*;
  * single file to be read. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
  */
-class MidiReader {
+public class MidiReader implements Reader<Score> {
 
     /* A few of the most useful MidiTools messages */
     private static final int SEQUENCE_NUMBER    = 0x00;
@@ -66,7 +65,6 @@ class MidiReader {
     private HashMap<Track,TreeMap<Long, Instrument>> instChangeLong;
     private HashMap<Track,TreeMap<Float, Instrument>> instChangeFloat;
     private HashMap<Track,TreeMap<Count, Instrument>> instChangeCount;
-
 
     /**
      * The main method of MidiReader, which is the entire
@@ -707,4 +705,5 @@ class MidiReader {
         // The best-matching count to put this event on
         return new Count(numerator,denominator);
     }
+
 }

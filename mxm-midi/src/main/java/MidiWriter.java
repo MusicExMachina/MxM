@@ -4,10 +4,12 @@ import base.TimeSignature;
 import events.Note;
 import form.Part;
 import form.Score;
+import io.Writer;
 
 import javax.sound.midi.*;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -18,7 +20,7 @@ import java.util.TreeMap;
  * single form.Score to be written. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
  */
-class MidiWriter {
+class MidiWriter implements Writer<Score> {
 
     /* The "resolution," i.e. the number of ticks per measure. */
     private static int resolution = 24;
@@ -74,6 +76,19 @@ class MidiWriter {
         }
         return sequence;
     }
+
+
+
+    @Override
+    public void write(Score type, String filename) {
+
+    }
+
+    @Override
+    public void write(Collection<Score> types, String filename) {
+
+    }
+
 
     private void init(Track track) throws InvalidMidiDataException {
 
@@ -222,8 +237,6 @@ class MidiWriter {
         }
     }
 
-
-
     public static void main(String argv[]) throws IOException, InvalidMidiDataException, MidiUnavailableException {
         //Sequence sequence = MidiTools.download("https://www.8notes.com/school/midi/violin/bach_bourree.mid");
         Sequence sequence = MidiTools.load(Paths.get("").toAbsolutePath()+"/mxm-midi/src/tests/resources/midi_schubert_impromptu.mid");
@@ -236,5 +249,4 @@ class MidiWriter {
         //MxmWriter.java.write(outputPassage,"output");
         //MidiTools.play(out);
     }
-
 }

@@ -1,7 +1,6 @@
 package io;
 
 import form.Passage;
-import form.Score;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,15 +10,13 @@ import java.util.Collection;
  * may be MIDI readers, MxM readers, LilyPond readers, MusicXML readers, ABC readers, and so on. Note that the different
  * types of passages will have different readers- a RealBookReader, a ScoreReader, a LineReader, etc.
  */
-public interface Reader<T extends Passage> {
-    static Score read(String filename) {
-        return null;
-    }
-    static Collection<Score> read(Collection<String> filenames) {
-        ArrayList<Score> passages = new ArrayList<>();
+public abstract class Reader<T extends Passage> {
+    public T read(String filename);
+    public Collection<T> read(Collection<String> filenames) {
+        ArrayList<T> toReturn = new ArrayList<>();
         for(String filename : filenames) {
-            passages.add(read(filename));
+            toReturn.add(read(filename));
         }
-        return passages;
+        return toReturn;
     }
 }

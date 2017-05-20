@@ -1,5 +1,7 @@
 import base.Pitch;
 import base.PitchClass;
+import io.Reader;
+import io.Writer;
 import musicTheory.Chord;
 import musicTheory.ChordClass;
 
