@@ -1,6 +1,6 @@
 package musicTheory;
 
-import base.types.PitchClass;
+import base.sound.PitchClass;
 import musicTheory.types.KeyClass;
 
 /**

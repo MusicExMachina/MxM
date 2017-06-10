@@ -1,11 +1,12 @@
-package events;
+package events.playable;
 
-import base.Count;
+import base.time.Count;
+import events.MusicEvent;
 
 /**
  * Created by celenp on 6/9/2017.
  */
-public abstract class PlayableEvent extends MusicEvent {
+public interface PlayableEvent extends MusicEvent {
 
     public Count getEnd() { return end; }
 

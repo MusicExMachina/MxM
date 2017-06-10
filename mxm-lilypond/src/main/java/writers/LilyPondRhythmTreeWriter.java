@@ -1,7 +1,7 @@
 import analysis.RhythmNode;
 import analysis.RhythmTree;
-import base.Count;
-import base.TimeSign;
+import base.time.Count;
+import base.time.TimeSign;
 import io.Writer;
 
 import java.io.IOException;

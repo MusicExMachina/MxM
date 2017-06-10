@@ -1,4 +1,4 @@
-package base.types;
+package base.sound;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 /**
  * Pitch class uses the interning design pattern to represent twelve different values: C, C#, D, D#, E, F, G, G#, A, A#,
- * and B. These are usually found on a pitch. Take note that there should never be more than these 12 PitchClasses, and
+ * and B. These are usually found on a sound. Take note that there should never be more than these 12 PitchClasses, and
  * that an iterator() has been provided for easy access.
  */
 public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass> {
@@ -17,30 +17,29 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     /** The highest basic class, better known as "B." */
     private static final int MAX_PITCHCLASS = 11;
 
+    // A number of public static pre-defined sound classes,
+    // representing all possible sound classes using their
+    // standard music theory names. Note enharmonic classes.
+    // TODO: C_FLAT might not work nicely with octave assumptions
+    // TODO: B_SHARP might not as well. Ill-defined goals here
     public static PitchClass C_FLAT     = getInstance(11);
     public static PitchClass C_NATURAL  = getInstance(0);
     public static PitchClass C_SHARP    = getInstance(1);
-
     public static PitchClass D_FLAT     = getInstance(1);
     public static PitchClass D_NATURAL  = getInstance(2);
     public static PitchClass D_SHARP    = getInstance(3);
-
     public static PitchClass E_FLAT     = getInstance(3);
     public static PitchClass E_NATURAL  = getInstance(4);
     public static PitchClass E_SHARP    = getInstance(5);
-
     public static PitchClass F_FLAT     = getInstance(4);
     public static PitchClass F_NATURAL  = getInstance(5);
     public static PitchClass F_SHARP    = getInstance(6);
-
     public static PitchClass G_FLAT     = getInstance(6);
     public static PitchClass G_NATURAL  = getInstance(7);
     public static PitchClass G_SHARP    = getInstance(8);
-
     public static PitchClass A_FLAT     = getInstance(8);
     public static PitchClass A_NATURAL  = getInstance(9);
     public static PitchClass A_SHARP    = getInstance(10);
-
     public static PitchClass B_FLAT     = getInstance(10);
     public static PitchClass B_NATURAL  = getInstance(11);
     public static PitchClass B_SHARP    = getInstance(0);
@@ -64,60 +63,60 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     }
 
     /**
-     * Gets an instance of a given base.types.PitchClass size. This method
-     * creates the interning design pattern per base.types.PitchClass.
-     * @param value The value of this base.types.PitchClass.
-     * @return An base.types.PitchClass of this value.
+     * Gets an instance of a given base.sound.PitchClass size. This method
+     * creates the interning design pattern per base.sound.PitchClass.
+     * @param value The value of this base.sound.PitchClass.
+     * @return An base.sound.PitchClass of this value.
      */
     public static PitchClass getInstance(int value) {
         if(value >= MIN_PITCHCLASS && value <= MAX_PITCHCLASS) {
             return ALL.get(value);
         }
         else {
-            throw new Error("PITCH CLASS:\tbase.Pitch class out of range.");
+            throw new Error("PITCH CLASS:\tbase.sound.Pitch class out of range.");
         }
     }
 
-    /** Stores the midi value of this base.Pitch. */
+    /** Stores the midi value of this base.sound.Pitch. */
     private int value;
 
     /**
-     * The private constructor for base.types.PitchClass.
-     * @param value The value of this base.types.PitchClass.
+     * The private constructor for base.sound.PitchClass.
+     * @param value The value of this base.sound.PitchClass.
      */
     private PitchClass(int value) {
         this.value = (byte)value;
     }
 
     /**
-     * Transposes a base.types.PitchClass by a given interval.
-     * @param intervalClass The base.Interval to transpose by.
-     * @return The new, resulting base.types.PitchClass.
+     * Transposes a base.sound.PitchClass by a given interval.
+     * @param intervalClass The base.sound.Interval to transpose by.
+     * @return The new, resulting base.sound.PitchClass.
      */
     public PitchClass transpose(IntervalClass intervalClass) {
         return PitchClass.getInstance((value + intervalClass.getSize() % 12));
     }
 
     /**
-     * Gets the base.Interval between this base.types.PitchClass and another.
-     * @param other The other base.Pitch to subtract from this one.
-     * @return THe base.Interval between this base.Pitch and another.
+     * Gets the base.sound.Interval between this base.sound.PitchClass and another.
+     * @param other The other base.sound.Pitch to subtract from this one.
+     * @return THe base.sound.Interval between this base.sound.Pitch and another.
      */
     public PitchClass minus(PitchClass other) {
         return new PitchClass(other.value - this.value);
     }
 
     /**
-     * Normalizes this base.types.PitchClass between 0 and 1.
-     * @return This base.types.PitchClass in the range [0,1).
+     * Normalizes this base.sound.PitchClass between 0 and 1.
+     * @return This base.sound.PitchClass in the range [0,1).
      */
     public float normalized() {
         return (float)(value - MIN_PITCHCLASS)/(float)(MAX_PITCHCLASS - MIN_PITCHCLASS);
     }
 
     /**
-     * Returns a nicely-formatted String of this base.types.PitchClass (for debug).
-     * @return A nicely-formatted String of this base.types.PitchClass.
+     * Returns a nicely-formatted String of this base.sound.PitchClass (for debug).
+     * @return A nicely-formatted String of this base.sound.PitchClass.
      */
     public String toString() {
         switch (value) {
@@ -132,8 +131,8 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     }
 
     /**
-     * Compares this base.types.PitchClass to another base.types.PitchClass.
-     * @param other The other base.types.PitchClass.
+     * Compares this base.sound.PitchClass to another base.sound.PitchClass.
+     * @param other The other base.sound.PitchClass.
      * @return The comparison.
      */
     @Override
@@ -143,8 +142,8 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
 
     /**
      * Compares two PitchClasses.
-     * @param pc1 The first base.types.PitchClass.
-     * @param pc2 The second base.types.PitchClass.
+     * @param pc1 The first base.sound.PitchClass.
+     * @param pc2 The second base.sound.PitchClass.
      * @return The comparison.
      */
     @Override
@@ -153,9 +152,9 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     }
 
     /**
-     * Checks if this base.types.PitchClass equals another Object.
+     * Checks if this base.sound.PitchClass equals another Object.
      * @param o The other Object.
-     * @return If this base.types.PitchClass is equal to the Object.
+     * @return If this base.sound.PitchClass is equal to the Object.
      */
     @Override
     public boolean equals(Object o) {
@@ -164,7 +163,7 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
 
     /**
      * A simple hash code for storage of PitchClasses in special Collections.
-     * @return The hash code for this base.types.PitchClass.
+     * @return The hash code for this base.sound.PitchClass.
      */
     @Override
     public int hashCode() {

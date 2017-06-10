@@ -1,5 +1,7 @@
 package base;
 
+import base.sound.Interval;
+import base.sound.Pitch;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;

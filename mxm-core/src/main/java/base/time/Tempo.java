@@ -1,9 +1,9 @@
-package base;
+package base.time;
 
 import java.util.Comparator;
 
 /**
- * base.Tempo is a glorified int wrapper, which allows for a little more dress
+ * base.time.Tempo is a glorified int wrapper, which allows for a little more dress
  * and prevents problems down the line with arguments to constructors.
  */
 public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
@@ -12,8 +12,8 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
     private final int value;
 
     /**
-     * Constructor taking in a base.Tempo speed.
-     * @param value The base.Tempo's speed.
+     * Constructor taking in a base.time.Tempo speed.
+     * @param value The base.time.Tempo's speed.
      */
     public Tempo(int value) {
         if(value > 0 ) {
@@ -25,7 +25,7 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
     }
 
     /**
-     * Returns the number of beats per minute this base.Tempo represents.
+     * Returns the number of beats per minute this base.time.Tempo represents.
      * @return The BPM of this tempo.
      */
     public int getBPM() {
@@ -33,8 +33,8 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
     }
 
     /**
-     * Returns a nicely-formatted String of this base.Tempo (for debug).
-     * @return This base.Tempo's String representation.
+     * Returns a nicely-formatted String of this base.time.Tempo (for debug).
+     * @return This base.time.Tempo's String representation.
      */
     public String toString() {
         return value + " bpm";
@@ -48,8 +48,8 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
 
     /**
      * Compares two Tempi.
-     * @param p1 The first base.Tempo.
-     * @param p2 The second base.Tempo.
+     * @param p1 The first base.time.Tempo.
+     * @param p2 The second base.time.Tempo.
      * @return The comparison.
      */
     @Override
@@ -58,9 +58,9 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
     }
 
     /**
-     * Checks if this base.Tempo equals another Object.
+     * Checks if this base.time.Tempo equals another Object.
      * @param o The other Object.
-     * @return If this base.Tempo is equal to the Object.
+     * @return If this base.time.Tempo is equal to the Object.
      */
     @Override
     public boolean equals(Object o) {
@@ -72,7 +72,7 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
 
     /**
      * A simple hash code for storage of Tempi in special Collections.
-     * @return The hash code for this base.Tempo.
+     * @return The hash code for this base.time.Tempo.
      */
     @Override
     public int hashCode() {

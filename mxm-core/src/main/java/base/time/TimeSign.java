@@ -1,4 +1,4 @@
-package base;
+package base.time;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,8 +9,8 @@ import java.util.Iterator;
  * levels (3/4 versus 6/8) and will eventually  be useful in determining how
  * transitions between TimeSignatures work.
  *
- * NoteEvent: These are in many ways structurally similar to Counts. The major difference
- * is that there's no reason to ever reduce a base.TimeSign from say, 4/4 to 2/2.
+ * Note: These are in many ways structurally similar to Counts. The major difference
+ * is that there's no reason to ever reduce a base.time.TimeSign from say, 4/4 to 2/2.
  */
 public class TimeSign {
 
@@ -58,16 +58,6 @@ public class TimeSign {
 
     }
 
-    public static void main(String args[]) {
-        Iterator<TimeSign> itr = iterator();
-        while(itr.hasNext()) {
-            TimeSign ts = itr.next();
-            String str = ts + "\t";
-            for(int i = 0; i < 5; i++)
-                str += " \t" + ts.getPreferredNoteLength(i);
-            System.out.println(str);
-        }
-    }
     /**
      * Gets an iterator which enumerates all valid time signatures.
      * @return An iterator over all valid times signatures
@@ -78,7 +68,7 @@ public class TimeSign {
 
     /**
      * Gets an instance of a time signature with a given numerator
-     * and denominator. NoteEvent that
+     * and denominator. Note that
      * @param numerator The numerator of this time signature
      * @param denominator The denominator of this time Signature
      * @return A time signature with this description
@@ -97,8 +87,8 @@ public class TimeSign {
     }
 
     /**
-     * A constructor for base.TimeSign taking in a numerator and
-     * denominator. events.eventTypes.NoteEvent that these do not need to be reduced,
+     * A constructor for base.time.TimeSign taking in a numerator and
+     * denominator. events.playable.Note that these do not need to be reduced,
      * as TimeSignatures can be almost anything you want them
      * to be.
      * @param numerator The desired numerator.
@@ -117,16 +107,16 @@ public class TimeSign {
     }
 
     /**
-     * Gets the denominator of this base.TimeSign.
-     * @return This base.TimeSign's denominator.
+     * Gets the denominator of this base.time.TimeSign.
+     * @return This base.time.TimeSign's denominator.
      */
     public int getNumerator() {
         return numerator;
     }
 
     /**
-     * Gets the denominator of this base.TimeSign.
-     * @return This base.TimeSign's denominator.
+     * Gets the denominator of this base.time.TimeSign.
+     * @return This base.time.TimeSign's denominator.
      */
     public int getDenominator() {
         return denominator;
@@ -155,15 +145,15 @@ public class TimeSign {
 
     /**
      * Returns a nicely-formatted String
-     * of this base.TimeSign (for debug).
-     * @return This base.TimeSign's String representation.
+     * of this base.time.TimeSign (for debug).
+     * @return This base.time.TimeSign's String representation.
      */
     public String toString() {
         return getNumerator() + "/" + getDenominator() + " time ";
     }
 
     /**
-     * A noteQualities (generated) equals() method for base.TimeSign.
+     * A noteQualities (generated) equals() method for base.time.TimeSign.
      * @param o The Object to compare this to.
      * @return If these two Objects are equal.
      */
@@ -180,7 +170,7 @@ public class TimeSign {
     /**
      * A simple hash code in order to allow storage
      * in certain Collections, like HashSets.
-     * @return The hash code for this base.TimeSign.
+     * @return The hash code for this base.time.TimeSign.
      */
     @Override
     public int hashCode() {

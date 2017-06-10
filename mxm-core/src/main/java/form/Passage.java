@@ -8,7 +8,7 @@ package form;
 public interface Passage {
 
     /*
-    public Iterable<NoteEvent> notesItr();
+    public Iterable<Note> notesItr();
     public Iterable<Part> partsItr();
     public Iterable<Instrument> sectionsItr();
     public Iterable<>

@@ -14,8 +14,8 @@ import java.util.Collection;
 public class MxmScoreWriter extends Writer<Score> {
 
     /**
-     * Write takes a Score and writes it to a file of the given name.
-     * @param passage The Score to write to a .mxm file
+     * Write takes a ScoreEvent and writes it to a file of the given name.
+     * @param passage The ScoreEvent to write to a .mxm file
      * @param filename The name of the file (before .mxm is added)
      */
     @Override
@@ -23,7 +23,7 @@ public class MxmScoreWriter extends Writer<Score> {
         try {
             PrintWriter writer = new PrintWriter(filename + ".mxm", "UTF-8");
 
-            writer.println("> Score");
+            writer.println("> ScoreEvent");
             writer.println("  - Title");
             writer.println("      " + passage.getName());
             writer.println("  - Composer");
@@ -64,7 +64,7 @@ public class MxmScoreWriter extends Writer<Score> {
                 writer.println("      > Notes");
 
                 int lastMeasure = 0;
-                for(NoteEvent note : part) {
+                for(Note note : part) {
 
                     int measure = note.getStart().getMeasure();
 

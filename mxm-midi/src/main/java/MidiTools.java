@@ -104,8 +104,8 @@ public abstract class MidiTools
     }
 
     /**
-     * Takes in a midi Sequence and writes a form.Score. The
-     * form.Score may then be parsed in a number of ways, including
+     * Takes in a midi Sequence and writes a form.ScoreEvent. The
+     * form.ScoreEvent may then be parsed in a number of ways, including
      * forming RhythmTrees, etc. as Passages carry *more* useful
      * musical information than Sequences alone.
      * @param sequence
@@ -118,10 +118,10 @@ public abstract class MidiTools
     }
 
     /**
-     * Takes in a form.Score and writes a midi Sequence from
+     * Takes in a form.ScoreEvent and writes a midi Sequence from
      * it. The Sequence can then be played using MidiTools.play()
      * or saved to a midi file using MidiTools.save()
-     * @param passage The form.Score to make into a Sequence.
+     * @param passage The form.ScoreEvent to make into a Sequence.
      * @return The created MidiTools Sequence.
      */
     public static Sequence write(Score passage) {

@@ -1,6 +1,6 @@
-import base.Count;
-import base.TimeSign;
-import events.eventTypes.NoteEvent;
+import base.time.Count;
+import base.time.TimeSign;
+import events.playable.Note;
 import form.Part;
 import form.Score;
 import io.MxmScoreWriter;
@@ -18,7 +18,7 @@ public class PassageVisualizer extends JFrame {
     private Score passage;
 
     public PassageVisualizer(Score passage){
-        super("Score Visualizer");
+        super("ScoreEvent Visualizer");
 
         this.passage = passage;
 
@@ -51,7 +51,7 @@ public class PassageVisualizer extends JFrame {
             }
             for(Part part : passage) {
                 Color color = Color.getHSBColor(rand.nextFloat(),1,1);
-                for(NoteEvent note: part) {
+                for(Note note: part) {
                     g.setColor(color);
                     g.fillRect( Math.round(note.getStart().toFloat()*hScale),
                                 Math.round(vScale - note.getPitch().normalized()*vScale),

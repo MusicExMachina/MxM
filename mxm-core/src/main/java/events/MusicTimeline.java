@@ -1,6 +1,6 @@
 package events;
 
-import base.Count;
+import base.time.Count;
 
 import java.util.Iterator;
 import java.util.TreeMap;

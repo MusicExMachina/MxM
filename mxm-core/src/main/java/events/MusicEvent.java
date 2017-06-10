@@ -1,19 +1,13 @@
 package events;
 
-import base.Count;
+import base.time.Count;
 
 /**
  * A
  */
-public abstract class MusicEvent {
-
-    /** The start RhythmNode of this events.eventTypes.NoteEvent. */
-    private Count start;
-
-    public Count getStart() { return start; }
+public interface MusicEvent {
+    public Count getStart();// { return start; }
 
     @Override
-    public int hashCode() {
-        return start.hashCode();
-    }
+    public int hashCode();// {  return start.hashCode(); }
 }

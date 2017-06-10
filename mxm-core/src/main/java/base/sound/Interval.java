@@ -1,15 +1,13 @@
-package base;
-
-import base.types.IntervalClass;
+package base.sound;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * base.Interval is a simple class which utilizes the interning design pattern to create only two
+ * base.sound.Interval is a simple class which utilizes the interning design pattern to create only two
  * hundred forty different values- all possible MIDI basic differences. Intervals are usually
- * used for analysis, though they may be used in Collections. events.eventTypes.NoteEvent that there should never be
+ * used for analysis, though they may be used in Collections. events.playable.Note that there should never be
  * more than these 240 Intervals, and that an iterator() has been provided for easy access.
  * Also note that Intervals may be negative, though IntervalClasses never are.
  */
@@ -39,14 +37,14 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
         return ALL.iterator();
     }
 
-    /** The immutable noteQualities base.types.IntervalClass of this base.Interval. */
+    /** The immutable noteQualities base.sound.IntervalClass of this base.sound.Interval. */
     private IntervalClass intervalClass;
 
     /** The immutable size of this interval in half-steps. */
     private int size;
 
     /**
-     * The normal, private base.Interval constructor.
+     * The normal, private base.sound.Interval constructor.
      * @param size The size of the interval in half-steps.
      */
     private Interval(int size) {
@@ -60,10 +58,10 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
     }
 
     /**
-     * Gets an instance of a given base.Interval size. This method
-     * creates the interning design pattern per base.Interval.
-     * @param value The size (in half steps) of this base.Interval
-     * @return An base.Interval of this size.
+     * Gets an instance of a given base.sound.Interval size. This method
+     * creates the interning design pattern per base.sound.Interval.
+     * @param value The size (in half steps) of this base.sound.Interval
+     * @return An base.sound.Interval of this size.
      */
     public static Interval getInstance(int value) {
         if(value >= MIN_INTERVAL && value < MAX_INTERVAL) {
@@ -75,25 +73,25 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
     }
 
     /**
-     * A getter for the base.types.IntervalClass of this base.Interval.
-     * @return The base.types.IntervalClass of this base.Interval.
+     * A getter for the base.sound.IntervalClass of this base.sound.Interval.
+     * @return The base.sound.IntervalClass of this base.sound.Interval.
      */
     public IntervalClass getIntervalClass() {
         return intervalClass;
     }
 
     /**
-     * A getter for the size of this base.Interval, in half-steps.
-     * @return The size of this base.Interval, in half-steps.
+     * A getter for the size of this base.sound.Interval, in half-steps.
+     * @return The size of this base.sound.Interval, in half-steps.
      */
     public int getSize() {
         return size;
     }
 
     /**
-     * Creates a new base.Interval that is the sum of these two.
-     * @param other The other base.Interval to add to this one.
-     * @return  The new base.Interval sum.
+     * Creates a new base.sound.Interval that is the sum of these two.
+     * @param other The other base.sound.Interval to add to this one.
+     * @return  The new base.sound.Interval sum.
      */
     public Interval plus(Interval other) {
         int newSize = size + other.size;
@@ -101,14 +99,14 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
             return ALL.get(newSize + MIN_INTERVAL);
         }
         else {
-            throw new Error("INTERVAL:\nResultant base.Interval out of range!");
+            throw new Error("INTERVAL:\nResultant base.sound.Interval out of range!");
         }
     }
 
     /**
-     * Creates a new base.Interval that is the difference of these two.
-     * @param other The other base.Interval to subtract from this one.
-     * @return The new base.Interval difference.
+     * Creates a new base.sound.Interval that is the difference of these two.
+     * @param other The other base.sound.Interval to subtract from this one.
+     * @return The new base.sound.Interval difference.
      */
     public Interval minus(Interval other) {
         int newSize = size - other.size;
@@ -116,13 +114,13 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
             return ALL.get(newSize + MIN_INTERVAL);
         }
         else {
-            throw new Error("INTERVAL:\nResultant base.Interval out of range!");
+            throw new Error("INTERVAL:\nResultant base.sound.Interval out of range!");
         }
     }
 
     /**
-     * Compares this base.Interval to another, purely based on size and direction.
-     * @param other the other base.Interval to compare this one to.
+     * Compares this base.sound.Interval to another, purely based on size and direction.
+     * @param other the other base.sound.Interval to compare this one to.
      * @return The comparison between the two.
      */
     @Override
@@ -132,8 +130,8 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
 
     /**
      * Compares two Intervals, purely based on size and direction.
-     * @param i1 The first base.Interval.
-     * @param i2 The second base.Interval.
+     * @param i1 The first base.sound.Interval.
+     * @param i2 The second base.sound.Interval.
      * @return The comparison between the two.
      */
     @Override
@@ -153,7 +151,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
 
     /**
      * A simple hash code in order to allow storage in certain Collections.
-     * @return The hash code for this base.Interval.
+     * @return The hash code for this base.sound.Interval.
      */
     @Override
     public int hashCode() {

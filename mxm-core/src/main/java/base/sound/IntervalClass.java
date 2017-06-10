@@ -1,4 +1,4 @@
-package base.types;
+package base.sound;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 /**
  * There are only twelve interval classes which represent the twelve possible (always positive) vector differences
- * between pitch classes. For instance, MINOR_SECOND represents both a movement of a minor second upward, a major
+ * between sound classes. For instance, MINOR_SECOND represents both a movement of a minor second upward, a major
  * seventh downward, a minor ninth upward, so on and so forth such that octaves are always compressed.
  */
 public class IntervalClass implements Comparator<IntervalClass>, Comparable<IntervalClass> {
@@ -43,10 +43,10 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     }
 
     /**
-     * Gets an instance of a given base.types.IntervalClass size. This method
-     * creates the interning design pattern per base.types.IntervalClass.
-     * @param size The size (in half steps) of this base.types.IntervalClass
-     * @return An base.types.IntervalClass of this size.
+     * Gets an instance of a given base.sound.IntervalClass size. This method
+     * creates the interning design pattern per base.sound.IntervalClass.
+     * @param size The size (in half steps) of this base.sound.IntervalClass
+     * @return An base.sound.IntervalClass of this size.
      */
     public static IntervalClass getInstance(int size) {
         if(size >= MIN_INTERVALCLASS && size <= MAX_INTERVALCLASS) {
@@ -57,12 +57,12 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
         }
     }
 
-    /** The size of the base.types.IntervalClass. */
+    /** The size of the base.sound.IntervalClass. */
     private int size;
 
     /**
-     * A constructor for base.types.IntervalClass which is private.
-     * @param size The size (0-11) of this base.types.IntervalClass.
+     * A constructor for base.sound.IntervalClass which is private.
+     * @param size The size (0-11) of this base.sound.IntervalClass.
      */
     private IntervalClass(int size) {
         this.size = size;
@@ -79,7 +79,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * Returns the interval class that is the summation of this and another. For instance, MAJOR_THIRD.plus(MINOR_THIRD)
-     * would equal PERFECT_FIFTH and so forth. NoteEvent that this wraps around the octave such that a PERFECT_FIFTH plus a
+     * would equal PERFECT_FIFTH and so forth. Note that this wraps around the octave such that a PERFECT_FIFTH plus a
      * PERFECT_FOURTH would equal UNISON.
      * @param other The other interval class to add to this one
      * @return  The new interval class that corresponds to the addition of this interval class and other
@@ -90,7 +90,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * Creates a new interval class that is the difference between this and another. For instance, a MAJOR_THIRD minus a
-     * MINOR_SECOND would be a MINOR_THIRD and so forth. NoteEvent that this wraps around the octave such that a UNISON minus
+     * MINOR_SECOND would be a MINOR_THIRD and so forth. Note that this wraps around the octave such that a UNISON minus
      * a MAJOR_SECOND equals a MINOR_SEVENTH.
      * @param other The other interval class to subtract from this one
      * @return The new interval class that corresponds to the difference between this and other
@@ -114,7 +114,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * Compares this interval class to another, purely based on size.
-     * @param other the other base.types.IntervalClass to compare this one to.
+     * @param other the other base.sound.IntervalClass to compare this one to.
      * @return The comparison between the two.
      */
     @Override
@@ -124,8 +124,8 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * Compares two IntervalClasses, purely based on size.
-     * @param ic1 The first base.types.IntervalClass.
-     * @param ic2 The second base.types.IntervalClass.
+     * @param ic1 The first base.sound.IntervalClass.
+     * @param ic2 The second base.sound.IntervalClass.
      * @return The comparison between the two.
      */
     @Override
@@ -148,7 +148,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * A simple hash code in order to allow storage in certain Collections.
-     * @return The hash code for this base.types.IntervalClass.
+     * @return The hash code for this base.sound.IntervalClass.
      */
     @Override
     public int hashCode() {

@@ -1,10 +1,10 @@
-package base;
+package base.sound;
 
 import java.util.Comparator;
 
 /**
  * The dynamic class is a glorified byte wrapper, which allows for a little more dress and avoiding confusion down the
- * line. NoteEvent that we still use the MIDI standard's definition of loudness, just as we use midi note values.
+ * line. Note that we still use the MIDI standard's definition of loudness, just as we use midi note values.
  */
 public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
 
@@ -12,7 +12,7 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
     private static int MIN_DYNAMIC = 0;
     private static int MAX_DYNAMIC = 127;
 
-    /* A bunch of preset dynamics for general use. NoteEvent that niente is silent */
+    /* A bunch of preset dynamics for general use. Note that niente is silent */
     public static final Dynamic NIENTE              = new Dynamic(0);
     public static final Dynamic PIANISSISSIMO       = new Dynamic(16);
     public static final Dynamic PIANISSIMO          = new Dynamic(32);
@@ -35,13 +35,13 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
             this.value = (byte)value;
         }
         else {
-            throw new Error("Invalid dynamic range!");
+            throw new Error("DYNAMIC:\tInvalid dynamic range!");
         }
     }
 
     /**
-     * Compares this base.Dynamic to another base.Dynamic.
-     * @param other The other base.Dynamic.
+     * Compares this base.sound.Dynamic to another base.sound.Dynamic.
+     * @param other The other base.sound.Dynamic.
      * @return The comparison.
      */
     @Override
@@ -51,8 +51,8 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
 
     /**
      * Compares two Dynamics.
-     * @param p1 The first base.Dynamic.
-     * @param p2 The second base.Dynamic.
+     * @param p1 The first base.sound.Dynamic.
+     * @param p2 The second base.sound.Dynamic.
      * @return The comparison.
      */
     @Override
@@ -61,9 +61,9 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
     }
 
     /**
-     * Checks if this base.Dynamic equals another Object.
+     * Checks if this base.sound.Dynamic equals another Object.
      * @param o The other Object.
-     * @return If this base.Dynamic is equal to the Object.
+     * @return If this base.sound.Dynamic is equal to the Object.
      */
     @Override
     public boolean equals(Object o) {
@@ -75,7 +75,7 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
 
     /**
      * A simple hash code for storage of Dynamics in special Collections.
-     * @return The hash code for this base.Dynamic.
+     * @return The hash code for this base.sound.Dynamic.
      */
     @Override
     public int hashCode() {

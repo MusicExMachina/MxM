@@ -1,6 +1,6 @@
 package analysis;
 
-import base.Count;
+import base.time.Count;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,7 +157,7 @@ public class RhythmNode {
         if(children.size() == 0) {
             String thisNode = "[ ";
             /*
-            for(NoteEvent note : frame) {
+            for(Note note : frame) {
                 thisNode += note.getPitch().toString() + " ";
             }
             */

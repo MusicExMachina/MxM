@@ -1,27 +1,25 @@
-package base;
-
-import base.types.PitchClass;
+package base.sound;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * base.Pitch is a simple class which utilizes the interning design pattern to create only one
+ * base.sound.Pitch is a simple class which utilizes the interning design pattern to create only one
  * hundred twenty different values- all possible MIDI pitches. Pitches are usually found on
- * Notes, though they may be used in Collections. events.eventTypes.NoteEvent that there should never be more than
+ * Notes, though they may be used in Collections. events.playable.Note that there should never be more than
  * these 120 Pitches, and that an iterator() has been provided for easy access.
  */
-public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
+public class Pitch extends Sound implements Comparator<Pitch>, Comparable<Pitch> {
 
     //////////////////////////////
     // Private static variables //
     //////////////////////////////
 
-    /** The minimum midi value of basic, C-1. */
+    /** The minimum midi sound value, C-1. */
     private static final int MIN_PITCH = 0;
 
-    /** The maximum midi value of basic, B9. */
+    /** The maximum midi sound value, B9. */
     private static final int MAX_PITCH = 120;
 
     /** An ArrayList of all valid Pitches */
@@ -43,28 +41,28 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Gets an instance of a given base.Pitch size. This method
-     * creates the interning design pattern per base.Pitch.
-     * @param value The (midi) value of this base.Pitch
-     * @return An base.Pitch of this size.
+     * Gets an instance of a given base.sound.Pitch size. This method
+     * creates the interning design pattern per base.sound.Pitch.
+     * @param value The (midi) value of this base.sound.Pitch
+     * @return An base.sound.Pitch of this size.
      */
     public static Pitch getInstance(int value) {
         if(value >= MIN_PITCH&& value <= MAX_PITCH) {
             return ALL.get(value - MIN_PITCH);
         }
         else {
-            throw new Error("INTERVAL:\tbase.Interval out of range.");
+            throw new Error("INTERVAL:\tbase.sound.Interval out of range.");
         }
     }
 
-    /** The pitch class of this pitch. */
+    /** The sound class of this sound. */
     private PitchClass pitchClass;
     
-    /** The midi value of this pitch. */
+    /** The midi value of this sound. */
     private int value;
 
     /**
-     * The pitch
+     * The sound
      * @param value
      */
     private Pitch(int value) {
@@ -73,26 +71,26 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Gets the base.types.PitchClass of this base.Pitch.
-     * @return The base.types.PitchClass of this base.Pitch.
+     * Gets the base.sound.PitchClass of this base.sound.Pitch.
+     * @return The base.sound.PitchClass of this base.sound.Pitch.
      */
     public PitchClass getPitchClass() {
         return pitchClass;
     }
 
     /**
-     * Transposes a base.Pitch by a given interval.
-     * @param interval The base.Interval to transpose by.
-     * @return The new, resulting base.Pitch.
+     * Transposes a base.sound.Pitch by a given interval.
+     * @param interval The base.sound.Interval to transpose by.
+     * @return The new, resulting base.sound.Pitch.
      */
     public Pitch transpose(Interval interval) {
         return new Pitch(value + interval.getSize());
     }
 
     /**
-     * Gets the base.Interval between this base.Pitch and another.
-     * @param other The other base.Pitch to subtract from this one.
-     * @return THe base.Interval between this base.Pitch and another.
+     * Gets the base.sound.Interval between this base.sound.Pitch and another.
+     * @param other The other base.sound.Pitch to subtract from this one.
+     * @return THe base.sound.Interval between this base.sound.Pitch and another.
      */
     public Interval minus(Pitch other) {
         return Interval.getInstance(other.value - this.value);
@@ -103,8 +101,8 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Normalizes this base.types.PitchClass between 0 and 1.
-     * @return This base.types.PitchClass in the range [0,1).
+     * Normalizes this base.sound.PitchClass between 0 and 1.
+     * @return This base.sound.PitchClass in the range [0,1).
      */
     public float normalized() {
         return (float)(value - MIN_PITCH)/(float)(MAX_PITCH - MIN_PITCH);
@@ -112,16 +110,16 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
     /**
      * Returns a nicely-formatted String
-     * of this base.Pitch (for debug).
-     * @return A nicely-formatted String of this base.Pitch.
+     * of this base.sound.Pitch (for debug).
+     * @return A nicely-formatted String of this base.sound.Pitch.
      */
     public String toString() {
         return pitchClass.toString() + (value/12 - 1);
     }
 
     /**
-     * Compares this base.Pitch to another base.Pitch.
-     * @param other The other base.Pitch.
+     * Compares this base.sound.Pitch to another base.sound.Pitch.
+     * @param other The other base.sound.Pitch.
      * @return The comparison.
      */
     @Override
@@ -131,8 +129,8 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
     /**
      * Compares two Pitches.
-     * @param p1 The first base.Pitch.
-     * @param p2 The second base.Pitch.
+     * @param p1 The first base.sound.Pitch.
+     * @param p2 The second base.sound.Pitch.
      * @return The comparison.
      */
     @Override
@@ -141,9 +139,9 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Checks if this base.Pitch equals another Object.
+     * Checks if this base.sound.Pitch equals another Object.
      * @param o The other Object.
-     * @return If this base.Pitch is equal to the Object.
+     * @return If this base.sound.Pitch is equal to the Object.
      */
     @Override
     public boolean equals(Object o) {
@@ -152,7 +150,7 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
 
     /**
      * A simple hash code for storage of Pitches in special Collections.
-     * @return The hash code for this base.Pitch.
+     * @return The hash code for this base.sound.Pitch.
      */
     @Override
     public int hashCode() {

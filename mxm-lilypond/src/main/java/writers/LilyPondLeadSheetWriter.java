@@ -16,7 +16,7 @@ public class LilyPondLeadSheetWriter {
 
     public void writeBookEntry() {
 
-        // The bookpart block establishes this as a chapter-of-sorts in an overall book of pieces. NoteEvent that all the
+        // The bookpart block establishes this as a chapter-of-sorts in an overall book of pieces. Note that all the
         // Lilypond styling here is based on OpenBook, which may be found at https://github.com/veltzer/openbook
         System.out.println("\\bookpart {");
         writeHeader();

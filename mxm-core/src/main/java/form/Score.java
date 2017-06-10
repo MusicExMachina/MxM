@@ -1,8 +1,8 @@
 package form;
 
-import base.Count;
-import base.Instrument;
-import base.TimeSign;
+import base.time.Count;
+import base.instrument.Instrument;
+import base.time.TimeSign;
 import events.eventTypes.TempoEvent;
 import events.eventTypes.TimeSignEvent;
 

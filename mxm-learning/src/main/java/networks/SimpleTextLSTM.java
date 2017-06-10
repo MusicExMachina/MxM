@@ -127,7 +127,7 @@ public class SimpleTextLSTM {
     /**
      * An encapsulation method for configuring the neural net.
      * This method is gigantic by necessity as DL4J has individual
-     * initialization methods per variable. NoteEvent that this method's
+     * initialization methods per variable. Note that this method's
      * only tangible outcome is that it creates "configuration."
      */
     private void configure() {
@@ -225,7 +225,7 @@ public class SimpleTextLSTM {
             // Since this is an RNN, we need to call rnnTimeStep(), not output().
             // This is because rnnTimeStep() is optimized to save previous inputs,
             // rather than needing to load everything each time we predict a new
-            // output. NoteEvent that we start with the training data's first entry
+            // output. Note that we start with the training data's first entry
             INDArray output = network.rnnTimeStep(testInit);
 
             // Now we predict inputstring.length more characters (the same length

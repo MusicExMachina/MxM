@@ -1,5 +1,5 @@
-import base.Pitch;
-import base.types.PitchClass;
+import base.sound.Pitch;
+import base.sound.PitchClass;
 import musicTheory.Chord;
 import musicTheory.types.ChordClass;
 
@@ -16,7 +16,7 @@ public class LilyPondParser {
         PitchClass pitch        = parsePitchClass(tokens[0]);
         ChordClass chordClass   = parseChordClass(tokens[1]);
 
-        return new Chord();
+        return new Chord(pitch,chordClass);
     }
 
     private Pitch parsePitch(String pitchString) {

@@ -1,10 +1,12 @@
 package form;
 
-import base.*;
-import events.MusicEvent;
-import events.MusicTimeline;
-import events.PlayableEvent;
-import events.eventTypes.NoteEvent;
+import base.instrument.Instrument;
+import base.sound.Dynamic;
+import base.sound.Technique;
+import base.time.Count;
+import events.playable.PlayableEvent;
+import events.eventTypes.DynamicEvent;
+import events.playable.Note;
 
 import java.util.Iterator;
 import java.util.TreeMap;
@@ -22,11 +24,10 @@ public abstract class Part<NoteType extends PlayableEvent> implements Iterable<N
     private Instrument instrument;
 
     /** The notes played in this line. */
-    private MusicTimeline<MusicEvent> notes;
+    private TreeMap<Count, NoteType> notes;
 
-    private TreeMap<Count, NoteEvent> dynamic;
+    private TreeMap<Count, DynamicEvent> dynamic;
 
-    private TreeMap<Count, NoteEvent> notes;
 
     /**
      * The line constructor starts only with the instrument
@@ -38,7 +39,7 @@ public abstract class Part<NoteType extends PlayableEvent> implements Iterable<N
         this.notes = new TreeMap<>();
     }
 
-    public void add(NoteEvent note) {
+    public void add(Note note) {
         notes.put(note.getStart(),note);
     }
 
@@ -59,7 +60,7 @@ public abstract class Part<NoteType extends PlayableEvent> implements Iterable<N
     @Override
     public String toString() {
         String toReturn = instrument.toString() + "\n\t\t";
-        for(NoteEvent note : this) {
+        for(Note note : this) {
             toReturn += note.toString() + " ";
         }
         return toReturn + "\n";
