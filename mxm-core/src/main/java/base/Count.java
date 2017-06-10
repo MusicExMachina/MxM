@@ -3,10 +3,8 @@ package base;
 import java.util.Comparator;
 
 /**
- * A Count is the fundamental measurement of  musical time. events.eventTypes.Note
- * that Counts are essentially just fractions. They're not really that
- * special. They are, however, immutable, in order to avoid accidental
- * headaches down the line.
+ * A Count is the fundamental measurement of  musical time. Also note that counts are essentially just fractions.
+ * They're not really that special. They are, however, immutable, in order to avoid accidental headaches down the line.
  */
 public class Count implements Comparator<Count>, Comparable<Count> {
 
@@ -17,10 +15,10 @@ public class Count implements Comparator<Count>, Comparable<Count> {
     public static final Count ONE = new Count(1);
 
     /** The fractional numerator of this Count */
-    protected int numerator;
+    private int numerator;
 
     /** The fractional denominator of this Count */
-    protected int denominator;
+    private int denominator;
 
     /** The measure of this Count */
     private int measure;
@@ -40,7 +38,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
 
     /**
      * A constructor for base.Count taking in a numerator and
-     * denominator. events.eventTypes.Note that these do not need to be reduced,
+     * denominator. events.eventTypes.NoteEvent that these do not need to be reduced,
      * as the constructor itself will do the reducing.
      * @param numerator The desired numerator.
      * @param denominator The desired denominator.
@@ -60,7 +58,7 @@ public class Count implements Comparator<Count>, Comparable<Count> {
 
     /**
      * A constructor for base.Count taking in a measure, a numerator
-     * and a denominator. events.eventTypes.Note that these do not need to be
+     * and a denominator. events.eventTypes.NoteEvent that these do not need to be
      * reduced, as the constructor itself will do the reducing.
      * @param measure The desired measure.
      * @param numerator The desired numerator.
@@ -179,7 +177,6 @@ public class Count implements Comparator<Count>, Comparable<Count> {
      * the constructor, but why do that?
      */
     private void reduce() {
-
         // Euclid's gcd algorithm, everyone's favorite
         int a = numerator;
         int b = denominator;
@@ -262,4 +259,5 @@ public class Count implements Comparator<Count>, Comparable<Count> {
         result = 31 * result + denominator;
         return result;
     }
+
 }

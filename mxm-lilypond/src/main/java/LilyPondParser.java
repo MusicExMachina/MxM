@@ -89,8 +89,7 @@ public class LilyPondParser {
                     throw new Error("LILY POND PARSER:\t Chord class string \"" + chordClassString + "\" improperly formatted.");
                 }
         }
-
-
+        return null;
     }
 
 }

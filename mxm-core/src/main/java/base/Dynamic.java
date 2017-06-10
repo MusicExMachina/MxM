@@ -3,21 +3,27 @@ package base;
 import java.util.Comparator;
 
 /**
- * base.Dynamic is a glorified int wrapper, which allows for a little more dress
- * and prevents problems down the line with arguments to constructors.
+ * The dynamic class is a glorified byte wrapper, which allows for a little more dress and avoiding confusion down the
+ * line. NoteEvent that we still use the MIDI standard's definition of loudness, just as we use midi note values.
  */
 public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
 
-    /* A bunch of preset Dynamics for general use. */
-    public static final Dynamic NIENTE        = new Dynamic(0);
+    /* Variable bounds */
+    private static int MIN_DYNAMIC = 0;
+    private static int MAX_DYNAMIC = 127;
 
-    /* Useful variable bounds */
-    public static int MIN_DYNAMIC = 0;
-    public static int MAX_DYNAMIC = 100;
+    /* A bunch of preset dynamics for general use. NoteEvent that niente is silent */
+    public static final Dynamic NIENTE              = new Dynamic(0);
+    public static final Dynamic PIANISSISSIMO       = new Dynamic(16);
+    public static final Dynamic PIANISSIMO          = new Dynamic(32);
+    public static final Dynamic PIANO               = new Dynamic(48);
+    public static final Dynamic MEZZO_PIANO         = new Dynamic(64);
+    public static final Dynamic MEZZO_FORTE         = new Dynamic(80);
+    public static final Dynamic FORTE               = new Dynamic(96);
+    public static final Dynamic FORTISSIMO          = new Dynamic(112);
+    public static final Dynamic FORTISSISSIMO       = new Dynamic(127);
 
-    /**
-     * Stores the loudness of this base.Dynamic
-     */
+    /** Stores the loudness of this dynamic. */
     private final byte value;
 
     /**
@@ -31,14 +37,6 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
         else {
             throw new Error("Invalid dynamic range!");
         }
-    }
-
-    /**
-     * Copy constructor for base.Dynamic.
-     * @param other The other base.Dynamic.
-     */
-    public Dynamic(Dynamic other) {
-        this.value = other.value;
     }
 
     /**
@@ -82,5 +80,22 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
     @Override
     public int hashCode() {
         return (int) value;
+    }
+
+    /**
+     * Returns a nicely-formatted string representing this dynamic level.
+     * @return A string representing this dynamic level (and its approximate music notation)
+     */
+    @Override
+    public String toString() {
+        if(value == 0)  return value + " (n)";
+        if(value < 16)  return value + " (ppp)";
+        if(value < 32)  return value + " (pp)";
+        if(value < 48)  return value + " (p)";
+        if(value < 64)  return value + " (mp)";
+        if(value < 80)  return value + " (mf)";
+        if(value < 96)  return value + " (f)";
+        if(value < 112) return value + " (ff)";
+        return value + " (fff)";
     }
 }

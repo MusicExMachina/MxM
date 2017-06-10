@@ -1,9 +1,9 @@
 import base.Count;
-import events.eventTypes.Note;
+import base.TimeSign;
+import events.eventTypes.NoteEvent;
 import form.Part;
 import form.Score;
-import base.TimeSignature;
-import io.MxmWriter;
+import io.MxmScoreWriter;
 
 import javax.sound.midi.Sequence;
 import javax.swing.*;
@@ -40,7 +40,7 @@ public class PassageVisualizer extends JFrame {
             int vScale = 400;
 
             for(int i = 0; i < 100; i++) {
-                TimeSignature timeSig = passage.getTimeSignatureAt(new Count(i+1));
+                TimeSign timeSig = passage.getTimeSignatureAt(new Count(i+1));
                 g.setColor(Color.darkGray);
                 g.drawLine(Math.round(i*hScale),0,Math.round(i*hScale),vScale);
                 for(int j = 1; j <= timeSig.getNumerator(); j++) {
@@ -51,7 +51,7 @@ public class PassageVisualizer extends JFrame {
             }
             for(Part part : passage) {
                 Color color = Color.getHSBColor(rand.nextFloat(),1,1);
-                for(Note note: part) {
+                for(NoteEvent note: part) {
                     g.setColor(color);
                     g.fillRect( Math.round(note.getStart().toFloat()*hScale),
                                 Math.round(vScale - note.getPitch().normalized()*vScale),
@@ -76,7 +76,7 @@ public class PassageVisualizer extends JFrame {
             Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/dvorak/dvs93.mid");
             //Sequence sequence = MidiTools.download("http://tedmuller.us/Piano/FlightOfTheBumblebee/FlightOfTheBumblebee.mid");
             Score passage = MidiTools.parse(sequence);
-            MxmWriter.write(passage,"C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-gui\\src\\tests\\resources\\output");
+            MxmScoreWriter.write(passage,"C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-gui\\src\\tests\\resources\\output");
             MidiTools.play(sequence);
             PassageVisualizer rtv = new PassageVisualizer(passage);
             Thread.sleep(100000);

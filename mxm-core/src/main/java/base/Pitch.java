@@ -9,7 +9,7 @@ import java.util.Iterator;
 /**
  * base.Pitch is a simple class which utilizes the interning design pattern to create only one
  * hundred twenty different values- all possible MIDI pitches. Pitches are usually found on
- * Notes, though they may be used in Collections. events.eventTypes.Note that there should never be more than
+ * Notes, though they may be used in Collections. events.eventTypes.NoteEvent that there should never be more than
  * these 120 Pitches, and that an iterator() has been provided for easy access.
  */
 public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
@@ -57,12 +57,16 @@ public class Pitch implements Comparator<Pitch>, Comparable<Pitch> {
         }
     }
 
-    /** The base.types.PitchClass of this base.Pitch. */
+    /** The pitch class of this pitch. */
     private PitchClass pitchClass;
     
-    /** The midi value of this base.Pitch. */
+    /** The midi value of this pitch. */
     private int value;
 
+    /**
+     * The pitch
+     * @param value
+     */
     private Pitch(int value) {
         this.value = value;
         this.pitchClass = PitchClass.getInstance(value%12);

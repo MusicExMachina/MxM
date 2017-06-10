@@ -1,16 +1,15 @@
 package io;
 
-import form.Passage;
+import form.Score;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Collection;
 
 /**
  * Created by celenp on 3/27/2017.
  */
-public class MxmReader implements Reader<Passage> {
-    public Passage read(String filename) {
+public class MxmScoreReader extends Reader<Score> {
+    public Score read(String filename) {
         try {
             FileReader reader = new FileReader(filename);
 
@@ -21,11 +20,6 @@ public class MxmReader implements Reader<Passage> {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
-    }
-
-    @Override
-    public Collection<Passage> read(Collection<String> filenames) {
         return null;
     }
 }

@@ -1,7 +1,7 @@
 import base.Count;
 import base.Tempo;
-import base.TimeSignature;
-import events.eventTypes.Note;
+import base.TimeSign;
+import events.eventTypes.NoteEvent;
 import form.Part;
 import form.Score;
 import io.Writer;
@@ -15,7 +15,7 @@ import java.util.TreeMap;
 
 /**
  * MidiWriter is a class which does exactly what you'd expect.
- * events.eventTypes.Note that each MidiWriter composes exactly *one* midi Sequence.
+ * events.eventTypes.NoteEvent that each MidiWriter composes exactly *one* midi Sequence.
  * This means that the MidiTools class instantiates one for every
  * single form.Score to be written. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
@@ -65,7 +65,7 @@ class MidiWriter implements Writer<Score> {
             for(Part line : passage) {
                 Track track = sequence.createTrack();
                 initTrack(track);
-                for(Note note : line) {
+                for(NoteEvent note : line) {
                     addNote(note, track);
                 }
                 //endTrack(track);
@@ -129,7 +129,7 @@ class MidiWriter implements Writer<Score> {
         track.add(new MidiEvent(instChange, 0));
     }
 
-    private void addNote(Note note, Track track) throws InvalidMidiDataException {
+    private void addNote(NoteEvent note, Track track) throws InvalidMidiDataException {
         //System.out.println("Added note");
 
         ShortMessage on = new ShortMessage();
@@ -188,7 +188,7 @@ class MidiWriter implements Writer<Score> {
             int curMeasure = timeSigItr.next();
             int measuresPassed = curMeasure - lastTimeSigChange;
 
-            TimeSignature timeSignature = passage.getTimeSignatureAt(new Count(curMeasure));
+            TimeSign timeSignature = passage.getTimeSignatureAt(new Count(curMeasure));
 
             long newTimePoint = timePoints.lastEntry().getValue() + measuresPassed * lastMeasureSize;
 
@@ -246,7 +246,7 @@ class MidiWriter implements Writer<Score> {
 
         //Sequence out = MidiTools.write(passage);
         //Score outputPassage = MidiTools.parse(out);
-        //MxmWriter.java.write(outputPassage,"output");
+        //MxmScoreWriter.java.write(outputPassage,"output");
         //MidiTools.play(out);
     }
 }

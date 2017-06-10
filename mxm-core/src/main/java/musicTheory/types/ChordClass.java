@@ -43,7 +43,7 @@ public class ChordClass implements Iterable<IntervalClass> {
 
     /**
      * The constructor for a specific type of chord (such as major or minor) which says nothing about spacing, inversion
-     * and so forth- only what chord factors it includes. The constructor automatically adds a unison to the mix. Note
+     * and so forth- only what chord factors it includes. The constructor automatically adds a unison to the mix. NoteEvent
      * that we do not have to copy factors as interval classes are immutable.
      * @param factors The intervals in this chord, all shrunk down to one octave (ie, a ninth becomes a second)
      */

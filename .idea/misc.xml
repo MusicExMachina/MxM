@@ -27,6 +27,8 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/mxm-core/pom.xml" />
+        <option value="$PROJECT_DIR$/mxm-drafting/pom.xml" />
+        <option value="$PROJECT_DIR$/mxm-generation/pom.xml" />
       </set>
     </option>
   </component>

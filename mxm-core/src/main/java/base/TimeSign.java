@@ -9,10 +9,10 @@ import java.util.Iterator;
  * levels (3/4 versus 6/8) and will eventually  be useful in determining how
  * transitions between TimeSignatures work.
  *
- * Note: These are in many ways structurally similar to Counts. The major difference
- * is that there's no reason to ever reduce a base.TimeSignature from say, 4/4 to 2/2.
+ * NoteEvent: These are in many ways structurally similar to Counts. The major difference
+ * is that there's no reason to ever reduce a base.TimeSign from say, 4/4 to 2/2.
  */
-public class TimeSignature {
+public class TimeSign {
 
     /** The fractional numerator of this time signature */
     private int numerator;
@@ -27,41 +27,41 @@ public class TimeSignature {
     private Count[] preferredNoteLength;
 
     /** An ArrayList of all valid Pitches */
-    private static final ArrayList<TimeSignature> ALL = new ArrayList<TimeSignature>();
+    private static final ArrayList<TimeSign> ALL = new ArrayList<TimeSign>();
 
     // Initialize all pitches
     static {
         // Duple Time
-        ALL.add(new TimeSignature(1,1, new int[]{}));
-        ALL.add(new TimeSignature(2,2, new int[]{}));
-        ALL.add(new TimeSignature(2,4, new int[]{}));
-        ALL.add(new TimeSignature(4,4, new int[]{}));
-        ALL.add(new TimeSignature(8,8, new int[]{}));
+        ALL.add(new TimeSign(1,1, new int[]{}));
+        ALL.add(new TimeSign(2,2, new int[]{}));
+        ALL.add(new TimeSign(2,4, new int[]{}));
+        ALL.add(new TimeSign(4,4, new int[]{}));
+        ALL.add(new TimeSign(8,8, new int[]{}));
 
         // Triple Time
-        ALL.add(new TimeSignature(3,2, new int[]{3}));
-        ALL.add(new TimeSignature(3,4, new int[]{3}));
+        ALL.add(new TimeSign(3,2, new int[]{3}));
+        ALL.add(new TimeSign(3,4, new int[]{3}));
 
         // Compound Time
-        ALL.add(new TimeSignature(3,8, new int[]{3}));
-        ALL.add(new TimeSignature(6,8, new int[]{2,3}));
-        ALL.add(new TimeSignature(9,8, new int[]{3,3}));
-        ALL.add(new TimeSignature(12,8, new int[]{2,2,3}));
+        ALL.add(new TimeSign(3,8, new int[]{3}));
+        ALL.add(new TimeSign(6,8, new int[]{2,3}));
+        ALL.add(new TimeSign(9,8, new int[]{3,3}));
+        ALL.add(new TimeSign(12,8, new int[]{2,2,3}));
 
         // Complex Time
-        ALL.add(new TimeSignature(5,4, new int[]{5}));
-        ALL.add(new TimeSignature(7,4, new int[]{7}));
-        ALL.add(new TimeSignature(11,4, new int[]{11}));
-        ALL.add(new TimeSignature(5,8, new int[]{5}));
-        ALL.add(new TimeSignature(7,8, new int[]{7}));
-        ALL.add(new TimeSignature(11,8, new int[]{11}));
+        ALL.add(new TimeSign(5,4, new int[]{5}));
+        ALL.add(new TimeSign(7,4, new int[]{7}));
+        ALL.add(new TimeSign(11,4, new int[]{11}));
+        ALL.add(new TimeSign(5,8, new int[]{5}));
+        ALL.add(new TimeSign(7,8, new int[]{7}));
+        ALL.add(new TimeSign(11,8, new int[]{11}));
 
     }
 
     public static void main(String args[]) {
-        Iterator<TimeSignature> itr = iterator();
+        Iterator<TimeSign> itr = iterator();
         while(itr.hasNext()) {
-            TimeSignature ts = itr.next();
+            TimeSign ts = itr.next();
             String str = ts + "\t";
             for(int i = 0; i < 5; i++)
                 str += " \t" + ts.getPreferredNoteLength(i);
@@ -72,22 +72,22 @@ public class TimeSignature {
      * Gets an iterator which enumerates all valid time signatures.
      * @return An iterator over all valid times signatures
      */
-    public static Iterator<TimeSignature> iterator() {
+    public static Iterator<TimeSign> iterator() {
         return ALL.iterator();
     }
 
     /**
      * Gets an instance of a time signature with a given numerator
-     * and denominator. Note that
+     * and denominator. NoteEvent that
      * @param numerator The numerator of this time signature
      * @param denominator The denominator of this time Signature
      * @return A time signature with this description
      */
-    public static TimeSignature getInstance(int numerator, int denominator) {
+    public static TimeSign getInstance(int numerator, int denominator) {
         // TODO: Make this a more effective search, perhaps hash
-        Iterator<TimeSignature> iterator = iterator();
+        Iterator<TimeSign> iterator = iterator();
         while(iterator.hasNext()) {
-            TimeSignature timeSig = iterator.next();
+            TimeSign timeSig = iterator.next();
             if( timeSig.numerator == numerator &&
                 timeSig.denominator == denominator)
                     return timeSig;
@@ -97,14 +97,14 @@ public class TimeSignature {
     }
 
     /**
-     * A constructor for base.TimeSignature taking in a numerator and
-     * denominator. events.eventTypes.Note that these do not need to be reduced,
+     * A constructor for base.TimeSign taking in a numerator and
+     * denominator. events.eventTypes.NoteEvent that these do not need to be reduced,
      * as TimeSignatures can be almost anything you want them
      * to be.
      * @param numerator The desired numerator.
      * @param denominator The desired denominator.
      */
-    private TimeSignature(int numerator, int denominator, int[] preferredSubdivision) {
+    private TimeSign(int numerator, int denominator, int[] preferredSubdivision) {
         this.numerator              = numerator;
         this.denominator            = denominator;
         this.preferredSubdivision   = preferredSubdivision;
@@ -117,16 +117,16 @@ public class TimeSignature {
     }
 
     /**
-     * Gets the denominator of this base.TimeSignature.
-     * @return This base.TimeSignature's denominator.
+     * Gets the denominator of this base.TimeSign.
+     * @return This base.TimeSign's denominator.
      */
     public int getNumerator() {
         return numerator;
     }
 
     /**
-     * Gets the denominator of this base.TimeSignature.
-     * @return This base.TimeSignature's denominator.
+     * Gets the denominator of this base.TimeSign.
+     * @return This base.TimeSign's denominator.
      */
     public int getDenominator() {
         return denominator;
@@ -155,15 +155,15 @@ public class TimeSignature {
 
     /**
      * Returns a nicely-formatted String
-     * of this base.TimeSignature (for debug).
-     * @return This base.TimeSignature's String representation.
+     * of this base.TimeSign (for debug).
+     * @return This base.TimeSign's String representation.
      */
     public String toString() {
         return getNumerator() + "/" + getDenominator() + " time ";
     }
 
     /**
-     * A noteQualities (generated) equals() method for base.TimeSignature.
+     * A noteQualities (generated) equals() method for base.TimeSign.
      * @param o The Object to compare this to.
      * @return If these two Objects are equal.
      */
@@ -172,7 +172,7 @@ public class TimeSignature {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TimeSignature timeSignature = (TimeSignature) o;
+        TimeSign timeSignature = (TimeSign) o;
 
         return numerator == timeSignature.numerator && denominator == timeSignature.denominator;
     }
@@ -180,7 +180,7 @@ public class TimeSignature {
     /**
      * A simple hash code in order to allow storage
      * in certain Collections, like HashSets.
-     * @return The hash code for this base.TimeSignature.
+     * @return The hash code for this base.TimeSign.
      */
     @Override
     public int hashCode() {

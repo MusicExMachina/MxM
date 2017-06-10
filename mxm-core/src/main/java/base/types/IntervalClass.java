@@ -79,7 +79,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * Returns the interval class that is the summation of this and another. For instance, MAJOR_THIRD.plus(MINOR_THIRD)
-     * would equal PERFECT_FIFTH and so forth. Note that this wraps around the octave such that a PERFECT_FIFTH plus a
+     * would equal PERFECT_FIFTH and so forth. NoteEvent that this wraps around the octave such that a PERFECT_FIFTH plus a
      * PERFECT_FOURTH would equal UNISON.
      * @param other The other interval class to add to this one
      * @return  The new interval class that corresponds to the addition of this interval class and other
@@ -90,7 +90,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * Creates a new interval class that is the difference between this and another. For instance, a MAJOR_THIRD minus a
-     * MINOR_SECOND would be a MINOR_THIRD and so forth. Note that this wraps around the octave such that a UNISON minus
+     * MINOR_SECOND would be a MINOR_THIRD and so forth. NoteEvent that this wraps around the octave such that a UNISON minus
      * a MAJOR_SECOND equals a MINOR_SEVENTH.
      * @param other The other interval class to subtract from this one
      * @return The new interval class that corresponds to the difference between this and other

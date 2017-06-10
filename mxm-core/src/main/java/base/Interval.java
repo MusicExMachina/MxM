@@ -9,7 +9,7 @@ import java.util.Iterator;
 /**
  * base.Interval is a simple class which utilizes the interning design pattern to create only two
  * hundred forty different values- all possible MIDI basic differences. Intervals are usually
- * used for analysis, though they may be used in Collections. events.eventTypes.Note that there should never be
+ * used for analysis, though they may be used in Collections. events.eventTypes.NoteEvent that there should never be
  * more than these 240 Intervals, and that an iterator() has been provided for easy access.
  * Also note that Intervals may be negative, though IntervalClasses never are.
  */

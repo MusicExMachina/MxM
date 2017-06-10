@@ -157,7 +157,7 @@ public class RhythmNode {
         if(children.size() == 0) {
             String thisNode = "[ ";
             /*
-            for(Note note : frame) {
+            for(NoteEvent note : frame) {
                 thisNode += note.getPitch().toString() + " ";
             }
             */

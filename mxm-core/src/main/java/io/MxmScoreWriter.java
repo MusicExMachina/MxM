@@ -1,23 +1,17 @@
 package io;
 
-import base.Count;
-import base.Tempo;
-import base.TimeSignature;
-import events.eventTypes.Note;
-import form.Part;
 import form.Score;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
- * MxmWriter allows Passages to be written into .mxm files, an internal format
+ * MxmScoreWriter allows Passages to be written into .mxm files, an internal format
  * which stores all the information of a passage in a human-readable text
- * file, formatted such that it can be read again by the MxmReader class.
+ * file, formatted such that it can be read again by the MxmScoreReader class.
  */
-public class MxmWriter implements Writer<Score>{
+public class MxmScoreWriter extends Writer<Score> {
 
     /**
      * Write takes a Score and writes it to a file of the given name.
@@ -36,13 +30,13 @@ public class MxmWriter implements Writer<Score>{
             writer.println("      " + passage.getComposer());
             writer.println("");
 
-
+            /*
             // Write all of the time signature information
             writer.println("  > Time Signatures");
-            Iterator<Integer> timeSigItr = passage.timeSignatureIterator();
+            Iterator<TimeSignEvent> timeSigItr = passage.timeSignChangeIterator();
             while (timeSigItr.hasNext()) {
                 Count count             = new Count(timeSigItr.next());
-                TimeSignature timeSig   = passage.getTimeSignatureAt(count);
+                TimeSign timeSig   = passage.getTimeSignatureAt(count);
                 String measureString    = padRight(String.valueOf(count.getMeasure()),4);
                 String numString        = String.valueOf(timeSig.getNumerator());
                 String denomString      = String.valueOf(timeSig.getDenominator());
@@ -70,7 +64,7 @@ public class MxmWriter implements Writer<Score>{
                 writer.println("      > Notes");
 
                 int lastMeasure = 0;
-                for(Note note : part) {
+                for(NoteEvent note : part) {
 
                     int measure = note.getStart().getMeasure();
 
@@ -91,6 +85,7 @@ public class MxmWriter implements Writer<Score>{
                     writer.println("          " + startStr + "    " + endStr + "    " +  pitchStr);
                 }
             }
+            */
             writer.close();
         } catch (IOException e) {
             // do something

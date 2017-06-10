@@ -1,6 +1,6 @@
 import base.*;
 import base.Instrument;
-import events.eventTypes.Note;
+import events.eventTypes.NoteEvent;
 import form.Part;
 import form.Score;
 import io.Reader;
@@ -10,7 +10,7 @@ import java.util.*;
 
 /**
  * MidiReader is a class which does exactly what you'd expect.
- * events.eventTypes.Note that each MidiReader parses exactly *one* midi Sequence.
+ * events.eventTypes.NoteEvent that each MidiReader parses exactly *one* midi Sequence.
  * This means that the MidiTools class instantiates one for every
  * single file to be read. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
@@ -39,9 +39,9 @@ public class MidiReader implements Reader<Score> {
     private Score passage;
 
     /* Time signature change events in various time formats */
-    private TreeMap<Long,TimeSignature> timeSigsLong;
-    private TreeMap<Float,TimeSignature> timeSigsFloat;
-    private TreeMap<Count, TimeSignature> timeSigsCount;
+    private TreeMap<Long, TimeSign> timeSigsLong;
+    private TreeMap<Float, TimeSign> timeSigsFloat;
+    private TreeMap<Count, TimeSign> timeSigsCount;
 
     /* Tempo change events in various time formats */
     private TreeMap<Long,Integer> tempiLong;
@@ -51,12 +51,12 @@ public class MidiReader implements Reader<Score> {
     /* Measure markers in longs */
     private TreeMap<Long,Float> timePoints;
 
-    /* Note on events in various time formats */
+    /* NoteEvent on events in various time formats */
     private HashMap<Track,TreeMap<Long,TreeSet<Pitch>>> noteOnsLong;
     private HashMap<Track,TreeMap<Float,TreeSet<Pitch>>> noteOnsFloat;
     private HashMap<Track,TreeMap<Count,TreeSet<Pitch>>> noteOnsCount;
 
-    /* Note off events in various time formats */
+    /* NoteEvent off events in various time formats */
     private HashMap<Track,TreeMap<Pitch,TreeSet<Long>>> noteOffsLong;
     private HashMap<Track,TreeMap<Pitch,TreeSet<Float>>> noteOffsFloat;
     private HashMap<Track,TreeMap<Pitch,TreeSet<Count>>> noteOffsCount;
@@ -118,7 +118,7 @@ public class MidiReader implements Reader<Score> {
             instChangeLong.put(track,new TreeMap<Long, Instrument>());
 
             // Set the initial instrument of this track (it may change)
-            // Note that "-1" here just means anything else will override it
+            // NoteEvent that "-1" here just means anything else will override it
             //TreeMap<Long,base.Instrument> init = new TreeMap<>();
             //init.put(-1L,base.Instrument.DEFAULT);
             //instChangeLong.put(track,init);
@@ -341,7 +341,7 @@ public class MidiReader implements Reader<Score> {
     private void parseTempoMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         Integer ppqn = (data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff);
-        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter events.eventTypes.Note - I think this is right
+        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter events.eventTypes.NoteEvent - I think this is right
     }
 
     /**
@@ -355,12 +355,12 @@ public class MidiReader implements Reader<Score> {
         byte[] data = message.getData();
         int numerator   = data[0];
         int denominator = 2 << (data[1] - 1);
-        TimeSignature timeSignature  = TimeSignature.getInstance(4,4);
+        TimeSign timeSignature  = TimeSign.getInstance(4,4);
         if(numerator == 0 || denominator == 0) {
             System.out.println("MIDI PARSER:\tImproper time signature message, reverting to 4/4");
         }
         else {
-            timeSignature = TimeSignature.getInstance(numerator, denominator);
+            timeSignature = TimeSign.getInstance(numerator, denominator);
         }
         timeSigsLong.put(tick,timeSignature);
     }
@@ -408,7 +408,7 @@ public class MidiReader implements Reader<Score> {
         }
         // Else, make it 4/4, because why not?
         else {
-            timeSigsFloat.put(0f, TimeSignature.getInstance(4, 4));
+            timeSigsFloat.put(0f, TimeSign.getInstance(4, 4));
             System.out.println("MIDI PARSER: No time signature... defaulting to 4/4");
         }
 
@@ -437,7 +437,7 @@ public class MidiReader implements Reader<Score> {
 
 
             // Information
-            TimeSignature timeSig = timeSigsLong.floorEntry(tick).getValue();
+            TimeSign timeSig = timeSigsLong.floorEntry(tick).getValue();
             long ticksPerMeasure = resolution * 4 * timeSig.getNumerator() / timeSig.getDenominator();
             long ticksElapsed = tick - prevTick;
             float timeElapsed = (float) ticksElapsed / ticksPerMeasure;
@@ -539,7 +539,7 @@ public class MidiReader implements Reader<Score> {
 
     /**
      * Converts the all events into fractions-of-a-measure
-     * format. events.eventTypes.Note that this is a touchy, time-consuming
+     * format. events.eventTypes.NoteEvent that this is a touchy, time-consuming
      * process prone to minor errors, and thus, this function
      * is likely to require tweaking going forward.
      */
@@ -636,8 +636,8 @@ public class MidiReader implements Reader<Score> {
                     Count start = pair.getKey();
                     for(Pitch pitch : pair.getValue()) {
                         Count end = noteOffsCount.get(track).get(pitch).ceiling(start);
-                        System.out.println(new Note(start,end,pitch));
-                        part.add(new Note(start,end,pitch));
+                        System.out.println(new NoteEvent(start,end,pitch));
+                        part.add(new NoteEvent(start,end,pitch));
                     }
                 }
                 // Add the part to the passage
@@ -648,7 +648,7 @@ public class MidiReader implements Reader<Score> {
 
     /**
      * A useful method that interpolates a tick between established
-     * time points. events.eventTypes.Note that this is similar to the way that pixels
+     * time points. events.eventTypes.NoteEvent that this is similar to the way that pixels
      * are interpolated in digital images.
      * @param tick The tick representing the time to be interpolated.
      * @return The float value of this tick as fractions of a measure.

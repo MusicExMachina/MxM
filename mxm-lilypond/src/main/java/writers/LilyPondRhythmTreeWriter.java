@@ -1,7 +1,7 @@
 import analysis.RhythmNode;
 import analysis.RhythmTree;
 import base.Count;
-import base.TimeSignature;
+import base.TimeSign;
 import io.Writer;
 
 import java.io.IOException;
@@ -57,7 +57,7 @@ public class LilyPondRhythmTreeWriter implements Writer<RhythmTree> {
     public static String getRhythmTreeString(RhythmTree rhythmTree, String treeName){
         return "\\score { \n" +
                 "\t\\new Staff {\n" +
-                "\t\t"+getNoteString(rhythmTree.getRoot(),0, TimeSignature.getInstance(4,4)) + "\n" +
+                "\t\t"+getNoteString(rhythmTree.getRoot(),0, TimeSign.getInstance(4,4)) + "\n" +
                 "\t}\n" +
                 "\t\\header {\n" +
                 "\t\tpiece = \"" + treeName + "\"\n" +
@@ -65,7 +65,7 @@ public class LilyPondRhythmTreeWriter implements Writer<RhythmTree> {
                 "}";
     }
 
-    public static String getNoteString(RhythmNode node, int level, TimeSignature timeSignature) {
+    public static String getNoteString(RhythmNode node, int level, TimeSign timeSignature) {
         String toReturn = "";
 
         // If this is a leaf node

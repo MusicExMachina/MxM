@@ -5,7 +5,7 @@ import java.util.Random;
 
 /**
  * Creates a Distribution over a type. Elements can be added but not subtracted,
- * and Distributions can be combined in various ways. Note that the most useful
+ * and Distributions can be combined in various ways. NoteEvent that the most useful
  * "end product" of a Distribution is its ability to choose() a value based on
  * a random seed.
  */

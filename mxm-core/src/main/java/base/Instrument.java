@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 /**
- * A class for storing information about a specific instrument. Note that this
+ * A class for storing information about a specific instrument. NoteEvent that this
  * is specific enough to be "Horn in F" instead of just "Horn" given that different
  * transpositions of the "same" instrument have different tendencies.
  */

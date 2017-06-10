@@ -1,24 +1,16 @@
 package form;
 
 /**
- * Created by celenp on 5/13/2017.
+ * Passages are a section of organized music over a set amount of time, best
+ * Passages can be cut exerpted to form other, smaller Passages. For instance, out of a large Passage, like the Adagio
+ * movement of Dvorak's Ninth Symphony, one might
  */
-public class Passage {
-/*
-    public TimeSignature getTimeSignature(int measure) {
+public interface Passage {
 
-    }
-
-    public TimeSignature getTimeSignature(Count time) {
-        return getTimeSignature(time.getMeasure());
-    }
-
-    public Tempo getTempo(Count time) {
-
-    }
-
-    public Count getLength() {
-
-    }
-*/
+    /*
+    public Iterable<NoteEvent> notesItr();
+    public Iterable<Part> partsItr();
+    public Iterable<Instrument> sectionsItr();
+    public Iterable<>
+    */
 }

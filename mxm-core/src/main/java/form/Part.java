@@ -1,22 +1,32 @@
 package form;
 
 import base.*;
-import events.eventTypes.Note;
+import events.MusicEvent;
+import events.MusicTimeline;
+import events.PlayableEvent;
+import events.eventTypes.NoteEvent;
 
 import java.util.Iterator;
 import java.util.TreeMap;
 
 /**
- * Lines are horizontal arrangements of Notes that are heard as a
- * continuous horizontal slice.
+ * Parts represent a collection of
+ *
+ * A single instrument can play a part
+ * A single section can play one part (
+ * A single section can play many parts (think of four horn parts).
  */
-public class Part implements Iterable<Note> {
+public abstract class Part<NoteType extends PlayableEvent> implements Iterable<NoteType> {
 
     /** The instrument that plays this line. */
     private Instrument instrument;
 
     /** The notes played in this line. */
-    private TreeMap<Count, Note> notes;
+    private MusicTimeline<MusicEvent> notes;
+
+    private TreeMap<Count, NoteEvent> dynamic;
+
+    private TreeMap<Count, NoteEvent> notes;
 
     /**
      * The line constructor starts only with the instrument
@@ -28,11 +38,19 @@ public class Part implements Iterable<Note> {
         this.notes = new TreeMap<>();
     }
 
-    public void add(Note note) {
+    public void add(NoteEvent note) {
         notes.put(note.getStart(),note);
     }
 
     public Instrument getInstrument() { return instrument; }
+
+
+    public void getNoteAt(Count count) {}
+
+    public void getDynamicAt(Count count) {}
+
+    public void getTechniqueAAt(Count count) {}
+
 
     /**
      * Returns a nicely-formatted string representing this line.
@@ -41,7 +59,7 @@ public class Part implements Iterable<Note> {
     @Override
     public String toString() {
         String toReturn = instrument.toString() + "\n\t\t";
-        for(Note note : this) {
+        for(NoteEvent note : this) {
             toReturn += note.toString() + " ";
         }
         return toReturn + "\n";
@@ -52,7 +70,12 @@ public class Part implements Iterable<Note> {
      * @return An iterator over all the notes in this line.
      */
     @Override
-    public Iterator<Note> iterator() {
+    public Iterator<NoteType> iterator() {
         return notes.values().iterator();
     }
+
+    public Iterator<Dynamic> dynamicItr() { return null; }
+
+    public Iterator<Technique> techniqueItr() { return null; }
+
 }

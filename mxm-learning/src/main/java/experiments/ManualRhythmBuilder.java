@@ -32,9 +32,9 @@ public class ManualRhythmBuilder {
 //        form.Part l = new form.Part(base.Instrument.ACOUSTIC_GRAND_PIANO);
 //        for (int i = 0; i < schubert.length; i++) {
 //            int[] aGrieg = schubert[i];
-//            events.eventTypes.Note[] cs = new events.eventTypes.Note[schubert[i].length];
+//            events.eventTypes.NoteEvent[] cs = new events.eventTypes.NoteEvent[schubert[i].length];
 //            for (int j = 0; j<schubert[i].length; j++){
-//                cs[j] = new events.eventTypes.Note(base.Pitch.getInstance(60));
+//                cs[j] = new events.eventTypes.NoteEvent(base.Pitch.getInstance(60));
 //            }
 //            analysis.RhythmTree r = new analysis.RhythmTree(aGrieg, cs);
 //            //l.add(new MidiMeasure(i, r));
@@ -44,7 +44,7 @@ public class ManualRhythmBuilder {
 //        form.Score p = new form.Score();
 //
 //        p.add(l);
-//        p.addTimeSignature(new base.TimeSignature(4, 4), 0);
+//        p.addTimeSignature(new base.TimeSign(4, 4), 0);
 //        p.addTempoChange(new base.Tempo(120), base.Count.ZERO);
 //
 //        Sequence seq = MidiTools.write(p);
