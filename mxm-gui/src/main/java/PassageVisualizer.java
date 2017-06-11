@@ -1,6 +1,6 @@
-import base.time.Count;
-import base.time.TimeSign;
-import events.playable.Note;
+import events.sounding.Note;
+import time.Count;
+import time.TimeSign;
 import form.Part;
 import form.Score;
 import io.MxmScoreWriter;

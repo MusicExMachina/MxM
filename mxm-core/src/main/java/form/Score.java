@@ -1,39 +1,26 @@
 package form;
 
-import base.time.Count;
-import base.instrument.Instrument;
-import base.time.TimeSign;
-import events.eventTypes.TempoEvent;
-import events.eventTypes.TimeSignEvent;
+/**
+ * Scores are slightly-more-formal Passages, meaning that they contain metadata about their composer, their name, so on
+ * and so forth. As a subclass of Passage, however, Scores can be excerpted to form other Passages (just not other
+ * Scores, of course).
+ */
+public class Score extends Passage {
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeMap;
-
-public class Score {
-
-    private String name;
+    private String title;
     private String composer;
+    private String style;
+    private int yearComposed;
 
-    protected Set<Part> parts;
-    protected TreeMap<Instrument,List<Part>> partsBySection;
-
-    public Iterator<Part> partIterator() { return null; }
-    public Iterator<Instrument> sectionIterator() { return null; }
-
-    public Iterator<TempoEvent> tempoChangeIterator() { return null; }
-    public Iterator<TimeSignEvent> timeSignChangeIterator() { return null; }
-
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public String getComposer() {
         return composer;
     }
 
-    public TimeSign getTimeSignatureAt(Count count) {
-        return null;
+    public String toString() {
+        return title + " by " + composer + " full score";
     }
 }

@@ -1,7 +1,7 @@
-import base.sound.Pitch;
-import base.sound.PitchClass;
-import musicTheory.Chord;
-import musicTheory.types.ChordClass;
+import sound.Pitch;
+import musicTheory.PitchClass;
+import sound.Chord;
+import musicTheory.ChordClass;
 
 /**
  * Created by celenp on 5/16/2017.
@@ -11,7 +11,7 @@ public class LilyPondParser {
     private Chord parseChord(String chordString) {
         String[] tokens = chordString.split(":");
         if (tokens.length != 2) {
-            throw new Error("LILY POND PARSER:\t Chord string \"" + chordString + "\" improperly formatted.");
+            throw new Error("LILY POND PARSER:\t ChordNote string \"" + chordString + "\" improperly formatted.");
         }
         PitchClass pitch        = parsePitchClass(tokens[0]);
         ChordClass chordClass   = parseChordClass(tokens[1]);
@@ -86,7 +86,7 @@ public class LilyPondParser {
             default:
                 String[] tokens = chordClassString.split(".");
                 if (tokens.length != 2) {
-                    throw new Error("LILY POND PARSER:\t Chord class string \"" + chordClassString + "\" improperly formatted.");
+                    throw new Error("LILY POND PARSER:\t ChordNote class string \"" + chordClassString + "\" improperly formatted.");
                 }
         }
         return null;

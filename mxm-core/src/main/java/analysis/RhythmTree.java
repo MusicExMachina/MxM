@@ -1,6 +1,6 @@
 package analysis;
 
-import base.time.Count;
+import time.Count;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Queue;

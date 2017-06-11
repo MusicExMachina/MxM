@@ -1,7 +1,7 @@
 package base;
 
-import base.sound.Interval;
-import base.sound.Pitch;
+import musicTheory.Interval;
+import sound.Pitch;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
