@@ -12,14 +12,14 @@ import java.nio.file.Paths;
 /**
  * Created by celenp on 5/20/2017.
  */
-public class LilyPondLeadSheetParser extends Reader<Score> {
+public class LilyPondLeadSheetParser extends Reader {
 
     @Override
     public Score read(String filename) {
         return null;
     }
 
-    public static int main(String[] args) {
+    public static void main(String[] args) {
         String pathStr = "src/tests/resources/realBookEntries";
 
         // Get the path to the resource we want
@@ -32,11 +32,13 @@ public class LilyPondLeadSheetParser extends Reader<Score> {
         File folder = new File(path.toString());
         File[] allFiles = folder.listFiles();
 
+        LilyPondLeadSheetParser parser = new LilyPondLeadSheetParser();
+
         File file = allFiles[0];
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                parse(line);
+                parser.parse(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,7 +46,7 @@ public class LilyPondLeadSheetParser extends Reader<Score> {
     }
 
     public void parse(String inputString) {
-        String[] blocks = inputString.split("{}");
+        String[] blocks = inputString.split("-");
         for(String string : blocks) {
             System.out.println(">\t" + string);
         }

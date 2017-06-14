@@ -1,14 +1,23 @@
 package events;
 
+import sound.Dynamic;
+import sound.Lyric;
 import sound.Sound;
+import sound.Technique;
 import time.Count;
 
 /**
- * Created by celenp on 6/9/2017.
+ *
  */
-public abstract class Note<SoundType extends Sound> implements MusicEvent {
+public abstract class Note<SoundType extends Sound> extends MusicEvent {
 
+    // Note attributes
     private SoundType sound;
+    private Lyric lyric;
+    private Dynamic dynamic;
+    private Technique technique;
+
+    // Note timing information
     private Count start;
     private Count end;
     private Count duration;

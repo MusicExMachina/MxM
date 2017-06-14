@@ -1,6 +1,6 @@
 import events.sounding.Note;
 import time.Count;
-import time.TimeSign;
+import time.TimeSig;
 import form.Part;
 import form.Score;
 import io.MxmScoreWriter;
@@ -40,7 +40,7 @@ public class PassageVisualizer extends JFrame {
             int vScale = 400;
 
             for(int i = 0; i < 100; i++) {
-                TimeSign timeSig = passage.getTimeSignatureAt(new Count(i+1));
+                TimeSig timeSig = passage.getTimeSignatureAt(new Count(i+1));
                 g.setColor(Color.darkGray);
                 g.drawLine(Math.round(i*hScale),0,Math.round(i*hScale),vScale);
                 for(int j = 1; j <= timeSig.getNumerator(); j++) {

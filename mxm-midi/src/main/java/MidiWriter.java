@@ -1,7 +1,7 @@
 import events.sounding.Note;
 import time.Count;
 import time.Tempo;
-import time.TimeSign;
+import time.TimeSig;
 import form.Part;
 import form.Score;
 import io.Writer;
@@ -188,7 +188,7 @@ class MidiWriter implements Writer<Score> {
             int curMeasure = timeSigItr.next();
             int measuresPassed = curMeasure - lastTimeSigChange;
 
-            TimeSign timeSignature = passage.getTimeSignatureAt(new Count(curMeasure));
+            TimeSig timeSignature = passage.getTimeSignatureAt(new Count(curMeasure));
 
             long newTimePoint = timePoints.lastEntry().getValue() + measuresPassed * lastMeasureSize;
 

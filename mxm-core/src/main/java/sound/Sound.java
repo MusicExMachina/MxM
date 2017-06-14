@@ -11,16 +11,6 @@ package sound;
  *
  * TODO: Semi-pitched instruments, such as certain types of drums, may require a special Sound subclass like "SemiPitch"
  */
-public class Sound {
-
-    /**
-     * Constructor for a Sound, utilized by subclasses.
-     * @param technique The Technique used to generate this Note
-     * @param dynamic The Dynamic level at which this Note is played
-     */
-    Sound() {
-        this.technique = technique;
-        this.dynamic = dynamic;
-    }
+public interface Sound {
 
 }

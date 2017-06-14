@@ -3,7 +3,7 @@ import sound.*;
 import sound.Instrument;
 import time.Count;
 import time.Tempo;
-import time.TimeSign;
+import time.TimeSig;
 import form.Part;
 import form.Score;
 import io.Reader;
@@ -42,9 +42,9 @@ public class MidiReader implements Reader<Score> {
     private Score passage;
 
     /* Time signature change events in various time formats */
-    private TreeMap<Long, TimeSign> timeSigsLong;
-    private TreeMap<Float, TimeSign> timeSigsFloat;
-    private TreeMap<Count, TimeSign> timeSigsCount;
+    private TreeMap<Long, TimeSig> timeSigsLong;
+    private TreeMap<Float, TimeSig> timeSigsFloat;
+    private TreeMap<Count, TimeSig> timeSigsCount;
 
     /* Tempo change events in various time formats */
     private TreeMap<Long,Integer> tempiLong;
@@ -358,12 +358,12 @@ public class MidiReader implements Reader<Score> {
         byte[] data = message.getData();
         int numerator   = data[0];
         int denominator = 2 << (data[1] - 1);
-        TimeSign timeSignature  = TimeSign.getInstance(4,4);
+        TimeSig timeSignature  = TimeSig.getInstance(4,4);
         if(numerator == 0 || denominator == 0) {
             System.out.println("MIDI PARSER:\tImproper time signature message, reverting to 4/4");
         }
         else {
-            timeSignature = TimeSign.getInstance(numerator, denominator);
+            timeSignature = TimeSig.getInstance(numerator, denominator);
         }
         timeSigsLong.put(tick,timeSignature);
     }
@@ -411,7 +411,7 @@ public class MidiReader implements Reader<Score> {
         }
         // Else, make it 4/4, because why not?
         else {
-            timeSigsFloat.put(0f, TimeSign.getInstance(4, 4));
+            timeSigsFloat.put(0f, TimeSig.getInstance(4, 4));
             System.out.println("MIDI PARSER: No time signature... defaulting to 4/4");
         }
 
@@ -440,7 +440,7 @@ public class MidiReader implements Reader<Score> {
 
 
             // Information
-            TimeSign timeSig = timeSigsLong.floorEntry(tick).getValue();
+            TimeSig timeSig = timeSigsLong.floorEntry(tick).getValue();
             long ticksPerMeasure = resolution * 4 * timeSig.getNumerator() / timeSig.getDenominator();
             long ticksElapsed = tick - prevTick;
             float timeElapsed = (float) ticksElapsed / ticksPerMeasure;
