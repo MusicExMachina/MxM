@@ -1,5 +1,8 @@
-package events;
+package form;
 
+import events.MusicEvent;
+import events.TempoChange;
+import events.TimeSigChange;
 import time.Count;
 
 import java.util.Comparator;
@@ -27,9 +30,11 @@ public class Frame implements Iterable<MusicEvent>, Comparator<Frame>, Comparabl
         return timing;
     }
 
+    /*
     public Iterator<Note> noteItr() {
-        events.iterator();
+        return events.iterator();
     }
+    */
 
     @Override
     public Iterator<MusicEvent> iterator() {
@@ -43,6 +48,6 @@ public class Frame implements Iterable<MusicEvent>, Comparator<Frame>, Comparabl
 
     @Override
     public int compare(Frame frame1, Frame frame2) {
-        return frame1.getTiming().compareTo(other.getTiming());
+        return frame1.getTiming().compareTo(frame2.getTiming());
     }
 }

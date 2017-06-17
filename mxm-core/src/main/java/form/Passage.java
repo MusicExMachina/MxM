@@ -6,7 +6,6 @@ import events.TempoChange;
 import events.TimeSigChange;
 import sound.Instrument;
 import time.Count;
-import time.TimeSig;
 
 import java.util.*;
 
@@ -47,6 +46,10 @@ public class Passage implements Iterable<Part> {
 
     public Iterator<TimeSigChange> timeSigChangeItr() { return timeSigChanges.values().iterator(); }
 
+    @Override
+    public Iterator<Part> iterator() {
+        return null;
+    }
 
 
 
@@ -54,6 +57,7 @@ public class Passage implements Iterable<Part> {
 
 
 
+/*
     public Passage excerpt(int startMeasure, int endMeasure) {
 
     }
@@ -80,4 +84,5 @@ public class Passage implements Iterable<Part> {
     public Iterator<MusicEvent> iterator() {
         return null;
     }
+    */
 }

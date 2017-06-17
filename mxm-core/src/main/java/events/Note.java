@@ -1,5 +1,6 @@
 package events;
 
+import form.Part;
 import sound.Dynamic;
 import sound.Lyric;
 import sound.Sound;
@@ -12,6 +13,7 @@ import time.Count;
 public abstract class Note<SoundType extends Sound> extends MusicEvent {
 
     // Note attributes
+    private Part playedBy;
     private SoundType sound;
     private Lyric lyric;
     private Dynamic dynamic;
@@ -22,6 +24,7 @@ public abstract class Note<SoundType extends Sound> extends MusicEvent {
     private Count end;
     private Count duration;
 
+    public Part getPlayedBy() { return playedBy; }
 
     public SoundType getSound() {
         return sound;

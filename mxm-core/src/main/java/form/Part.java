@@ -40,9 +40,8 @@ public class Part {
 
     public Instrument getInstrument() { return instrument; }
 
-    public int getPartNumberInSection() { return partNumberInSection; }
+    public int getPartNumInSection() { return partNumInSection; }
 
-    @Override
     public Iterator<MusicEvent> iterator() {
         return null;
     }

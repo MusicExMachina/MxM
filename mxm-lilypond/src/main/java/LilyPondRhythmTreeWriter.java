@@ -12,7 +12,7 @@ import java.util.Collection;
 /**
  * This writer has a number of recursive methods that
  */
-public class LilyPondRhythmTreeWriter implements Writer<RhythmTree> {
+public class LilyPondRhythmTreeWriter extends Writer<RhythmTree> {
 
     @Override
     public void write(RhythmTree rhythmTree, String filename) {

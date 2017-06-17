@@ -12,6 +12,10 @@ public class Score extends Passage {
     private String style;
     private int yearComposed;
 
+    public Score(Score score) {
+        super(score);
+    }
+
     public String getTitle() {
         return title;
     }

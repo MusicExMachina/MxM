@@ -1,16 +1,10 @@
 package events;
 
-import time.Time;
-
 /**
  * Created by celenp on 6/11/2017.
  */
-public class TimeSigChange implements MusicEvent {
+public class TimeSigChange extends MusicEvent {
 
-    @Override
-    public Time getStart() {
-        return null;
-    }
 
     @Override
     public int compareTo(MusicEvent o) {

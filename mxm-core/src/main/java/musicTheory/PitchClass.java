@@ -22,6 +22,7 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     // standard music theory names. Note enharmonic classes.
     // TODO: C_FLAT might not work nicely with octave assumptions
     // TODO: B_SHARP might not as well. Ill-defined goals here
+    /*
     public static PitchClass C_FLAT     = getInstance(11);
     public static PitchClass C_NATURAL  = getInstance(0);
     public static PitchClass C_SHARP    = getInstance(1);
@@ -43,6 +44,7 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     public static PitchClass B_FLAT     = getInstance(10);
     public static PitchClass B_NATURAL  = getInstance(11);
     public static PitchClass B_SHARP    = getInstance(0);
+    */
 
     /** All possible PitchClasses */
     private static final ArrayList<PitchClass> ALL = new ArrayList<>();
@@ -128,6 +130,10 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
             case 10:    return "Bb";    case 11:    return "B";
             default:    return "ERROR";
         }
+    }
+
+    public int getValue() {
+        return value;
     }
 
     /**

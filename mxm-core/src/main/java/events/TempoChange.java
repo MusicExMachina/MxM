@@ -1,17 +1,9 @@
 package events;
 
-import time.Time;
-
 /**
  * Created by celenp on 5/13/2017.
  */
 public class TempoChange extends MusicEvent {
-    @Override
-    public Time getStart() {
-        return null;
-    }
-
-    @Override
     public int compareTo(MusicEvent o) {
         return 0;
     }

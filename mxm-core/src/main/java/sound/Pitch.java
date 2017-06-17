@@ -13,7 +13,7 @@ import java.util.Iterator;
  * Notes, though they may be used in Collections. events.sounding.Note that there should never be more than
  * these 120 Pitches, and that an iterator() has been provided for easy access.
  */
-public class Pitch extends Sound implements Comparator<Pitch>, Comparable<Pitch> {
+public class Pitch implements Sound, Comparator<Pitch>, Comparable<Pitch> {
 
     //////////////////////////////
     // Private static variables //
@@ -50,6 +50,23 @@ public class Pitch extends Sound implements Comparator<Pitch>, Comparable<Pitch>
      * @return An sound.Pitch of this size.
      */
     public static Pitch getInstance(int value) {
+        if(value >= MIN_PITCH&& value <= MAX_PITCH) {
+            return ALL.get(value - MIN_PITCH);
+        }
+        else {
+            throw new Error("INTERVAL:\tmusicTheory.Interval out of range.");
+        }
+    }
+
+    /**
+     * Gets an instance of a given sound.Pitch size. This method
+     * creates the interning design pattern per sound.Pitch.
+     * @param pitchClass The pitch class of this pitch (C, Ab, F#)
+     * @param octave The octave of this pitch
+     * @return An sound.Pitch of this size.
+     */
+    public static Pitch getInstance(PitchClass pitchClass, int octave) {
+        int value = pitchClass.getValue() + (octave+1)*12;
         if(value >= MIN_PITCH&& value <= MAX_PITCH) {
             return ALL.get(value - MIN_PITCH);
         }

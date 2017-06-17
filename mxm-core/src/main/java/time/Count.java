@@ -4,7 +4,7 @@ package time;
  * A Count is the fundamental measurement of  musical time. Also note that counts are essentially just fractions.
  * They're not really that special. They are, however, immutable, in order to avoid accidental headaches down the line.
  */
-public class Count implements Time {
+public class Count {
 
     /** A zero Count */
     public static final Count ZERO = new Count(0);
@@ -15,8 +15,11 @@ public class Count implements Time {
     /** The fraction of this Count (its position within the measure) */
     private Beat countClass;
 
+    private int numerator;
+    private int denominator;
+
     /** The measure this Count is in */
-    private Measure measure;
+    private int measure;
 
     /**
      * A constructor for time.Count taking in just a measure
@@ -24,7 +27,7 @@ public class Count implements Time {
      * avoids having annoying 1-denominator constructor calls.
      * @param measure The desired measure.
      */
-    public Count(Measure measure) {
+    public Count(int measure) {
         this.numerator   = measure;
         this.denominator = 1;
         this.measure     = numerator / denominator;
@@ -141,7 +144,6 @@ public class Count implements Time {
      * @param other the other time.Count to compare this one to.
      * @return The comparison between the two.
      */
-    @Override
     public int compareTo(Count other) {
         return Double.compare(this.toDouble(),other.toDouble());
     }
@@ -152,7 +154,6 @@ public class Count implements Time {
      * @param c2 The second time.Count.
      * @return The comparison between the two.
      */
-    @Override
     public int compare(Count c1, Count c2) {
         return Double.compare(c1.toDouble(),c2.toDouble());
     }
@@ -162,7 +163,6 @@ public class Count implements Time {
      * @param o The Object to compare this to.
      * @return If these two Objects are equal.
      */
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -181,11 +181,84 @@ public class Count implements Time {
      * in certain Collections, like HashSets.
      * @return The hash code for this time.Count.
      */
-    @Override
     public int hashCode() {
         int result = numerator;
         result = 31 * result + denominator;
         return result;
     }
+
+
+
+
+    /**
+     * A getter for this time.Count's numerator.
+     * @return This time.Count's numerator.
+     */
+    public int getNumerator() {
+        return numerator;
+    }
+
+    /**
+     * A getter for this time.Count's denominator.
+     * @return This time.Count's denominator.
+     */
+    public int getDenominator() {
+        return denominator;
+    }
+
+    /**
+     * Converts this time.Count to a float.
+     * @return This time.Count's float value.
+     */
+    public float toFloat() {
+        return (float)numerator/denominator;
+    }
+
+    /**
+     * Converts this time.Count to a double.
+     * @return This time.Count's double value.
+     */
+    public double toDouble() {
+        return (double)numerator/denominator;
+    }
+
+    /**
+     * Reduces the time.Count's internal fraction, a vital
+     * method which is run exactly once- every time a
+     * new time.Count is created. This could be lumped in
+     * the constructor, but why do that?
+     */
+    private void reduce() {
+        // Euclid's gcd algorithm, everyone's favorite
+        int a = numerator;
+        int b = denominator;
+
+        if(a == 0 && b == 0) {
+            throw new IllegalArgumentException("Undefined Count: (0,0)");
+        }
+        else if(a == 0){
+            denominator /= b;
+            return;
+        }
+        else if(b == 0){
+            numerator /= a;
+            return;
+        }
+
+        while (a != b) {
+            if (a > b) {
+                a -= b;
+            }
+            else {
+                b -= a;
+            }
+        }
+
+        // Reduce both numerator and denominator
+        // by "a," the greatest common factor.
+        numerator   /= a;
+        denominator /= a;
+    }
+
 
 }

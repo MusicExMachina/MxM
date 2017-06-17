@@ -25,7 +25,7 @@ public class MxmScoreWriter extends Writer<Score> {
 
             writer.println("> ScoreEvent");
             writer.println("  - Title");
-            writer.println("      " + passage.getName());
+            // writer.println("      " + passage.getName());
             writer.println("  - Composer");
             writer.println("      " + passage.getComposer());
             writer.println("");

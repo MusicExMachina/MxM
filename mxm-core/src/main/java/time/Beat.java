@@ -11,7 +11,7 @@ public class Beat implements Comparable<Beat> {
     public Beat(int numerator, int denominator) {
 
         if(numerator > denominator) {
-            throw new Error("Cannot create a beat larger than ")
+            throw new Error("Cannot create a beat larger than ");
         }
         if(denominator > 0) {
             this.numerator = numerator;
