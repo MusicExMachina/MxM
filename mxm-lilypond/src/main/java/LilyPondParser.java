@@ -1,3 +1,4 @@
+import events.Note;
 import musicTheory.ChordClass;
 import musicTheory.PitchClass;
 import sound.Chord;
@@ -12,21 +13,26 @@ import java.util.ArrayList;
 public class LilyPondParser {
 
     public static void main(String[] args) {
+        /*
 
         System.out.println(parseNoteLength("4"));
         System.out.println(parseNoteLength("4."));
         System.out.println(parseNoteLength("8"));
         System.out.println(parseNoteLength("8."));
         System.out.println(parseNoteLength("16"));
-
+        */
 
         /*
-        ArrayList<Pitch> pitches = parsePitches("c c' cis, d des''' e, eisis,, f,,,,");
-        for(Pitch pitch : pitches) {
-            System.out.print(pitch + " ");
-        }
         */
+
+
+        ArrayList<Note> notes = parseNotes("c4 c'4 cis,128. d\\breve des'''8. e,1 eisis,,\\longa f,,,,4");
+        for(Note note : notes) {
+            System.out.println(note.getStart() + "\t\t" + note.getSound() + " " + note.getDuration() + "   ");
+        }
+
     }
+
 
     private static Chord parseChord(String chordString) {
         String[] tokens = chordString.split(":");
@@ -39,13 +45,30 @@ public class LilyPondParser {
         return new Chord(pitch,chordClass);
     }
 
-    private static ArrayList<Pitch> parsePitches(String pitchString) {
-        ArrayList<Pitch> toReturn = new ArrayList<>();
-        String[] pitches = pitchString.split(" ");
-        for(String pitchToken : pitches) {
-            toReturn.add(parsePitch(pitchToken));
+    private static ArrayList<Note> parseNotes(String noteString) {
+        ArrayList<Note> toReturn = new ArrayList<>();
+        String[] notes = noteString.split(" ");
+
+        Count curTime = Count.ZERO;
+        for(String noteToken : notes) {
+            Note note = parseNote(noteToken, curTime);
+            toReturn.add(note);
+            // Keep track of the time
+            curTime = curTime.plus(note.getDuration());
         }
         return toReturn;
+    }
+
+    private static Note<Pitch> parseNote(String noteToken, Count curTime) {
+        int divider = 0;
+        for(divider = 0; divider < noteToken.length(); divider++ ) {
+            if(noteToken.charAt(divider) == '\\' || Character.isDigit(noteToken.charAt(divider))) {
+                break;
+            }
+        }
+        Pitch pitch = parsePitch(noteToken.substring(0,divider));
+        Count length = parseNoteLength(noteToken.substring(divider),Count.ONE);
+        return new Note<Pitch>(curTime,length,pitch);
     }
 
     private static Pitch parsePitch(String pitchToken) {
@@ -135,7 +158,7 @@ public class LilyPondParser {
         return null;
     }
 
-    private static Count parseNoteLength(String noteLengthString) {
+    private static Count parseNoteLength(String noteLengthString, Count tupletModifier) {
         int numerator = 1;
         int denominator = 1;
 
@@ -158,6 +181,10 @@ public class LilyPondParser {
                 numerator   += 1;
             }
         }
+
+        // If we're in a tuplet, then modify the actual length accordingly
+        numerator *= tupletModifier.getNumerator();
+        denominator *= tupletModifier.getDenominator();
 
         return new Count(numerator,denominator);
     }

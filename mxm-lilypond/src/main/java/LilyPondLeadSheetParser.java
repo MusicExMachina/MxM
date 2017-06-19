@@ -20,13 +20,15 @@ public class LilyPondLeadSheetParser extends Reader {
     }
 
     public static void main(String[] args) {
-        String pathStr = "src/tests/resources/realBookEntries";
+        String pathStr = "mxm-lilypond/src/tests/resources/realBookEntries";
 
         // Get the path to the resource we want
         Path curPath = Paths.get("").toAbsolutePath();
         String curPathStr = curPath.toString();
         Path path = Paths.get(curPathStr, pathStr);
         Charset charset = Charset.forName("UTF-8");
+
+        System.out.println(path);
 
         // Get the resources folder
         File folder = new File(path.toString());
@@ -46,9 +48,9 @@ public class LilyPondLeadSheetParser extends Reader {
     }
 
     public void parse(String inputString) {
-        String[] blocks = inputString.split("-");
+        String[] blocks = inputString.split("-P");
         for(String string : blocks) {
-            System.out.println(">\t" + string);
+            System.out.println(">\t" + string.trim());
         }
     }
 

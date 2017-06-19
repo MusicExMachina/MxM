@@ -82,8 +82,8 @@ public class LilyPondRhythmTreeWriter extends Writer<RhythmTree> {
             else System.out.println("!");
         }
         else {
-            int preferredSubdivision    = timeSignature.getPreferredSubdivision(level);
-            int actualSubdivision       = node.getValue();
+            int preferredSubdivision = timeSignature.getPreferredSubdivision(level);
+            int actualSubdivision    = node.getValue();
 
             // Tuplets
             if(preferredSubdivision % actualSubdivision != 0) {
