@@ -20,20 +20,40 @@ public class Pitch implements Sound, Comparator<Pitch>, Comparable<Pitch> {
     //////////////////////////////
 
     /** The minimum midi sound value, C-1. */
-    private static final int MIN_PITCH = 0;
+    private static final int MIN_PITCH_VALUE = 0;
 
     /** The maximum midi sound value, B9. */
-    private static final int MAX_PITCH = 120;
+    private static final int MAX_PITCH_VALUE = 120;
 
     /** An ArrayList of all valid Pitches */
     private static final ArrayList<Pitch> ALL = new ArrayList<Pitch>();
 
     // Initialize all pitches
     static {
-        for(int midiValue = MIN_PITCH; midiValue <= MAX_PITCH; midiValue++) {
+        for(int midiValue = MIN_PITCH_VALUE; midiValue <= MAX_PITCH_VALUE; midiValue++) {
             ALL.add(new Pitch(midiValue));
         }
     }
+
+    //////////////////////////////
+    // Public static variables  //
+    //////////////////////////////
+
+    /** The minimum midi octave, -1 */
+    public static final int MIN_OCTAVE = -1;
+
+    /** The maximum midi octave, 9 */
+    public static final int MAX_OCTAVE = 9;
+
+    /** The lowest possible pitch */
+    public static final Pitch MIN_PITCH = getInstance(MIN_PITCH_VALUE);
+
+    /** The highest possible pitch */
+    public static final Pitch MAX_PITCH = getInstance(MAX_PITCH_VALUE);
+
+    //////////////////////////////
+    //      Static methods      //
+    //////////////////////////////
 
     /**
      * Gets an iterator which enumerates all valid Pitches.
@@ -44,88 +64,110 @@ public class Pitch implements Sound, Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Gets an instance of a given sound.Pitch size. This method
-     * creates the interning design pattern per sound.Pitch.
-     * @param value The (midi) value of this sound.Pitch
-     * @return An sound.Pitch of this size.
+     * Gets an instance of a given pitch. This method creates the interning design pattern per pitch.
+     * @param value The (midi) value of this pitch.
+     * @return An pitch of this (midi) value
      */
     public static Pitch getInstance(int value) {
-        if(value >= MIN_PITCH&& value <= MAX_PITCH) {
-            return ALL.get(value - MIN_PITCH);
-        }
-        else {
+        if(value >= MIN_PITCH_VALUE && value <= MAX_PITCH_VALUE )
+            return ALL.get(value - MIN_PITCH_VALUE);
+        else
             throw new Error("INTERVAL:\tmusicTheory.Interval out of range.");
-        }
     }
 
     /**
-     * Gets an instance of a given sound.Pitch size. This method
-     * creates the interning design pattern per sound.Pitch.
+     * Gets an instance of a given pitch. This method creates the interning design pattern per pitch.
      * @param pitchClass The pitch class of this pitch (C, Ab, F#)
      * @param octave The octave of this pitch
-     * @return An sound.Pitch of this size.
+     * @return A pitch of this pitch class and octave
      */
     public static Pitch getInstance(PitchClass pitchClass, int octave) {
-        int value = pitchClass.getValue() + (octave+1)*12;
-        if(value >= MIN_PITCH&& value <= MAX_PITCH) {
-            return ALL.get(value - MIN_PITCH);
-        }
-        else {
-            throw new Error("INTERVAL:\tmusicTheory.Interval out of range.");
-        }
+        int value = pitchClass.getValue() + (octave + MIN_OCTAVE)*12;
+        if(value >= MIN_PITCH_VALUE && value <= MAX_PITCH_VALUE )
+            return ALL.get(value - MIN_PITCH_VALUE);
+        else
+            throw new Error("PITCH:\tPitch out of range.");
     }
 
-    /** The sound class of this sound. */
+    //////////////////////////////
+    // Private member variables //
+    //////////////////////////////
+
+    /** The sound class of this pitch */
     private PitchClass pitchClass;
-    
-    /** The midi value of this sound. */
+
+    /** The octave of this pitch, between OCTAVE_MIN and OCTAVE_MAX */
+    private int octave;
+
+    /** The midi value of this pitch, between PITCH_MIN and PITCH_MAX */
     private int value;
 
+    //////////////////////////////
+    //   Private constructor    //
+    //////////////////////////////
+
     /**
-     * The sound
-     * @param value
+     * The pitch constructor, which is private to enforce the interning design pattern (one instance per value).
+     * @param value The (midi) value of this pitch
      */
     private Pitch(int value) {
         this.value = value;
         this.pitchClass = PitchClass.getInstance(value%12);
+        this.octave = value/12;
+    }
+
+    //////////////////////////////
+    //  Private member methods  //
+    //////////////////////////////
+
+    /**
+     * Gets the (midi) value of this pitch.
+     * @return The (midi) value of this pitch
+     */
+    public int getValue() {
+        return value;
     }
 
     /**
-     * Gets the musicTheory.PitchClass of this sound.Pitch.
-     * @return The musicTheory.PitchClass of this sound.Pitch.
+     * Gets the pitch class of this pitch.
+     * @return The pitch class of this pitch
      */
     public PitchClass getPitchClass() {
         return pitchClass;
     }
 
     /**
-     * Transposes a sound.Pitch by a given interval.
-     * @param interval The musicTheory.Interval to transpose by.
-     * @return The new, resulting sound.Pitch.
+     * Gets the octave of this pitch.
+     * @return The octave of this pitch
+     */
+    public int getOctave() {
+        return octave;
+    }
+
+    /**
+     * Transposes a pitch by a given interval
+     * @param interval The interval to transpose by
+     * @return The new, resulting pitch
      */
     public Pitch transpose(Interval interval) {
         return new Pitch(value + interval.getSize());
     }
 
     /**
-     * Gets the musicTheory.Interval between this sound.Pitch and another.
-     * @param other The other sound.Pitch to subtract from this one.
-     * @return THe musicTheory.Interval between this sound.Pitch and another.
+     * Gets the interval between this pitch and another.
+     * @param other The other pitch to subtract from this one
+     * @return The interval between this pitch and another
      */
     public Interval minus(Pitch other) {
         return Interval.getInstance(other.value - this.value);
     }
 
-    public int getValue() {
-        return value;
-    }
-
     /**
-     * Normalizes this musicTheory.PitchClass between 0 and 1.
-     * @return This musicTheory.PitchClass in the range [0,1).
+     * Normalizes this pitch between 0 and 1.
+     * @return The value of this pitch in the range [0,1).
      */
     public float normalized() {
-        return (float)(value - MIN_PITCH)/(float)(MAX_PITCH - MIN_PITCH);
+        return (float)(value - MIN_PITCH_VALUE)/(float)(MAX_PITCH_VALUE - MIN_PITCH_VALUE);
     }
 
     /**

@@ -26,7 +26,7 @@ public class TimeSig {
     /** The preferred note size at each subdivision level (in 4/4 counts) */
     private Count[] preferredNoteLength;
 
-    /** An ArrayList of all valid Pitches */
+    /** An ArrayList of all valid TimeSignatures */
     private static final ArrayList<TimeSig> ALL = new ArrayList<TimeSig>();
 
     // Initialize all pitches
