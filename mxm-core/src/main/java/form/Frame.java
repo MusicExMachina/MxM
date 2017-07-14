@@ -10,24 +10,24 @@ import java.util.Iterator;
 import java.util.TreeSet;
 
 /**
- * Created by celenp on 6/11/2017.
+ * A frame represents
  */
 public class Frame implements Iterable<MusicEvent>, Comparator<Frame>, Comparable<Frame> {
 
-    Count timing;
+    Count start;
     TreeSet<MusicEvent> events;
     TempoChange tempoChange;
     TimeSigChange timeSigChange;
 
     public Frame(Count timing) {
-        this.timing = timing;
+        this.start = timing;
         this.events = new TreeSet<>();
         this.tempoChange = null;
         this.timeSigChange = null;
     }
 
-    public Count getTiming() {
-        return timing;
+    public Count getStart() {
+        return start;
     }
 
     /*
@@ -43,11 +43,11 @@ public class Frame implements Iterable<MusicEvent>, Comparator<Frame>, Comparabl
 
     @Override
     public int compareTo(Frame other) {
-        return this.getTiming().compareTo(other.getTiming());
+        return this.getStart().compareTo(other.getStart());
     }
 
     @Override
     public int compare(Frame frame1, Frame frame2) {
-        return frame1.getTiming().compareTo(frame2.getTiming());
+        return frame1.getStart().compareTo(frame2.getStart());
     }
 }

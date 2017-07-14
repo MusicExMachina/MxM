@@ -3,7 +3,7 @@ package sound;
 /**
  * PortamentoSounds involve a bend between two discrete Pitches.
  */
-public class Portamento implements Sound {
+public class Portamento implements ISound {
 
     /** The starting Pitch of this Portamento */
     private Pitch startPitch;

@@ -8,8 +8,8 @@ import java.util.Comparator;
  *
  * This class is IMMUTABLE!
  */
-public class Count implements Comparable<Count>, Comparator<Count>
-{
+public class Count implements Comparable<Count>, Comparator<Count> {
+
     /** A zero Count */
     public static final Count ZERO = new Count(0);
     /** A full measure Count */

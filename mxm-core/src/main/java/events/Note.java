@@ -1,28 +1,34 @@
 package events;
 
-import form.Part;
+import sound.Accent;
 import sound.Dynamic;
-import sound.Lyric;
-import sound.Sound;
+import sound.ISound;
 import sound.Technique;
 import time.Count;
 
 /**
+ * Notes represent a sound over some duration of time. All notes have a set number of attributes, which
  *
+ * Note that there can be no inherent comparisons between notes- after all, what would we compare about them? Their
+ * start times? Their pitches? What would we do with unpitched notes?
  */
-public class Note<SoundType extends Sound> extends MusicEvent {
+public class Note<SoundType extends ISound> {
 
-    // Note attributes
-    private Part playedBy;
-    private SoundType sound;
-    private Lyric lyric;
-    private Dynamic dynamic;
-    private Technique technique;
+    Count start;
 
-    // Note timing information
+    // Music event timing information
     private Count start;
     private Count end;
     private Count duration;
+
+
+
+    // Note attributes
+    private SoundType sound;
+    private Technique technique;
+    private Dynamic dynamic;
+
+    private Accent accent;
 
     public Note(Count start, Count duration, SoundType sound) {
         this.start = start;
@@ -30,10 +36,20 @@ public class Note<SoundType extends Sound> extends MusicEvent {
         this.sound = sound;
     }
 
-    public Part getPlayedBy() { return playedBy; }
-
     public SoundType getSound() {
         return sound;
+    }
+
+    public Technique getTechnique() {
+        return technique;
+    }
+
+    public Dynamic getDynamic() {
+        return dynamic;
+    }
+
+    public Accent getAccent() {
+        return accent;
     }
 
     public Count getStart() {
@@ -46,15 +62,5 @@ public class Note<SoundType extends Sound> extends MusicEvent {
 
     public Count getDuration() {
         return duration;
-    }
-
-    @Override
-    public int compareTo(MusicEvent o) {
-        return 0;
-    }
-
-    @Override
-    public int compare(MusicEvent o1, MusicEvent o2) {
-        return 0;
     }
 }
