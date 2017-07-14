@@ -1,30 +1,32 @@
-import base.Count;
-import base.Tempo;
-import base.TimeSignature;
-import form.Note;
+import events.sounding.Note;
+import time.Count;
+import time.Tempo;
+import time.TimeSign;
 import form.Part;
-import form.Passage;
+import form.Score;
+import io.Writer;
 
 import javax.sound.midi.*;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeMap;
 
 /**
  * MidiWriter is a class which does exactly what you'd expect.
- * form.Note that each MidiWriter composes exactly *one* midi Sequence.
+ * events.sounding.Note that each MidiWriter composes exactly *one* midi Sequence.
  * This means that the MidiTools class instantiates one for every
- * single form.Passage to be written. This class could potentially be
+ * single form.ScoreEvent to be written. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
  */
-class MidiWriter {
+class MidiWriter implements Writer<Score> {
 
     /* The "resolution," i.e. the number of ticks per measure. */
     private static int resolution = 24;
 
     /* The passage that we're reading from. */
-    private Passage passage = null;
+    private Score passage = null;
 
     /* The sequence that we're writing to. */
     private Sequence sequence = null;
@@ -33,7 +35,7 @@ class MidiWriter {
     private TreeMap<Float,Long> timePoints;
 
     // Writes the information contained in a passage down to a sequence
-    public Sequence run(Passage passage) {
+    public Sequence run(Score passage) {
         try {
             // Initialize our variables
             this.passage = passage;
@@ -74,6 +76,19 @@ class MidiWriter {
         }
         return sequence;
     }
+
+
+
+    @Override
+    public void write(Score type, String filename) {
+
+    }
+
+    @Override
+    public void write(Collection<Score> types, String filename) {
+
+    }
+
 
     private void init(Track track) throws InvalidMidiDataException {
 
@@ -173,7 +188,7 @@ class MidiWriter {
             int curMeasure = timeSigItr.next();
             int measuresPassed = curMeasure - lastTimeSigChange;
 
-            TimeSignature timeSignature = passage.getTimeSignatureAt(new Count(curMeasure));
+            TimeSign timeSignature = passage.getTimeSignatureAt(new Count(curMeasure));
 
             long newTimePoint = timePoints.lastEntry().getValue() + measuresPassed * lastMeasureSize;
 
@@ -222,19 +237,16 @@ class MidiWriter {
         }
     }
 
-
-
     public static void main(String argv[]) throws IOException, InvalidMidiDataException, MidiUnavailableException {
         //Sequence sequence = MidiTools.download("https://www.8notes.com/school/midi/violin/bach_bourree.mid");
         Sequence sequence = MidiTools.load(Paths.get("").toAbsolutePath()+"/mxm-midi/src/tests/resources/midi_schubert_impromptu.mid");
-        Passage passage = MidiTools.parse(sequence);
+        Score passage = MidiTools.parse(sequence);
         //MidiWriter writer = new MidiWriter();
         //writer.write(passage,"input");
 
         //Sequence out = MidiTools.write(passage);
-        //Passage outputPassage = MidiTools.parse(out);
-        //MxmWriter.write(outputPassage,"output");
+        //ScoreEvent outputPassage = MidiTools.parse(out);
+        //MxmScoreWriter.java.write(outputPassage,"output");
         //MidiTools.play(out);
     }
-
 }

@@ -3,7 +3,7 @@ package networks;
 import org.deeplearning4j.earlystopping.EarlyStoppingConfiguration;
 import org.deeplearning4j.earlystopping.EarlyStoppingResult;
 import org.deeplearning4j.earlystopping.saver.LocalFileModelSaver;
-import org.deeplearning4j.earlystopping.scorecalc.DataSetLossCalculator;
+import org.deeplearning4j.earlystopping.scorecalc.DataSetLossCalculatorCG;
 import org.deeplearning4j.earlystopping.termination.MaxEpochsTerminationCondition;
 import org.deeplearning4j.earlystopping.termination.MaxTimeIterationTerminationCondition;
 import org.deeplearning4j.earlystopping.trainer.EarlyStoppingTrainer;
@@ -163,7 +163,7 @@ public class EarlyStoppingTextLSTM {
         EarlyStoppingConfiguration.Builder esBuilder = new EarlyStoppingConfiguration.Builder();
         esBuilder.epochTerminationConditions(new MaxEpochsTerminationCondition(100));
         esBuilder.iterationTerminationConditions(new MaxTimeIterationTerminationCondition(20, TimeUnit.MINUTES));
-        esBuilder.scoreCalculator(new DataSetLossCalculator(testingData.iterateWithMiniBatches(), true));
+        esBuilder.scoreCalculator(new DataSetLossCalculatorCG(testingData.iterateWithMiniBatches(),true));
         esBuilder.evaluateEveryNEpochs(1);
         esBuilder.modelSaver(new LocalFileModelSaver("C:\\Users\\celenp\\Desktop"));
 
@@ -246,7 +246,7 @@ public class EarlyStoppingTextLSTM {
         System.out.println("Termination details: " + result.getTerminationDetails());
         System.out.println("Total epochs: " + result.getTotalEpochs());
         System.out.println("Best epoch number: " + result.getBestModelEpoch());
-        System.out.println("Score at best epoch: " + result.getBestModelScore());
+        System.out.println("ScoreEvent at best epoch: " + result.getBestModelScore());
 
         //Get the best model:
         MultiLayerNetwork bestModel = (MultiLayerNetwork)result.getBestModel();
@@ -254,7 +254,7 @@ public class EarlyStoppingTextLSTM {
 
 
 
-
+/*
         // Each epoch is another iteration of training
         for (int epoch = 0; epoch < 100; epoch++) {
             System.out.println("Epoch " + epoch);
@@ -302,6 +302,7 @@ public class EarlyStoppingTextLSTM {
             System.out.print("\n");
             System.out.println("...completed training.");
         }
+        */
     }
 
     private static int findIndexOfHighestValue(double[] distribution) {

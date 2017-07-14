@@ -11,7 +11,7 @@ import java.util.Random;
  */
 public class Distribution<T> {
 
-    /** The total number of occurrences of all types in this distribution. */
+    /** The total number of occurrences of all sound in this distribution. */
     private int totalOccurrences;
 
     /** The occurrences of each type in this distribution. */

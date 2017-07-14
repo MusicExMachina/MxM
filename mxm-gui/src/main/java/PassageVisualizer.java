@@ -1,9 +1,9 @@
-import base.Count;
-import form.Note;
+import events.sounding.Note;
+import time.Count;
+import time.TimeSign;
 import form.Part;
-import form.Passage;
-import base.TimeSignature;
-import io.MxmWriter;
+import form.Score;
+import io.MxmScoreWriter;
 
 import javax.sound.midi.Sequence;
 import javax.swing.*;
@@ -15,10 +15,10 @@ import java.util.Random;
  */
 public class PassageVisualizer extends JFrame {
 
-    private Passage passage;
+    private Score passage;
 
-    public PassageVisualizer(Passage passage){
-        super("Passage Visualizer");
+    public PassageVisualizer(Score passage){
+        super("ScoreEvent Visualizer");
 
         this.passage = passage;
 
@@ -40,7 +40,7 @@ public class PassageVisualizer extends JFrame {
             int vScale = 400;
 
             for(int i = 0; i < 100; i++) {
-                TimeSignature timeSig = passage.getTimeSignatureAt(new Count(i+1));
+                TimeSign timeSig = passage.getTimeSignatureAt(new Count(i+1));
                 g.setColor(Color.darkGray);
                 g.drawLine(Math.round(i*hScale),0,Math.round(i*hScale),vScale);
                 for(int j = 1; j <= timeSig.getNumerator(); j++) {
@@ -75,8 +75,8 @@ public class PassageVisualizer extends JFrame {
             //Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/bach/bwv159-4.mid");
             Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/dvorak/dvs93.mid");
             //Sequence sequence = MidiTools.download("http://tedmuller.us/Piano/FlightOfTheBumblebee/FlightOfTheBumblebee.mid");
-            Passage passage = MidiTools.parse(sequence);
-            MxmWriter.write(passage,"C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-gui\\src\\tests\\resources\\output");
+            Score passage = MidiTools.parse(sequence);
+            MxmScoreWriter.write(passage,"C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-gui\\src\\tests\\resources\\output");
             MidiTools.play(sequence);
             PassageVisualizer rtv = new PassageVisualizer(passage);
             Thread.sleep(100000);

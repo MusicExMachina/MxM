@@ -24,6 +24,9 @@
         <module>mxm-learning</module>
         <module>mxm-lilypond</module>
         <module>mxm-midi</module>
+        <module>mxm-leadSheetGeneration</module>
+        <module>mxm-generation</module>
+        <module>mxm-generation</module>
     </modules>
 
     <dependencies>

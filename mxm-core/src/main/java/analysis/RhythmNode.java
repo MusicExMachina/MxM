@@ -1,6 +1,6 @@
 package analysis;
 
-import base.Count;
+import time.Count;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class RhythmNode {
     /** The depth of this Node in the tree. */
     private int depth;
 
-    /** The RhythmTree of this Node. */
+    /** The analysis.RhythmTree of this Node. */
     private RhythmTree tree;
 
     /** The parent of this Node. */
@@ -25,17 +25,17 @@ public class RhythmNode {
     /** All of the children of this Node. */
     private List<RhythmNode> children;
 
-    /** The timing of this RhythmNode */
+    /** The timing of this analysis.RhythmNode */
     private Count timing;
 
-    /** The duration of this RhythmNode */
+    /** The duration of this analysis.RhythmNode */
     private Count duration;
 
     /**
-     * The RhythmNode constructor, used by the subdivide function in an almost-factory method.
-     * @param parent The parent of this RhythmNode.
-     * @param timing The timing of this RhythmNode.
-     * @param duration The duration of this RhythmNode.
+     * The analysis.RhythmNode constructor, used by the subdivide function in an almost-factory method.
+     * @param parent The parent of this analysis.RhythmNode.
+     * @param timing The timing of this analysis.RhythmNode.
+     * @param duration The duration of this analysis.RhythmNode.
      */
     public RhythmNode(RhythmTree tree, RhythmNode parent, Count timing, Count duration) {
         if(parent != null)
@@ -48,16 +48,16 @@ public class RhythmNode {
     }
 
     /**
-     * Returns the RhythmTree of this RhythmNode.
-     * @return The RhythmTree of this RhythmNode.
+     * Returns the analysis.RhythmTree of this analysis.RhythmNode.
+     * @return The analysis.RhythmTree of this analysis.RhythmNode.
      */
     public RhythmTree getTree() {
         return tree;
     }
 
     /**
-     * Returns the parent of this RhythmNode.
-     * @return The parent of this RhythmNode.
+     * Returns the parent of this analysis.RhythmNode.
+     * @return The parent of this analysis.RhythmNode.
      */
     public RhythmNode getParent() {
         return parent;
@@ -79,7 +79,7 @@ public class RhythmNode {
         return timing;
     }
     /**
-     * Returns all the children of this RhythmNode.
+     * Returns all the children of this analysis.RhythmNode.
      * @return An edit-safe List of child nodes.
      */
     public List<RhythmNode> getChildren() {
@@ -87,24 +87,24 @@ public class RhythmNode {
     }
 
     /**
-     * Returns the subdivision number of this RhythmNode.
-     * @return The number of children of this RhythmNode.
+     * Returns the subdivision number of this analysis.RhythmNode.
+     * @return The number of children of this analysis.RhythmNode.
      */
     public int getValue() {
         return children.size();
     }
 
     /**
-     * Returns the depth of this RhythmNode in the tree.
-     * @return The depth of this RhythmNode in the tree.
+     * Returns the depth of this analysis.RhythmNode in the tree.
+     * @return The depth of this analysis.RhythmNode in the tree.
      */
     public int getDepth() {
         return depth;
     }
 
     /**
-     * Subdivides this RhythmNode a given number of times.
-     * @param times The number of times to divide this RhythmNode.
+     * Subdivides this analysis.RhythmNode a given number of times.
+     * @param times The number of times to divide this analysis.RhythmNode.
      * @return A list of the children of this Node.
      */
     public List<RhythmNode> subdivide(int times) {
@@ -119,19 +119,19 @@ public class RhythmNode {
                     children.add(new RhythmNode(tree,this,newTiming,newDuration));
                 }
             }
-            else throw new Error("This RhythmNode is already subdivided!");
+            else throw new Error("This analysis.RhythmNode is already subdivided!");
         }
         else if(times == 1) {
             //tree.addFrame(timing);
         }
         else if(times < 0)
-            throw new Error("Trying to subdivide this RhythmNode" + times + " times!");
+            throw new Error("Trying to subdivide this analysis.RhythmNode" + times + " times!");
 
         return children;
     }
 
     /**
-     * Converts this RhythmNode to a List of Integer subdivisions
+     * Converts this analysis.RhythmNode to a List of Integer subdivisions
      * @return A List of Integer subdivisions.
      */
     public ArrayList<Integer> toList() {

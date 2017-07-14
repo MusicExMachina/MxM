@@ -11,7 +11,7 @@ public class RhythmInput {
 //    /**
 //     * A list of all rhythm trees in training set (IID for NN processing)
 //     */
-//    private List<RhythmTree> rhythms;
+//    private List<analysis.RhythmTree> rhythms;
 //
 //    public static final int DIVISION_TOKEN = 0;
 //
@@ -19,10 +19,10 @@ public class RhythmInput {
 //     * Create a blank rhythm input object
 //     */
 //    public RhythmInput(){
-//        rhythms = new ArrayList<RhythmTree>();
+//        rhythms = new ArrayList<analysis.RhythmTree>();
 //    }
 //
-//    public void addRhythm(RhythmTree tree){
+//    public void addRhythm(analysis.RhythmTree tree){
 //        rhythms.add(tree);
 //    }
 //
@@ -35,7 +35,7 @@ public class RhythmInput {
 //        ArrayList<List<Integer>> rhythmLists = new ArrayList<>();
 //        int numPossibleStates = 0;
 //        int maxTreeLength = 0;
-//        for(RhythmTree rhythm : rhythms){
+//        for(analysis.RhythmTree rhythm : rhythms){
 //            List<Integer> l = rhythm.toSubdivisionList();
 //            rhythmLists.add(l);
 //            numPossibleStates = 0;

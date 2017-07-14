@@ -1,67 +1,29 @@
 package form;
 
-import base.*;
-
-import java.util.Iterator;
-import java.util.TreeMap;
+import sound.Instrument;
 
 /**
- * Lines are horizontal arrangements of Notes that are heard as a
- * continuous horizontal slice.
+ * Parts represent
  */
-public class Part implements Iterable<Note> {
-
+public class Part{
 
     /** The instrument that plays this line. */
     private Instrument instrument;
 
-    /** The notes played in this line. */
-    private TreeMap<Count, Note> notes;
+    private int partNumberInSection;
+
 
     /**
      * The line constructor starts only with the instrument
      * playing this passage, as measures are added later.
      * @param instrument
      */
-    public Part(Instrument instrument) {
+    public Part(Instrument instrument, int partNumberInSection) {
         this.instrument = instrument;
-        this.notes = new TreeMap<>();
-    }
-
-    public void add(Note note) {
-        notes.put(note.getStart(),note);
+        this.partNumberInSection = partNumberInSection;
     }
 
     public Instrument getInstrument() { return instrument; }
 
-    public float getLastTime() {
-        if(notes.size() > 0) {
-            return notes.firstKey().toFloat();
-        }
-        else {
-            return 0f;
-        }
-    }
-
-    /**
-     * Returns a nicely-formatted string representing this line.
-     * @return A string representing this line.
-     */
-    @Override
-    public String toString() {
-        String toReturn = instrument.toString() + "\n\t\t";
-        for(Note note : this) {
-            toReturn += note.toString() + " ";
-        }
-        return toReturn + "\n";
-    }
-
-    /**
-     * Returns an iterator over all the notes in this line.
-     * @return An iterator over all the notes in this line.
-     */
-    @Override
-    public Iterator<Note> iterator() {
-        return notes.values().iterator();
-    }
+    public int getPartNumberInSection() { return partNumberInSection; }
 }

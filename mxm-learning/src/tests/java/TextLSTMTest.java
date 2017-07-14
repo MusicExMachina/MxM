@@ -1,3 +1,4 @@
+import networks.EarlyStoppingTextLSTM;
 import networks.SimpleTextLSTM;
 import networks.VisualizedTextLSTM;
 import org.junit.Test;
@@ -14,6 +15,11 @@ public class TextLSTMTest {
     @Test
     public void visualTest() {
         VisualizedTextLSTM network = new VisualizedTextLSTM("School ain't cool.",50,2);
+        network.run();
+    }
+    @Test
+    public void earlyStoppingTextLSTM() {
+        EarlyStoppingTextLSTM network = new EarlyStoppingTextLSTM("School ain't cool.",50,2);
         network.run();
     }
 }

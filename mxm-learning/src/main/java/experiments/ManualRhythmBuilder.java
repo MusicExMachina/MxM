@@ -29,23 +29,23 @@ public class ManualRhythmBuilder {
 //                                        new int[]{2,2,2,2,2,1,1,1,1,1,1},
 //                                        new int[]{2,2,2,2,1,1,2,1,1,2,1,1,2,2,1,1,2,1,1}};
 //
-//        form.Part l = new form.Part(base.Instrument.ACOUSTIC_GRAND_PIANO);
+//        form.Part l = new form.Part(sound.Instrument.ACOUSTIC_GRAND_PIANO);
 //        for (int i = 0; i < schubert.length; i++) {
 //            int[] aGrieg = schubert[i];
-//            form.Note[] cs = new form.Note[schubert[i].length];
+//            events.sounding.Note[] cs = new events.sounding.Note[schubert[i].length];
 //            for (int j = 0; j<schubert[i].length; j++){
-//                cs[j] = new form.Note(base.Pitch.getInstance(60));
+//                cs[j] = new events.sounding.Note(sound.Pitch.getInstance(60));
 //            }
-//            RhythmTree r = new RhythmTree(aGrieg, cs);
+//            analysis.RhythmTree r = new analysis.RhythmTree(aGrieg, cs);
 //            //l.add(new MidiMeasure(i, r));
 //        }
 //        System.out.println(l.getRhythm());
 //
-//        form.Passage p = new form.Passage();
+//        form.ScoreEvent p = new form.ScoreEvent();
 //
 //        p.add(l);
-//        p.addTimeSignature(new base.TimeSignature(4, 4), 0);
-//        p.addTempoChange(new base.Tempo(120), base.Count.ZERO);
+//        p.addTimeSignature(new time.TimeSign(4, 4), 0);
+//        p.addTempoChange(new time.Tempo(120), base.Count.ZERO);
 //
 //        Sequence seq = MidiTools.write(p);
 //
