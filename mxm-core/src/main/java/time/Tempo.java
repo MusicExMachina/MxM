@@ -8,59 +8,67 @@ import java.util.Comparator;
  */
 public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
 
-    /** Stores a tempo value, in BPM. */
+    /** Stores a tempo value, in BPM */
     private final int value;
 
     /**
-     * Constructor taking in a time.Tempo speed.
-     * @param value The time.Tempo's speed.
+     * Constructor taking in a tempo, in beats per minute.
+     * @param value The tempo, in beats per minute
      */
     public Tempo(int value) {
-        if(value > 0 ) {
+        if(value > 0 )
             this.value = value;
-        }
-        else {
-            throw new Error("Invalid tempo! (" + value + " bpm)");
-        }
+        else
+            throw new Error("TEMPO:\tInvalid tempo! (" + value + " bpm)");
     }
 
     /**
-     * Returns the number of beats per minute this time.Tempo represents.
-     * @return The BPM of this tempo.
+     * Returns the number of beats per minute this tempo represents.
+     * @return The BPM of this tempo
      */
     public int getBPM() {
         return value;
     }
 
     /**
-     * Returns a nicely-formatted String of this time.Tempo (for debug).
-     * @return This time.Tempo's String representation.
+     * Returns a nicely-formatted string of this tempo (for debug).
+     * @return This tempo's string representation
      */
     public String toString() {
-        return value + " bpm";
+        return getBPM() + " bpm";
     }
 
-
+    /**
+     * Compares this tempo to another.
+     * @param other The other tempo
+     * @return The comparison
+     */
     @Override
     public int compareTo(Tempo other) {
-        return new Integer(value).compareTo(other.value);
+        if(other != null)
+            return new Integer(value).compareTo(other.value);
+        else
+            return 0;
     }
 
     /**
      * Compares two Tempi.
-     * @param p1 The first time.Tempo.
-     * @param p2 The second time.Tempo.
-     * @return The comparison.
+     * @param p1 The first tempo
+     * @param p2 The second tempo
+     * @return The comparison
      */
     @Override
     public int compare(Tempo p1, Tempo p2) {
-        return new Integer(p1.value).compareTo(p2.value);
+        if(p1 != null && p2 != null)
+            return new Integer(p1.value).compareTo(p2.value);
+        else
+            return 0;
     }
 
     /**
-     * Checks if this time.Tempo equals another Object.
-     * @param o The other Object.
-     * @return If this time.Tempo is equal to the Object.
+     * Checks if this tempo equals another object.
+     * @param o The other object.
+     * @return If this tempo is equal to the object.
      */
     @Override
     public boolean equals(Object o) {
@@ -71,8 +79,8 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
     }
 
     /**
-     * A simple hash code for storage of Tempi in special Collections.
-     * @return The hash code for this time.Tempo.
+     * A simple hash code for storage of tempi in special collections.
+     * @return The hash code for this tempo.
      */
     @Override
     public int hashCode() {

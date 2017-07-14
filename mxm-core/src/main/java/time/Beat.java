@@ -1,17 +1,23 @@
 package time;
 
 /**
- * Created by celenp on 2/11/2017.
+ * Beats represent a sub-measure measurement of musical time (i.e. "beat three of four" or "the upbeat of 2"). In this
+ * sense, they are the proper fraction, which when combined with an integer measure, make up an entire count. In a
+ * different sense, beats are like PitchClasses, IntervalClasses, or anything else.
+ *
+ * This class is IMMUTABLE!
  */
 public class Beat implements Comparable<Beat> {
+
+    public static Beat ZERO = new Beat(0,1);
+    public static Beat ONE = new Beat(1,1);
 
     private int numerator;
     private int denominator;
 
     public Beat(int numerator, int denominator) {
-
         if(numerator > denominator) {
-            throw new Error("Cannot create a beat larger than ")
+            throw new Error("Cannot create a beat larger than ");
         }
         if(denominator > 0) {
             this.numerator = numerator;
@@ -57,7 +63,7 @@ public class Beat implements Comparable<Beat> {
     }
 
     /**
-     * Reduces the time.Count's internal fraction, a vital
+     * Reduces the count's internal fraction, a vital
      * method which is run exactly once- every time a
      * new time.Count is created. This could be lumped in
      * the constructor, but why do that?
@@ -68,7 +74,7 @@ public class Beat implements Comparable<Beat> {
         int b = denominator;
 
         if(a == 0 && b == 0) {
-            throw new IllegalArgumentException("Undefined Count: (0,0)");
+            throw new IllegalArgumentException("BEAT:\tUndefined! (0,0)");
         }
         else if(a == 0){
             denominator /= b;
@@ -78,7 +84,6 @@ public class Beat implements Comparable<Beat> {
             numerator /= a;
             return;
         }
-
         while (a != b) {
             if (a > b) {
                 a -= b;
@@ -88,8 +93,7 @@ public class Beat implements Comparable<Beat> {
             }
         }
 
-        // Reduce both numerator and denominator
-        // by "a," the greatest common factor.
+        // Reduce both numerator and denominator by "a," the greatest common factor.
         numerator   /= a;
         denominator /= a;
     }
@@ -99,4 +103,8 @@ public class Beat implements Comparable<Beat> {
         return Double.compare(this.toDouble(),other.toDouble());
     }
 
+    @Override
+    public int compare(Beat b1, Beat b2) {
+        return Double.compare(b1.toDouble(),b2.toDouble());
+    }
 }

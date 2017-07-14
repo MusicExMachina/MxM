@@ -1,7 +1,7 @@
 import analysis.RhythmNode;
 import analysis.RhythmTree;
 import time.Count;
-import time.TimeSign;
+import time.TimeSig;
 import io.Writer;
 
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.Collection;
 /**
  * This writer has a number of recursive methods that
  */
-public class LilyPondRhythmTreeWriter implements Writer<RhythmTree> {
+public class LilyPondRhythmTreeWriter extends Writer<RhythmTree> {
 
     @Override
     public void write(RhythmTree rhythmTree, String filename) {
@@ -57,7 +57,7 @@ public class LilyPondRhythmTreeWriter implements Writer<RhythmTree> {
     public static String getRhythmTreeString(RhythmTree rhythmTree, String treeName){
         return "\\score { \n" +
                 "\t\\new Staff {\n" +
-                "\t\t"+getNoteString(rhythmTree.getRoot(),0, TimeSign.getInstance(4,4)) + "\n" +
+                "\t\t"+getNoteString(rhythmTree.getRoot(),0, TimeSig.getInstance(4,4)) + "\n" +
                 "\t}\n" +
                 "\t\\header {\n" +
                 "\t\tpiece = \"" + treeName + "\"\n" +
@@ -65,7 +65,7 @@ public class LilyPondRhythmTreeWriter implements Writer<RhythmTree> {
                 "}";
     }
 
-    public static String getNoteString(RhythmNode node, int level, TimeSign timeSignature) {
+    public static String getNoteString(RhythmNode node, int level, TimeSig timeSignature) {
         String toReturn = "";
 
         // If this is a leaf node
@@ -82,8 +82,8 @@ public class LilyPondRhythmTreeWriter implements Writer<RhythmTree> {
             else System.out.println("!");
         }
         else {
-            int preferredSubdivision    = timeSignature.getPreferredSubdivision(level);
-            int actualSubdivision       = node.getValue();
+            int preferredSubdivision = timeSignature.getPreferredSubdivision(level);
+            int actualSubdivision    = node.getValue();
 
             // Tuplets
             if(preferredSubdivision % actualSubdivision != 0) {

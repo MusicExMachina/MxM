@@ -1,15 +1,15 @@
 package events;
 
-import time.Time;
+import time.Count;
 
 import java.util.Comparator;
 
 /**
  * A
  */
-public interface MusicEvent extends Comparable<MusicEvent>, Comparator<MusicEvent> {
-    public Time getStart();// { return start; }
+public abstract class MusicEvent implements Comparator<MusicEvent>, Comparable<MusicEvent> {
+    Count start;
 
-    @Override
-    public int hashCode();// {  return start.hashCode(); }
+    public Count getStart() { return start; }
+
 }

@@ -25,7 +25,7 @@ public class MxmScoreWriter extends Writer<Score> {
 
             writer.println("> ScoreEvent");
             writer.println("  - Title");
-            writer.println("      " + passage.getName());
+            // writer.println("      " + passage.getName());
             writer.println("  - Composer");
             writer.println("      " + passage.getComposer());
             writer.println("");
@@ -36,7 +36,7 @@ public class MxmScoreWriter extends Writer<Score> {
             Iterator<TimeSignEvent> timeSigItr = passage.timeSignChangeIterator();
             while (timeSigItr.hasNext()) {
                 Count count             = new Count(timeSigItr.next());
-                TimeSign timeSig   = passage.getTimeSignatureAt(count);
+                TimeSig timeSig   = passage.getTimeSignatureAt(count);
                 String measureString    = padRight(String.valueOf(count.getMeasure()),4);
                 String numString        = String.valueOf(timeSig.getNumerator());
                 String denomString      = String.valueOf(timeSig.getDenominator());

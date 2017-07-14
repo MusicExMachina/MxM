@@ -3,7 +3,7 @@ package sound;
 /**
  * PortamentoSounds involve a bend between two discrete Pitches.
  */
-public class Portamento extends Sound {
+public class Portamento implements Sound {
 
     /** The starting Pitch of this Portamento */
     private Pitch startPitch;
@@ -19,7 +19,7 @@ public class Portamento extends Sound {
      * @param dynamic The Dynamic level at which this Note is played
      */
     public Portamento(Pitch startPitch, Pitch endPitch, Technique technique, Dynamic dynamic) {
-        super(technique, dynamic);
+        super();
         this.startPitch = startPitch;
         this.endPitch = endPitch;
     }

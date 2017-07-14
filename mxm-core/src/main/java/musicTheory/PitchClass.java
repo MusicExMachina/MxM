@@ -11,17 +11,32 @@ import java.util.Iterator;
  */
 public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass> {
 
+    //////////////////////////////
+    // Private static variables //
+    //////////////////////////////
+
     /** The lowest basic class, better known as "C." */
-    private static final int MIN_PITCHCLASS = 0;
+    private static final int MIN_PITCH_CLASS_VALUE = 0;
 
     /** The highest basic class, better known as "B." */
-    private static final int MAX_PITCHCLASS = 11;
+    private static final int MAX_PITCH_CLASS_VALUE = 11;
 
-    // A number of public static pre-defined sound classes,
-    // representing all possible sound classes using their
-    // standard music theory names. Note enharmonic classes.
-    // TODO: C_FLAT might not work nicely with octave assumptions
-    // TODO: B_SHARP might not as well. Ill-defined goals here
+    /** All possible PitchClasses */
+    private static final ArrayList<PitchClass> ALL = new ArrayList<>();
+
+    // Initialize the "ALL" collection
+    static {
+        for(int pitchClassValue = MIN_PITCH_CLASS_VALUE; pitchClassValue <= MIN_PITCH_CLASS_VALUE; pitchClassValue++)
+            ALL.add(new PitchClass(pitchClassValue));
+    }
+
+    //////////////////////////////
+    // Public static variables  //
+    //////////////////////////////
+
+    /* A number of public static pre-defined sound classes representing all possible sound classes using their
+    standard music theory names. Note enharmonic classes. */
+
     public static PitchClass C_FLAT     = getInstance(11);
     public static PitchClass C_NATURAL  = getInstance(0);
     public static PitchClass C_SHARP    = getInstance(1);
@@ -44,79 +59,87 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     public static PitchClass B_NATURAL  = getInstance(11);
     public static PitchClass B_SHARP    = getInstance(0);
 
-    /** All possible PitchClasses */
-    private static final ArrayList<PitchClass> ALL = new ArrayList<>();
-
-    // Initialize the "ALL" collection
-    static {
-        for(int pitchClassValue = MIN_PITCHCLASS; pitchClassValue <= MAX_PITCHCLASS; pitchClassValue++) {
-            ALL.add(new PitchClass(pitchClassValue));
-        }
-    }
+    //////////////////////////////
+    //      Static methods      //
+    //////////////////////////////
 
     /**
-     * Gets an iterator which enumerates all valid PitchClasses.
-     * @return An iterator over all valid Pitches.
+     * Gets an iterator which enumerates all valid pitch classes.
+     * @return An iterator over all valid pitches
      */
     public static Iterator<PitchClass> iterator() {
         return ALL.iterator();
     }
 
     /**
-     * Gets an instance of a given musicTheory.PitchClass size. This method
-     * creates the interning design pattern per musicTheory.PitchClass.
-     * @param value The value of this musicTheory.PitchClass.
-     * @return An musicTheory.PitchClass of this value.
+     * Gets an instance of a given music pitch class. This method creates the interning design pattern per pitch class.
+     * @param value The value of this pitch class
+     * @return An pitch class of this value.
      */
     public static PitchClass getInstance(int value) {
-        if(value >= MIN_PITCHCLASS && value <= MAX_PITCHCLASS) {
+        if(value >= MIN_PITCH_CLASS_VALUE && value <= MAX_PITCH_CLASS_VALUE)
             return ALL.get(value);
-        }
-        else {
-            throw new Error("PITCH CLASS:\tsound.Pitch class out of range.");
-        }
+        else
+            throw new Error("PITCH CLASS:\tPitch class out of range.");
     }
 
-    /** Stores the midi value of this sound.Pitch. */
+    //////////////////////////////
+    // Private member variables //
+    //////////////////////////////
+
+    /** Stores the value of this pitch class, from MIN_PITCH_CLASS_VALUE to MAX_PITCH_CLASS_VALUE */
     private int value;
 
+    //////////////////////////////
+    //   Private constructor    //
+    //////////////////////////////
+
     /**
-     * The private constructor for musicTheory.PitchClass.
-     * @param value The value of this musicTheory.PitchClass.
+     * The private constructor for pitch class, which preserves the interning design pattern.
+     * @param value The value of this pitch class
      */
     private PitchClass(int value) {
         this.value = (byte)value;
     }
 
+    //////////////////////////////
+    //   Public member methods  //
+    //////////////////////////////
+
+    /** Gets the value of this pitch class */
+    public int getValue() {
+        return value;
+    }
+
     /**
-     * Transposes a musicTheory.PitchClass by a given interval.
-     * @param intervalClass The musicTheory.Interval to transpose by.
-     * @return The new, resulting musicTheory.PitchClass.
+     * Transposes a pitch class by a given interval class.
+     * @param intervalClass The interval class to transpose by
+     * @return The new, resulting pitch class
      */
     public PitchClass transpose(IntervalClass intervalClass) {
         return PitchClass.getInstance((value + intervalClass.getSize() % 12));
     }
 
     /**
-     * Gets the musicTheory.Interval between this musicTheory.PitchClass and another.
-     * @param other The other sound.Pitch to subtract from this one.
-     * @return THe musicTheory.Interval between this sound.Pitch and another.
+     * Gets the interval class between this pitch class and another.
+     * @param other The other ch to subtract from this one
+     * @return The interval class between this pitch class and another
      */
-    public PitchClass minus(PitchClass other) {
-        return new PitchClass(other.value - this.value);
+    public IntervalClass minus(PitchClass other) {
+        return IntervalClass.getInstance(other.value - this.value);
     }
 
     /**
-     * Normalizes this musicTheory.PitchClass between 0 and 1.
-     * @return This musicTheory.PitchClass in the range [0,1).
+     * Normalizes this pitch class between 0 and 1.
+     * @return The value of this pitch class in the range [0,1).
      */
     public float normalized() {
-        return (float)(value - MIN_PITCHCLASS)/(float)(MAX_PITCHCLASS - MIN_PITCHCLASS);
+        return (float)(value - MIN_PITCH_CLASS_VALUE)/(float)(MAX_PITCH_CLASS_VALUE - MIN_PITCH_CLASS_VALUE);
     }
 
     /**
-     * Returns a nicely-formatted String of this musicTheory.PitchClass (for debug).
-     * @return A nicely-formatted String of this musicTheory.PitchClass.
+     * Returns a nicely-formatted String of this pitch class (for debug).
+     * @return A nicely-formatted String of this pitch class
      */
     public String toString() {
         switch (value) {
@@ -131,9 +154,9 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     }
 
     /**
-     * Compares this musicTheory.PitchClass to another musicTheory.PitchClass.
-     * @param other The other musicTheory.PitchClass.
-     * @return The comparison.
+     * Compares this pitch class to another pitch class.
+     * @param other The other pitch class
+     * @return The comparison
      */
     @Override
     public int compareTo(PitchClass other) {
@@ -141,10 +164,10 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     }
 
     /**
-     * Compares two PitchClasses.
-     * @param pc1 The first musicTheory.PitchClass.
-     * @param pc2 The second musicTheory.PitchClass.
-     * @return The comparison.
+     * Compares two pitch classes.
+     * @param pc1 The first pitch class
+     * @param pc2 The second pitch class
+     * @return The comparison
      */
     @Override
     public int compare(PitchClass pc1, PitchClass pc2) {
@@ -152,9 +175,9 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     }
 
     /**
-     * Checks if this musicTheory.PitchClass equals another Object.
-     * @param o The other Object.
-     * @return If this musicTheory.PitchClass is equal to the Object.
+     * Checks if this pitch class equals another object.
+     * @param o The other object
+     * @return If this pitch class is equal to the object
      */
     @Override
     public boolean equals(Object o) {
@@ -162,8 +185,8 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     }
 
     /**
-     * A simple hash code for storage of PitchClasses in special Collections.
-     * @return The hash code for this musicTheory.PitchClass.
+     * A simple hash code for storage of pitch classes in special collections.
+     * @return The hash code for this pitch class
      */
     @Override
     public int hashCode() {
