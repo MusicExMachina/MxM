@@ -26,10 +26,10 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
 
     // Initialize the "ALL" collection
     static {
-        for(int pitchClassValue = MIN_PITCH_CLASS_VALUE; pitchClassValue <= MIN_PITCH_CLASS_VALUE; pitchClassValue++) {
+        for(int pitchClassValue = MIN_PITCH_CLASS_VALUE; pitchClassValue <= MIN_PITCH_CLASS_VALUE; pitchClassValue++)
             ALL.add(new PitchClass(pitchClassValue));
-        }
     }
+
     //////////////////////////////
     // Public static variables  //
     //////////////////////////////
@@ -103,7 +103,7 @@ public class PitchClass implements Comparator<PitchClass>, Comparable<PitchClass
     }
 
     //////////////////////////////
-    //  Private member methods  //
+    //   Public member methods  //
     //////////////////////////////
 
     /** Gets the value of this pitch class */

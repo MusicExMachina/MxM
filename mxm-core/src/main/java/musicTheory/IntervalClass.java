@@ -11,45 +11,62 @@ import java.util.Iterator;
  */
 public class IntervalClass implements Comparator<IntervalClass>, Comparable<IntervalClass> {
 
-    /** The lowest interval class, better known as "unison" */
-    private static final int MIN_INTERVALCLASS = 0;
+    //////////////////////////////
+    // Private static variables //
+    //////////////////////////////
 
-    /** The highest interval class, better known as "a major seventh" */
-    private static final int MAX_INTERVALCLASS = 11;
+    /** The lowest interval class, better known as "an upward unison" */
+    private static final int MIN_INTERVAL_CLASS_VALUE = 0;
 
-    /** These twelve IntervalClasses are all that can exist. */
-    public static final IntervalClass UNISON            = new IntervalClass(0);
-    public static final IntervalClass MINOR_SECOND      = new IntervalClass(1);
-    public static final IntervalClass MAJOR_SECOND      = new IntervalClass(2);
-    public static final IntervalClass MINOR_THIRD       = new IntervalClass(3);
-    public static final IntervalClass MAJOR_THIRD       = new IntervalClass(4);
-    public static final IntervalClass PERFECT_FOURTH    = new IntervalClass(5);
-    public static final IntervalClass TRITONE           = new IntervalClass(6);
-    public static final IntervalClass PERFECT_FIFTH     = new IntervalClass(7);
-    public static final IntervalClass MINOR_SIXTH       = new IntervalClass(8);
-    public static final IntervalClass MAJOR_SIXTH       = new IntervalClass(9);
-    public static final IntervalClass MINOR_SEVENTH     = new IntervalClass(10);
-    public static final IntervalClass MAJOR_SEVENTH     = new IntervalClass(11);
+    /** The highest interval class, better known as "an upward major seventh" */
+    private static final int MAX_INTERVAL_CLASS_VALUE = 11;
 
-    /** All possible IntervalClasses */
+    /** All possible interval classes */
     private static final ArrayList<IntervalClass> ALL = new ArrayList<>();
 
+    // Initialize the "ALL" collection
+    static {
+        for(int intervalValue = MIN_INTERVAL_CLASS_VALUE; intervalValue < MAX_INTERVAL_CLASS_VALUE; intervalValue++)
+            ALL.add(getInstance(intervalValue));
+    }
+
+    //////////////////////////////
+    // Public static variables  //
+    //////////////////////////////
+
+    /* These twelve IntervalClasses are all that can exist. */
+    public static final IntervalClass UNISON            = getInstance(0);
+    public static final IntervalClass MINOR_SECOND      = getInstance(1);
+    public static final IntervalClass MAJOR_SECOND      = getInstance(2);
+    public static final IntervalClass MINOR_THIRD       = getInstance(3);
+    public static final IntervalClass MAJOR_THIRD       = getInstance(4);
+    public static final IntervalClass PERFECT_FOURTH    = getInstance(5);
+    public static final IntervalClass TRITONE           = getInstance(6);
+    public static final IntervalClass PERFECT_FIFTH     = getInstance(7);
+    public static final IntervalClass MINOR_SIXTH       = getInstance(8);
+    public static final IntervalClass MAJOR_SIXTH       = getInstance(9);
+    public static final IntervalClass MINOR_SEVENTH     = getInstance(10);
+    public static final IntervalClass MAJOR_SEVENTH     = getInstance(11);
+
+    //////////////////////////////
+    //      Static methods      //
+    //////////////////////////////
+    
     /**
-     * Gets an iterator which enumerates all valid IntervalClasses.
-     * @return An iterator over all valid Pitches.
+     * Gets an iterator which enumerates all valid interval classes.
+     * @return An iterator over all valid interval classes
      */
     public static Iterator<IntervalClass> iterator() {
         return ALL.iterator();
     }
 
     /**
-     * Gets an instance of a given musicTheory.IntervalClass size. This method
-     * creates the interning design pattern per musicTheory.IntervalClass.
-     * @param size The size (in half steps) of this musicTheory.IntervalClass
-     * @return An musicTheory.IntervalClass of this size.
+     * Gets an instance of a given interval class. This method creates the interning design pattern per interval class.
+     * @param size The size (in half steps) of this interval class
+     * @return An intervalClass of this value
      */
     public static IntervalClass getInstance(int size) {
-        if(size >= MIN_INTERVALCLASS && size <= MAX_INTERVALCLASS) {
+        if(size >= MIN_INTERVAL_CLASS_VALUE && size <= MAX_INTERVAL_CLASS_VALUE) {
             return ALL.get(size);
         }
         else {
@@ -57,17 +74,29 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
         }
     }
 
-    /** The size of the musicTheory.IntervalClass. */
+    //////////////////////////////
+    // Private member variables //
+    //////////////////////////////
+
+    /** The size of the interval class. */
     private int size;
 
+    //////////////////////////////
+    //   Private constructor    //
+    //////////////////////////////
+
     /**
-     * A constructor for musicTheory.IntervalClass which is private.
-     * @param size The size (0-11) of this musicTheory.IntervalClass.
+     * A constructor for interval class, which is private.
+     * @param size The size (0-11) of this interval class
      */
     private IntervalClass(int size) {
         this.size = size;
         ALL.add(this);
     }
+
+    //////////////////////////////
+    //   Public member methods  //
+    //////////////////////////////
 
     /**
      * A getter for the size of this interval class, in half-steps.
@@ -85,7 +114,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      * @return  The new interval class that corresponds to the addition of this interval class and other
      */
     public IntervalClass plus(IntervalClass other) {
-        return ALL.get((this.size + other.size)%12);
+        return getInstance((this.size + other.size)%12);
     }
 
     /**
@@ -96,12 +125,12 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      * @return The new interval class that corresponds to the difference between this and other
      */
     public IntervalClass minus(IntervalClass other) {
-        return ALL.get((this.size - other.size + 12)%12);
+        return getInstance((this.size - other.size + 12)%12);
     }
 
     /**
-     * Returns a nicely-formatted String of this interval class (for debug).
-     * @return A nicely-formatted String of this interval class
+     * Returns a nicely-formatted string of this interval class (for debug).
+     * @return A nicely-formatted string of this interval class
      */
     public String toString() {
         switch (size) {
@@ -114,8 +143,8 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * Compares this interval class to another, purely based on size.
-     * @param other the other musicTheory.IntervalClass to compare this one to.
-     * @return The comparison between the two.
+     * @param other the other interval class to compare this one to
+     * @return The comparison between the two
      */
     @Override
     public int compareTo(IntervalClass other) {
@@ -124,9 +153,9 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * Compares two IntervalClasses, purely based on size.
-     * @param ic1 The first musicTheory.IntervalClass.
-     * @param ic2 The second musicTheory.IntervalClass.
-     * @return The comparison between the two.
+     * @param ic1 The first interval class
+     * @param ic2 The second interval class
+     * @return The comparison between the two
      */
     @Override
     public int compare(IntervalClass ic1, IntervalClass ic2) {
@@ -135,8 +164,8 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * A noteQualities (generated) equals() method for IntervalClasses.
-     * @param o The Object to compare this to.
-     * @return If these two Objects are equal.
+     * @param o The Object to compare this to
+     * @return If these two Objects are equal
      */
     @Override
     public boolean equals(Object o) {
@@ -148,11 +177,10 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /**
      * A simple hash code in order to allow storage in certain Collections.
-     * @return The hash code for this musicTheory.IntervalClass.
+     * @return The hash code for this interval class.
      */
     @Override
     public int hashCode() {
         return size;
     }
-
 }

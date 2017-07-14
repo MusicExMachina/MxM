@@ -117,7 +117,7 @@ public class Pitch implements Sound, Comparator<Pitch>, Comparable<Pitch> {
     }
 
     //////////////////////////////
-    //  Private member methods  //
+    //   Public member methods  //
     //////////////////////////////
 
     /**
@@ -171,18 +171,17 @@ public class Pitch implements Sound, Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Returns a nicely-formatted String
-     * of this sound.Pitch (for debug).
-     * @return A nicely-formatted String of this sound.Pitch.
+     * Returns a nicely-formatted string of this pitch (for debug).
+     * @return A nicely-formatted string of this pitch
      */
     public String toString() {
         return pitchClass.toString() + (value/12 - 1);
     }
 
     /**
-     * Compares this sound.Pitch to another sound.Pitch.
-     * @param other The other sound.Pitch.
-     * @return The comparison.
+     * Compares this pitch to another pitch.
+     * @param other The other pitch
+     * @return The comparison
      */
     @Override
     public int compareTo(Pitch other) {
@@ -190,10 +189,10 @@ public class Pitch implements Sound, Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Compares two Pitches.
-     * @param p1 The first sound.Pitch.
-     * @param p2 The second sound.Pitch.
-     * @return The comparison.
+     * Compares two pitches.
+     * @param p1 The first pitch
+     * @param p2 The second pitch
+     * @return The comparison
      */
     @Override
     public int compare(Pitch p1, Pitch p2) {
@@ -201,9 +200,9 @@ public class Pitch implements Sound, Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * Checks if this sound.Pitch equals another Object.
-     * @param o The other Object.
-     * @return If this sound.Pitch is equal to the Object.
+     * Checks if this pitch equals another object.
+     * @param o The other object
+     * @return If this pitch is equal to the object
      */
     @Override
     public boolean equals(Object o) {
@@ -211,8 +210,8 @@ public class Pitch implements Sound, Comparator<Pitch>, Comparable<Pitch> {
     }
 
     /**
-     * A simple hash code for storage of Pitches in special Collections.
-     * @return The hash code for this sound.Pitch.
+     * A simple hash code for storage of pitches in special collections.
+     * @return The hash code for this pitch
      */
     @Override
     public int hashCode() {

@@ -1,5 +1,7 @@
 package musicTheory;
 
+import sound.Pitch;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -12,115 +14,150 @@ import java.util.Iterator;
  */
 public class Interval implements Comparator<Interval>, Comparable<Interval> {
 
+    //////////////////////////////
+    // Private static variables //
+    //////////////////////////////
+
     /** The smallest an interval can be. */
-    private static int MIN_INTERVAL = -120;
+    private static int MIN_INTERVAL_VALUE = -(Pitch.MAX_OCTAVE - Pitch.MIN_OCTAVE);
 
     /** The largest an interval can be. */
-    private static int MAX_INTERVAL = 120;
+    private static int MAX_INTERVAL_VALUE = Pitch.MAX_OCTAVE - Pitch.MIN_OCTAVE;
+
+    /** The smallest an interval can be. */
+    private static int MIN_OCTAVE_VALUE = Pitch.MAX_OCTAVE - Pitch.MIN_OCTAVE;
+
+    /** The largest an interval can be. */
+    private static int MAX_OCTAVE_VALUE = Pitch.MAX_OCTAVE - Pitch.MIN_OCTAVE;
 
     /** All possible IntervalClasses */
     private static final ArrayList<Interval> ALL   = new ArrayList<>();
 
     // Initialize the "ALL" collection
     static {
-        for(int intervalValue = MIN_INTERVAL; intervalValue < MAX_INTERVAL; intervalValue++) {
+        for(int intervalValue = MIN_INTERVAL_VALUE; intervalValue < MAX_INTERVAL_VALUE; intervalValue++)
             ALL.add(new Interval(intervalValue));
-        }
     }
 
+    //////////////////////////////
+    //      Static methods      //
+    //////////////////////////////
+
     /**
-     * Gets an iterator which enumerates all valid Intervals.
-     * @return An iterator over all valid Intervals.
+     * Gets an iterator which enumerates all valid intervals.
+     * @return An iterator over all valid intervals.
      */
     public static Iterator<Interval> iterator() {
         return ALL.iterator();
     }
 
-    /** The immutable noteQualities musicTheory.IntervalClass of this musicTheory.Interval. */
+    /**
+     * Gets an instance of a given interval size. This method creates the interning design pattern per interval.
+     * @param value The size (in half steps) of this interval
+     * @return An interval of this size
+     */
+    public static Interval getInstance(int value) {
+        if(value >= MIN_INTERVAL_VALUE && value < MAX_INTERVAL_VALUE)
+            return ALL.get(value - MIN_INTERVAL_VALUE);
+        else
+            throw new Error("INTERVAL:\tInterval out of range.");
+    }
+
+    //////////////////////////////
+    // Private member variables //
+    //////////////////////////////
+
+    /** The immutable noteQualities interval class of this interval. */
     private IntervalClass intervalClass;
+
+    /** The octave of this pitch, between OCTAVE_MIN and OCTAVE_MAX */
+    private int octaves;
 
     /** The immutable size of this interval in half-steps. */
     private int size;
 
+
+    //////////////////////////////
+    //   Private constructor    //
+    //////////////////////////////
+
     /**
-     * The normal, private musicTheory.Interval constructor.
-     * @param size The size of the interval in half-steps.
+     * The interval constructor, which is private to enforce the interning design pattern.
+     * @param size The size of the interval in half-steps
      */
     private Interval(int size) {
-        if(size >= MIN_INTERVAL && size <= MAX_INTERVAL) {
-            this.size = (byte)size;
-            this.intervalClass = IntervalClass.getInstance((Math.abs(size) + 1200) % 12);
+        if(size >= MIN_INTERVAL_VALUE && size <= MAX_INTERVAL_VALUE) {
+            this.size = size;
+            this.intervalClass = IntervalClass.getInstance((Math.abs(size) + MAX_INTERVAL_VALUE) % 12);
+            this.octaves = size/12;
         }
         else {
             throw new Error("INTERVAL:\nInvalid interval size");
         }
     }
 
+    //////////////////////////////
+    //   Public member methods  //
+    //////////////////////////////
+    
     /**
-     * Gets an instance of a given musicTheory.Interval size. This method
-     * creates the interning design pattern per musicTheory.Interval.
-     * @param value The size (in half steps) of this musicTheory.Interval
-     * @return An musicTheory.Interval of this size.
-     */
-    public static Interval getInstance(int value) {
-        if(value >= MIN_INTERVAL && value < MAX_INTERVAL) {
-            return ALL.get(value - MIN_INTERVAL);
-        }
-        else {
-            throw new Error("INTERVAL:\tInterval out of range.");
-        }
-    }
-
-    /**
-     * A getter for the musicTheory.IntervalClass of this musicTheory.Interval.
-     * @return The musicTheory.IntervalClass of this musicTheory.Interval.
+     * A getter for the interval class of this interval.
+     * @return The interval class of this interval
      */
     public IntervalClass getIntervalClass() {
         return intervalClass;
     }
 
     /**
-     * A getter for the size of this musicTheory.Interval, in half-steps.
-     * @return The size of this musicTheory.Interval, in half-steps.
+     * A getter for the number of octaves (positive or negative) in this interval.
+     * @return The number of octaves (positive or negative) in this interval.
+     */
+    public int getOctaves() {
+        return octaves;
+    }
+
+    /**
+     * A getter for the size of this interval, (positive or negative) in half-steps.
+     * @return The size of this interval, (positive or negative) in half-steps.
      */
     public int getSize() {
         return size;
     }
 
     /**
-     * Creates a new musicTheory.Interval that is the sum of these two.
-     * @param other The other musicTheory.Interval to add to this one.
-     * @return  The new musicTheory.Interval sum.
+     * Creates a new interval that is the sum of these two.
+     * @param other The other interval to add to this one
+     * @return  The new interval sum
      */
     public Interval plus(Interval other) {
         int newSize = size + other.size;
-        if(newSize >= MIN_INTERVAL && newSize <= MAX_INTERVAL) {
-            return ALL.get(newSize + MIN_INTERVAL);
+        if(newSize >= MIN_INTERVAL_VALUE && newSize <= MAX_INTERVAL_VALUE) {
+            return ALL.get(newSize + MIN_INTERVAL_VALUE);
         }
         else {
-            throw new Error("INTERVAL:\nResultant musicTheory.Interval out of range!");
+            throw new Error("INTERVAL:\tResultant interval out of range!");
         }
     }
 
     /**
-     * Creates a new musicTheory.Interval that is the difference of these two.
-     * @param other The other musicTheory.Interval to subtract from this one.
-     * @return The new musicTheory.Interval difference.
+     * Creates a new interval that is the difference of these two.
+     * @param other The other interval to subtract from this one
+     * @return The new interval difference
      */
     public Interval minus(Interval other) {
         int newSize = size - other.size;
-        if(newSize >= MIN_INTERVAL && newSize <= MAX_INTERVAL) {
-            return ALL.get(newSize + MIN_INTERVAL);
+        if(newSize >= MIN_INTERVAL_VALUE && newSize <= MAX_INTERVAL_VALUE) {
+            return ALL.get(newSize + MIN_INTERVAL_VALUE);
         }
         else {
-            throw new Error("INTERVAL:\nResultant musicTheory.Interval out of range!");
+            throw new Error("INTERVAL:\nResultant interval out of range!");
         }
     }
 
     /**
-     * Compares this musicTheory.Interval to another, purely based on size and direction.
-     * @param other the other musicTheory.Interval to compare this one to.
-     * @return The comparison between the two.
+     * Compares this interval to another, purely based on size and direction.
+     * @param other the other interval to compare this one to
+     * @return The comparison between the two
      */
     @Override
     public int compareTo(Interval other) {
@@ -129,9 +166,9 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
 
     /**
      * Compares two Intervals, purely based on size and direction.
-     * @param i1 The first musicTheory.Interval.
-     * @param i2 The second musicTheory.Interval.
-     * @return The comparison between the two.
+     * @param i1 The first interval
+     * @param i2 The second interval
+     * @return The comparison between the two
      */
     @Override
     public int compare(Interval i1, Interval i2) {
@@ -139,9 +176,9 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
     }
 
     /**
-     * A noteQualities (generated) equals() method for Intervals.
-     * @param o The Object to compare this to.
-     * @return If these two Objects are equal.
+     * A (generated) equals() method for intervals.
+     * @param o The object to compare this to
+     * @return If these two objects are equal
      */
     @Override
     public boolean equals(Object o) {
@@ -150,7 +187,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
 
     /**
      * A simple hash code in order to allow storage in certain Collections.
-     * @return The hash code for this musicTheory.Interval.
+     * @return The hash code for this interval.
      */
     @Override
     public int hashCode() {
