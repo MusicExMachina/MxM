@@ -9,5 +9,5 @@ import java.util.Comparator;
  * take place ONLY on barlines.
  */
 public interface ITime extends Comparable<ITime>, Comparator<ITime> {
-
+    // No methods other than those inherited from Comparable and Comparator
 }

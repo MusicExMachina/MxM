@@ -1,6 +1,6 @@
 package form;
 
-import events.MusicEvent;
+import events.IMusicEvent;
 import events.Note;
 import instruments.Instrument;
 import time.Beat;
@@ -23,7 +23,7 @@ public class Part {
 
 
 
-    private TreeMap<Beat, MusicEvent> allEvents;
+    private TreeMap<Beat, IMusicEvent> allEvents;
     private TreeMap<Beat, Note> allNotes;
 
 
@@ -41,7 +41,7 @@ public class Part {
 
     public int getPartNumInSection() { return partNumInSection; }
 
-    public Iterator<MusicEvent> iterator() {
+    public Iterator<IMusicEvent> iterator() {
         return null;
     }
 }

@@ -1,18 +1,27 @@
 package events;
 
+import time.*;
+
 /**
  * Created by celenp on 6/11/2017.
  */
-public class TimeSigChange extends MusicEvent {
+public class TimeSigChange implements IMusicEvent<Measure> {
 
+    private TimeSig timeSig;
+    private Frame<Measure> frame;
 
-    @Override
-    public int compareTo(MusicEvent o) {
-        return 0;
+    public TimeSigChange(Frame<Measure> frame, TimeSig timeSig) {
+        this.frame = frame;
+        this.timeSig = timeSig;
     }
 
     @Override
-    public int compare(MusicEvent o1, MusicEvent o2) {
-        return 0;
+    public Frame<Measure> getFrame() {
+        return frame;
+    }
+
+    @Override
+    public Measure getTiming() {
+        return null;
     }
 }

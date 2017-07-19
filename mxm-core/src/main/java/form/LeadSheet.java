@@ -5,6 +5,7 @@ import events.TempoChange;
 import events.TimeSigChange;
 import sound.Chord;
 import time.Count;
+import time.Frame;
 
 import java.util.Iterator;
 import java.util.TreeMap;
@@ -15,7 +16,7 @@ import java.util.TreeMap;
 public class LeadSheet implements IPassage {
 
     private TreeMap<Count, Sound> allNotes;
-    private TreeMap<Count, Note> melodyNotes;
+    private TreeMap<Count, Frame> melodyNotes;
     private TreeMap<Count, Chord> changesNotes;
 
     @Override

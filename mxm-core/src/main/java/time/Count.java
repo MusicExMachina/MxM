@@ -1,25 +1,23 @@
 package time;
 
-import java.util.Comparator;
-
 /**
  * Counts are the fundamental measurement of  musical time. Also note that counts are essentially just fractions. Note
  * that while their numerator and denominator are an improper fraction, the measure and beat are a proper one.
  *
  * This class is IMMUTABLE!
  */
-public class Count implements Comparable<Count>, Comparator<Count> {
+public class Count implements ITime {
 
     /** A zero Count */
-    public static final Count ZERO = new Count(0);
+    public static final Count ZERO = new Count(Measure.PICKUP);
     /** A full measure Count */
-    public static final Count ONE = new Count(1);
+    public static final Count ONE = new Count(Measure.ONE);
     /** The numerator of this Count as an IMPROPER fraction!) */
     private int numerator;
     /** The denominator of this Count */
     private int denominator;
     /** The measure this Count is in */
-    private int measure;
+    private Measure measure;
     /** The beat of this Count (its position within the measure) */
     private Beat beat;
 
@@ -27,8 +25,8 @@ public class Count implements Comparable<Count>, Comparator<Count> {
      * A constructor for a count taking in just a measure number.
      * @param measure The desired measure.
      */
-    public Count(int measure) {
-        this(measure,1);
+    public Count(Measure measure) {
+        this(measure.getNumber(),1);
     }
 
     /**
@@ -36,7 +34,7 @@ public class Count implements Comparable<Count>, Comparator<Count> {
      * @param beat The desired beat.
      */
     public Count(Beat beat) {
-        this(0,beat);
+        this(Measure.ONE,beat);
     }
 
     /**
@@ -48,7 +46,7 @@ public class Count implements Comparable<Count>, Comparator<Count> {
         if(denominator > 0) {
             this.numerator   = numerator;
             this.denominator = denominator;
-            this.measure     = numerator / denominator;
+            this.measure     = new Measure(numerator / denominator);
             reduce();
             this.beat = new Beat(numerator,denominator);
         }
@@ -63,12 +61,12 @@ public class Count implements Comparable<Count>, Comparator<Count> {
      * @param measure The desired measure.
      * @param beat The desired beat.
      */
-    public Count(int measure, Beat beat) {
+    public Count(Measure measure, Beat beat) {
         if(denominator != 0) {
-            this.numerator   = numerator + measure*denominator;
-            this.denominator = denominator;
+            this.numerator   = beat.getNumerator();
+            this.denominator = beat.getDenominator();
             reduce();
-            this.measure     = numerator / denominator;
+            this.measure     = new Measure(numerator / denominator);
         }
         else {
             throw new Error("Cannot create a time.Count with a deno");
@@ -80,7 +78,7 @@ public class Count implements Comparable<Count>, Comparator<Count> {
      * number" part of the internal fraction.
      * @return This time.Count's measure number.
      */
-    public int getMeasure() {
+    public Measure getMeasure() {
         return measure;
     }
 
@@ -237,5 +235,33 @@ public class Count implements Comparable<Count>, Comparator<Count> {
         // Reduce both numerator and denominator by "a," the greatest common factor.
         numerator   /= a;
         denominator /= a;
+    }
+
+    @Override
+    public int compareTo(ITime other) {
+        // If they are the same Count
+        if (this == other) {
+            return 0;
+        }
+        // If the other time is null
+        if (other == null) {
+            throw new Error("COUNT:\tCannot compare to a null ITime!");
+        }
+        // If the other class is a count
+        if (other.getClass() == Count.class) {
+            Count otherCount = (Count)other;
+            return Double.compare(this.toDouble(),otherCount.toDouble());
+        }
+        // If the other class is a measure
+        if (other.getClass() == Measure.class) {
+            Measure otherMeasure = (Measure)other;
+            return Double.compare(this.toDouble(),otherMeasure.toDouble());
+        }
+        throw new Error("COUNT:\tUnknown ITime type! (" + other.getClass().toGenericString() + ")");
+    }
+
+    @Override
+    public int compare(ITime o1, ITime o2) {
+        return 0;
     }
 }

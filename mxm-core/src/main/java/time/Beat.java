@@ -1,5 +1,7 @@
 package time;
 
+import java.util.Comparator;
+
 /**
  * Beats represent a sub-measure measurement of musical time (i.e. "beat three of four" or "the upbeat of 2"). In this
  * sense, they are the proper fraction, which when combined with an integer measure, make up an entire count. In a
@@ -7,7 +9,7 @@ package time;
  *
  * This class is IMMUTABLE!
  */
-public class Beat implements Comparable<Beat> {
+public class Beat implements Comparable<Beat>, Comparator<Beat> {
 
     public static Beat ZERO = new Beat(0,1);
     public static Beat ONE = new Beat(1,1);
