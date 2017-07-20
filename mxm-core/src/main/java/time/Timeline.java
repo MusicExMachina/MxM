@@ -1,7 +1,5 @@
 package time;
 
-import events.IMusicEvent;
-
 import java.util.Iterator;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -28,7 +26,7 @@ public class Timeline <TimeType extends ITime> implements Iterable<Frame<TimeTyp
      * The basic copy constructor
      * @param other
      */
-    private Timeline(Timeline other) {
+    private Timeline(Timeline<TimeType> other) {
         this.frames = other.frames;
     }
 
@@ -37,7 +35,7 @@ public class Timeline <TimeType extends ITime> implements Iterable<Frame<TimeTyp
      * A form of copy constructor, which 
      * @param other
      */
-    private Timeline(Timeline other, TimeType startTime) {
+    private Timeline(Timeline<TimeType> other, ITime startTime) {
         this.frames = other.frames.tailMap(startTime,true);
     }
 
@@ -45,7 +43,7 @@ public class Timeline <TimeType extends ITime> implements Iterable<Frame<TimeTyp
      * A form of copy constructor, which
      * @param other
      */
-    private Timeline(Timeline other, TimeType startTime, TimeType endTime) {
+    private Timeline(Timeline<ITime> other, TimeType startTime, TimeType endTime) {
 
     }
 
@@ -54,8 +52,8 @@ public class Timeline <TimeType extends ITime> implements Iterable<Frame<TimeTyp
      * @param startTime
      * @return
      */
-    public Timeline<TimeType,EventType> subTimeline(ITime startTime) {
-
+    public Timeline<TimeType> subTimeline(ITime startTime) {
+        return new Timeline<TimeType>(this, startTime);
     }
 
     /**
@@ -64,7 +62,7 @@ public class Timeline <TimeType extends ITime> implements Iterable<Frame<TimeTyp
      * @param endTime
      * @return
      */
-    public Timeline<TimeType,EventType> subTimeline(ITime startTime, ITime endTime) {
+    public Timeline<TimeType> subTimeline(ITime startTime, ITime endTime) {
 
     }
 
@@ -73,7 +71,7 @@ public class Timeline <TimeType extends ITime> implements Iterable<Frame<TimeTyp
      * @return
      */
     @Override
-    public Iterator<Frame<TimeType, EventType>> iterator() {
+    public Iterator<Frame<TimeType>> iterator() {
         return frames.values().iterator();
     }
 }

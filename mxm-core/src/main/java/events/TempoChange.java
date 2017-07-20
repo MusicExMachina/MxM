@@ -12,9 +12,9 @@ public class TempoChange implements IMusicEvent<Count> {
     /** The tempo we're changing to at this particular time*/
     public Tempo tempo;
 
-    private Frame<Count,? extends IMusicEvent<Count>> frame;
+    private Frame<Count> frame;
 
-    public TempoChange(Frame<Count,? extends IMusicEvent<Count>> frame, Tempo tempo) {
+    public TempoChange(Frame<Count> frame, Tempo tempo) {
         this.frame = frame;
         this.tempo = tempo;
     }
@@ -24,7 +24,7 @@ public class TempoChange implements IMusicEvent<Count> {
     }
 
     @Override
-    public Frame<Count,? extends IMusicEvent<Count>> getFrame() {
+    public Frame<Count> getFrame() {
         return frame;
     }
 
