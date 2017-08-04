@@ -3,7 +3,6 @@ import time.Count;
 import time.Tempo;
 import time.TimeSig;
 import form.Part;
-import form.Score;
 import io.Writer;
 
 import javax.sound.midi.*;
@@ -20,13 +19,13 @@ import java.util.TreeMap;
  * single form.ScoreEvent to be written. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
  */
-class MidiWriter implements Writer<Score> {
+class MidiWriter implements Writer<TraditionalScore> {
 
     /* The "resolution," i.e. the number of ticks per measure. */
     private static int resolution = 24;
 
     /* The passage that we're reading from. */
-    private Score passage = null;
+    private TraditionalScore passage = null;
 
     /* The sequence that we're writing to. */
     private Sequence sequence = null;
@@ -35,7 +34,7 @@ class MidiWriter implements Writer<Score> {
     private TreeMap<Float,Long> timePoints;
 
     // Writes the information contained in a passage down to a sequence
-    public Sequence run(Score passage) {
+    public Sequence run(TraditionalScore passage) {
         try {
             // Initialize our variables
             this.passage = passage;
@@ -80,12 +79,12 @@ class MidiWriter implements Writer<Score> {
 
 
     @Override
-    public void write(Score type, String filename) {
+    public void write(TraditionalScore type, String filename) {
 
     }
 
     @Override
-    public void write(Collection<Score> types, String filename) {
+    public void write(Collection<TraditionalScore> types, String filename) {
 
     }
 
@@ -240,7 +239,7 @@ class MidiWriter implements Writer<Score> {
     public static void main(String argv[]) throws IOException, InvalidMidiDataException, MidiUnavailableException {
         //Sequence sequence = MidiTools.download("https://www.8notes.com/school/midi/violin/bach_bourree.mid");
         Sequence sequence = MidiTools.load(Paths.get("").toAbsolutePath()+"/mxm-midi/src/tests/resources/midi_schubert_impromptu.mid");
-        Score passage = MidiTools.parse(sequence);
+        TraditionalScore passage = MidiTools.parse(sequence);
         //MidiWriter writer = new MidiWriter();
         //writer.write(passage,"input");
 

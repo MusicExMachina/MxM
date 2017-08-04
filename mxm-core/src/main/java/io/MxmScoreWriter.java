@@ -1,7 +1,5 @@
 package io;
 
-import form.Score;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
@@ -11,7 +9,7 @@ import java.util.Collection;
  * which stores all the information of a passage in a human-readable text
  * file, formatted such that it can be read again by the MxmScoreReader class.
  */
-public class MxmScoreWriter extends Writer<Score> {
+public class MxmScoreWriter extends Writer<TraditionalScore> {
 
     /**
      * Write takes a ScoreEvent and writes it to a file of the given name.
@@ -19,7 +17,7 @@ public class MxmScoreWriter extends Writer<Score> {
      * @param filename The name of the file (before .mxm is added)
      */
     @Override
-    public void write(Score passage, String filename) {
+    public void write(TraditionalScore passage, String filename) {
         try {
             PrintWriter writer = new PrintWriter(filename + ".mxm", "UTF-8");
 
@@ -93,7 +91,7 @@ public class MxmScoreWriter extends Writer<Score> {
     }
 
     @Override
-    public void write(Collection<Score> types, String filename) {
+    public void write(Collection<TraditionalScore> types, String filename) {
 
     }
 

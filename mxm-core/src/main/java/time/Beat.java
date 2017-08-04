@@ -12,7 +12,6 @@ import java.util.Comparator;
 public class Beat implements Comparable<Beat>, Comparator<Beat> {
 
     public static Beat ZERO = new Beat(0,1);
-    public static Beat ONE = new Beat(1,1);
 
     private int numerator;
     private int denominator;
@@ -31,6 +30,37 @@ public class Beat implements Comparable<Beat>, Comparator<Beat> {
             throw new Error("Cannot create a time.Count with a denominator less than or equal to zero.");
         }
     }
+
+
+    public Count plus(Beat other) {
+        int newNumerator = this.numerator + other.numerator;
+        int newDenominator = this.denominator + other.denominator;
+        int measureDifference = 0;
+
+        if(newNumerator > newDenominator) {
+            newNumerator -= newDenominator;
+            measureDifference += 1;
+        }
+        return new Count(new Measure(measureDifference), new Beat(newNumerator, newDenominator));
+    }
+
+
+    public Count minus(Beat other) {
+        int newNumerator = this.numerator - other.numerator;
+        int newDenominator = this.denominator - other.denominator;
+        int measureDifference = 0;
+
+        if(newNumerator < 0) {
+            newNumerator += newDenominator;
+            measureDifference -= 1;
+        }
+        return new Count(new Measure(measureDifference), new Beat(newNumerator, newDenominator));
+    }
+
+
+
+
+
 
     /**
      * A getter for this time.Count's numerator.

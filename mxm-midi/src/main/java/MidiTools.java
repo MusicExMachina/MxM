@@ -1,5 +1,4 @@
 import com.sun.media.sound.StandardMidiFileReader;
-import form.Score;
 
 import javax.sound.midi.*;
 import javax.sound.midi.spi.MidiFileReader;
@@ -111,7 +110,7 @@ public abstract class MidiTools
      * @param sequence
      * @return
      */
-    public static Score parse(Sequence sequence) {
+    public static TraditionalScore parse(Sequence sequence) {
         // Spawn off a parser object
         MidiReader midiReader = new MidiReader();
         return midiReader.read(sequence);
@@ -124,7 +123,7 @@ public abstract class MidiTools
      * @param passage The form.ScoreEvent to make into a Sequence.
      * @return The created MidiTools Sequence.
      */
-    public static Sequence write(Score passage) {
+    public static Sequence write(TraditionalScore passage) {
         // Spawn off a parser object
         MidiWriter midiWriter = new MidiWriter();
         return midiWriter.run(passage);

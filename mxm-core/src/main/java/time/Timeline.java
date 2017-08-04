@@ -1,5 +1,8 @@
 package time;
 
+import events.MusicEvent;
+
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -10,10 +13,10 @@ import java.util.TreeMap;
  *
  * Note that copy constructors and
  */
-public class Timeline <TimeType extends ITime> implements Iterable<Frame<TimeType>> {
+public class Timeline <MusicEventType extends MusicEvent> implements Iterable<Frame> {
 
     /** The frames of */
-    private NavigableMap<TimeType,Frame<TimeType>> frames;
+    private NavigableMap<MusicEventType,Frame<MusicEventType>> frames;
 
     /**
      *
@@ -26,7 +29,7 @@ public class Timeline <TimeType extends ITime> implements Iterable<Frame<TimeTyp
      * The basic copy constructor
      * @param other
      */
-    private Timeline(Timeline<TimeType> other) {
+    private Timeline(Timeline<MusicEventType> other) {
         this.frames = other.frames;
     }
 
@@ -35,7 +38,7 @@ public class Timeline <TimeType extends ITime> implements Iterable<Frame<TimeTyp
      * A form of copy constructor, which 
      * @param other
      */
-    private Timeline(Timeline<TimeType> other, ITime startTime) {
+    private Timeline(Timeline<MusicEventType> other, ITime startTime) {
         this.frames = other.frames.tailMap(startTime,true);
     }
 
@@ -43,27 +46,28 @@ public class Timeline <TimeType extends ITime> implements Iterable<Frame<TimeTyp
      * A form of copy constructor, which
      * @param other
      */
-    private Timeline(Timeline<ITime> other, TimeType startTime, TimeType endTime) {
+    private Timeline(Timeline<MusicEventType> other, Count startTime, Count endTime) {
 
     }
 
     /**
-     *
-     * @param startTime
+     * Adds a frame at a given time, or returns the existing frame at that time. Note that this process is how
+     * @param time
      * @return
      */
-    public Timeline<TimeType> subTimeline(ITime startTime) {
-        return new Timeline<TimeType>(this, startTime);
+    public Frame<MusicEventType> addOrGetAt(Count time) {
+
+        if(frames.containsKey(time)) {
+            return frames.get(time);
+        }
+        else {
+            Frame<MusicEventType> frameAtTime = new Frame<TimeType>(time);
+            frames.put(time, frameAtTime);
+        }
     }
 
-    /**
-     *
-     * @param startTime
-     * @param endTime
-     * @return
-     */
-    public Timeline<TimeType> subTimeline(ITime startTime, ITime endTime) {
-
+    public Frame<TimeType> getFrameAt(ITime time) {
+        return frames.floorEntry(time).getValue();
     }
 
     /**

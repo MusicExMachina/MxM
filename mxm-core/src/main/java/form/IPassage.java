@@ -1,28 +1,24 @@
 package form;
 
 import events.Note;
-import events.TempoChange;
-import events.TimeSigChange;
-import time.Count;
+import time.*;
 
-import java.util.Iterator;
+import java.util.TreeSet;
 
 /**
  * Passage is an interface representing any collection of notes that may be iterated over, regardless of who plays them.
- * For instance, both a Score and a Part are implementations of Passages- even though they represent different subsets
+ * For instance, both a TraditionalScore and a Part are implementations of Passages- even though they represent different subsets
  * of a whole piece.
  */
-public interface IPassage {
-    public static int PICKUP_MEASURE_NUM = 0;
-    public static int START_MEASURE_NUM = 1;
-
-    public IPassage getExcerpt(Count start, Count end);
-
+public interface IPassage extends Iterable<Frame<Count>> {
     public Count getStart();
     public Count getEnd();
     public Count getDuration();
 
-    public Iterator<Note> soundItr();
-    public Iterator<TimeSigChange> timeSigChangeItr();
-    public Iterator<TempoChange> tempoChangeItr();
+    public Tempo getTempoAt(Count time);
+    public TimeSig getTimeSigAt(Count time);
+    public TreeSet<Note> getNotesAt(Count time);
+
+    public IPassage getExcerpt(Count start);
+    public IPassage getExcerpt(Count start, Count end);
 }

@@ -13,10 +13,9 @@ import time.Frame;
  * Note that there can be no inherent comparisons between notes- after all, what would we compare about them? Their
  * start times? Their pitches? What would we do with unpitched notes?
  */
-public class Note <SoundType extends ISound> implements IMusicEvent<Count> {
+public class Note <SoundType extends ISound> extends MusicEvent<Count> {
 
     // Music event timing information
-    private Frame<Count> startFrame;
     private Frame<Count> endFrame;
     private Count duration;
 
@@ -27,38 +26,14 @@ public class Note <SoundType extends ISound> implements IMusicEvent<Count> {
     private Accent accent;
 
     public Note(Frame<Count> startFrame, Frame<Count> endFrame, SoundType sound) {
-        this.startFrame = startFrame;
+        super(startFrame);
         this.endFrame = endFrame;
         this.duration = getStart().minus(getEnd());
         this.sound = sound;
     }
 
-    // FRAME TIMING
-
-    @Override
-    public Frame<Count> getFrame() {
-        return startFrame;
-    }
-
-    public Frame<Count> getStartFrame() {
-        return startFrame;
-    }
-
-    public Frame<Count> getEndFrame() {
-        return endFrame;
-    }
 
     // COUNT TIMING
-
-    @Override
-    public Count getTiming() {
-        return startFrame.getTiming();
-    }
-
-    public Count getStart() {
-        return startFrame.getTiming();
-    }
-
     public Count getEnd() {
         return endFrame.getTiming();
     }
@@ -67,20 +42,21 @@ public class Note <SoundType extends ISound> implements IMusicEvent<Count> {
         return duration;
     }
 
-    // PROPERTIES
+    // FRAME TIMING
+    public Frame<Count> getEndFrame() {
+        return endFrame;
+    }
 
+    // PROPERTIES
     public SoundType getSound() {
         return sound;
     }
-
     public Technique getTechnique() {
         return technique;
     }
-
     public Dynamic getDynamic() {
         return dynamic;
     }
-
     public Accent getAccent() {
         return accent;
     }

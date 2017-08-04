@@ -4,7 +4,6 @@ import time.Count;
 import time.Tempo;
 import time.TimeSig;
 import form.Part;
-import form.Score;
 import io.Reader;
 
 import javax.sound.midi.*;
@@ -17,7 +16,7 @@ import java.util.*;
  * single file to be read. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
  */
-public class MidiReader implements Reader<Score> {
+public class MidiReader implements Reader<TraditionalScore> {
 
     /* A few of the most useful MidiTools messages */
     private static final int SEQUENCE_NUMBER    = 0x00;
@@ -38,7 +37,7 @@ public class MidiReader implements Reader<Score> {
 
     /* Input and output */
     private Sequence sequence;
-    private Score passage;
+    private TraditionalScore passage;
 
     /* Time signature change events in various time formats */
     private TreeMap<Long, TimeSig> timeSigsLong;
@@ -74,10 +73,10 @@ public class MidiReader implements Reader<Score> {
      * @param sequence The midi Sequence to parse.
      * @return The form.ScoreEvent representing this Sequence.
      */
-    public Score read(Sequence sequence) {
+    public TraditionalScore read(Sequence sequence) {
 
         this.sequence = sequence;
-        passage = new Score();
+        passage = new TraditionalScore();
 
         System.out.println("MIDI PARSER:\tParsing midi events...");
         parseAll();

@@ -1,9 +1,11 @@
 package time;
 
+import java.util.Comparator;
+
 /**
  * Created by celenp on 7/13/2017.
  */
-public class Measure implements ITime {
+public class Measure implements Comparable<Measure>, Comparator<Measure> {
 
     public static Measure PICKUP    = new Measure(0);
     public static Measure ONE       = new Measure(1);
@@ -14,42 +16,39 @@ public class Measure implements ITime {
         this.number = number;
     }
 
-    public int getNumber() {
+    public int getMeasureNum() {
         return number;
     }
 
-    /**
-     * Converts this count to a float.
-     * @return This count's float value.
-     */
+
+    public Measure plus(Measure other) {
+        return new Measure(number + other.number);
+    }
+
+    public Measure minus(Measure other) {
+        return new Measure(number - other.number);
+    }
+
     public float toFloat() {
         return (float)number;
     }
 
-    /**
-     * Converts this count to a double.
-     * @return This count's double value.
-     */
     public double toDouble() {
         return (double)number;
     }
 
 
-    @Override
-    public int compareTo(ITime o) {
-        return 0;
-    }
-
-    @Override
-    public int compare(ITime o1, ITime o2) {
-        return 0;
-    }
-
     public String toString() {
-        if(number == 0)
-            return "m. pickup";
-        else
-            return "m." + number;
+        return number == 0 ? "m. pickup" : "m." + number;
     }
 
+    @Override
+    public int compareTo(Measure other) {
+        return Integer.compare(number,other.number);
+    }
+
+    @Override
+    public int compare(Measure measure1, Measure measure2) {
+        return Integer.compare(measure1.number,measure2.number);
+    }
 }

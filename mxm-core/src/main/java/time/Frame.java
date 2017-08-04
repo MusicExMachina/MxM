@@ -1,8 +1,7 @@
 package time;
 
-import events.IMusicEvent;
-import events.TempoChange;
-import events.TimeSigChange;
+import com.sun.istack.internal.NotNull;
+import events.MusicEvent;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -13,27 +12,21 @@ import java.util.TreeSet;
  *
  * Note that since
  */
-public class Frame <TimeType extends ITime> implements Iterable<IMusicEvent>, Comparator<Frame>, Comparable<Frame> {
+public class Frame <MusicEventType extends MusicEvent> implements Iterable<MusicEventType>, Comparator<Frame>, Comparable<Frame> {
 
-    private TimeType timing;
-    private TreeSet<? extends IMusicEvent<TimeType>> events;
-    private TempoChange tempoChange;
-    private TimeSigChange timeSigChange;
+    /** The time that the frame starts */
+    private Count timing;
+    /** All events that occur starting on this frame */
+    private TreeSet<MusicEventType> events;
 
-    public Frame(TimeType timing) {
+    /** */
+    public Frame(@NotNull Count timing) {
         this.timing = timing;
         this.events = new TreeSet<>();
-        this.tempoChange = null;
-        this.timeSigChange = null;
     }
 
-    public TimeType getTiming() {
+    public Count getTiming() {
         return timing;
-    }
-
-    @Override
-    public Iterator<IMusicEvent> iterator() {
-        return (Iterator<IMusicEvent>) events.iterator();
     }
 
     @Override
@@ -44,5 +37,10 @@ public class Frame <TimeType extends ITime> implements Iterable<IMusicEvent>, Co
     @Override
     public int compare(Frame frame1, Frame frame2) {
         return frame1.getTiming().compareTo(frame2.getTiming());
+    }
+
+    @Override
+    public Iterator<MusicEventType> iterator() {
+        return events.iterator();
     }
 }

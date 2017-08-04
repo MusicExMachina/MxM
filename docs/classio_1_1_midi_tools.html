@@ -106,9 +106,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:ab3b413fb3f7f796e0c40f1065d9dbe98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a005ae461c90faa197c28ee796bdb437f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1_midi_tools.html#a005ae461c90faa197c28ee796bdb437f">save</a> (Sequence sequence, String fileName)  throws IOException </td></tr>
 <tr class="separator:a005ae461c90faa197c28ee796bdb437f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76a79d432b6ac7e7e293629925c28cb4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classmodel_1_1form_1_1_passage.html">form.Score</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1_midi_tools.html#a76a79d432b6ac7e7e293629925c28cb4">parse</a> (Sequence sequence)</td></tr>
+<tr class="memitem:a76a79d432b6ac7e7e293629925c28cb4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classmodel_1_1form_1_1_passage.html">form.TraditionalScore</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1_midi_tools.html#a76a79d432b6ac7e7e293629925c28cb4">parse</a> (Sequence sequence)</td></tr>
 <tr class="separator:a76a79d432b6ac7e7e293629925c28cb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7bb935cd1f46be52a34a5e32bc7f1a0"><td class="memItemLeft" align="right" valign="top">static Sequence&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1_midi_tools.html#ae7bb935cd1f46be52a34a5e32bc7f1a0">write</a> (<a class="el" href="classmodel_1_1form_1_1_passage.html">form.Score</a> passage)</td></tr>
+<tr class="memitem:ae7bb935cd1f46be52a34a5e32bc7f1a0"><td class="memItemLeft" align="right" valign="top">static Sequence&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1_midi_tools.html#ae7bb935cd1f46be52a34a5e32bc7f1a0">write</a> (<a class="el" href="classmodel_1_1form_1_1_passage.html">form.TraditionalScore</a> passage)</td></tr>
 <tr class="separator:ae7bb935cd1f46be52a34a5e32bc7f1a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a7b8cc1e005b9b52159d419ef24f635"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1_midi_tools.html#a1a7b8cc1e005b9b52159d419ef24f635">play</a> (Sequence sequence)  throws MidiUnavailableException, InvalidMidiDataException </td></tr>
 <tr class="separator:a1a7b8cc1e005b9b52159d419ef24f635"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -198,7 +198,7 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="classmodel_1_1form_1_1_passage.html">form.Score</a> parse </td>
+          <td class="memname">static <a class="el" href="classmodel_1_1form_1_1_passage.html">form.TraditionalScore</a> parse </td>
           <td>(</td>
           <td class="paramtype">Sequence&#160;</td>
           <td class="paramname"><em>sequence</em></td><td>)</td>
@@ -211,7 +211,7 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Takes in a midi Sequence and writes a form.Score. The form.Score may then be parsed in a number of ways, including forming RhythmTrees, etc. as Passages carry <em>more</em> useful musical information than Sequences alone. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Takes in a midi Sequence and writes a form.TraditionalScore. The form.TraditionalScore may then be parsed in a number of ways, including forming RhythmTrees, etc. as Passages carry <em>more</em> useful musical information than Sequences alone. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">sequence</td><td></td></tr>
   </table>
@@ -341,7 +341,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">static Sequence write </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmodel_1_1form_1_1_passage.html">form.Score</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classmodel_1_1form_1_1_passage.html">form.TraditionalScore</a>&#160;</td>
           <td class="paramname"><em>passage</em></td><td>)</td>
           <td></td>
         </tr>
@@ -352,9 +352,9 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Takes in a form.Score and writes a midi Sequence from it. The Sequence can then be played using <a class="el" href="classio_1_1_midi_tools.html#a1a7b8cc1e005b9b52159d419ef24f635">MidiTools.play()</a> or saved to a midi file using <a class="el" href="classio_1_1_midi_tools.html#a005ae461c90faa197c28ee796bdb437f">MidiTools.save()</a> </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Takes in a form.TraditionalScore and writes a midi Sequence from it. The Sequence can then be played using <a class="el" href="classio_1_1_midi_tools.html#a1a7b8cc1e005b9b52159d419ef24f635">MidiTools.play()</a> or saved to a midi file using <a class="el" href="classio_1_1_midi_tools.html#a005ae461c90faa197c28ee796bdb437f">MidiTools.save()</a> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">passage</td><td>The form.Score to make into a Sequence. </td></tr>
+    <tr><td class="paramname">passage</td><td>The form.TraditionalScore to make into a Sequence. </td></tr>
   </table>
   </dd>
 </dl>
