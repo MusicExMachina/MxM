@@ -11,40 +11,14 @@ import sound.Instrument;
  */
 public class Voice {
 
-    /** Every voice belongs to a passage */
-    private final IPassage passage;
-
     /** Every voice has an instrument */
     private final Instrument instrument;
-
     /** The part number this voice is in its section- i.e. "#1" or "#4" */
     private final int partNumInSection;
 
-    /**
-     * The constructor for a voice taking in an instrument, a part number within its section, and a passage
-     * @param instrument
-     * @param partNumInSection the
-     * @param passage the passage in which this voice is playing
-     */
-    public Voice(Instrument instrument, int partNumInSection, IPassage passage) {
-        this.passage = passage;
+    public Voice(Instrument instrument, int partNumInSection) {
         this.instrument = instrument;
         this.partNumInSection = partNumInSection;
-    }
-
-    public Voice(Voice other, IPassage newPassage) {
-        this.passage = newPassage;
-        this.instrument = other.instrument;
-        this.partNumInSection = other.partNumInSection;
-
-    }
-
-    /**
-     * Gets the passage that this voice is playing in.
-     * @return The
-     */
-    public IPassage getPassage() {
-        return passage;
     }
 
     public Instrument getInstrument() {
@@ -52,6 +26,6 @@ public class Voice {
     }
 
     public int getPartNumInSection() {
-
+        return partNumInSection;
     }
 }

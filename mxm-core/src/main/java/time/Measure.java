@@ -5,7 +5,7 @@ import java.util.Comparator;
 /**
  * Created by celenp on 7/13/2017.
  */
-public class Measure implements Comparable<Measure>, Comparator<Measure> {
+public class Measure implements ITime, Comparable<Measure>, Comparator<Measure> {
 
     public static Measure PICKUP    = new Measure(0);
     public static Measure ONE       = new Measure(1);

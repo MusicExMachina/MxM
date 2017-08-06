@@ -1,16 +1,14 @@
 package form;
 
 import com.sun.istack.internal.NotNull;
-import events.MusicEvent;
 import events.Note;
-import events.ParallelTimeline;
-import events.TempoChange;
-import events.TimeSigChange;
-import time.*;
+import sound.ISound;
+import time.Count;
+import time.ITime;
+import time.Tempo;
+import time.TimeSig;
 
 import java.util.Iterator;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 /**
  * Parts represent passages played by a single performer or a number of performers in the same section. To put it
@@ -20,38 +18,38 @@ import java.util.TreeSet;
 public class Part implements IPassage {
     private final Score score;
     private final Voice voice;
-    private final ParallelTimeline<Note> allNotes;
+    private final ParallelTimeline<Count, Note<? extends ISound>> notes;
 
-    public Part(@NotNull Score score,@NotNull Voice voice) {
+    public Part(@NotNull Score score, @NotNull Voice voice) {
         this.score = score;
         this.voice = voice;
-        this.allNotes = new ParallelTimeline<>();
+        this.notes = new ParallelTimeline<>();
     }
 
     @Override
-    public Count getStart() {
-        return allNotes.getStart();
+    public ITime getStart() {
+        return notes.getStart();
     }
     @Override
-    public Count getEnd() {
-        return allNotes.getEnd();
+    public ITime getEnd() {
+        return notes.getEnd();
     }
     @Override
-    public Count getDuration() {
-        return allNotes.getDuration();
+    public ITime getDuration() {
+        return notes.getDuration();
     }
-    @Override
 
-    public Tempo getTempoAt(Count time) {
+    @Override
+    public Tempo getTempoAt(ITime time) {
         return score.getTempoAt(time);
     }
     @Override
-    public TimeSig getTimeSigAt(Count time) {
+    public TimeSig getTimeSigAt(ITime time) {
         return score.getTimeSigAt(time);
     }
     @Override
-    public TreeSet<Note> getNotesAt(Count time) {
-        return null;
+    public Iterator<Note<? extends ISound>> getNotesAt(ITime time) {
+        return notes.getFrameAt(time).iterator();
     }
 
     @Override
@@ -61,14 +59,5 @@ public class Part implements IPassage {
     @Override
     public IPassage getExcerpt(Count start, Count end) {
         return null;
-    }
-
-    @Override
-    public Iterator<TempoChange> tempoChangeItr() {
-        return score.tempoChangeItr();
-    }
-    @Override
-    public Iterator<TimeSigChange> timeSigChangeItr() {
-        return score.timeSigChangeItr();
     }
 }

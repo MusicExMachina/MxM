@@ -1,9 +1,11 @@
 package events;
 
+import form.IFrame;
 import sound.Accent;
 import sound.Dynamic;
 import sound.ISound;
 import sound.Technique;
+import time.Count;
 
 /**
  * Notes represent a sound over some duration of time. All notes have a set number of attributes, which
@@ -11,7 +13,7 @@ import sound.Technique;
  * Note that there can be no inherent comparisons between notes- after all, what would we compare about them? Their
  * start times? Their pitches? What would we do with unpitched notes?
  */
-public class Note <SoundType extends ISound> extends SpanningEvent {
+public class Note <SoundType extends ISound> extends SpanningEvent<Count> implements IMusicEvent<Count> {
     // Note attributes
     private SoundType sound;
     private Technique technique;

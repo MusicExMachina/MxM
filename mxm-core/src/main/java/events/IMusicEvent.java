@@ -1,38 +1,37 @@
 package events;
 
-import time.Count;
+import form.IFrame;
+import time.ITime;
 
-public interface IMusicEvent {
+public interface IMusicEvent <ITimeType extends ITime> {
 
     // COUNT TIMING
-    public Count getTiming();
+    public ITimeType getTiming();
 
     // FRAME TIMING
     public IFrame getIFrame();
 }
 
-abstract class InstantEvent implements IMusicEvent {
-    private final IFrame IFrame;
+abstract class InstantEvent<ITimeType extends ITime> implements IMusicEvent<ITimeType> {
+    private final IFrame<ITimeType> IFrame;
 
     InstantEvent(IFrame IFrame) {
         this.IFrame = IFrame;
     }
 
-    // COUNT TIMING
     @Override
-    public final Count getTiming() { return IFrame.getTiming(); }
+    public final ITimeType getTiming() { return IFrame.getTiming(); }
 
-    // FRAME TIMING
     @Override
     public final IFrame getIFrame() { return IFrame; }
 }
 
-abstract class SpanningEvent implements IMusicEvent {
-    private final IFrame startIFrame;
-    private final IFrame endIFrame;
-    private final Count duration;
+abstract class SpanningEvent<ITimeType extends ITime> implements IMusicEvent<ITimeType> {
+    private final IFrame<ITimeType> startIFrame;
+    private final IFrame<ITimeType> endIFrame;
+    private final ITime duration;
 
-    SpanningEvent(IFrame startIFrame, IFrame endIFrame) {
+    SpanningEvent(IFrame<ITimeType> startIFrame, IFrame<ITimeType> endIFrame) {
         this.startIFrame = startIFrame;
         this.endIFrame = endIFrame;
         this.duration = endIFrame.getTiming().minus(startIFrame.getTiming());
@@ -40,14 +39,14 @@ abstract class SpanningEvent implements IMusicEvent {
 
     // COUNT TIMING
     @Override
-    public final Count getTiming() { return startIFrame.getTiming(); }
-    public final Count getStart() {
+    public final ITimeType getTiming() { return startIFrame.getTiming(); }
+    public final ITimeType getStart() {
         return startIFrame.getTiming();
     }
-    public final Count getEnd() {
+    public final ITimeType getEnd() {
         return endIFrame.getTiming();
     }
-    public final Count getDuration() {
+    public final ITime getDuration() {
         return duration;
     }
 

@@ -8,7 +8,7 @@ import com.sun.istack.internal.NotNull;
  *
  * This class is IMMUTABLE!
  */
-public class Count implements Comparable<Count> {
+public class Count implements ITime, Comparable<Count> {
 
     /** A zero Count */
     public static final Count ZERO = new Count(new Measure(0));

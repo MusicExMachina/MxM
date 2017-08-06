@@ -1,5 +1,6 @@
 package events;
 
+import form.IFrame;
 import sound.ISound;
 import sound.Pitch;
 

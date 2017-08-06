@@ -1,6 +1,8 @@
 package form;
 
+import com.sun.istack.internal.NotNull;
 import events.*;
+import sound.ISound;
 import sound.Instrument;
 import time.*;
 
@@ -10,15 +12,12 @@ public class Score implements IPassage {
 
     private String title;
 
-    Timeline<Count> allEvents;
-
     // Timing information
-    Timeline<Measure> timeSignChanges;
-    Timeline<Count> tempoChanges;
-    // stylistic information
+    SerialTimeline<Measure, TimeSigChange> timeSigChanges;
+    SerialTimeline<Count, TempoChange> tempoChanges;
+    ParallelTimeline<Count, Note<? extends ISound>> allNotes;
 
-    Timeline<Count> allNotes;
-
+    // Parts and sections
     TreeMap<Voice,Part> parts;
     TreeMap<Instrument,Set<Voice>> sections;
 
@@ -26,33 +25,15 @@ public class Score implements IPassage {
     public Score() {
         parts = new TreeMap<>();
     }
-
-    public Score(Score other) {
-        // We must copy everything that is not immutable and doesn't rely on knowing its passage. This includes, for
-        // instance,
-
-    }
-
-    public Score excerpt() {
-
-    }
-
     public Iterator<Voice> allVoices() {
         return parts.keySet().iterator();
     }
-
     public Iterator<Voice> allParts() {
         return parts.keySet().iterator();
     }
-
-
-
-
-
     public Part getPart(Voice voice) {
         return parts.get(voice);
     }
-
     public List<Part> getParts(Collection<Voice> voices) {
         List<Part> toReturn = new ArrayList<>();
         for(Voice voice : voices) {
@@ -60,7 +41,6 @@ public class Score implements IPassage {
         }
         return toReturn;
     }
-
     public List<Part> getParts(Instrument section) {
         List<Part> toReturn = new ArrayList<>();
         for(Voice voice : sections.get(section)) {
@@ -68,7 +48,6 @@ public class Score implements IPassage {
         }
         return toReturn;
     }
-
     public List<Instrument> getSections() {
         List<Instrument> toReturn = new ArrayList<>();
         for(Instrument section : sections.keySet()) {
@@ -78,65 +57,58 @@ public class Score implements IPassage {
     }
 
 
+    // ADD METHODS
+    public void add(@NotNull Tempo tempo, @NotNull Count count) {
+        //
+        /*
+        TempoChange tempoChange = new TempoChange(tempo,);
+        tempoChanges.add()
+        */
+    }
+    public void add(TimeSig timeSig, Measure measure) {
 
-
-    @Override
-    public Count getStart() {
-        return all;
     }
 
+
+
+
+
     @Override
-    public Count getEnd() {
+    public ITime getStart() {
+        return allNotes.getStart();
+    }
+    @Override
+    public ITime getEnd() {
+        return null;
+    }
+    @Override
+    public ITime getDuration() {
         return null;
     }
 
-    @Override
-    public Count getDuration() {
-        return null;
-    }
+
 
     @Override
     public Tempo getTempoAt(ITime time) {
-        return tempoChanges.getFrameAt(time).iterator().next().getTempo();
+        return tempoChanges.getEventAt(time).getTempo();
     }
-
     @Override
     public TimeSig getTimeSigAt(ITime time) {
-        return null;
+        return timeSigChanges.getEventAt(time).getTimeSig();
+    }
+    @Override
+    public Iterator<Note<? extends ISound>> getNotesAt(ITime time) {
+        return allNotes.getEventsAt(time);
     }
 
-    @Override
-    public TreeSet<Note> getNotesAt(ITime time) {
-        return null;
-    }
+
 
     @Override
     public IPassage getExcerpt(Count start) {
         return null;
     }
-
     @Override
     public IPassage getExcerpt(Count start, Count end) {
         return null;
-    }
-
-    @Override
-    public Iterator<Note> noteItr() {
-        return null;
-    }
-
-    @Override
-    public Iterator<TimeSigChange> timeSigChangeItr() {
-        return null;
-    }
-
-    @Override
-    public Iterator<TempoChange> tempoChangeItr() {
-        return null;
-    }
-
-    @Override
-    public Iterator<Frame<Count>> iterator() {
-        return allEvents.iterator();
     }
 }

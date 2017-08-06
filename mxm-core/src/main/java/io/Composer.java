@@ -30,6 +30,6 @@ public class Composer {
         score.add(tempo, currentCount);
     }
     private void writeTimeSig(@NotNull TimeSig timeSig) {
-        score.add(timeSig, currentCount);
+        score.add(timeSig, currentCount.getMeasure());
     }
 }
