@@ -8,8 +8,8 @@ import time.*;
 public class TempoChange extends InstantEvent {
     private Tempo tempo;
 
-    public TempoChange(Frame frame, Tempo tempo) {
-        super(frame);
+    public TempoChange(IFrame IFrame, Tempo tempo) {
+        super(IFrame);
         this.tempo = tempo;
     }
 

@@ -1,6 +1,6 @@
 package form;
 
-import instruments.Instrument;
+import sound.Instrument;
 
 /**
  * Voices represent the more abstract use of the word "part"- first violin, third horn, snare, etc. Voices are part of

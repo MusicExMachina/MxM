@@ -18,8 +18,8 @@ public class Note <SoundType extends ISound> extends SpanningEvent {
     private Dynamic dynamic;
     private Accent accent;
 
-    public Note(Frame startFrame, Frame endFrame, SoundType sound) {
-        super(startFrame,endFrame);
+    public Note(IFrame startIFrame, IFrame endIFrame, SoundType sound) {
+        super(startIFrame, endIFrame);
         this.sound = sound;
     }
 

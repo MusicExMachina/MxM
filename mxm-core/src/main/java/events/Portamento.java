@@ -6,8 +6,8 @@ import sound.Pitch;
 public class Portamento extends Note {
     private Pitch endPitch;
 
-    public Portamento(Frame startFrame, Frame endFrame, ISound sound) {
-        super(startFrame, endFrame, sound);
+    public Portamento(IFrame startIFrame, IFrame endIFrame, ISound sound) {
+        super(startIFrame, endIFrame, sound);
     }
 
     public Pitch getEndPitch() {

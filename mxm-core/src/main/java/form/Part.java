@@ -1,7 +1,9 @@
 package form;
 
+import com.sun.istack.internal.NotNull;
 import events.MusicEvent;
 import events.Note;
+import events.ParallelTimeline;
 import events.TempoChange;
 import events.TimeSigChange;
 import time.*;
@@ -16,53 +18,39 @@ import java.util.TreeSet;
  * drum set part, so on and so forth. As a type of IPassage, they can be iterated over for their constituent events.
  */
 public class Part implements IPassage {
-    private Piece piece;
+    private final Score score;
+    private final Voice voice;
+    private final ParallelTimeline<Note> allNotes;
 
-    /** The voice that plays this part */
-    private Voice voice;
-
-
-
-    private TreeMap<Beat, MusicEvent> allEvents;
-    private TreeMap<Beat, Note> allNotes;
-
-
-
-
-
-
-
-    public Part(Voice voice, IPassage passage) {
-
+    public Part(@NotNull Score score,@NotNull Voice voice) {
+        this.score = score;
+        this.voice = voice;
+        this.allNotes = new ParallelTimeline<>();
     }
 
     @Override
     public Count getStart() {
-        return null;
+        return allNotes.getStart();
     }
-
     @Override
     public Count getEnd() {
-        return null;
+        return allNotes.getEnd();
     }
-
     @Override
     public Count getDuration() {
-        return null;
+        return allNotes.getDuration();
     }
-
     @Override
-    public Tempo getTempoAt(ITime time) {
-        return null;
+
+    public Tempo getTempoAt(Count time) {
+        return score.getTempoAt(time);
     }
-
     @Override
-    public TimeSig getTimeSigAt(ITime time) {
-        return null;
+    public TimeSig getTimeSigAt(Count time) {
+        return score.getTimeSigAt(time);
     }
-
     @Override
-    public TreeSet<Note> getNotesAt(ITime time) {
+    public TreeSet<Note> getNotesAt(Count time) {
         return null;
     }
 
@@ -70,7 +58,6 @@ public class Part implements IPassage {
     public IPassage getExcerpt(Count start) {
         return null;
     }
-
     @Override
     public IPassage getExcerpt(Count start, Count end) {
         return null;
@@ -78,11 +65,10 @@ public class Part implements IPassage {
 
     @Override
     public Iterator<TempoChange> tempoChangeItr() {
-        return piece.tempoChangeItr();
+        return score.tempoChangeItr();
     }
-
     @Override
     public Iterator<TimeSigChange> timeSigChangeItr() {
-        return piece.timeSigChangeItr();
+        return score.timeSigChangeItr();
     }
 }

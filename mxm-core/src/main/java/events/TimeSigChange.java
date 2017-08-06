@@ -8,8 +8,8 @@ import time.*;
 public class TimeSigChange extends InstantEvent {
     private TimeSig timeSig;
 
-    public TimeSigChange(Frame frame, TimeSig timeSig) {
-        super(frame);
+    public TimeSigChange(IFrame IFrame, TimeSig timeSig) {
+        super(IFrame);
         this.timeSig = timeSig;
     }
 

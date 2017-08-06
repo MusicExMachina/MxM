@@ -1,7 +1,4 @@
-package instruments;
-
-import sound.ISound;
-import sound.Technique;
+package sound;
 
 import java.util.ArrayList;
 import java.util.Iterator;

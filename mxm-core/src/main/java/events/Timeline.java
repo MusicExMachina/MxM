@@ -3,78 +3,79 @@ package events;
 import time.Count;
 
 import java.util.Iterator;
-import java.util.NavigableMap;
 import java.util.TreeMap;
 
-/**
- * Created by celenp on 7/15/2017.
- *
- *
- * Note that copy constructors and
- */
-public class Timeline <MusicEventType extends MusicEvent> implements Iterable<Frame<MusicEventType>> {
+public interface Timeline <MusicEventType extends IMusicEvent> extends Iterable<IFrame<MusicEventType>> {
+
+    public void add(MusicEventType event);
+
+    public IFrame<MusicEventType> getFrameAt(Count count);
+
+    public Count getStart();
+    public Count getEnd();
+    public Count getDuration();
+
+    @Override
+    public Iterator<IFrame<MusicEventType>> iterator();
+}
+
+public class SerialTimeline <MusicEventType extends IMusicEvent> implements Timeline {
 
     /** The frames of */
-    private NavigableMap<Count, Frame> frames;
+    private final TreeMap<Count, MonoFrame<MusicEventType>> frames;
 
-    /**
-     *
-     */
-    public Timeline() {
-        this.frames = new TreeMap<>();
+    public SerialTimeline() {
+        this.frames = new TreeMap<Count, MonoFrame<MusicEventType>> frames;
     }
 
-    /**
-     * The basic copy constructor
-     * @param other
-     */
-    private Timeline(Timeline<MusicEventType> other) {
-        this.frames = other.frames;
-    }
-
-
-    /**
-     * A form of copy constructor, which 
-     * @param other
-     */
-    private Timeline(Timeline<MusicEventType> other, ITime startTime) {
-        this.frames = other.frames.tailMap(startTime,true);
-    }
-
-    /**
-     * A form of copy constructor, which
-     * @param other
-     */
-    private Timeline(Timeline<MusicEventType> other, Count startTime, Count endTime) {
+    @Override
+    public void add(IMusicEvent event) {
 
     }
 
-    /**
-     * Adds a frame at a given time, or returns the existing frame at that time. Note that this process is how
-     * @param time
-     * @return
-     */
-    public Frame<MusicEventType> addOrGetAt(Count time) {
+    @Override
+    public IFrame getFrameAt(Count count) {
+        return null;
+    }
+
+    @Override
+    public Count getStart() {
+        return null;
+    }
+
+    @Override
+    public Count getEnd() {
+        return null;
+    }
+
+    @Override
+    public Count getDuration() {
+        return null;
+    }
+
+    @Override
+    public Iterator<IFrame> iterator() {
+        return null;
+    }
+}
+
+public class ParallelTimeline <MusicEventType extends IMusicEvent> implements Timeline {
+
+    /** The frames of */
+    private final TreeMap<Count, IFrame> frames;
+
+
+    public void add(MusicEventType event) {
+
+    }
+    {
 
         if(frames.containsKey(time)) {
             return frames.get(time);
         }
         else {
-            Frame<MusicEventType> frameAtTime = new Frame<MusicEventType>(time);
-            frames.put(time, frameAtTime);
+            IFrame<MusicEventType> IFrameAtTime = new IFrame<MusicEventType>(time);
+            frames.put(time, IFrameAtTime);
         }
-    }
-
-    public Frame<MusicEventType> getFrameAt(Count count) {
-        return frames.floorEntry(count).getValue();
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public Iterator<Frame<MusicEventType>> iterator() {
-        return frames.values().iterator();
     }
 }

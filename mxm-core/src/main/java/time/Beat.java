@@ -12,6 +12,7 @@ import java.util.Comparator;
 public class Beat implements Comparable<Beat>, Comparator<Beat> {
 
     public static Beat ZERO = new Beat(0,1);
+    public static Beat ONE = new Beat(1,0);
 
     private int numerator;
     private int denominator;
@@ -56,11 +57,6 @@ public class Beat implements Comparable<Beat>, Comparator<Beat> {
         }
         return new Count(new Measure(measureDifference), new Beat(newNumerator, newDenominator));
     }
-
-
-
-
-
 
     /**
      * A getter for this time.Count's numerator.

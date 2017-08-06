@@ -1,12 +1,12 @@
 package form;
 
 import events.*;
-import instruments.Instrument;
+import sound.Instrument;
 import time.*;
 
 import java.util.*;
 
-public class Piece implements IPassage {
+public class Score implements IPassage {
 
     private String title;
 
@@ -23,17 +23,17 @@ public class Piece implements IPassage {
     TreeMap<Instrument,Set<Voice>> sections;
 
 
-    public Piece() {
+    public Score() {
         parts = new TreeMap<>();
     }
 
-    public Piece(Piece other) {
+    public Score(Score other) {
         // We must copy everything that is not immutable and doesn't rely on knowing its passage. This includes, for
         // instance,
 
     }
 
-    public Piece excerpt() {
+    public Score excerpt() {
 
     }
 
