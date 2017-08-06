@@ -1,9 +1,6 @@
 package form;
 
-import events.MusicEvent;
-import events.Note;
-import events.TempoChange;
-import events.TimeSigChange;
+import events.*;
 import instruments.Instrument;
 import time.*;
 

@@ -1,5 +1,6 @@
 package form;
 
+import events.Frame;
 import events.Note;
 import time.*;
 
@@ -10,7 +11,7 @@ import java.util.TreeSet;
  * For instance, both a TraditionalScore and a Part are implementations of Passages- even though they represent different subsets
  * of a whole piece.
  */
-public interface IPassage extends Iterable<Frame<Count>> {
+public interface IPassage extends Iterable<Frame> {
     public Count getStart();
     public Count getEnd();
     public Count getDuration();

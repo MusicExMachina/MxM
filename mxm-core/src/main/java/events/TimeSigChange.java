@@ -5,11 +5,11 @@ import time.*;
 /**
  * Created by celenp on 6/11/2017.
  */
-public class TimeSigChange extends MusicEvent<Measure> {
+public class TimeSigChange extends InstantEvent {
     private TimeSig timeSig;
 
-    public TimeSigChange(Frame<Measure> startFrame, TimeSig timeSig) {
-        super(startFrame);
+    public TimeSigChange(Frame frame, TimeSig timeSig) {
+        super(frame);
         this.timeSig = timeSig;
     }
 

@@ -1,8 +1,7 @@
-package time;
+package events;
 
-import events.MusicEvent;
+import time.Count;
 
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -13,10 +12,10 @@ import java.util.TreeMap;
  *
  * Note that copy constructors and
  */
-public class Timeline <MusicEventType extends MusicEvent> implements Iterable<Frame> {
+public class Timeline <MusicEventType extends MusicEvent> implements Iterable<Frame<MusicEventType>> {
 
     /** The frames of */
-    private NavigableMap<MusicEventType,Frame<MusicEventType>> frames;
+    private NavigableMap<Count, Frame> frames;
 
     /**
      *
@@ -61,13 +60,13 @@ public class Timeline <MusicEventType extends MusicEvent> implements Iterable<Fr
             return frames.get(time);
         }
         else {
-            Frame<MusicEventType> frameAtTime = new Frame<TimeType>(time);
+            Frame<MusicEventType> frameAtTime = new Frame<MusicEventType>(time);
             frames.put(time, frameAtTime);
         }
     }
 
-    public Frame<TimeType> getFrameAt(ITime time) {
-        return frames.floorEntry(time).getValue();
+    public Frame<MusicEventType> getFrameAt(Count count) {
+        return frames.floorEntry(count).getValue();
     }
 
     /**
@@ -75,7 +74,7 @@ public class Timeline <MusicEventType extends MusicEvent> implements Iterable<Fr
      * @return
      */
     @Override
-    public Iterator<Frame<TimeType>> iterator() {
+    public Iterator<Frame<MusicEventType>> iterator() {
         return frames.values().iterator();
     }
 }
