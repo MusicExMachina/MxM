@@ -13,7 +13,7 @@ import java.util.Iterator;
  * for a particular chord type. They are, however, useful in analyzing music where all we get to read is a sequence of
  * chords, such as a lead sheet.
  */
-public class Chord implements Sound, Iterable<PitchClass> {
+public class Chord implements ISound, Iterable<PitchClass> {
 
     /* A list of the chord factors, starting from the root, and moving upward in thirds, fourths, etc. */
     private ArrayList<PitchClass> factors;
@@ -37,5 +37,11 @@ public class Chord implements Sound, Iterable<PitchClass> {
     @Override
     public Iterator<PitchClass> iterator() {
         return null;
+    }
+
+    /**
+     * Created by celenp on 7/13/2017.
+     */
+    public static class Lyric implements ISound {
     }
 }

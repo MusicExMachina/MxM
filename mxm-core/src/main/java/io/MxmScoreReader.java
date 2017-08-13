@@ -1,15 +1,13 @@
 package io;
 
-import form.Score;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 /**
  * Created by celenp on 3/27/2017.
  */
-public class MxmScoreReader extends Reader<Score> {
-    public Score read(String filename) {
+public class MxmScoreReader extends Reader<TraditionalScore> {
+    public TraditionalScore read(String filename) {
         try {
             FileReader reader = new FileReader(filename);
 

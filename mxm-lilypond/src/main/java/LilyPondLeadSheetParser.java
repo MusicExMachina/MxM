@@ -1,4 +1,3 @@
-import form.Score;
 import io.Reader;
 
 import java.io.BufferedReader;
@@ -15,7 +14,7 @@ import java.nio.file.Paths;
 public class LilyPondLeadSheetParser extends Reader {
 
     @Override
-    public Score read(String filename) {
+    public TraditionalScore read(String filename) {
         return null;
     }
 

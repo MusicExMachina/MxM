@@ -2,7 +2,6 @@ import events.sounding.Note;
 import time.Count;
 import time.TimeSig;
 import form.Part;
-import form.Score;
 import io.MxmScoreWriter;
 
 import javax.sound.midi.Sequence;
@@ -15,9 +14,9 @@ import java.util.Random;
  */
 public class PassageVisualizer extends JFrame {
 
-    private Score passage;
+    private TraditionalScore passage;
 
-    public PassageVisualizer(Score passage){
+    public PassageVisualizer(TraditionalScore passage){
         super("ScoreEvent Visualizer");
 
         this.passage = passage;
@@ -75,7 +74,7 @@ public class PassageVisualizer extends JFrame {
             //Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/bach/bwv159-4.mid");
             Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/dvorak/dvs93.mid");
             //Sequence sequence = MidiTools.download("http://tedmuller.us/Piano/FlightOfTheBumblebee/FlightOfTheBumblebee.mid");
-            Score passage = MidiTools.parse(sequence);
+            TraditionalScore passage = MidiTools.parse(sequence);
             MxmScoreWriter.write(passage,"C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-gui\\src\\tests\\resources\\output");
             MidiTools.play(sequence);
             PassageVisualizer rtv = new PassageVisualizer(passage);

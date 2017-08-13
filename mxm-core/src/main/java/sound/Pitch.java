@@ -13,7 +13,7 @@ import java.util.Iterator;
  * Notes, though they may be used in Collections. events.sounding.Note that there should never be more than
  * these 120 Pitches, and that an iterator() has been provided for easy access.
  */
-public class Pitch implements Sound, Comparator<Pitch>, Comparable<Pitch> {
+public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
 
     //////////////////////////////
     // Private static variables //

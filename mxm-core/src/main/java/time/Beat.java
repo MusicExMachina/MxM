@@ -1,5 +1,7 @@
 package time;
 
+import java.util.Comparator;
+
 /**
  * Beats represent a sub-measure measurement of musical time (i.e. "beat three of four" or "the upbeat of 2"). In this
  * sense, they are the proper fraction, which when combined with an integer measure, make up an entire count. In a
@@ -7,10 +9,10 @@ package time;
  *
  * This class is IMMUTABLE!
  */
-public class Beat implements Comparable<Beat> {
+public class Beat implements Comparable<Beat>, Comparator<Beat> {
 
     public static Beat ZERO = new Beat(0,1);
-    public static Beat ONE = new Beat(1,1);
+    public static Beat ONE = new Beat(1,0);
 
     private int numerator;
     private int denominator;
@@ -28,6 +30,32 @@ public class Beat implements Comparable<Beat> {
         else {
             throw new Error("Cannot create a time.Count with a denominator less than or equal to zero.");
         }
+    }
+
+
+    public Count plus(Beat other) {
+        int newNumerator = this.numerator + other.numerator;
+        int newDenominator = this.denominator + other.denominator;
+        int measureDifference = 0;
+
+        if(newNumerator > newDenominator) {
+            newNumerator -= newDenominator;
+            measureDifference += 1;
+        }
+        return new Count(new Measure(measureDifference), new Beat(newNumerator, newDenominator));
+    }
+
+
+    public Count minus(Beat other) {
+        int newNumerator = this.numerator - other.numerator;
+        int newDenominator = this.denominator - other.denominator;
+        int measureDifference = 0;
+
+        if(newNumerator < 0) {
+            newNumerator += newDenominator;
+            measureDifference -= 1;
+        }
+        return new Count(new Measure(measureDifference), new Beat(newNumerator, newDenominator));
     }
 
     /**

@@ -1,11 +1,9 @@
-import form.Score;
-
 /**
  * Created by celenp on 6/9/2017.
  */
-public class ScoreComposer implements Composer<Score> {
+public class ScoreComposer implements Composer<TraditionalScore> {
     @Override
-    public void run(Score passage) {
+    public void run(TraditionalScore passage) {
 
     }
 }

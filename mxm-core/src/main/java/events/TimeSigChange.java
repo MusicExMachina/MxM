@@ -1,18 +1,19 @@
 package events;
 
+import time.*;
+
 /**
  * Created by celenp on 6/11/2017.
  */
-public class TimeSigChange extends MusicEvent {
+public class TimeSigChange extends InstantEvent<Measure> {
+    private TimeSig timeSig;
 
-
-    @Override
-    public int compareTo(MusicEvent o) {
-        return 0;
+    public TimeSigChange(form.IFrame IFrame, TimeSig timeSig) {
+        super(IFrame);
+        this.timeSig = timeSig;
     }
 
-    @Override
-    public int compare(MusicEvent o1, MusicEvent o2) {
-        return 0;
+    public TimeSig getTimeSig() {
+        return timeSig;
     }
 }

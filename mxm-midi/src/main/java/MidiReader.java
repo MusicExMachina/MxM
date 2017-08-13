@@ -1,10 +1,10 @@
 import events.sounding.Note;
 import sound.*;
+import sound.Instrument;
 import time.Count;
 import time.Tempo;
 import time.TimeSig;
 import form.Part;
-import form.Score;
 import io.Reader;
 
 import javax.sound.midi.*;
@@ -17,7 +17,7 @@ import java.util.*;
  * single file to be read. This class could potentially be
  * absorbed into MidiTools, but is separated for the code cleanness.
  */
-public class MidiReader implements Reader<Score> {
+public class MidiReader implements Reader<TraditionalScore> {
 
     /* A few of the most useful MidiTools messages */
     private static final int SEQUENCE_NUMBER    = 0x00;
@@ -38,7 +38,7 @@ public class MidiReader implements Reader<Score> {
 
     /* Input and output */
     private Sequence sequence;
-    private Score passage;
+    private TraditionalScore passage;
 
     /* Time signature change events in various time formats */
     private TreeMap<Long, TimeSig> timeSigsLong;
@@ -64,9 +64,9 @@ public class MidiReader implements Reader<Score> {
     private HashMap<Track,TreeMap<Pitch,TreeSet<Count>>> noteOffsCount;
 
     /* Instrument change events in various time formats */
-    private HashMap<Track,TreeMap<Long, instruments.Instrument>> instChangeLong;
-    private HashMap<Track,TreeMap<Float, instruments.Instrument>> instChangeFloat;
-    private HashMap<Track,TreeMap<Count, instruments.Instrument>> instChangeCount;
+    private HashMap<Track,TreeMap<Long, Instrument>> instChangeLong;
+    private HashMap<Track,TreeMap<Float, Instrument>> instChangeFloat;
+    private HashMap<Track,TreeMap<Count, Instrument>> instChangeCount;
 
     /**
      * The main method of MidiReader, which is the entire essence of this class. In fact, this class could be summed up
@@ -74,10 +74,10 @@ public class MidiReader implements Reader<Score> {
      * @param sequence The midi Sequence to parse.
      * @return The form.ScoreEvent representing this Sequence.
      */
-    public Score read(Sequence sequence) {
+    public TraditionalScore read(Sequence sequence) {
 
         this.sequence = sequence;
-        passage = new Score();
+        passage = new TraditionalScore();
 
         System.out.println("MIDI PARSER:\tParsing midi events...");
         parseAll();
@@ -117,12 +117,12 @@ public class MidiReader implements Reader<Score> {
             // Create note ons and note offs for each track
             noteOnsLong.put(track,new TreeMap<Long, TreeSet<Pitch>>());
             noteOffsLong.put(track,new TreeMap<Pitch, TreeSet<Long>>());
-            instChangeLong.put(track,new TreeMap<Long, instruments.Instrument>());
+            instChangeLong.put(track,new TreeMap<Long, Instrument>());
 
             // Set the initial instrument of this track (it may change)
             // Note that "-1" here just means anything else will override it
-            //TreeMap<Long,instruments.Instrument> init = new TreeMap<>();
-            //init.put(-1L,instruments.Instrument.DEFAULT);
+            //TreeMap<Long,sound.Instrument> init = new TreeMap<>();
+            //init.put(-1L,sound.Instrument.DEFAULT);
             //instChangeLong.put(track,init);
             // TODO: Instrument change stuff
 
@@ -314,9 +314,9 @@ public class MidiReader implements Reader<Score> {
         switch (message.getCommand()) {
             case BANK_SELECT:
                 if(!instChangeLong.containsKey(track)) {
-                    instChangeLong.put(track,new TreeMap<Long, instruments.Instrument>());
+                    instChangeLong.put(track,new TreeMap<Long, sound.Instrument>());
                 }
-                instChangeLong.get(track).put(tick,instruments.Instrument.getGeneralMIDIInstrument(message.getMessage()[3]));
+                instChangeLong.get(track).put(tick,sound.Instrument.getGeneralMIDIInstrument(message.getMessage()[3]));
                 break;
         }
         */
@@ -330,7 +330,7 @@ public class MidiReader implements Reader<Score> {
      * @param tick The tick of this event's timing.
      */
     private void parseProgramChangeMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
-        instChangeLong.get(track).put(tick, instruments.Instrument.getGeneralMIDIInstrument(message.getData1()));
+        instChangeLong.get(track).put(tick, Instrument.getGeneralMIDIInstrument(message.getData1()));
     }
 
     /**
@@ -494,7 +494,7 @@ public class MidiReader implements Reader<Score> {
         }
 
         for(Track track : instChangeLong.keySet()) {
-            instChangeFloat.put(track,new TreeMap<Float, instruments.Instrument>());
+            instChangeFloat.put(track,new TreeMap<Float, Instrument>());
             for(Long switchTick : instChangeLong.get(track).keySet()) {
                 instChangeFloat.get(track).put(interpolate(switchTick), instChangeLong.get(track).get(switchTick));
             }
@@ -575,7 +575,7 @@ public class MidiReader implements Reader<Score> {
             // Add a space for the new collection
             noteOnsCount.put(track, new TreeMap<Count, TreeSet<Pitch>>());
             noteOffsCount.put(track, new TreeMap<Pitch, TreeSet<Count>>());
-            instChangeCount.put(track, new TreeMap<Count, instruments.Instrument>());
+            instChangeCount.put(track, new TreeMap<Count, Instrument>());
 
             // For each note-on frame
             for (Float instChangeTime : instChangeFloat.get(track).keySet()) {
@@ -630,7 +630,7 @@ public class MidiReader implements Reader<Score> {
         // For every track
         for(Track track : noteOnsCount.keySet()) {
             if(!noteOnsCount.get(track).isEmpty() && !instChangeCount.get(track).isEmpty()) {
-                instruments.Instrument instrument = instChangeCount.get(track).firstEntry().getValue();
+                Instrument instrument = instChangeCount.get(track).firstEntry().getValue();
                 Part part = new Part(instrument);
                 // TODO: Instrument changes
 

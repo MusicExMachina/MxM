@@ -1,15 +1,20 @@
 package events;
 
+import time.Count;
+import time.Tempo;
+
 /**
  * Created by celenp on 5/13/2017.
  */
-public class TempoChange extends MusicEvent {
-    public int compareTo(MusicEvent o) {
-        return 0;
+public class TempoChange extends InstantEvent<Count> {
+    private Tempo tempo;
+
+    public TempoChange(form.IFrame IFrame, Tempo tempo) {
+        super(IFrame);
+        this.tempo = tempo;
     }
 
-    @Override
-    public int compare(MusicEvent o1, MusicEvent o2) {
-        return 0;
+    public Tempo getTempo() {
+        return tempo;
     }
 }

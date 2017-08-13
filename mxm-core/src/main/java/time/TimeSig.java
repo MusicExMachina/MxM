@@ -102,7 +102,7 @@ public class TimeSig {
         this.preferredNoteLength[0] = getMeasureSize();
 
         for(int i = 1; i < preferredNoteLength.length; i++) {
-            this.preferredNoteLength[i] = preferredNoteLength[i - 1].dividedBy(getPreferredSubdivision(i - 1));
+           // this.preferredNoteLength[i] = preferredNoteLength[i - 1].dividedBy(getPreferredSubdivision(i - 1));
         }
     }
 
@@ -122,7 +122,7 @@ public class TimeSig {
         return denominator;
     }
 
-    public Count getMeasureSize() { return new Count(numerator,denominator); }
+    public Count getMeasureSize() { return new Count(Measure.PICKUP, new Beat(numerator,denominator)); }
 
     public int getPreferredSubdivision(int level) {
         if(level < 0)
@@ -138,7 +138,7 @@ public class TimeSig {
             throw new Error("TIME SIGNATURE:\t cannot access subdivision level " + level);
         if(level >= preferredNoteLength.length)
             // Take the last one and keep subdividing by two until we reach the desired level
-            return preferredNoteLength[preferredNoteLength.length-1].dividedBy(2 << (level - preferredNoteLength.length));
+            return null; //preferredNoteLength[preferredNoteLength.length-1].dividedBy(2 << (level - preferredNoteLength.length));
         else
             return preferredNoteLength[level];
     }
