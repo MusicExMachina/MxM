@@ -3,7 +3,7 @@
 # NOTE: Travis-CI can only publish SNAPSHOT versions. To release a version, you need
 #       to use the internal ReadyTalk Jenkins job.
 
-echo -e "ABCDEFG\n"
+echo -e "@@@@@INITIATE PUBLISH\n"
 
 if [ "$TRAVIS_REPO_SLUG" == "MusicExMachina/MxM" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
   if [[ $(./gradlew -q getVersion) != *SNAPSHOT* ]]; then
