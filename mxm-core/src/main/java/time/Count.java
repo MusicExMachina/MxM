@@ -12,6 +12,7 @@ public class Count implements ITime, Comparable<Count> {
 
     /** A zero Count */
     public static final Count ZERO = new Count(new Measure(0));
+    public static final Count ONE = new Count(new Measure(1));
     /** The numerator of this Count as an IMPROPER fraction!) */
     private int numerator;
     /** The denominator of this Count */
@@ -74,5 +75,33 @@ public class Count implements ITime, Comparable<Count> {
 
     public int hashCode() {
         return beat.hashCode() + 31*measure.hashCode();
+    }
+
+    @Override
+    public ITime plus(ITime other) {
+        return null;
+    }
+
+    @Override
+    public ITime minus(ITime other) {
+        return null;
+    }
+
+    @Override
+    public ITime times(int amount) {
+        return null;
+    }
+
+    @Override
+    public ITime dividedBy(int amount) {
+        return null;
+    }
+
+    public int getNumerator() {
+        return numerator;
+    }
+
+    public int getDenominator() {
+        return denominator;
     }
 }

@@ -49,7 +49,7 @@ public class Part implements IPassage {
     }
     @Override
     public Iterator<Note<? extends ISound>> getNotesAt(ITime time) {
-        return notes.getFrameAt(time).iterator();
+        return null;
     }
 
     @Override

@@ -1,4 +1,5 @@
 import io.Reader;
+import musicTheory.Scale;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,7 +15,7 @@ import java.nio.file.Paths;
 public class LilyPondLeadSheetParser extends Reader {
 
     @Override
-    public TraditionalScore read(String filename) {
+    public Scale read(String filename) {
         return null;
     }
 

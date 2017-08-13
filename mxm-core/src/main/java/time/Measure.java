@@ -51,4 +51,24 @@ public class Measure implements ITime, Comparable<Measure>, Comparator<Measure> 
     public int compare(Measure measure1, Measure measure2) {
         return Integer.compare(measure1.number,measure2.number);
     }
+
+    @Override
+    public ITime plus(ITime other) {
+        return null;
+    }
+
+    @Override
+    public ITime minus(ITime other) {
+        return null;
+    }
+
+    @Override
+    public ITime times(int amount) {
+        return null;
+    }
+
+    @Override
+    public ITime dividedBy(int amount) {
+        return null;
+    }
 }

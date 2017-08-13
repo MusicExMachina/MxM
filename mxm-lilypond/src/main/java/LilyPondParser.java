@@ -54,7 +54,7 @@ public class LilyPondParser {
             Note note = parseNote(noteToken, curTime);
             toReturn.add(note);
             // Keep track of the time
-            curTime = curTime.plus(note.getDuration());
+            curTime = (Count) curTime.plus(note.getDuration());
         }
         return toReturn;
     }
@@ -68,7 +68,7 @@ public class LilyPondParser {
         }
         Pitch pitch = parsePitch(noteToken.substring(0,divider));
         Count length = parseNoteLength(noteToken.substring(divider),Count.ONE);
-        return new Note<Pitch>(curTime,length,pitch);
+        return null;//new Note<Pitch>(curTime,length,pitch);
     }
 
     private static Pitch parsePitch(String pitchToken) {
@@ -186,6 +186,6 @@ public class LilyPondParser {
         numerator *= tupletModifier.getNumerator();
         denominator *= tupletModifier.getDenominator();
 
-        return new Count(numerator,denominator);
+        return null;//new Count(numerator,denominator);
     }
 }
