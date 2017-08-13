@@ -1,0 +1,5 @@
+/**
+ * ASDF
+ */
+public class Test {
+}

@@ -7,7 +7,7 @@ if [ "$TRAVIS_REPO_SLUG" == "MusicExMachina/MxM" ] && [ "$TRAVIS_JDK_VERSION" ==
 
   echo -e "Publishing javadoc...\n"
 
-  cp -R build/docs/javadoc $HOME/javadoc-latest
+  cp -R target/site $HOME/site
 
   cd $HOME
   git config --global user.email "travis@travis-ci.org"
