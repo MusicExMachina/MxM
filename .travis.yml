@@ -13,5 +13,4 @@ env:
 
 script: ./gradlew integTest check Javadoc --info --stacktrace
 after_success:
-- .utility/initiate-publish.sh
 - .utility/push-javadoc-to-gh-pages.sh
