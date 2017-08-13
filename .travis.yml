@@ -1,10 +1,10 @@
 language: java
+jdk:
+- oraclejdk8
 script: mvn test -B
 cache:
   directories:
   - $HOME/.m2
 
 after_sucess:
-  - cd $TRAVIS_BUILD_DIR
-  - chmod +x docsDeploy.sh
-  - ./docsDeploy.sh
+  - .utility/push-javadoc-to-github-pages.sh
