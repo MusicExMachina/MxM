@@ -11,7 +11,7 @@ import java.util.Iterator;
 
 /**
  * Passage is an interface representing any collection of notes that may be iterated over, regardless of who plays them.
- * For instance, both a TraditionalScore and a Part are implementations of Passages- even though they represent different subsets
+ * For instance, both a Score and a Part are implementations of Passages- even though they represent different subsets
  * of a whole piece.
  */
 public interface IPassage {
