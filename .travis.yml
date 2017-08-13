@@ -4,7 +4,9 @@ jdk:
 script: mvn test -B
 cache:
   directories:
-  - $HOME/.m2
-
+  - "$HOME/.m2"
 after_sucess:
-  - .utility/push-javadoc-to-github-pages.sh
+- ".utility/push-javadoc-to-github-pages.sh"
+env:
+  global:
+    secure: smhliLz+k7OLcFjZcCXrdbwUBeEgK4xE+vnMJ0qyDiU/PJN72fjCeRYewJ5iw7pAVX+XZfHfqZokn2caH/KH22sBI33byEgBx28N+aFIvvSS/OO2UVASZI3p/fRfReN7/wmtcuAeG7CP2QWvu3lHLnqa9n4VAJZ1q6l5rzOw6RGiBM2TJ5R8hWiJqhfb5Atu1oj+sgo/J8GBPEiOTk48g5r/Ev86xj5Km8KhiYpy/UlhAvzLXAGvlkSfWbzRqdf7XkMR8QI0vw/T3nVNStHSrMLk73zP9c6nIpcNpD1yXO77zAejTSmHNhmGIyTK41y3PIbwFMUnsAeb3aLK9Gg1f18Lykis5jftu+wwmIEM71+ziKK8KqwIhK8s305M8K4qx1OU/NtUp/4iNDd+dTcjjOz95qLByYkFhRvvSB4tdp3VkcqO+VNqnkiPGnZDhULRtsNeKdAXyV1xKLRxhZ7XRPTO5n9cXnnMixDO/SOsrYFvj5I07f3ivEyi9W/rrCqbKabUXcpsnD6eF4b9BPXyhxScaAAXOlREAx4939yu9UfuWCbvV2ygsSZawRVA7ASKe7RjiVX+gty1pWapOkSR62SYo5IuuB2D9H9cIVhNOQo93FpNUno4P5kBX3DRtC0gnZY/vj6CcRkXd1ric8MOFhsksLcSHUQJtaTVamGqrXw=
