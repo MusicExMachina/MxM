@@ -2,8 +2,8 @@ language: java
 jdk:
 - oraclejdk8
 script:
+- mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V
 - mvn test -B
-- mvn javadoc:javadoc
 cache:
   directories:
   - "$HOME/.m2"
