@@ -1,0 +1,28 @@
+group 'com.musicexmachina'
+version '1.0-SNAPSHOT'
+
+allprojects {
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile 'junit:junit4.9'
+    }
+
+    javadoc {
+        source = sourceSets.main.allJava
+        classpath = configurations.compile
+    }
+}
+
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath 'com.netflix.nebula:gradle-aggregate-javadocs-plugin:2.2.+'
+    }
+}
+
+apply plugin: 'nebula-aggregate-javadocs'

@@ -1,0 +1,6 @@
+rootProject.name = 'mxm'
+include 'mxm-core'
+include 'mxm-lilypond'
+include 'mxm-midi'
+include 'mxm-learning'
+
