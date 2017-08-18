@@ -10,7 +10,6 @@ if [ "$TRAVIS_REPO_SLUG" == "MusicExMachina/MxM" ] &&
   echo -e "Publishing javadoc...\n"
 
   cp -R build/docs/javadoc $HOME/javadoc-latest
-  cp -R build/docs/javadoc docs
 
   # Get to the Travis build directory, configure git and clone the repo
   cd $HOME
