@@ -15,6 +15,7 @@ if [ "$TRAVIS_REPO_SLUG" == "MusicExMachina/MxM" ] &&
   cd $HOME
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "travis-ci"
+  curl -u "username:${GH_TOKEN}" https://github.com/username/ol3-1.git
   git clone --branch=gh-pages https://${GH_TOKEN}@github.com/MusicExMachina/MxM gh-pages > /dev/null
 
   # Commit and push the changes
