@@ -12,6 +12,6 @@ env:
   global:
       secure: nAinXpzf8pEt/Rsg+lu6NG0hXWMbuRn/sLbt/+W5NtsFJEtuYPeZwS+ykX/UOuiD4PpTGt3SeoRTYumsOQ5kVStaFlUCGHnQVFQsAO5WSZCYZL3iq1NPemxGpute9EBDw2IhgON7N9UANimQQGth7zZuJ2lcxr7HMMaUhe5zfoWtOgSseBvntGon9m/E5/sG1I55vqWog2FYW69VGpwhzQ/KQFrkFXRobXN3AhdhBBxvEGXT+VpoK5alclEniihu7wLq0pav7YR0unpj4Z5kXcuk0gKV0StSmvMuye/ep76YaTD12M25PSAXO2XW9leNacBq0/APwPVk/rLvRaYgdw4j7a++xdH3N+sGzvXme2cwpU2A1XXD3lStcqe97tjagtTdi7GSrgjptJDBnIfVfcItn2v0LfNfAdgnWBqOzVXMyPNuWFnADGAnLowmFQNmA+u+6w2o5YmRJPbGGzWk2eGFQRUzlrCNnCQT3G1yXeYkhb8QOU9D4JwJdm7GLqWBVrxtUnVTJ+3Rb9y8iU2wbOTXZm9pdAYr9htN3M8RIDA2l1/pb7mWta3+jsrCRdiueFe+xdcYHx9k2/1bTueWADF3u2364EOreVE0n4Fj86hqlGFRR4N7DAU8wPKZ8+pHaDetj4Ilu3i7LHzFKv0nVQgpCfYZDjGxM6yOC8owuY4=
 before_install:
-- chmod +x .utility/push-javadoc-to-gh-pages.sh
+- chmod +x .utility/push-javadoc.sh
 after_success:
 - ".utility/push-javadoc-to-gh-pages.sh.sh"
