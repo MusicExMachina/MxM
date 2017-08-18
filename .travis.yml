@@ -14,4 +14,4 @@ env:
 before_install:
 - chmod +x .utility/push-javadoc.sh
 after_success:
-- ".utility/push-javadoc-to-gh-pages.sh.sh"
+- ".utility/push-javadoc-to-gh-pages.sh"
