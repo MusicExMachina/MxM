@@ -1,10 +1,12 @@
 #!/bin/bash
 
-set -ex
+# set -ex
 
 # This code is all borrowed from ReadyTalk/swt-bling, which is under an MIT license as of 8/13/2017
 # Kindly provided as a part of Ben Limmer's tutorial on javadoc-ing with Travis CI on his blog at:
 # https://benlimmer.com/2013/12/26/automatically-publish-javadoc-to-gh-pages-with-travis-ci/
+
+# This still isn't working... :(
 
 if [ "$TRAVIS_REPO_SLUG" == "MusicExMachina/MxM" ] &&
    [ "$TRAVIS_JDK_VERSION" == "oraclejdk7" ] &&
