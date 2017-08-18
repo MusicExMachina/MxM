@@ -17,7 +17,7 @@ if [ "$TRAVIS_REPO_SLUG" == "MusicExMachina/MxM" ] &&
   git config --global user.name "travis-ci"
   git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/MusicExMachina/MxM gh-pages > /dev/null
 
-  # Commit and Push the Changes
+  # Commit and push the changes
   cd gh-pages
   git rm -rf ./javadoc
   cp -Rf $HOME/javadoc-latest ./javadoc
