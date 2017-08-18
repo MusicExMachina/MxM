@@ -22,7 +22,7 @@ if [ "$TRAVIS_REPO_SLUG" == "MusicExMachina/MxM" ] &&
 
   # Commit and push the changes
   cd gh-pages
-  git rm -rf ./javadoc
+  # git rm -rf ./javadoc
   cp -Rf $HOME/javadoc-latest ./javadoc
   git add -f .
   git add -u
