@@ -15,6 +15,13 @@ env:
 before_install:
 - chmod +x .utility/push-javadoc.sh
 
+branches:
+  except:
+  - gh-pages
+
+notifications:
+  email: false
+
 script:
 - gradle check
 - gradle aggregateJavadocs

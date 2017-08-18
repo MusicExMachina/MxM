@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -ex
+
 # This code is all borrowed from ReadyTalk/swt-bling, which is under an MIT license as of 8/13/2017
 # Kindly provided as a part of Ben Limmer's tutorial on javadoc-ing with Travis CI on his blog at:
 # https://benlimmer.com/2013/12/26/automatically-publish-javadoc-to-gh-pages-with-travis-ci/
@@ -15,17 +18,16 @@ if [ "$TRAVIS_REPO_SLUG" == "MusicExMachina/MxM" ] &&
   cd $HOME
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "travis-ci"
-  git clone --branch=gh-pages https://${GH_TOKEN}@github.com/MusicExMachina/MxM gh-pages > /dev/null
+  git clone --branch=gh-pages https://$git@github.com/MusicExMachina/MxM.git gh-pages > /dev/null
 
   # Commit and push the changes
   cd gh-pages
   git rm -rf ./javadoc
   cp -Rf $HOME/javadoc-latest ./javadoc
   git add -f .
+  git add -u
   git commit -m "Latest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
-  git remote add origin git@github.com:MusicExMachina/MxM.git
   git push -fq origin gh-pages > /dev/null
-
 
   echo -e "Published Javadoc to gh-pages.\n"
 
