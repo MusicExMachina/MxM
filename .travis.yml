@@ -1,18 +1,23 @@
 language: java
+
 jdk:
 - oraclejdk7
 - oraclejdk8
-script:
-- gradle check
-- gradle aggregateJavadocs
+
 cache:
   directories:
   - "$HOME/.m2"
+
 env:
   global:
-    secure: dfPu3PY1xFgMyg8iLRxA/ovU4N3XUtwDgQ8KAhduDK4UrjE7RU4RhqwA/dANtGgPnF5wTU0su2arZjbUAD1dxobqYGNLSg7jmA2lxznxGPlYYd9dZZvuwmC5V2VX4xXo8DCi/rodVM0GpQtYKZ+JAj8Z7Qy7+h+S6tdHKtAAkVJvU8Fo9UjI08n052i7OlsocJOtYybCKVI8u+t0y/66QVivXGBi9QUYJoVvpQsrw7Fd/zowDvoV0xPmNerTrISFOF852fZNNd6x34bahiuGR77k+nNexkiT373tLKHLR8ezoLBGaga2PHoqnHiprdXVhBzByYsj0W9gwRRdSPFnUKEu6gKkXY0iYZrDGHRuPYKMvynreVXnVo4n2ghofpvEVRj+h/GJ4sBllQc8pui0SWHXIGFpJ7gdqybiFz3y681PHZoZUZ0y6OXJoc+waJ6VteOuYP8H5IPlertEn+iUTI1H/4MEg6UWybV2mCBp/TwYKYAfW2zz+mqQWmXFcxu9Q6kWPLiP+0kjCmo5+6t7BgjWVgDgIApLcW2t3dtuadt+N0tHMS7UP8EuDDZopbBvBeY0XSwQZA9LlXZyOtr5fcyXYM3OnrPuWTKyOId9VUDriAuH4wFBS/dgUOxZsXhos+UJ2vq5e7JPpRUAyBVSN2W1GueaHo7+07cnLZPs5jM=
+  - secure: "dfPu3PY1xFgMyg8iLRxA/ovU4N3XUtwDgQ8KAhduDK4UrjE7RU4RhqwA/dANtGgPnF5wTU0su2arZjbUAD1dxobqYGNLSg7jmA2lxznxGPlYYd9dZZvuwmC5V2VX4xXo8DCi/rodVM0GpQtYKZ+JAj8Z7Qy7+h+S6tdHKtAAkVJvU8Fo9UjI08n052i7OlsocJOtYybCKVI8u+t0y/66QVivXGBi9QUYJoVvpQsrw7Fd/zowDvoV0xPmNerTrISFOF852fZNNd6x34bahiuGR77k+nNexkiT373tLKHLR8ezoLBGaga2PHoqnHiprdXVhBzByYsj0W9gwRRdSPFnUKEu6gKkXY0iYZrDGHRuPYKMvynreVXnVo4n2ghofpvEVRj+h/GJ4sBllQc8pui0SWHXIGFpJ7gdqybiFz3y681PHZoZUZ0y6OXJoc+waJ6VteOuYP8H5IPlertEn+iUTI1H/4MEg6UWybV2mCBp/TwYKYAfW2zz+mqQWmXFcxu9Q6kWPLiP+0kjCmo5+6t7BgjWVgDgIApLcW2t3dtuadt+N0tHMS7UP8EuDDZopbBvBeY0XSwQZA9LlXZyOtr5fcyXYM3OnrPuWTKyOId9VUDriAuH4wFBS/dgUOxZsXhos+UJ2vq5e7JPpRUAyBVSN2W1GueaHo7+07cnLZPs5jM="
 
 before_install:
 - chmod +x .utility/push-javadoc.sh
+
+script:
+- gradle check
+- gradle aggregateJavadocs
+
 after_success:
 - ".utility/push-javadoc.sh"
