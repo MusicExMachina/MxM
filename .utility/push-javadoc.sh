@@ -24,7 +24,7 @@ if [ "$TRAVIS_REPO_SLUG" == "MusicExMachina/MxM" ] &&
   cd gh-pages
   # git rm -rf ./javadoc
   cp -Rf $HOME/javadoc-latest ./javadoc
-  git add -f .
+  git add -f -A
   git add -u
   git commit -m "Latest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
   git push -fq origin gh-pages > /dev/null
