@@ -15,7 +15,7 @@ if [ "$TRAVIS_REPO_SLUG" == "MusicExMachina/MxM" ] &&
   cd $HOME
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "travis-ci"
-  git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/MusicExMachina/MxM.git gh-pages > /dev/null
+  git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/MusicExMachina/MxM gh-pages > /dev/null
 
   # Commit and Push the Changes
   cd gh-pages
@@ -25,6 +25,6 @@ if [ "$TRAVIS_REPO_SLUG" == "MusicExMachina/MxM" ] &&
   git commit -m "Latest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
   git push -fq origin gh-pages > /dev/null
 
-  echo -e "...published Javadoc to gh-pages.\n"
+  echo -e "Published Javadoc to gh-pages.\n"
 
 fi
