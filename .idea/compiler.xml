@@ -1,28 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="mxm-core" />
-        <module name="mxm-generation" />
-        <module name="mxm-gui" />
-        <module name="mxm-learning" />
-        <module name="mxm-lilypond" />
-        <module name="mxm-main" />
-        <module name="mxm-midi" />
-      </profile>
-    </annotationProcessing>
-    <bytecodeTargetLevel target="1.8">
-      <module name="MxM" target="1.7" />
-      <module name="mxm-core" target="1.7" />
-      <module name="mxm-generation" target="1.7" />
-      <module name="mxm-gui" target="1.7" />
-      <module name="mxm-learning" target="1.7" />
-      <module name="mxm-lilypond" target="1.7" />
-      <module name="mxm-midi" target="1.7" />
+    <bytecodeTargetLevel>
+      <module name="mxm-core_main" target="1.8" />
+      <module name="mxm-core_test" target="1.8" />
+      <module name="mxm-learning_main" target="1.8" />
+      <module name="mxm-learning_test" target="1.8" />
+      <module name="mxm-lilypond_main" target="1.8" />
+      <module name="mxm-lilypond_test" target="1.8" />
+      <module name="mxm-midi_main" target="1.8" />
+      <module name="mxm-midi_test" target="1.8" />
+      <module name="mxm_main" target="1.8" />
+      <module name="mxm_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
