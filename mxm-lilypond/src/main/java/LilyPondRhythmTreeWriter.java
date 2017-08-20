@@ -1,17 +1,9 @@
-import analysis.RhythmNode;
-import analysis.RhythmTree;
-import time.Count;
-import time.TimeSig;
-import io.Writer;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * This writer has a number of recursive methods that
- */
+/*
 public class LilyPondRhythmTreeWriter extends Writer<RhythmTree> {
 
     @Override
@@ -124,3 +116,4 @@ public class LilyPondRhythmTreeWriter extends Writer<RhythmTree> {
     }
 
 }
+*/

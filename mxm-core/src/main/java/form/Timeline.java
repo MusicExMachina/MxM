@@ -1,118 +1,67 @@
 package form;
 
+import com.sun.istack.internal.NotNull;
 import events.IMusicEvent;
-import time.ITime;
+import time.Time;
 
-import java.util.Iterator;
-import java.util.TreeMap;
+import java.util.*;
 
-public interface Timeline <TimeType extends ITime, MusicEventType extends IMusicEvent<TimeType>> extends Iterable<IFrame<TimeType>> {
+// mutable
+class Timeline <MusicEventType extends IMusicEvent> implements Iterable<Frame> {
 
-    public void add(MusicEventType event);
+    private Time start;
+    private Time end;
+    private Time duration;
 
-    public IFrame<TimeType> getFrameAt(ITime time);
+    private final TreeMap<Time,Frame> frames;
+    private final List<Timeline> children;
 
-    public ITime getStart();
-    public ITime getEnd();
-    public ITime getDuration();
-
-    @Override
-    public Iterator<IFrame<TimeType>> iterator();
-}
-
-class SerialTimeline <TimeType extends ITime, MusicEventType extends IMusicEvent<TimeType>> implements Timeline<TimeType,MusicEventType> {
-
-    /** The frames of */
-    private final TreeMap<TimeType, MonoFrame<TimeType,MusicEventType>> frames;
-
-    public SerialTimeline() {
+    Timeline() {
         this.frames = new TreeMap<>();
+        this.children = new ArrayList<>();
     }
 
-    @Override
-    public void add(IMusicEvent event) {
-
+    Timeline(@NotNull Timeline master) {
+        this.frames = new TreeMap<>();
+        this.children = new ArrayList<>();
+        master.attach(this);
     }
 
-    public MusicEventType getEventAt(ITime time) {
-        return null;
+    private void put(@NotNull Frame frame) {
+        frames.put(frame.getTiming(), frame);
+    }
+    private void attach(@NotNull Timeline timeline) {
+        children.add(timeline);
     }
 
-    @Override
-    public IFrame<TimeType> getFrameAt(ITime time) {
-        return null;
-    }
-
-
-
-    /*
-    {
-
+    public @NotNull Frame getFrameAtOrAdd(@NotNull Time time) {
         if(frames.containsKey(time)) {
             return frames.get(time);
         }
         else {
-            IFrame<MusicEventType> IFrameAtTime = new IFrame<MusicEventType>(time);
-            frames.put(time, IFrameAtTime);
+            Frame frame = new Frame(time);
+            frames.put(time,frame);
+            for(Timeline timeline : children) {
+                timeline.put(frame);
+            }
+            return frame;
         }
     }
-    */
 
-    @Override
-    public ITime getStart() {
-        return null;
+    public @NotNull Time getStart() { return start; }
+    public @NotNull Time getEnd() { return end; }
+    public @NotNull Time getDuration() { return duration; }
+
+    public @NotNull Frame getFrameBefore(Time time) {
+        return frames.floorEntry(time).getValue();
     }
-    @Override
-    public ITime getEnd() {
-        return null;
-    }
-    @Override
-    public ITime getDuration() {
-        return getEnd().minus(getStart());
-    }
-    @Override
-    public Iterator<IFrame<TimeType>> iterator() {
-        return null;
-    }
-}
-
-class ParallelTimeline <TimeType extends ITime, MusicEventType extends IMusicEvent<TimeType>> implements Timeline<TimeType,MusicEventType> {
-
-    /** The frames of */
-    private final TreeMap<TimeType, PolyFrame<TimeType,MusicEventType>> frames;
-
-    public ParallelTimeline() {
-        this.frames = new TreeMap<>();
-    }
-
-
-    public void add(MusicEventType event) {
-
+    public @NotNull Frame getFrameAfter(Time time) {
+        return frames.ceilingEntry(time).getValue();
     }
 
     @Override
-    public IFrame<TimeType> getFrameAt(ITime time) {
-        return null;
-    }
-
-
-    public Iterator<MusicEventType> getEventsAt(ITime time) {
-        return null;
-    }
-    @Override
-    public ITime getStart() {
-        return null;
-    }
-    @Override
-    public ITime getEnd() {
-        return null;
-    }
-    @Override
-    public ITime getDuration() {
-        return getEnd().minus(getStart());
-    }
-    @Override
-    public Iterator<IFrame<TimeType>> iterator() {
-        return null;
+    public Iterator<Frame> iterator() {
+        Collection constValues = java.util.Collections.unmodifiableCollection(frames.values());
+        return constValues.iterator();
     }
 }

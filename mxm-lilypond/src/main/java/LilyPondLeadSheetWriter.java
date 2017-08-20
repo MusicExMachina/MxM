@@ -1,8 +1,4 @@
-import java.util.Calendar;
-
-/**
- * Created by celenp on 5/15/2017.
- */
+/*
 public class LilyPondLeadSheetWriter {
 
     String songName = "Song";
@@ -124,5 +120,5 @@ public class LilyPondLeadSheetWriter {
         System.out.println("\t\t\\fill-line { \\smaller \\smaller { \"Typeset by MxM, derived from OpenBook\" } }");
         System.out.println("\t}");
     }
-
 }
+*/

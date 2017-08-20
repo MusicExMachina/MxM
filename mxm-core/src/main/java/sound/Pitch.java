@@ -8,9 +8,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * sound.Pitch is a simple class which utilizes the interning design pattern to create only one
+ * Pitch is a simple class which utilizes the interning design pattern to create only one
  * hundred twenty different values- all possible MIDI pitches. Pitches are usually found on
- * Notes, though they may be used in Collections. events.sounding.Note that there should never be more than
+ * Notes, though they may be used in Collections. form.events.sounding.Note that there should never be more than
  * these 120 Pitches, and that an iterator() has been provided for easy access.
  */
 public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
@@ -21,13 +21,10 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
 
     /** The minimum midi sound value, C-1. */
     private static final int MIN_PITCH_VALUE = 0;
-
     /** The maximum midi sound value, B9. */
     private static final int MAX_PITCH_VALUE = 120;
-
     /** An ArrayList of all valid Pitches */
     private static final ArrayList<Pitch> ALL = new ArrayList<Pitch>();
-
     // Initialize all pitches
     static {
         for(int midiValue = MIN_PITCH_VALUE; midiValue <= MAX_PITCH_VALUE; midiValue++) {
@@ -39,17 +36,14 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
     // Public static variables  //
     //////////////////////////////
 
-    /** The minimum midi octave, -1 */
+    /** The minimum octave, -1 */
     public static final int MIN_OCTAVE = -1;
-
-    /** The maximum midi octave, 9 */
+    /** The maximum octave, 9 */
     public static final int MAX_OCTAVE = 9;
-
     /** The lowest possible pitch */
-    public static final Pitch MIN_PITCH = getInstance(MIN_PITCH_VALUE);
-
+    public static final Pitch MIN_PITCH = get(MIN_PITCH_VALUE);
     /** The highest possible pitch */
-    public static final Pitch MAX_PITCH = getInstance(MAX_PITCH_VALUE);
+    public static final Pitch MAX_PITCH = get(MAX_PITCH_VALUE);
 
     //////////////////////////////
     //      Static methods      //
@@ -63,16 +57,18 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
         return ALL.iterator();
     }
 
+
+
     /**
      * Gets an instance of a given pitch. This method creates the interning design pattern per pitch.
      * @param value The (midi) value of this pitch.
      * @return An pitch of this (midi) value
      */
-    public static Pitch getInstance(int value) {
+    public static Pitch get(int value) {
         if(value >= MIN_PITCH_VALUE && value <= MAX_PITCH_VALUE )
             return ALL.get(value - MIN_PITCH_VALUE);
         else
-            throw new Error("INTERVAL:\tmusicTheory.Interval out of range.");
+            throw new Error("INTERVAL:\tInterval out of range.");
     }
 
     /**
@@ -81,7 +77,7 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
      * @param octave The octave of this pitch
      * @return A pitch of this pitch class and octave
      */
-    public static Pitch getInstance(PitchClass pitchClass, int octave) {
+    public static Pitch get(PitchClass pitchClass, int octave) {
         int value = pitchClass.getValue() + (octave + MIN_OCTAVE)*12;
         if(value >= MIN_PITCH_VALUE && value <= MAX_PITCH_VALUE )
             return ALL.get(value - MIN_PITCH_VALUE);

@@ -1,62 +1,58 @@
 package events;
 
-import form.IFrame;
-import time.ITime;
+import form.Frame;
+import time.Time;
 
-public interface IMusicEvent <ITimeType extends ITime> {
-
-    // COUNT TIMING
-    public ITimeType getTiming();
-
-    // FRAME TIMING
-    public IFrame getIFrame();
+public interface IMusicEvent {
+    // GETTERS
+    public Time getTiming();
+    public Frame getFrame();
 }
 
-abstract class InstantEvent<ITimeType extends ITime> implements IMusicEvent<ITimeType> {
-    private final IFrame<ITimeType> IFrame;
+abstract class InstantEvent implements IMusicEvent {
+    private final Frame frame;
 
-    InstantEvent(IFrame IFrame) {
-        this.IFrame = IFrame;
+    InstantEvent(Frame frame) {
+        this.frame = frame;
     }
 
+    // GETTERS
     @Override
-    public final ITimeType getTiming() { return IFrame.getTiming(); }
-
+    public final Time getTiming() { return frame.getTiming(); }
     @Override
-    public final IFrame getIFrame() { return IFrame; }
+    public final Frame getFrame() { return frame; }
 }
 
-abstract class SpanningEvent<ITimeType extends ITime> implements IMusicEvent<ITimeType> {
-    private final IFrame<ITimeType> startIFrame;
-    private final IFrame<ITimeType> endIFrame;
-    private final ITime duration;
+abstract class SpanningEvent implements IMusicEvent {
+    private final Frame startframe;
+    private final Frame endframe;
+    private final Time duration;
 
-    SpanningEvent(IFrame<ITimeType> startIFrame, IFrame<ITimeType> endIFrame) {
-        this.startIFrame = startIFrame;
-        this.endIFrame = endIFrame;
-        this.duration = endIFrame.getTiming().minus(startIFrame.getTiming());
+    // GETTERS
+    SpanningEvent(Frame startframe, Frame endframe) {
+        this.startframe = startframe;
+        this.endframe = endframe;
+        this.duration = endframe.getTiming().minus(startframe.getTiming());
     }
 
-    // COUNT TIMING
+    // GETTERS
     @Override
-    public final ITimeType getTiming() { return startIFrame.getTiming(); }
-    public final ITimeType getStart() {
-        return startIFrame.getTiming();
+    public final Time getTiming() { return startframe.getTiming(); }
+    public final Time getStart() {
+        return startframe.getTiming();
     }
-    public final ITimeType getEnd() {
-        return endIFrame.getTiming();
+    public final Time getEnd() {
+        return endframe.getTiming();
     }
-    public final ITime getDuration() {
+    public final Time getDuration() {
         return duration;
     }
-
-    // FRAME TIMING
     @Override
-    public final IFrame getIFrame() { return startIFrame; }
-    public final IFrame getStartIFrame() {
-        return startIFrame;
+    public final Frame getFrame() { return startframe; }
+    public final Frame getStartFrame() {
+        return startframe;
     }
-    public final IFrame getEndIFrame() {
-        return endIFrame;
+    public final Frame getEndFrame() {
+        return startframe;
     }
 }

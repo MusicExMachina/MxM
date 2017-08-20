@@ -1,7 +1,5 @@
-import events.sounding.Note;
-import time.Count;
-import time.Tempo;
-import time.TimeSig;
+import events.properties.Tempo;
+import events.properties.TimeSig;
 import form.Part;
 import io.Writer;
 
@@ -12,25 +10,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-/**
- * MidiWriter is a class which does exactly what you'd expect.
- * events.sounding.Note that each MidiWriter composes exactly *one* midi Sequence.
- * This means that the MidiTools class instantiates one for every
- * single form.ScoreEvent to be written. This class could potentially be
- * absorbed into MidiTools, but is separated for the code cleanness.
- */
+/*
 class MidiWriter implements Writer<TraditionalScore> {
 
-    /* The "resolution," i.e. the number of ticks per measure. */
     private static int resolution = 24;
-
-    /* The passage that we're reading from. */
     private TraditionalScore passage = null;
-
-    /* The sequence that we're writing to. */
     private Sequence sequence = null;
 
-    /* A series of floats mapped to Longs representing different measures' start times in ticks. */
     private TreeMap<Float,Long> timePoints;
 
     // Writes the information contained in a passage down to a sequence
@@ -115,12 +101,10 @@ class MidiWriter implements Writer<TraditionalScore> {
         me = new MidiEvent(mm,(long)0);
         track.add(me);
 
-        //****  set poly on  ****
         mm = new ShortMessage();
         mm.setMessage(0xB0, 0x7F,0x00);
         me = new MidiEvent(mm,(long)0);
         track.add(me);
-        */
 
         // Set the instrument to piano
         ShortMessage instChange = new ShortMessage();
@@ -249,3 +233,4 @@ class MidiWriter implements Writer<TraditionalScore> {
         //MidiTools.play(out);
     }
 }
+*/

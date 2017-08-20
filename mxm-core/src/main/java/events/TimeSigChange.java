@@ -1,15 +1,15 @@
 package events;
 
-import time.*;
+import events.properties.TimeSig;
 
 /**
  * Created by celenp on 6/11/2017.
  */
-public class TimeSigChange extends InstantEvent<Measure> {
+public class TimeSigChange extends InstantEvent implements ITimingEvent {
     private TimeSig timeSig;
 
-    public TimeSigChange(form.IFrame IFrame, TimeSig timeSig) {
-        super(IFrame);
+    public TimeSigChange(form.Frame Frame, TimeSig timeSig) {
+        super(Frame);
         this.timeSig = timeSig;
     }
 

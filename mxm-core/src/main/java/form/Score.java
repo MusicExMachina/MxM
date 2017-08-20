@@ -2,8 +2,10 @@ package form;
 
 import com.sun.istack.internal.NotNull;
 import events.*;
-import sound.ISound;
-import sound.Instrument;
+import events.properties.Tempo;
+import events.properties.TimeSig;
+import io.LineBuilder;
+import sound.Sonority;
 import time.*;
 
 import java.util.*;
@@ -12,103 +14,89 @@ public class Score implements IPassage {
 
     private String title;
 
+    // Master timeline
+    Timeline<IMusicEvent> masterTimeline;
+
     // Timing information
-    SerialTimeline<Measure, TimeSigChange> timeSigChanges;
-    SerialTimeline<Count, TempoChange> tempoChanges;
-    ParallelTimeline<Count, Note<? extends ISound>> allNotes;
+    Timeline<IScoreEvent> scoreEvents;
+    Timeline<TimeSigChange> timeSigChanges;
+    Timeline<TempoChange> tempoChanges;
 
-    // Parts and sections
-    TreeMap<Voice,Part> parts;
-    TreeMap<Instrument,Set<Voice>> sections;
+    // Other form.events
+    Timeline<Note> allNotes;
 
-
-    public Score() {
-        parts = new TreeMap<>();
-    }
-    public Iterator<Voice> allVoices() {
-        return parts.keySet().iterator();
-    }
-    public Iterator<Voice> allParts() {
-        return parts.keySet().iterator();
-    }
-    public Part getPart(Voice voice) {
-        return parts.get(voice);
-    }
-    public List<Part> getParts(Collection<Voice> voices) {
-        List<Part> toReturn = new ArrayList<>();
-        for(Voice voice : voices) {
-            toReturn.add(parts.get(voice));
-        }
-        return toReturn;
-    }
-    public List<Part> getParts(Instrument section) {
-        List<Part> toReturn = new ArrayList<>();
-        for(Voice voice : sections.get(section)) {
-            toReturn.add(parts.get(voice));
-        }
-        return toReturn;
-    }
-    public List<Instrument> getSections() {
-        List<Instrument> toReturn = new ArrayList<>();
-        for(Instrument section : sections.keySet()) {
-            toReturn.add(section);
-        }
-        return toReturn;
+    public Score(String title) {
+        this.title = title;
+        this.masterTimeline = new Timeline<>();
     }
 
-
-    // ADD METHODS
-    public void add(@NotNull Tempo tempo, @NotNull Count count) {
-        //
-        /*
-        TempoChange tempoChange = new TempoChange(tempo,);
-        tempoChanges.add()
-        */
-    }
-    public void add(TimeSig timeSig, Measure measure) {
-
+    public Score add(LineBuilder lineBuilder) {
+        return this;
     }
 
-
-
-
+    public void add(Tempo tempo, Time time) {
+        Frame frame = masterTimeline.getFrameAtOrAdd(time);
+        frame.add(new TempoChange(frame,tempo));
+    }
 
     @Override
-    public ITime getStart() {
-        return allNotes.getStart();
-    }
-    @Override
-    public ITime getEnd() {
-        return null;
-    }
-    @Override
-    public ITime getDuration() {
+    public Time getStart() {
         return null;
     }
 
-
-
     @Override
-    public Tempo getTempoAt(ITime time) {
-        return tempoChanges.getEventAt(time).getTempo();
-    }
-    @Override
-    public TimeSig getTimeSigAt(ITime time) {
-        return timeSigChanges.getEventAt(time).getTimeSig();
-    }
-    @Override
-    public Iterator<Note<? extends ISound>> getNotesAt(ITime time) {
-        return allNotes.getEventsAt(time);
-    }
-
-
-
-    @Override
-    public IPassage getExcerpt(Count start) {
+    public Time getEnd() {
         return null;
     }
+
     @Override
-    public IPassage getExcerpt(Count start, Count end) {
+    public Time getDuration() {
         return null;
+    }
+
+    @Override
+    public Tempo getTempoAt(Time time) {
+        return null;
+    }
+
+    @Override
+    public TimeSig getTimeSigAt(Time time) {
+        return null;
+    }
+
+    @Override
+    public Iterator<Note> noteItrAt(Time time) {
+        return null;
+    }
+
+    @Override
+    public Iterator<Chord> chordItrAt(Time time) {
+        return null;
+    }
+
+    @Override
+    public Sonority getSonorityAt(Time time) {
+        return null;
+    }
+
+    @Override
+    public Sonority getHarmonyAt(Time time) {
+        return null;
+    }
+
+    @Override
+    public IPassage getExcerpt(Time start) {
+        return null;
+    }
+
+    @Override
+    public IPassage getExcerpt(Time start, Time end) {
+        return null;
+    }
+
+
+    @Override
+    public @NotNull Iterator<Frame> iterator() {
+        return masterTimeline.iterator();
     }
 }

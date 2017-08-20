@@ -1,25 +1,16 @@
-import events.sounding.Note;
-import sound.*;
-import sound.Instrument;
-import time.Count;
-import time.Tempo;
-import time.TimeSig;
+import sound.Pitch;
+import events.properties.Instrument;
+import events.properties.Tempo;
+import events.properties.TimeSig;
 import form.Part;
 import io.Reader;
 
 import javax.sound.midi.*;
 import java.util.*;
 
-/**
- * MidiReader is a class which does exactly what you'd expect.
- * events.sounding.Note that each MidiReader parses exactly *one* midi Sequence.
- * This means that the MidiTools class instantiates one for every
- * single file to be read. This class could potentially be
- * absorbed into MidiTools, but is separated for the code cleanness.
- */
+/*
 public class MidiReader implements Reader<TraditionalScore> {
 
-    /* A few of the most useful MidiTools messages */
     private static final int SEQUENCE_NUMBER    = 0x00;
     private static final int TEXT_EVENT         = 0x01;
     private static final int COPYRIGHT_NOTICE   = 0x02;
@@ -36,56 +27,43 @@ public class MidiReader implements Reader<TraditionalScore> {
     private static final int KEY_SIGNATURE      = 0x59;
     private static final int SEQUENCER_SPECIFIC = 0x7F;
 
-    /* Input and output */
     private Sequence sequence;
     private TraditionalScore passage;
 
-    /* Time signature change events in various time formats */
     private TreeMap<Long, TimeSig> timeSigsLong;
     private TreeMap<Float, TimeSig> timeSigsFloat;
     private TreeMap<Count, TimeSig> timeSigsCount;
 
-    /* Tempo change events in various time formats */
     private TreeMap<Long,Integer> tempiLong;
     private TreeMap<Float,Tempo> tempiFloat;
     private TreeMap<Count, Tempo> tempiCount;
 
-    /* Measure markers in longs */
     private TreeMap<Long,Float> timePoints;
 
-    /* Note on events in various time formats */
     private HashMap<Track,TreeMap<Long,TreeSet<Pitch>>> noteOnsLong;
     private HashMap<Track,TreeMap<Float,TreeSet<Pitch>>> noteOnsFloat;
     private HashMap<Track,TreeMap<Count,TreeSet<Pitch>>> noteOnsCount;
 
-    /* Note off events in various time formats */
     private HashMap<Track,TreeMap<Pitch,TreeSet<Long>>> noteOffsLong;
     private HashMap<Track,TreeMap<Pitch,TreeSet<Float>>> noteOffsFloat;
     private HashMap<Track,TreeMap<Pitch,TreeSet<Count>>> noteOffsCount;
 
-    /* Instrument change events in various time formats */
     private HashMap<Track,TreeMap<Long, Instrument>> instChangeLong;
     private HashMap<Track,TreeMap<Float, Instrument>> instChangeFloat;
     private HashMap<Track,TreeMap<Count, Instrument>> instChangeCount;
 
-    /**
-     * The main method of MidiReader, which is the entire essence of this class. In fact, this class could be summed up
-     * in a single method, but it is simply too cumbersome to do so.
-     * @param sequence The midi Sequence to parse.
-     * @return The form.ScoreEvent representing this Sequence.
-     */
     public TraditionalScore read(Sequence sequence) {
 
         this.sequence = sequence;
         passage = new TraditionalScore();
 
-        System.out.println("MIDI PARSER:\tParsing midi events...");
+        System.out.println("MIDI PARSER:\tParsing midi form.events...");
         parseAll();
-        System.out.println("MIDI PARSER:\tFinished parsing midi events");
+        System.out.println("MIDI PARSER:\tFinished parsing midi form.events");
 
-        System.out.println("MIDI PARSER:\tInterpolating midi events...");
+        System.out.println("MIDI PARSER:\tInterpolating midi form.events...");
         interpolateAll();
-        System.out.println("MIDI PARSER:\tFinished interpolating midi events");
+        System.out.println("MIDI PARSER:\tFinished interpolating midi form.events");
 
         System.out.println("MIDI PARSER:\tConverting to counts...");
         convertToCounts();
@@ -98,11 +76,6 @@ public class MidiReader implements Reader<TraditionalScore> {
         return passage;
     }
 
-    /**
-     * Reads in and parses noteQualities midi information, such
-     * as all the events in a given midi Sequence. This
-     * information is stored, and then later interpreted.
-     */
     private void parseAll() {
 
         // Create all of the long (tick)-based timelines
@@ -121,8 +94,8 @@ public class MidiReader implements Reader<TraditionalScore> {
 
             // Set the initial instrument of this track (it may change)
             // Note that "-1" here just means anything else will override it
-            //TreeMap<Long,sound.Instrument> init = new TreeMap<>();
-            //init.put(-1L,sound.Instrument.DEFAULT);
+            //TreeMap<Long,events.properties.Instrument> init = new TreeMap<>();
+            //init.put(-1L,events.properties.Instrument.DEFAULT);
             //instChangeLong.put(track,init);
             // TODO: Instrument change stuff
 
@@ -146,13 +119,6 @@ public class MidiReader implements Reader<TraditionalScore> {
         }
     }
 
-    /**
-     * Parses a MIDI short message.
-     * @param track The track this message is on.
-     * @param event The event of this message.
-     * @param message The message itself.
-     * @param tick The tick of this event's timing.
-     */
     private void parseShortMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
 
         // Figure out the message's command
@@ -175,13 +141,6 @@ public class MidiReader implements Reader<TraditionalScore> {
         }
     }
 
-    /**
-     * Parses a MIDI meta message.
-     * @param track The track this message is on.
-     * @param event The event of this message.
-     * @param message The message itself.
-     * @param tick The tick of this event's timing.
-     */
     private void parseMetaMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
 
         // Figure out the message's type
@@ -237,30 +196,16 @@ public class MidiReader implements Reader<TraditionalScore> {
         }
     }
 
-    /**
-     * Parses a MIDI system-exclusive message.
-     * @param track The track this message is on.
-     * @param event The event of this message.
-     * @param message The message itself.
-     * @param tick The tick of this event's timing.
-     */
     private void parseSysexMessage(Track track, MidiEvent event, SysexMessage message, Long tick) {
         System.out.println("MIDI PARSER:\tUnrecognized MidiTools SysexMessage " + message.getData());
     }
 
-    /**
-     * Parses a MIDI note-on (short) message.
-     * @param track The track this message is on.
-     * @param event The event of this message.
-     * @param message The message itself.
-     * @param tick The tick of this event's timing.
-     */
     private void parseNoteOnMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
 
         // Data pulled off of the MidiEvent
         int pitchValue      = message.getData1();
         int velocityValue   = message.getData2();
-        Pitch pitch         = Pitch.getInstance(pitchValue);
+        Pitch pitch         = Pitch.get(pitchValue);
 
         //System.out.println(tick + "\t" + sound);
 
@@ -279,18 +224,11 @@ public class MidiReader implements Reader<TraditionalScore> {
         }
     }
 
-    /**
-     * Parses a MIDI note-off (short) message.
-     * @param track The track this message is on.
-     * @param event The event of this message.
-     * @param message The message itself.
-     * @param tick The tick of this event's timing.
-     */
     private void parseNoteOffMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
 
         // Data pulled off of the MidiEvent
         int pitchValue      = message.getData1();
-        Pitch pitch         = Pitch.getInstance(pitchValue);
+        Pitch pitch         = Pitch.get(pitchValue);
 
         // If this track hasn't had a note on at this tick
         if (!noteOffsLong.get(track).containsKey(pitch)) {
@@ -301,58 +239,21 @@ public class MidiReader implements Reader<TraditionalScore> {
         noteOffsLong.get(track).get(pitch).add(tick);
     }
 
-    /**
-     * Parses a MIDI control change (short) message.
-     * @param track The track this message is on.
-     * @param event The event of this message.
-     * @param message The message itself.
-     * @param tick The tick of this event's timing.
-     */
     private void parseControlChangeMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
         // TODO: Write parseControlChangeMessage()
-        /*
-        switch (message.getCommand()) {
-            case BANK_SELECT:
-                if(!instChangeLong.containsKey(track)) {
-                    instChangeLong.put(track,new TreeMap<Long, sound.Instrument>());
-                }
-                instChangeLong.get(track).put(tick,sound.Instrument.getGeneralMIDIInstrument(message.getMessage()[3]));
-                break;
-        }
-        */
     }
 
-    /**
-     * Parses a MIDI program change (short) message.
-     * @param track The track this message is on.
-     * @param event The event of this message.
-     * @param message The message itself.
-     * @param tick The tick of this event's timing.
-     */
+
     private void parseProgramChangeMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
         instChangeLong.get(track).put(tick, Instrument.getGeneralMIDIInstrument(message.getData1()));
     }
 
-    /**
-     * Parses a MIDI tempo change (meta) message.
-     * @param track The track this message is on.
-     * @param event The event of this message.
-     * @param message The message itself.
-     * @param tick The tick of this event's timing.
-     */
     private void parseTempoMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         Integer ppqn = (data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff);
-        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter events.sounding.Note - I think this is right
+        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter form.events.sounding.Note - I think this is right
     }
 
-    /**
-     * Parses a MIDI time signature (meta) message.
-     * @param track The track this message is on.
-     * @param event The event of this message.
-     * @param message The message itself.
-     * @param tick The tick of this event's timing.
-     */
     private void parseTimeSignatureMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         int numerator   = data[0];
@@ -367,13 +268,6 @@ public class MidiReader implements Reader<TraditionalScore> {
         timeSigsLong.put(tick,timeSignature);
     }
 
-    /**
-     * Parses a MIDI text (meta) message.
-     * @param track The track this message is on.
-     * @param event The event of this message.
-     * @param message The message itself.
-     * @param tick The tick of this event's timing.
-     */
     private void parseTextMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         String string = new String(data);
@@ -381,11 +275,6 @@ public class MidiReader implements Reader<TraditionalScore> {
         System.out.println("MIDI PARSER:\tText: \"" + string.replace("\n", "").replace("\r", "")+"\"");
     }
 
-    /**
-     * "Interprets" stored midi data, by extracting useful
-     * features, and saving time points which which we will
-     * later convert all events to counts.
-     */
     private void interpolateAll() {
 
         Integer resolution = sequence.getResolution();
@@ -539,12 +428,6 @@ public class MidiReader implements Reader<TraditionalScore> {
         instChangeLong.clear();
     }
 
-    /**
-     * Converts the all events into fractions-of-a-measure
-     * format. events.sounding.Note that this is a touchy, time-consuming
-     * process prone to minor errors, and thus, this function
-     * is likely to require tweaking going forward.
-     */
     private void convertToCounts() {
 
         timeSigsCount = new TreeMap<>();
@@ -615,9 +498,6 @@ public class MidiReader implements Reader<TraditionalScore> {
         instChangeFloat.clear();
     }
 
-    /**
-     *
-     */
     private void makeParts() {
 
         for(Count timeSigChange : timeSigsCount.keySet()) {
@@ -648,13 +528,6 @@ public class MidiReader implements Reader<TraditionalScore> {
         }
     }
 
-    /**
-     * A useful method that interpolates a tick between established
-     * time points. events.sounding.Note that this is similar to the way that pixels
-     * are interpolated in digital images.
-     * @param tick The tick representing the time to be interpolated.
-     * @return The float value of this tick as fractions of a measure.
-     */
     private float interpolate(long tick) {
         // Get the time points before and after this tick
         long earlierTick    = timePoints.floorKey(tick);
@@ -675,11 +548,6 @@ public class MidiReader implements Reader<TraditionalScore> {
         }
     }
 
-    /**
-     *
-     * @param time
-     * @return
-     */
     private Count closestCount(float time) {
         // Now we get to calculate where in the measure this lies
         int measure = (int)Math.floor(time);
@@ -707,3 +575,4 @@ public class MidiReader implements Reader<TraditionalScore> {
     }
 
 }
+*/

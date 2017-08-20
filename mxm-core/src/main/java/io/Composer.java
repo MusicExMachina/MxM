@@ -5,8 +5,8 @@ import events.TempoChange;
 import events.TimeSigChange;
 import form.Score;
 import time.Count;
-import time.Tempo;
-import time.TimeSig;
+import events.properties.Tempo;
+import events.properties.TimeSig;
 
 public class Composer {
 

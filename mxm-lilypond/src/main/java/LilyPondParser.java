@@ -1,7 +1,7 @@
-import events.Note;
-import musicTheory.ChordClass;
+import form.events.Note;
+import musicTheory.HarmonyClass;
 import musicTheory.PitchClass;
-import sound.Chord;
+import musicTheory.Harmony;
 import sound.Pitch;
 import time.Count;
 
@@ -34,15 +34,15 @@ public class LilyPondParser {
     }
 
 
-    private static Chord parseChord(String chordString) {
+    private static Harmony parseChord(String chordString) {
         String[] tokens = chordString.split(":");
         if (tokens.length != 2) {
             throw new Error("LILY POND PARSER:\t ChordNote string \"" + chordString + "\" improperly formatted.");
         }
         PitchClass pitch        = parsePitchClass(tokens[0]);
-        ChordClass chordClass   = parseChordClass(tokens[1]);
+        HarmonyClass chordClass   = parseChordClass(tokens[1]);
 
-        return new Chord(pitch,chordClass);
+        return new Harmony(pitch,chordClass);
     }
 
     private static ArrayList<Note> parseNotes(String noteString) {
@@ -67,7 +67,7 @@ public class LilyPondParser {
             }
         }
         Pitch pitch = parsePitch(noteToken.substring(0,divider));
-        Count length = parseNoteLength(noteToken.substring(divider),Count.ONE);
+        Count length = parseNoteLength(noteToken.substring(divider), Count.ONE);
         return new Note<Pitch>(curTime,length,pitch);
     }
 
@@ -85,7 +85,7 @@ public class LilyPondParser {
             }
         }
         PitchClass pitchClass = parsePitchClass(pitchToken);
-        return Pitch.getInstance(pitchClass,octave);
+        return Pitch.get(pitchClass,octave);
     }
 
     private static PitchClass parsePitchClass(String pitchClassToken) {
@@ -118,37 +118,37 @@ public class LilyPondParser {
         return PitchClass.getInstance(value);
     }
 
-    private static ChordClass parseChordClass(String chordClassString) {
+    private static HarmonyClass parseChordClass(String chordClassString) {
         switch (chordClassString) {
             case "":
-            case "5":           return ChordClass.MAJOR;
-            case "m":           return ChordClass.MINOR;
-            case "aug":         return ChordClass.AUGMENTED;
-            case "dim":         return ChordClass.DIMINISHED;
-            case "7":           return ChordClass.DOMINANT_SEVENTH;
+            case "5":           return HarmonyClass.MAJOR;
+            case "m":           return HarmonyClass.MINOR;
+            case "aug":         return HarmonyClass.AUGMENTED;
+            case "dim":         return HarmonyClass.DIMINISHED;
+            case "7":           return HarmonyClass.DOMINANT_SEVENTH;
             case "maj7":
-            case "maj":         return ChordClass.MAJOR_SEVENTH;
-            case "m7":          return ChordClass.MINOR_SEVENTH;
-            case "dim7":        return ChordClass.DIMINISHED_SEVENTH;
-            case "aug7":        return ChordClass.AUGMENTED_SEVENTH;
-            case "m7.5-":       return ChordClass.HALF_DIMINISHED_SEVENTH;
-            case "m7+":         return ChordClass.MINOR_MAJOR_SEVENTH;
-            case "6":           return ChordClass.MAJOR_SIXTH;
-            case "m6":          return ChordClass.MINOR_SIXTH;
-            case "9":           return ChordClass.DOMINANT_NINTH;
-            case "maj9":        return ChordClass.MAJOR_NINTH;
-            case "m9":          return ChordClass.MINOR_NINTH;
-            case "11":          return ChordClass.DOMINANT_ELEVENTH;
-            case "maj11":       return ChordClass.MAJOR_ELEVENTH;
-            case "m11":         return ChordClass.MINOR_ELEVENTH;
+            case "maj":         return HarmonyClass.MAJOR_SEVENTH;
+            case "m7":          return HarmonyClass.MINOR_SEVENTH;
+            case "dim7":        return HarmonyClass.DIMINISHED_SEVENTH;
+            case "aug7":        return HarmonyClass.AUGMENTED_SEVENTH;
+            case "m7.5-":       return HarmonyClass.HALF_DIMINISHED_SEVENTH;
+            case "m7+":         return HarmonyClass.MINOR_MAJOR_SEVENTH;
+            case "6":           return HarmonyClass.MAJOR_SIXTH;
+            case "m6":          return HarmonyClass.MINOR_SIXTH;
+            case "9":           return HarmonyClass.DOMINANT_NINTH;
+            case "maj9":        return HarmonyClass.MAJOR_NINTH;
+            case "m9":          return HarmonyClass.MINOR_NINTH;
+            case "11":          return HarmonyClass.DOMINANT_ELEVENTH;
+            case "maj11":       return HarmonyClass.MAJOR_ELEVENTH;
+            case "m11":         return HarmonyClass.MINOR_ELEVENTH;
             case "13":
-            case "13.11":       return ChordClass.DOMINANT_THIRTEENTH;
-            case "maj13.11":    return ChordClass.MAJOR_THIRTEENTH;
-            case "m13.11":      return ChordClass.MINOR_THIRTEENTH;
-            case "sus2":        return ChordClass.SUSPENDED_SECOND;
-            case "sus4":        return ChordClass.SUSPENDED_FOURTH;
+            case "13.11":       return HarmonyClass.DOMINANT_THIRTEENTH;
+            case "maj13.11":    return HarmonyClass.MAJOR_THIRTEENTH;
+            case "m13.11":      return HarmonyClass.MINOR_THIRTEENTH;
+            case "sus2":        return HarmonyClass.SUSPENDED_SECOND;
+            case "sus4":        return HarmonyClass.SUSPENDED_FOURTH;
             case "1.5":
-            case "1.8":         return ChordClass.POWER_CHORD;
+            case "1.8":         return HarmonyClass.POWER_CHORD;
             default:
                 String[] tokens = chordClassString.split(".");
                 if (tokens.length != 2) {

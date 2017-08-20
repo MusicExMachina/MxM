@@ -7,13 +7,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
-
+/*
 public abstract class MidiTools
 {
-    /**
-     * Prints some useful information about this system's
-     * Midi sequencer, synthesizer, and so forth.
-     */
     public static void printInfo() {
         try {
             Sequencer sequencer = MidiSystem.getSequencer();
@@ -44,25 +40,12 @@ public abstract class MidiTools
         }
     }
 
-    /**
-     * Loads a midi Sequence from a given file name.
-     * @param fileName The filename of the file we want.
-     * @return A midi Sequence loaded in from this file.
-     * @throws IOException If the reading fails for some reason.
-     * @throws InvalidMidiDataException  If the midi data is flawed.
-     */
+
     public static Sequence load (String fileName) throws IOException, InvalidMidiDataException {
         MidiFileReader reader = new StandardMidiFileReader();
         return reader.getSequence(new FileInputStream(fileName));
     }
 
-    /**
-     * Loads a number of midi sequences from a list of file names.
-     * @param fileNames The filename of the file we want.
-     * @return A midi Sequence loaded in from this file.
-     * @throws IOException If the reading fails for some reason.
-     * @throws InvalidMidiDataException  If the midi data is flawed.
-     */
     public static List<Sequence> loadAll (List<String> fileNames) throws IOException, InvalidMidiDataException {
         List<Sequence> toReturn = new ArrayList<>();
         // TODO: Parallelize this
@@ -73,25 +56,11 @@ public abstract class MidiTools
         return toReturn;
     }
 
-    /**
-     * Downloads a midi file from some remote location.
-     * @param url The url of the file we want to download.
-     * @return A midi Sequence downloaded from this URL.
-     * @throws IOException If the reading fails for some reason.
-     * @throws InvalidMidiDataException If the midi data is flawed.
-     */
     public static Sequence download (String url) throws IOException, InvalidMidiDataException {
         MidiFileReader reader = new StandardMidiFileReader();
         return reader.getSequence(new URL(url));
     }
 
-    /**
-     * Downloads a number of midi files from some remote location.
-     * @param urls The urls of the files we want to download.
-     * @return A midi Sequence downloaded from this URL.
-     * @throws IOException If the reading fails for some reason.
-     * @throws InvalidMidiDataException If the midi data is flawed.
-     */
     public static List<Sequence> downloadAll (List<String> urls) throws IOException, InvalidMidiDataException {
         List<Sequence> toReturn = new ArrayList<>();
         // TODO: Parallelize this
@@ -102,40 +71,18 @@ public abstract class MidiTools
         return toReturn;
     }
 
-    /**
-     * Takes in a midi Sequence and writes a form.ScoreEvent. The
-     * form.ScoreEvent may then be parsed in a number of ways, including
-     * forming RhythmTrees, etc. as Passages carry *more* useful
-     * musical information than Sequences alone.
-     * @param sequence
-     * @return
-     */
     public static TraditionalScore parse(Sequence sequence) {
         // Spawn off a parser object
         MidiReader midiReader = new MidiReader();
         return midiReader.read(sequence);
     }
 
-    /**
-     * Takes in a form.ScoreEvent and writes a midi Sequence from
-     * it. The Sequence can then be played using MidiTools.play()
-     * or saved to a midi file using MidiTools.save()
-     * @param passage The form.ScoreEvent to make into a Sequence.
-     * @return The created MidiTools Sequence.
-     */
     public static Sequence write(TraditionalScore passage) {
         // Spawn off a parser object
         MidiWriter midiWriter = new MidiWriter();
         return midiWriter.run(passage);
     }
 
-    /**
-     * Takes a midi Sequence and plays it using a
-     * device's default sequencer (if possible).
-     * @param sequence The midi Sequence to play
-     * @throws MidiUnavailableException If there is no midi sequencer.
-     * @throws InvalidMidiDataException If the midi Sequence is flawed.
-     */
     public static void play(Sequence sequence) throws MidiUnavailableException, InvalidMidiDataException {
         Sequencer sequencer = MidiSystem.getSequencer();
         sequencer.open();
@@ -143,3 +90,4 @@ public abstract class MidiTools
         sequencer.start();
     }
 }
+*/

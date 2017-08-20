@@ -1,5 +1,3 @@
-import org.junit.Test;
-
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 import java.io.*;
@@ -8,14 +6,9 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A suite of tests of basic MxM MIDI functionality.
- */
+/*
 public class MidiTest {
 
-    /**
-    * Tests MidiTools' ability to load midi files.
-     */
     @Test
     public void sequentialLoadTest() {
         String pathStr = "src/tests/resources/";
@@ -47,10 +40,6 @@ public class MidiTest {
             }
         }
     }
-
-    /**
-    * Tests MidiTools' ability to load midi files.
-     */
     @Test
     public void concurrentLoadTest() {
         String pathStr = "src/tests/resources/";
@@ -87,10 +76,6 @@ public class MidiTest {
             System.err.println(e);
         }
     }
-
-    /**
-    * Tests MidiTools' ability to download midi files from the internet.
-     */
     @Test
     public void sequentialDownloadTest() {
 
@@ -119,10 +104,6 @@ public class MidiTest {
             System.err.println(e);
         }
     }
-
-    /**
-    * Tests MidiTools' ability to download midi files from the internet.
-     */
     @Test
     public void concurrentDownloadTest() {
 
@@ -152,10 +133,6 @@ public class MidiTest {
             System.err.println(e);
         }
     }
-
-    /**
-     * Tests MidiTools' ability to play the first midi file in the resources folder.
-     */
     @Test
     public void playTest() {
         String pathStr = "src/tests/resources/";
@@ -180,10 +157,6 @@ public class MidiTest {
             e.printStackTrace();
         }
     }
-
-    /**
-     * Tests MidiTools' ability to parse the first midi file in the resources folder.
-     */
     @Test
     public void parseTest() {
         String pathStr = "src/tests/resources/";
@@ -207,3 +180,4 @@ public class MidiTest {
         }
     }
 }
+*/

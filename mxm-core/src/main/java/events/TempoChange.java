@@ -1,19 +1,20 @@
 package events;
 
-import time.Count;
-import time.Tempo;
+import form.Frame;
+import events.properties.Tempo;
 
-/**
- * Created by celenp on 5/13/2017.
- */
-public class TempoChange extends InstantEvent<Count> {
+public class TempoChange extends InstantEvent implements ITimingEvent {
+
+    // TEMPO CHANGE PROPERTIES
     private Tempo tempo;
 
-    public TempoChange(form.IFrame IFrame, Tempo tempo) {
-        super(IFrame);
+    // CONSTRUCTOR
+    public TempoChange(Frame Frame, Tempo tempo) {
+        super(Frame);
         this.tempo = tempo;
     }
 
+    // GETTERS
     public Tempo getTempo() {
         return tempo;
     }

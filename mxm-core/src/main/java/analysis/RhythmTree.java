@@ -1,6 +1,6 @@
 package analysis;
 
-import time.Beat;
+import time.IBarline;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -88,16 +88,16 @@ class RhythmNode {
     private RhythmTree tree;
     private RhythmNode parent;
     private List<RhythmNode> children;
-    private Beat timing;
-    private Beat duration;
+    private IBarline.Beat timing;
+    private IBarline.Beat duration;
 
 
     RhythmNode(RhythmTree tree) {
         this.parent     = null;
         this.tree       = tree;
         this.children   = new ArrayList<>();
-        this.timing     = Beat.ZERO;
-        this.duration   = Beat.ONE;
+        this.timing     = IBarline.Beat.ZERO;
+        this.duration   = IBarline.Beat.ONE;
     }
 
     /**
@@ -106,7 +106,7 @@ class RhythmNode {
      * @param timing The timing of this analysis.RhythmNode.
      * @param duration The duration of this analysis.RhythmNode.
      */
-    private RhythmNode(RhythmTree tree, RhythmNode parent, Beat timing, Beat duration) {
+    private RhythmNode(RhythmTree tree, RhythmNode parent, IBarline.Beat timing, IBarline.Beat duration) {
         if(parent != null)
             this.depth = parent.getDepth()+1;
         this.parent     = parent;
@@ -136,7 +136,7 @@ class RhythmNode {
      * Gets the duration of this node in Counts.
      * @return The duration of this node in Counts.
      */
-    public Beat getDuration() {
+    public IBarline.Beat getDuration() {
         return duration;
     }
 
@@ -144,7 +144,7 @@ class RhythmNode {
      * Gets the duration of this node in Counts.
      * @return The duration of this node in Counts.
      */
-    public Beat getTiming() {
+    public IBarline.Beat getTiming() {
         return timing;
     }
     /**
@@ -185,8 +185,8 @@ class RhythmNode {
                 int newNumerator = this.duration.getNumerator() * times;
                 // Add "times" many children
                 for (int i = 0; i < times; i++) {
-                    Beat newTiming = new Beat(newNumerator + i, newDenominator);
-                    Beat newDuration = new Beat(1, newDenominator);
+                    IBarline.Beat newTiming = new IBarline.Beat(newNumerator + i, newDenominator);
+                    IBarline.Beat newDuration = new IBarline.Beat(1, newDenominator);
                     children.add(new RhythmNode(tree,this,newTiming,newDuration));
                 }
             }

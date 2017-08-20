@@ -30,7 +30,7 @@ public class MxmScoreWriter extends Writer<TraditionalScore> {
 
             /*
             // Write all of the time signature information
-            writer.println("  > Time Signatures");
+            writer.println("  > ITime Signatures");
             Iterator<TimeSignEvent> timeSigItr = passage.timeSignChangeIterator();
             while (timeSigItr.hasNext()) {
                 Count count             = new Count(timeSigItr.next());

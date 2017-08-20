@@ -1,3 +1,4 @@
+/*
 import io.Reader;
 
 import java.io.BufferedReader;
@@ -8,9 +9,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Created by celenp on 5/20/2017.
- */
 public class LilyPondLeadSheetParser extends Reader {
 
     @Override
@@ -61,3 +59,4 @@ public class LilyPondLeadSheetParser extends Reader {
 
     }
 }
+*/
