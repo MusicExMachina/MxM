@@ -1,6 +1,6 @@
 package analysis;
 
-import time.IBarline;
+import base.time.Beat;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- * A conceptualization of rhythm as gradual, equal subdivisions of some concrete amount of time.
+ * A conceptualization of rhythm as gradual, equal subdivisions of some concrete amount of base.time.
  * RhythmTrees operate like many other data structures save that their only "real" storage is in
  * their leaf nodes.
  */
@@ -88,16 +88,16 @@ class RhythmNode {
     private RhythmTree tree;
     private RhythmNode parent;
     private List<RhythmNode> children;
-    private IBarline.Beat timing;
-    private IBarline.Beat duration;
+    private Beat timing;
+    private Beat duration;
 
 
     RhythmNode(RhythmTree tree) {
         this.parent     = null;
         this.tree       = tree;
         this.children   = new ArrayList<>();
-        this.timing     = IBarline.Beat.ZERO;
-        this.duration   = IBarline.Beat.ONE;
+        this.timing     = Beat.ZERO;
+        this.duration   = Beat.ONE;
     }
 
     /**
@@ -106,7 +106,7 @@ class RhythmNode {
      * @param timing The timing of this analysis.RhythmNode.
      * @param duration The duration of this analysis.RhythmNode.
      */
-    private RhythmNode(RhythmTree tree, RhythmNode parent, IBarline.Beat timing, IBarline.Beat duration) {
+    private RhythmNode(RhythmTree tree, RhythmNode parent, Beat timing, Beat duration) {
         if(parent != null)
             this.depth = parent.getDepth()+1;
         this.parent     = parent;
@@ -136,7 +136,7 @@ class RhythmNode {
      * Gets the duration of this node in Counts.
      * @return The duration of this node in Counts.
      */
-    public IBarline.Beat getDuration() {
+    public Beat getDuration() {
         return duration;
     }
 
@@ -144,7 +144,7 @@ class RhythmNode {
      * Gets the duration of this node in Counts.
      * @return The duration of this node in Counts.
      */
-    public IBarline.Beat getTiming() {
+    public Beat getTiming() {
         return timing;
     }
     /**
@@ -185,8 +185,8 @@ class RhythmNode {
                 int newNumerator = this.duration.getNumerator() * times;
                 // Add "times" many children
                 for (int i = 0; i < times; i++) {
-                    IBarline.Beat newTiming = new IBarline.Beat(newNumerator + i, newDenominator);
-                    IBarline.Beat newDuration = new IBarline.Beat(1, newDenominator);
+                    Beat newTiming = Beat.get(newNumerator + i, newDenominator);
+                    Beat newDuration = Beat.get(1, newDenominator);
                     children.add(new RhythmNode(tree,this,newTiming,newDuration));
                 }
             }

@@ -1,7 +1,7 @@
 package events;
 
-import form.Frame;
-import musicTheory.Harmony;
+import passage.Frame;
+import base.Harmony;
 
 public class Chord extends PlayableEvent<Harmony> {
     public Chord(Frame startIFrame, Frame endIFrame) {

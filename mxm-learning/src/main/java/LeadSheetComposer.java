@@ -1,4 +1,4 @@
-import form.compositionTypes.LeadSheet;
+import passage.compositionTypes.LeadSheet;
 
 /**
  * Created by celenp on 6/9/2017.

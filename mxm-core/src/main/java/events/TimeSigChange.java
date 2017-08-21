@@ -8,7 +8,7 @@ import events.properties.TimeSig;
 public class TimeSigChange extends InstantEvent implements ITimingEvent {
     private TimeSig timeSig;
 
-    public TimeSigChange(form.Frame Frame, TimeSig timeSig) {
+    public TimeSigChange(passage.Frame Frame, TimeSig timeSig) {
         super(Frame);
         this.timeSig = timeSig;
     }

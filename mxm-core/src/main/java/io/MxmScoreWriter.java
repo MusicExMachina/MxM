@@ -24,12 +24,12 @@ public class MxmScoreWriter extends Writer<TraditionalScore> {
             writer.println("> ScoreEvent");
             writer.println("  - Title");
             // writer.println("      " + passage.getName());
-            writer.println("  - Composer");
+            writer.println("  - ScoreBuilder");
             writer.println("      " + passage.getComposer());
             writer.println("");
 
             /*
-            // Write all of the time signature information
+            // Write all of the base.time signature information
             writer.println("  > ITime Signatures");
             Iterator<TimeSignEvent> timeSigItr = passage.timeSignChangeIterator();
             while (timeSigItr.hasNext()) {

@@ -1,14 +1,14 @@
 package events;
 
-import form.Frame;
+import passage.Frame;
 import events.properties.Tempo;
 
-public class TempoChange extends InstantEvent implements ITimingEvent {
 
+public class TempoChange extends InstantEvent implements ITimingEvent {
     // TEMPO CHANGE PROPERTIES
     private Tempo tempo;
 
-    // CONSTRUCTOR
+    // CONSTRUCTORS
     public TempoChange(Frame Frame, Tempo tempo) {
         super(Frame);
         this.tempo = tempo;

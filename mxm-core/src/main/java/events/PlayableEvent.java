@@ -1,7 +1,6 @@
 package events;
 
-import form.Frame;
-import form.SpanningEvent;
+import passage.Frame;
 import events.properties.Accent;
 import events.properties.Dynamic;
 import events.properties.Technique;

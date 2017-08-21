@@ -1,8 +1,8 @@
 package events.properties;
 
-import time.Count;
-import time.IBarline;
-import time.Measure;
+import base.time.Count;
+import base.time.IBarline;
+import base.time.Measure;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,10 +18,10 @@ import java.util.Iterator;
  */
 public class TimeSig {
 
-    /** The fractional numerator of this time signature */
+    /** The fractional numerator of this base.time signature */
     private int numerator;
 
-    /** The fractional denominator of this time signature */
+    /** The fractional denominator of this base.time signature */
     private int denominator;
 
     /** The preferred number of subdivisions at this subdivision level */
@@ -63,7 +63,7 @@ public class TimeSig {
     }
 
     /**
-     * Gets an iterator which enumerates all valid time signatures.
+     * Gets an iterator which enumerates all valid base.time signatures.
      * @return An iterator over all valid times signatures
      */
     public static Iterator<TimeSig> iterator() {
@@ -71,11 +71,11 @@ public class TimeSig {
     }
 
     /**
-     * Gets an instance of a time signature with a given numerator
+     * Gets an instance of a base.time signature with a given numerator
      * and denominator. Note that
-     * @param numerator The numerator of this time signature
-     * @param denominator The denominator of this time Signature
-     * @return A time signature with this description
+     * @param numerator The numerator of this base.time signature
+     * @param denominator The denominator of this base.time Signature
+     * @return A base.time signature with this description
      */
     public static TimeSig getInstance(int numerator, int denominator) {
         // TODO: Make this a more effective search, perhaps hash
@@ -86,13 +86,13 @@ public class TimeSig {
                 timeSig.denominator == denominator)
                     return timeSig;
         }
-        throw new Error("TIME SIGNATURE:\tThis time signature (" +
+        throw new Error("TIME SIGNATURE:\tThis base.time signature (" +
                 numerator + "/" + denominator + ") does not exist!");
     }
 
     /**
      * A constructor for events.properties.TimeSig taking in a numerator and
-     * denominator. form.events.sounding.Note that these do not need to be reduced,
+     * denominator. passage.events.sounding.Note that these do not need to be reduced,
      * as TimeSignatures can be almost anything you want them
      * to be.
      * @param numerator The desired numerator.
@@ -153,7 +153,7 @@ public class TimeSig {
      * @return This events.properties.TimeSig's String representation.
      */
     public String toString() {
-        return getNumerator() + "/" + getDenominator() + " time ";
+        return getNumerator() + "/" + getDenominator() + "base/time ";
     }
 
     /**

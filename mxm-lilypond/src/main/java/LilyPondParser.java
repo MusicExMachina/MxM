@@ -1,9 +1,9 @@
-import form.events.Note;
-import musicTheory.HarmonyClass;
-import musicTheory.PitchClass;
-import musicTheory.Harmony;
-import sound.Pitch;
-import time.Count;
+import passage.events.Note;
+import base.relative.HarmonyClass;
+import base.relative.PitchClass;
+import base.Harmony;
+import base.Pitch;
+import base.time.Count;
 
 import java.util.ArrayList;
 
@@ -53,7 +53,7 @@ public class LilyPondParser {
         for(String noteToken : notes) {
             Note note = parseNote(noteToken, curTime);
             toReturn.add(note);
-            // Keep track of the time
+            // Keep track of the base.time
             curTime = curTime.plus(note.getDuration());
         }
         return toReturn;
