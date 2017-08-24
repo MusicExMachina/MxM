@@ -1,20 +1,23 @@
 package passage;
 
+import base.sounds.*;
 import com.sun.istack.internal.NotNull;
-import events.Note;
+import events.*;
 import base.eventProps.Instrument;
 import base.time.Tempo;
 import base.time.TimeSig;
 import composition.LineBuilder;
 import base.time.*;
-import events.timing.TempoChange;
-import events.timing.TimeSigChange;
 
 import java.util.*;
 
-public class Score extends Timeline<IScoreEvent> implements IPassage {
+public class Score extends Timeline<IMusicEvent> implements IPassage {
 
     private String title;
+
+    // Note information
+    private Timeline<TimeSigChange> timeSigChanges;
+    private Timeline<TempoChange> tempoChanges;
 
     // Timing information
     private Timeline<TimeSigChange> timeSigChanges;
@@ -24,6 +27,7 @@ public class Score extends Timeline<IScoreEvent> implements IPassage {
     private Timeline<Note> allNotes;
 
     public Score(String title) {
+        super(frames);
         this.title = title;
         this.timeSigChanges = new Timeline<>();
         this.tempoChanges = new Timeline<>();
@@ -49,29 +53,38 @@ public class Score extends Timeline<IScoreEvent> implements IPassage {
     }
 
 
-
     @Override
-    public Tempo getTempoAt(Time time) {
-        return null;
-    }
+    public Iterator<IMusicEvent> eventItr() { return null; }
     @Override
-    public TimeSig getTimeSigAt(Time time) {
-        return null;
-    }
-
-
+    public Iterator<Note> noteItr() { return null; }
     @Override
-    public IPassage getExcerpt(Time start) {
-        return null;
-    }
+    public Iterator<Note<Pitch>> pitchedNoteItr() { return null; }
     @Override
-    public IPassage getExcerpt(Time start, Time end) {
-        return null;
-    }
-
-
+    public Iterator<Note<Noise>> unpitchedNoteItr() { return null; }
     @Override
-    public @NotNull Iterator<Frame> iterator() {
-        return iterator();
-    }
+    public Iterator<Note<Chord>> chordNoteItr() { return null; }
+    @Override
+    public Iterator<TimeSigChange> timeSigChangeItr() { return null; }
+    @Override
+    public Iterator<TempoChange> tempoChangeItr() { return null; }
+    @Override
+    public Iterator<IMusicEvent> eventItrAt(Time time) { return null; }
+    @Override
+    public Iterator<Note> noteItrAt(Time time) { return null; }
+    @Override
+    public Iterator<Note<Pitch>> pitchedNoteItrAt(Time time) { return null; }
+    @Override
+    public Iterator<Note<Noise>> unpitchedNoteItrAt(Time time) { return null; }
+    @Override
+    public Iterator<Note<Chord>> chordNoteItrAt(Time time) { return null; }
+    @Override
+    public Harmony getHarmonyAt(Time time) { return null; }
+    @Override
+    public Sonority getSonorityAt(Time time) { return null; }
+    @Override
+    public Timbre getTimbreAt(Time time) { return null; }
+    @Override
+    public Tempo getTempoAt(Time time) { return null; }
+    @Override
+    public TimeSig getTimeSigAt(Time time) { return timeSigChanges.getFrameBefore(time); }
 }

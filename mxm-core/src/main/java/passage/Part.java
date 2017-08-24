@@ -1,7 +1,6 @@
 package passage;
-import com.sun.istack.internal.NotNull;
-import events.Note;
-import base.eventProps.Instrument;
+import base.sounds.*;
+import events.*;
 import base.time.Tempo;
 import base.time.TimeSig;
 import base.time.Time;
@@ -10,6 +9,54 @@ import java.util.Iterator;
 
 public class Part extends Timeline<IPartEvent> implements IPassage {
     private final Score score;
+
+    Part(Score score) {
+        super(frames);
+        this.score = score;
+    }
+
+    @Override
+    public Iterator<IMusicEvent> eventItr() { return null; }
+    @Override
+    public Iterator<Note> noteItr() { return null; }
+    @Override
+    public Iterator<Note<Pitch>> pitchedNoteItr() { return null; }
+    @Override
+    public Iterator<Note<Noise>> unpitchedNoteItr() { return null; }
+    @Override
+    public Iterator<Note<Chord>> chordNoteItr() { return null; }
+    @Override
+    public Iterator<TimeSigChange> timeSigChangeItr() { return score.timeSigChangeItr(); }
+    @Override
+    public Iterator<TempoChange> tempoChangeItr() { return score.tempoChangeItr(); }
+
+
+    @Override
+    public Iterator<IMusicEvent> eventItrAt(Time time) { return null; }
+    @Override
+    public Iterator<Note> noteItrAt(Time time) { return null; }
+    @Override
+    public Iterator<Note<Pitch>> pitchedNoteItrAt(Time time) { return null; }
+    @Override
+    public Iterator<Note<Noise>> unpitchedNoteItrAt(Time time) { return null; }
+    @Override
+    public Iterator<Note<Chord>> chordNoteItrAt(Time time) { return null; }
+    @Override
+    public Harmony getHarmonyAt(Time time) { return null; }
+    @Override
+    public Sonority getSonorityAt(Time time) { return null; }
+    @Override
+    public Timbre getTimbreAt(Time time) { return null; }
+    @Override
+    public Tempo getTempoAt(Time time) { return score.getTempoAt(time); }
+    @Override
+    public TimeSig getTimeSigAt(Time time) { return score.getTimeSigAt(time); }
+}
+
+
+
+/*
+
     private final Instrument instrument;
     private final Timeline<IPartEvent> partEvents;
 
@@ -60,4 +107,4 @@ public class Part extends Timeline<IPartEvent> implements IPassage {
     public Iterator<Frame> iterator() {
         return masterT
     }
-}
+ */

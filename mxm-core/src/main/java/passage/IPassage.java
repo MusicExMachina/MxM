@@ -7,8 +7,8 @@ import events.Note;
 import base.time.Tempo;
 import base.time.TimeSig;
 import base.time.Time;
-import events.timing.TempoChange;
-import events.timing.TimeSigChange;
+import events.TempoChange;
+import events.TimeSigChange;
 
 import java.util.Iterator;
 
