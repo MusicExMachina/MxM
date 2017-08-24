@@ -1,6 +1,6 @@
-package events.properties;
+package base.eventProps;
 
-import sound.ISound;
+import base.sounds.ISound;
 
 import java.util.ArrayList;
 import java.util.Iterator;

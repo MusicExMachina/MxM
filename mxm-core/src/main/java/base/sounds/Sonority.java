@@ -1,7 +1,6 @@
-package base;
+package base.sounds;
 
 import base.relative.PitchClass;
-import sound.ISound;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,11 +19,11 @@ public class Sonority implements ISound {
         return new Sonority(pitches.subSet(from,to));
     }
 
-    public Harmony getHarmony() {
+    public Chord getHarmony() {
         Set<PitchClass> pitchClasses = new HashSet<>();
         for(Pitch pitch : pitches) {
             pitchClasses.add(pitch.getPitchClass());
         }
-        return new Harmony(pitchClasses);
+        return new Chord(pitchClasses);
     }
 }

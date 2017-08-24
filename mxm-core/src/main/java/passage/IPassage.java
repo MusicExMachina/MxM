@@ -1,12 +1,14 @@
 package passage;
 
+import base.sounds.*;
 import com.sun.istack.internal.NotNull;
-import events.Chord;
+import events.IMusicEvent;
 import events.Note;
-import events.properties.Tempo;
-import events.properties.TimeSig;
-import base.Sonority;
+import base.time.Tempo;
+import base.time.TimeSig;
 import base.time.Time;
+import events.timing.TempoChange;
+import events.timing.TimeSigChange;
 
 import java.util.Iterator;
 
@@ -16,20 +18,27 @@ import java.util.Iterator;
  * of a whole piece.
  */
 public interface IPassage extends Iterable<Frame> {
-    public @NotNull Time getStart();
-    public @NotNull Time getEnd();
-    public @NotNull Time getDuration();
+    // Iterators over specific event types
+    @NotNull Iterator<IMusicEvent> eventItr();               // All musical events
+    @NotNull Iterator<Note> noteItr();                       // All notes
+    @NotNull Iterator<Note<Pitch>> pitchedNoteItr();         // All pitched notes
+    @NotNull Iterator<Note<Noise>> unpitchedNoteItr();       // All unpitched notes
+    @NotNull Iterator<Note<Chord>> chordNoteItr();           // All chord notes
+    @NotNull Iterator<TimeSigChange> timeSigChangeItr();     // All time signature changes
+    @NotNull Iterator<TempoChange> tempoChangeItr();         // All tempo changes
 
-    public @NotNull Tempo getTempoAt(Time time);
-    public @NotNull TimeSig getTimeSigAt(Time time);
+    // Getters for iterators over events at a specific time
+    @NotNull Iterator<IMusicEvent> eventItrAt(Time time);            // All musical events
+    @NotNull Iterator<Note> noteItrAt(Time time);                    // All notes
+    @NotNull Iterator<Note<Pitch>> pitchedNoteItrAt(Time time);      // All pitched notes
+    @NotNull Iterator<Note<Noise>> unpitchedNoteItrAt(Time time);    // All unpitched notes
+    @NotNull Iterator<Note<Chord>> chordNoteItrAt(Time time);        // All chord notes
 
-/*
-    public @NotNull Iterator<Note> noteItrAt(Time time);
-    public @NotNull Iterator<Chord> chordItrAt(Time time);
+    // Getters at a specific time
+    @NotNull Harmony getHarmonyAt(Time time);        // Harmony at a time
+    @NotNull Sonority getSonorityAt(Time time);      // Sonority at a time
+    @NotNull Timbre getTimbreAt(Time time);          // Timbre at a time
 
-    public @NotNull Sonority getSonorityAt(Time time);
-    public @NotNull Sonority getHarmonyAt(Time time);
-*/
-    public @NotNull IPassage getExcerpt(Time start);
-    public @NotNull IPassage getExcerpt(Time start, Time end);
+    @NotNull Tempo getTempoAt(Time time);            // Tempo at a time
+    @NotNull TimeSig getTimeSigAt(Time time);        // Time Signature at a time
 }

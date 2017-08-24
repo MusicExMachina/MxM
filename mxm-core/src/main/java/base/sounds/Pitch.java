@@ -1,7 +1,7 @@
-package base;
+package base.sounds;
 
+import base.Interval;
 import base.relative.PitchClass;
-import sound.ISound;
 
 import java.util.ArrayList;
 import java.util.Comparator;

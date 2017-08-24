@@ -1,4 +1,4 @@
-package sound;
+package base.sounds;
 
 /**
  * ISound represents any "type" of sound that can be produced. Note that pitches are "types" of sound that have definite

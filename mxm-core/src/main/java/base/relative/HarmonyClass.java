@@ -170,7 +170,7 @@ public class HarmonyClass implements Iterable<IntervalClass> {
     public static final HarmonyClass POWER_CHORD = new HarmonyClass(
             IntervalClass.PERFECT_FIFTH);
 
-    /** All factors of this Harmony. */
+    /** All factors of this Chord. */
     private TreeSet<IntervalClass> factors;
 
     /**

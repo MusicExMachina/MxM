@@ -6,6 +6,5 @@ import base.time.Time;
 public interface IMusicEvent {
     // GETTERS
     public Time getTiming();
-    public Frame getFrame();
 }
 

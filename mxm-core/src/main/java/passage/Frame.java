@@ -1,6 +1,5 @@
 package passage;
 
-
 import com.sun.istack.internal.NotNull;
 import events.IMusicEvent;
 import base.time.Time;
@@ -10,8 +9,7 @@ import events.SpanningEvent;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-// Frames can be in multiple timelines... no one score can have two frames at the same base.time
-// mutable
+// Frames can
 public class Frame implements Iterable<IMusicEvent> {
     private final Time time;
 

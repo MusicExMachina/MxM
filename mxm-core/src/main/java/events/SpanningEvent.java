@@ -4,35 +4,20 @@ import base.time.Time;
 import passage.Frame;
 
 public abstract class SpanningEvent implements IMusicEvent {
-    private final Frame startframe;
-    private final Frame endframe;
+    private final Time startTime;
+    private final Time endTime;
     private final Time duration;
 
     // GETTERS
-    SpanningEvent(Frame startframe, Frame endframe) {
-        this.startframe = startframe;
-        this.endframe = endframe;
-        this.duration = endframe.getTime().minus(startframe.getTime());
+    protected SpanningEvent(Time startTime, Time endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.duration = endTime.minus(endTime);
     }
 
     // GETTERS
     @Override
-    public final Time getTiming() { return startframe.getTime(); }
-    public final Time getStart() {
-        return startframe.getTime();
-    }
-    public final Time getEnd() {
-        return endframe.getTime();
-    }
-    public final Time getDuration() {
-        return duration;
-    }
-    @Override
-    public final Frame getFrame() { return startframe; }
-    public final Frame getStartFrame() {
-        return startframe;
-    }
-    public final Frame getEndFrame() {
-        return startframe;
-    }
+    public final Time getTiming() { return startTime; }
+    public final Time getStart() { return endTime; }
+    public final Time getDuration() { return duration; }
 }

@@ -38,6 +38,6 @@ gradle-app.setting
 .gradletasknamecache
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
-# gradle/wrapper/gradle-wrapper.events.properties
+# gradle/wrapper/gradle-wrapper.base.eventProps
 
 # End of https://www.gitignore.io/api/java,gradle

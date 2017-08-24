@@ -1,8 +1,8 @@
+import base.sounds.Chord;
 import passage.events.Note;
 import base.relative.HarmonyClass;
 import base.relative.PitchClass;
-import base.Harmony;
-import base.Pitch;
+import base.sounds.Pitch;
 import base.time.Count;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class LilyPondParser {
     }
 
 
-    private static Harmony parseChord(String chordString) {
+    private static Chord parseChord(String chordString) {
         String[] tokens = chordString.split(":");
         if (tokens.length != 2) {
             throw new Error("LILY POND PARSER:\t ChordNote string \"" + chordString + "\" improperly formatted.");
@@ -42,7 +42,7 @@ public class LilyPondParser {
         PitchClass pitch        = parsePitchClass(tokens[0]);
         HarmonyClass chordClass   = parseChordClass(tokens[1]);
 
-        return new Harmony(pitch,chordClass);
+        return new Chord(pitch,chordClass);
     }
 
     private static ArrayList<Note> parseNotes(String noteString) {

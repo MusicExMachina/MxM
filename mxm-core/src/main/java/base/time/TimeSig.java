@@ -1,8 +1,6 @@
-package events.properties;
+package base.time;
 
-import base.time.Count;
 import base.time.IBarline;
-import base.time.Measure;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,7 +12,7 @@ import java.util.Iterator;
  * transitions between TimeSignatures work.
  *
  * Note: These are in many ways structurally similar to Counts. The major difference
- * is that there's no reason to ever reduce a events.properties.TimeSig from say, 4/4 to 2/2.
+ * is that there's no reason to ever reduce a base.time.TimeSig from say, 4/4 to 2/2.
  */
 public class TimeSig {
 
@@ -91,7 +89,7 @@ public class TimeSig {
     }
 
     /**
-     * A constructor for events.properties.TimeSig taking in a numerator and
+     * A constructor for base.time.TimeSig taking in a numerator and
      * denominator. passage.events.sounding.Note that these do not need to be reduced,
      * as TimeSignatures can be almost anything you want them
      * to be.
@@ -111,16 +109,16 @@ public class TimeSig {
     }
 
     /**
-     * Gets the denominator of this events.properties.TimeSig.
-     * @return This events.properties.TimeSig's denominator.
+     * Gets the denominator of this base.time.TimeSig.
+     * @return This base.time.TimeSig's denominator.
      */
     public int getNumerator() {
         return numerator;
     }
 
     /**
-     * Gets the denominator of this events.properties.TimeSig.
-     * @return This events.properties.TimeSig's denominator.
+     * Gets the denominator of this base.time.TimeSig.
+     * @return This base.time.TimeSig's denominator.
      */
     public int getDenominator() {
         return denominator;
@@ -149,15 +147,15 @@ public class TimeSig {
 
     /**
      * Returns a nicely-formatted String
-     * of this events.properties.TimeSig (for debug).
-     * @return This events.properties.TimeSig's String representation.
+     * of this base.time.TimeSig (for debug).
+     * @return This base.time.TimeSig's String representation.
      */
     public String toString() {
         return getNumerator() + "/" + getDenominator() + "base/time ";
     }
 
     /**
-     * A noteQualities (generated) equals() method for events.properties.TimeSig.
+     * A noteQualities (generated) equals() method for base.time.TimeSig.
      * @param o The Object to compare this to.
      * @return If these two Objects are equal.
      */
@@ -174,7 +172,7 @@ public class TimeSig {
     /**
      * A simple hash code in order to allow storage
      * in certain Collections, like HashSets.
-     * @return The hash code for this events.properties.TimeSig.
+     * @return The hash code for this base.time.TimeSig.
      */
     @Override
     public int hashCode() {

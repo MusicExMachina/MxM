@@ -1,18 +1,15 @@
 package events;
 
 import base.time.Time;
-import passage.Frame;
 
 public abstract class InstantEvent implements IMusicEvent {
-    private final Frame frame;
+    private final Time time;
 
-    InstantEvent(Frame frame) {
-        this.frame = frame;
+    protected InstantEvent(Time time) {
+        this.time = time;
     }
 
     // GETTERS
     @Override
-    public final Time getTiming() { return frame.getTime(); }
-    @Override
-    public final Frame getFrame() { return frame; }
+    public final Time getTiming() { return time; }
 }

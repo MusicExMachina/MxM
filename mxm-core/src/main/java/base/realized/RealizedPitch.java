@@ -1,6 +1,6 @@
 package base.realized;
 
-import base.Pitch;
+import base.sounds.Pitch;
 
 public class RealizedPitch extends Pitch implements IRealized {
     /**

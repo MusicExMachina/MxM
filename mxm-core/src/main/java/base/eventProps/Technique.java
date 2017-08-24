@@ -1,4 +1,4 @@
-package events.properties;
+package base.eventProps;
 
 /**
  * Techniques encompass any style of playing on an instrument that modifies the tone/style of any Pitch an instrument

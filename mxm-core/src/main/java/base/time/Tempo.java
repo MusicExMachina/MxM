@@ -1,9 +1,9 @@
-package events.properties;
+package base.time;
 
 import java.util.Comparator;
 
 /**
- * events.properties.Tempo is a glorified int wrapper, which allows for a little more dress
+ * base.time.Tempo is a glorified int wrapper, which allows for a little more dress
  * and prevents problems down the line with arguments to constructors.
  */
 public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {

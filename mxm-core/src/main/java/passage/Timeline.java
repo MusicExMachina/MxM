@@ -3,29 +3,39 @@ package passage;
 import com.sun.istack.internal.NotNull;
 import events.IMusicEvent;
 import base.time.Time;
+import events.SpanningEvent;
 
 import java.util.*;
 
 // mutable
-abstract class Timeline <MusicEventType extends IMusicEvent> implements Iterable<Frame> {
-
-    private final TreeMap<Time,Frame> frames;
+class Timeline <MusicEventType extends IMusicEvent> implements Iterable<Frame> {
 
     private final Timeline parent;
-    private final List<Timeline> children;
+    private final TreeMap<Time,Frame> frames;
 
     Timeline() {
-        this.frames = new TreeMap<>();
         this.parent = null;
-        this.children = new ArrayList<>();
+        this.frames = new TreeMap<>();
     }
 
     Timeline(@NotNull Timeline parent) {
-        this.frames = new TreeMap<>();
         this.parent = parent;
-        this.children = new ArrayList<>();
-        parent.attach(this);
+        this.frames = new TreeMap<>();
     }
+
+
+
+    private Music add() {
+
+    }
+
+
+
+
+
+
+
+
 
     private void put(@NotNull Frame frame) {
         frames.put(frame.getTime(),frame);
@@ -33,11 +43,8 @@ abstract class Timeline <MusicEventType extends IMusicEvent> implements Iterable
             timeline.put(frame);
         }
     }
-    private void attach(@NotNull Timeline timeline) {
-        children.add(timeline);
-    }
 
-    @NotNull Frame getFrameAtOrAdd(@NotNull Time time) {
+    private @NotNull Frame getFrameAtOrAdd(@NotNull Time time) {
         if(frames.containsKey(time)) {
             return frames.get(time);
         }
@@ -48,16 +55,19 @@ abstract class Timeline <MusicEventType extends IMusicEvent> implements Iterable
         }
     }
 
-    public @NotNull Time getStart() { return frames.firstKey(); }
-    public @NotNull Time getEnd() { return frames.lastKey(); }
-    public @NotNull Time getDuration() { return getStart().minus(getEnd()); }
 
+    // PUBLIC GETTERS
+    public @NotNull Frame getFrameAt(Time time) {
+        return frames.get(time);
+    }
     public @NotNull Frame getFrameBefore(Time time) {
         return frames.floorEntry(time).getValue();
     }
     public @NotNull Frame getFrameAfter(Time time) {
         return frames.ceilingEntry(time).getValue();
     }
+    public @NotNull Frame getFirstFrame() { return frames.firstEntry().getValue(); }
+    public @NotNull Frame getLastFrame() { return frames.lastEntry().getValue(); }
 
     @Override
     public Iterator<Frame> iterator() {
