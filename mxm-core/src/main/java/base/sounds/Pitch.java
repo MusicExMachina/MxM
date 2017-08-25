@@ -2,6 +2,7 @@ package base.sounds;
 
 import base.Interval;
 import base.relative.PitchClass;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -80,8 +81,8 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
      * @param octave The octave of this pitch
      * @return A pitch of this pitch class and octave
      */
-    public static Pitch get(PitchClass pitchClass, int octave) {
-        int value = pitchClass.getValue() + (octave + MIN_OCTAVE)*12;
+    public static Pitch get(@NotNull PitchClass pitchClass, int octave) {
+        int value = pitchClass.getValue()+ (octave + MIN_OCTAVE)*12;
         if(value >= MIN_PITCH_VALUE && value <= MAX_PITCH_VALUE )
             return ALL.get(value - MIN_PITCH_VALUE);
         else

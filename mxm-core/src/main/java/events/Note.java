@@ -1,7 +1,7 @@
 package events;
 
 import base.time.Time;
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import base.eventProps.Accent;
 import base.eventProps.Dynamic;
 import base.eventProps.Technique;
@@ -19,7 +19,7 @@ public class Note<SoundType extends ISound> extends SpanningEvent implements IPa
     private Accent accent;
 
     // CONSTRUCTOR
-    protected Note(@NotNull Part part, @NotNull SoundType sound, @NotNull Time startTime, @NotNull Time endTime) {
+    public Note(@NotNull Part part, @NotNull SoundType sound, @NotNull Time startTime, @NotNull Time endTime) {
         super(startTime, endTime);
         this.part = part;
         this.sound = sound;

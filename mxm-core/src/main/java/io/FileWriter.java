@@ -9,18 +9,8 @@ import java.util.Collection;
  */
 public abstract class FileWriter<T> {
 
-    /**
-     *
-     * @param type
-     * @param filename
-     */
     public abstract void write(T type, String filename);
 
-    /**
-     * Writes a number of classes to a
-     * @param types
-     * @param filename
-     */
     public void write(Collection<T> types, String filename) {
         ArrayList<T> toReturn = new ArrayList<>();
         int index = 0;

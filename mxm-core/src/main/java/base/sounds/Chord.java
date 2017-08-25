@@ -1,6 +1,6 @@
 package base.sounds;
 
-import base.relative.HarmonyClass;
+import base.relative.ChordClass;
 import base.relative.IntervalClass;
 import base.relative.PitchClass;
 
@@ -11,19 +11,23 @@ import java.util.Set;
 public class Chord implements ISound, Iterable<PitchClass> {
 
     private HashSet<PitchClass> factors;
-    private HarmonyClass harmonyClass;
+    private ChordClass chordClass;
 
-    public Chord(Set<PitchClass> pitchClasses){
+    public static Chord get(PitchClass root, ChordClass chordClass) {
+        return new Chord(root,chordClass);
+    }
+
+    protected Chord(Set<PitchClass> pitchClasses){
         this.factors = (HashSet<PitchClass>) pitchClasses;
     }
 
-    public Chord(PitchClass root, HarmonyClass harmonyClass) {
-        /* For every interval in the HarmonyClass (which holds all intervals above
+    protected Chord(PitchClass root, ChordClass chordClass) {
+        /* For every interval in the ChordClass (which holds all intervals above
             the root, add a chord factor that is also that high above the root */
-        for(IntervalClass intervalClass : harmonyClass) {
+        for(IntervalClass intervalClass : chordClass) {
             factors.add(root.transpose(intervalClass));
         }
-        this.harmonyClass = harmonyClass;
+        this.chordClass = chordClass;
     }
 
     @Override

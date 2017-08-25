@@ -1,7 +1,6 @@
 package events;
 
 import base.time.Time;
-import passage.Frame;
 
 public abstract class SpanningEvent implements IMusicEvent {
     private final Time startTime;

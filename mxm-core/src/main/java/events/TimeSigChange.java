@@ -1,8 +1,7 @@
 package events;
 
 import base.time.Measure;
-import com.sun.istack.internal.NotNull;
-import events.InstantEvent;
+import org.jetbrains.annotations.NotNull;
 import base.time.TimeSig;
 import passage.Score;
 
@@ -13,7 +12,7 @@ public class TimeSigChange extends InstantEvent implements IScoreEvent {
     private final Score score;
     private final TimeSig timeSig;
 
-    TimeSigChange(@NotNull Score score, @NotNull Measure timing, @NotNull  TimeSig timeSig) {
+    public TimeSigChange(@NotNull Score score, @NotNull Measure timing, @NotNull TimeSig timeSig) {
         super(timing);
         this.score = score;
         this.timeSig = timeSig;

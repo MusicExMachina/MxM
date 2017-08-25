@@ -1,6 +1,6 @@
 package base.time;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public class Measure extends Time {
     private int measureNumber;

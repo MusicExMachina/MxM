@@ -1,11 +1,11 @@
 package base.time;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import javafx.util.Pair;
 
 public abstract class Time implements Comparable<Time> {
-    public static int PICKUP_MEASURE    = -1;
-    public static int MEASURE_ONE       = 0;
+    public static Measure PICKUP_MEASURE    = get(-1);
+    public static Measure MEASURE_ONE       = get(0);
 
     static Pair<Integer,Integer> reduce(int numerator, int denominator) {
         // Euclid's gcd algorithm, everyone's favorite
@@ -49,7 +49,7 @@ public abstract class Time implements Comparable<Time> {
     public static Time get(int numerator, int denominator) {
         Pair<Integer,Integer> pair = reduce(numerator,denominator);
         if(pair.getValue() == 1) return Measure.get(pair.getKey());
-        else return Count.get(pair.getKey(),pair.getValue());
+        else return new Count(pair.getKey(),pair.getValue());
     }
     public static Time get(int numerator, int denominator, int measureNum) {
         int newNumerator = numerator + denominator*measureNum;
@@ -85,7 +85,7 @@ class Count extends Time {
     private final Beat beat;
     private final Measure measure;
 
-    public Count(int numerator, int denominator) {
+    Count(int numerator, int denominator) {
         this.numerator = numerator;
         this.denominator = denominator;
         this.beat = Beat.get(numerator % denominator, denominator);

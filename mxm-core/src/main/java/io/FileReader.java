@@ -10,11 +10,6 @@ import java.util.Collection;
  */
 public abstract class FileReader<T> {
 
-    /**
-     *
-     * @param filename
-     * @return
-     */
     public abstract T read(String filename);
 
     public Collection<T> read(Collection<String> filenames) {

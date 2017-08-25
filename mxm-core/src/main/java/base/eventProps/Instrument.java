@@ -28,7 +28,7 @@ public class Instrument {
 
     /**
      * Returns an iterator over all possible sounds that this instrument can produce.
-     * @returnan An iterator over all possible sounds that this instrument can produce
+     * @return An iterator over all possible sounds that this instrument can produce
      */
     public Iterator<ISound> possibleSoundItr() {
         return possibleSounds.iterator();

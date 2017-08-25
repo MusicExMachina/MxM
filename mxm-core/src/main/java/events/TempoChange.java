@@ -1,7 +1,7 @@
 package events;
 
 import base.time.Time;
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import events.InstantEvent;
 import base.time.Tempo;
 import passage.Score;

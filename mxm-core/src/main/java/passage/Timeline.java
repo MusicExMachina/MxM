@@ -1,33 +1,71 @@
 package passage;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import events.IMusicEvent;
 import base.time.Time;
 import events.InstantEvent;
 import events.SpanningEvent;
+import events.TempoChange;
 
 import java.util.*;
 
 // mutable
-@SuppressWarnings("unchecked")
-class Timeline <MusicEventType extends IMusicEvent> implements Iterable<Frame<MusicEventType>> {
+abstract class Timeline <MusicEventType extends IMusicEvent> {
     private final TreeMap<Time, Frame<MusicEventType>> frames;
-
     Timeline() {
         this.frames = new TreeMap<>();
     }
-
     private @NotNull Frame<MusicEventType> getFrameAtOrAdd(@NotNull Time time) {
-        if(frames.containsKey(time)) {
-            return frames.get(time);
-        }
-        else {
-            Frame frame = new Frame(time);
-            put(frame);
-            return frame;
+        return frames.containsKey(time) ? frames.get(time) : frames.put(time, new Frame<>(time));
+    }
+}
+
+
+@SuppressWarnings("unchecked")
+class SerialTimeline <MusicEventType extends IMusicEvent> implements Iterable<MusicEventType> {
+    private final TreeMap<Time, MusicEventType> events;
+
+    SerialTimeline() {
+        this.events = new TreeMap<>();
+    }
+
+    // ADDER
+    public void addEvent(MusicEventType event) {
+        if (events.get(event.getTiming()) == null) {
+            events.put(event.getTiming(), event);
+        } else {
+            throw new Error("Serial Timeline: Cannot add one event on top of another!");
         }
     }
 
+    // PUBLIC GETTERS
+    public MusicEventType getFirstEvent() { return events.firstEntry().getValue(); }
+    public MusicEventType getLastEvent() { return events.lastEntry().getValue(); }
+    public MusicEventType getEventAt(Time time) {
+        return events.get(time);
+    }
+    public MusicEventType getEventBefore(Time time) {
+        return events.floorEntry(time).getValue();
+    }
+    public MusicEventType getEventAfter(Time time) {
+        return events.ceilingEntry(time).getValue();
+    }
+
+    @Override
+    public @NotNull Iterator<MusicEventType> iterator() {
+        Collection constValues = java.util.Collections.unmodifiableCollection(events.values());
+        return constValues.iterator();
+    }
+}
+
+
+@SuppressWarnings("unchecked")
+class ParallelTimeline <MusicEventType extends IMusicEvent> implements Iterable<Frame<MusicEventType>> {
+    private final TreeMap<Time, Frame<MusicEventType>> frames;
+
+    ParallelTimeline() {
+        this.frames = new TreeMap<>();
+    }
 
     // PUBLIC GETTERS
     public @NotNull Frame<MusicEventType> getFirstFrame() { return frames.firstEntry().getValue(); }
@@ -48,8 +86,6 @@ class Timeline <MusicEventType extends IMusicEvent> implements Iterable<Frame<Mu
         return constValues.iterator();
     }
 }
-
-
 
 
 

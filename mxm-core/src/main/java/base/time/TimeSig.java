@@ -1,7 +1,5 @@
 package base.time;
 
-import base.time.IBarline;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -101,7 +99,7 @@ public class TimeSig {
         this.denominator            = denominator;
         this.preferredSubdivision   = preferredSubdivision;
         this.preferredNoteLength    = new Count[preferredSubdivision.length+1];
-        this.preferredNoteLength[0] = getMeasureSize();
+        //this.preferredNoteLength[0] = Beat.;
 
         for(int i = 1; i < preferredNoteLength.length; i++) {
            // this.preferredNoteLength[i] = preferredNoteLength[i - 1].dividedBy(getPreferredSubdivision(i - 1));
@@ -123,8 +121,6 @@ public class TimeSig {
     public int getDenominator() {
         return denominator;
     }
-
-    public Count getMeasureSize() { return new Count(Measure.PICKUP, new IBarline.Beat(numerator,denominator)); }
 
     public int getPreferredSubdivision(int level) {
         if(level < 0)

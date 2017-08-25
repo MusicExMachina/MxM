@@ -9,6 +9,7 @@ allprojects {
     }
 
     dependencies {
+        compile 'org.jetbrains:annotations:15.0'
         testCompile 'junit:junit4.9'
     }
 

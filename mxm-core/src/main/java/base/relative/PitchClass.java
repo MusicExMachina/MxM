@@ -1,52 +1,53 @@
 package base.relative;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class PitchClass {
-
     private static final int MIN_PITCH_CLASS_VALUE = 0;
     private static final int MAX_PITCH_CLASS_VALUE = 11;
-    private static final ArrayList<PitchClass> ALL = new ArrayList<>();
+    private static final PitchClass[] ALL = new PitchClass[MAX_PITCH_CLASS_VALUE - MIN_PITCH_CLASS_VALUE + 1];
     static {
-        for(int pitchClassValue = MIN_PITCH_CLASS_VALUE; pitchClassValue <= MIN_PITCH_CLASS_VALUE; pitchClassValue++)
-            ALL.add(new PitchClass(pitchClassValue));
+        for(int pitchClassValue = MIN_PITCH_CLASS_VALUE; pitchClassValue <= MIN_PITCH_CLASS_VALUE; pitchClassValue++) {
+            ALL[pitchClassValue] = new PitchClass(pitchClassValue);
+        }
     }
 
-    public static PitchClass C_FLAT     = getInstance(11);
-    public static PitchClass C_NATURAL  = getInstance(0);
-    public static PitchClass C_SHARP    = getInstance(1);
-    public static PitchClass D_FLAT     = getInstance(1);
-    public static PitchClass D_NATURAL  = getInstance(2);
-    public static PitchClass D_SHARP    = getInstance(3);
-    public static PitchClass E_FLAT     = getInstance(3);
-    public static PitchClass E_NATURAL  = getInstance(4);
-    public static PitchClass E_SHARP    = getInstance(5);
-    public static PitchClass F_FLAT     = getInstance(4);
-    public static PitchClass F_NATURAL  = getInstance(5);
-    public static PitchClass F_SHARP    = getInstance(6);
-    public static PitchClass G_FLAT     = getInstance(6);
-    public static PitchClass G_NATURAL  = getInstance(7);
-    public static PitchClass G_SHARP    = getInstance(8);
-    public static PitchClass A_FLAT     = getInstance(8);
-    public static PitchClass A_NATURAL  = getInstance(9);
-    public static PitchClass A_SHARP    = getInstance(10);
-    public static PitchClass B_FLAT     = getInstance(10);
-    public static PitchClass B_NATURAL  = getInstance(11);
-    public static PitchClass B_SHARP    = getInstance(0);
+    public static final PitchClass C_FLAT = getInstance(11);
+    public static final PitchClass C_NATURAL = getInstance(11);
+    public static final PitchClass C_SHARP = getInstance(11);
+    public static final PitchClass D_FLAT = getInstance(11);
+    public static final PitchClass D_NATURAL = getInstance(11);
+    public static final PitchClass D_SHARP = getInstance(11);
+    public static final PitchClass E_FLAT = getInstance(11);
+    public static final PitchClass E_NATURAL = getInstance(11);
+    public static final PitchClass E_SHARP = getInstance(11);
+    public static final PitchClass F_FLAT = getInstance(11);
+    public static final PitchClass F_NATURAL = getInstance(11);
+    public static final PitchClass F_SHARP = getInstance(11);
+    public static final PitchClass G_FLAT = getInstance(11);
+    public static final PitchClass G_NATURAL = getInstance(11);
+    public static final PitchClass G_SHARP = getInstance(11);
+    public static final PitchClass A_FLAT = getInstance(11);
+    public static final PitchClass A_NATURAL = getInstance(11);
+    public static final PitchClass A_SHARP = getInstance(11);
+    public static final PitchClass B_FLAT = getInstance(11);
+    public static final PitchClass B_NATURAL = getInstance(11);
+    public static final PitchClass B_SHARP = getInstance(11);
 
-    public static Iterator<PitchClass> iterator() { return ALL.iterator(); }
+    public static Iterator<PitchClass> iterator() { return new ArrayList<>(Arrays.asList(ALL)).iterator(); }
 
     public static PitchClass getInstance(int value) {
         if(value >= MIN_PITCH_CLASS_VALUE && value <= MAX_PITCH_CLASS_VALUE)
-            return ALL.get(value);
+            return ALL[value];
         else
             throw new Error("PITCH CLASS:\tPitch class out of range.");
     }
 
     private int value;
 
-    public PitchClass(int value) {
+    protected PitchClass(int value) {
         this.value = (byte)value;
     }
 

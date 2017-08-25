@@ -1,7 +1,6 @@
 package events;
 
-import com.sun.istack.internal.NotNull;
-import passage.Frame;
+import org.jetbrains.annotations.NotNull;
 import base.time.Time;
 
 // An event can be in multiple frames, but only one score
