@@ -1,4 +1,5 @@
 package base.relative;
 
-public class KeyClass {
+public class KeyClass implements IRelative {
+    
 }

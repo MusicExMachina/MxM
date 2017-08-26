@@ -24,6 +24,6 @@ public class Sonority implements ISound {
         for(Pitch pitch : pitches) {
             pitchClasses.add(pitch.getPitchClass());
         }
-        return new Chord(pitchClasses);
+        return null;// new Chord(pitchClasses);
     }
 }

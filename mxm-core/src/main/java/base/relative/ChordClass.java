@@ -22,23 +22,19 @@ public class ChordClass implements Iterable<IntervalClass> {
     /** Diminished chords */
     public static final ChordClass DIMINISHED = new ChordClass(MINOR_THIRD, TRITONE);
     /** Dominant seventh chords */
-    public static final ChordClass DOMINANT_SEVENTH = new ChordClass(MAJOR_THIRD, PERFECT_FIFTH, IntervalClass.MINOR_SEVENTH);
+    public static final ChordClass DOM_SEVENTH = new ChordClass(MAJOR_THIRD, PERFECT_FIFTH, IntervalClass.MINOR_SEVENTH);
     /** Major seventh chords */
     public static final ChordClass MAJOR_SEVENTH = new ChordClass(MAJOR_THIRD, PERFECT_FIFTH, IntervalClass.MINOR_SEVENTH);
     /** Minor seventh chords */
     public static final ChordClass MINOR_SEVENTH = new ChordClass(MINOR_THIRD, PERFECT_FIFTH, IntervalClass.MINOR_SEVENTH);
     /** Diminished seventh chords */
-    public static final ChordClass DIMINISHED_SEVENTH = new ChordClass(MINOR_THIRD, TRITONE, IntervalClass.MAJOR_SIXTH);
+    public static final ChordClass DIM_SEVENTH = new ChordClass(MINOR_THIRD, TRITONE, IntervalClass.MAJOR_SIXTH);
     /** Augmented seventh chords */
-    public static final ChordClass AUGMENTED_SEVENTH = new ChordClass(MAJOR_THIRD, PERFECT_FIFTH, IntervalClass.MAJOR_SEVENTH);
+    public static final ChordClass AUG_SEVENTH = new ChordClass(MAJOR_THIRD, PERFECT_FIFTH, IntervalClass.MAJOR_SEVENTH);
     /** Half-diminished seventh chords */
-    public static final ChordClass HALF_DIMINISHED_SEVENTH = new ChordClass(MINOR_THIRD, TRITONE, IntervalClass.MINOR_SEVENTH);
-
+    public static final ChordClass HALF_DIM_SEVENTH = new ChordClass(MINOR_THIRD, TRITONE, IntervalClass.MINOR_SEVENTH);
     /** Minor-major seventh chords */
-    public static final ChordClass MINOR_MAJOR_SEVENTH = new ChordClass(
-            MINOR_THIRD,
-            PERFECT_FIFTH,
-            IntervalClass.MINOR_SEVENTH);
+    public static final ChordClass MINOR_MAJOR_SEVENTH = new ChordClass(MINOR_THIRD, PERFECT_FIFTH, IntervalClass.MINOR_SEVENTH);
 
     /** Major sixth chords */
     public static final ChordClass MAJOR_SIXTH = new ChordClass(

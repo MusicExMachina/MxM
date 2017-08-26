@@ -14,6 +14,6 @@ public class Key extends Chord {
     KeyClass keyClass;
 
     public Key(Set<PitchClass> pitchClasses) {
-        super(pitchClasses);
+        super(null,null);
     }
 }

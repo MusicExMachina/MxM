@@ -1,15 +1,18 @@
 package base.relative;
 
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
 /**
- * Pitch class stuff
+ * Pitch classes represent a collapsing of {@link base.sounds.Pitch} about the octave. To put it another way, a C5 and
+ * a C0 are the same pitch class- C. Pitch classes parallel pitches in many respects- they can be transposed, and also
+ * follow the flyweight (interning) design pattern. There are only 12 pitch classes, which can be accessed via static
+ * variables like {@link #C_NATURAL} or {@link #get(int)}.
  */
-public class PitchClass {
+public class PitchClass implements IRelative {
+
     /** The maximum pitch class value, which represents C */
     private static final int MIN_PITCH_CLASS_VALUE = 0;
     /** The maximum pitch class value, which represents B */
@@ -83,7 +86,10 @@ public class PitchClass {
             throw new Error("PITCH CLASS: Pitch class of size " + value + " is out of range.");
         }
     }
-    /** An iterator over all possible pitch classes. */
+    /**
+     * Gets an iterator which enumerates all valid pitch classes.
+     * @return An iterator over all valid pitch classes
+     */
     public static @NotNull Iterator<PitchClass> iterator() { return new ArrayList<>(Arrays.asList(ALL)).iterator(); }
 
     /** The value of this pitch class (between MIN_PITCH_CLASS_VALUE and MAX_PITCH_CLASS_VALUE) */
@@ -92,7 +98,7 @@ public class PitchClass {
      * A private constructor for PitchClass which is hidden by the flyweight design pattern (use get() instead).
      * @param value the value of this pitch class
      */
-    private PitchClass(int value) {
+    protected PitchClass(int value) {
         this.value = (byte)value;
     }
     /**
