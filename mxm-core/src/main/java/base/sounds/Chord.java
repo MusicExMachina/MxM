@@ -22,6 +22,7 @@ public class Chord implements ISound, Iterable<PitchClass> {
     }
 
     protected Chord(PitchClass root, ChordClass chordClass) {
+        factors = new HashSet<>();
         /* For every interval in the ChordClass (which holds all intervals above
             the root, add a chord factor that is also that high above the root */
         for(IntervalClass intervalClass : chordClass) {

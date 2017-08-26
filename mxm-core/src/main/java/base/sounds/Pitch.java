@@ -112,7 +112,7 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
      */
     private Pitch(int value) {
         this.value = value;
-        this.pitchClass = PitchClass.getInstance(value%12);
+        this.pitchClass = PitchClass.get(value%12);
         this.octave = value/12;
     }
 

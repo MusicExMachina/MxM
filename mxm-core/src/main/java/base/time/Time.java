@@ -65,8 +65,8 @@ public abstract class Time implements Comparable<Time> {
     @Override
     public final int compareTo(Time other) {
         if(this.equals(other)) return 0;
-        if(this.getMeasure().getNum() > other.getMeasure().getNum()) return 1;
-        if(this.getMeasure().getNum() > other.getMeasure().getNum()) return -1;
+        if(this.getMeasure().getNumber() > other.getMeasure().getNumber()) return 1;
+        if(this.getMeasure().getNumber() > other.getMeasure().getNumber()) return -1;
         return this.getBeat().compareTo(other.getBeat());
     }
     public final boolean equals(Time other) {

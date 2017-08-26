@@ -1,6 +1,9 @@
 package base.relative;
 
+import base.Interval;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 
@@ -17,17 +20,27 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
 
     /** The lowest interval class, better known as "an upward unison" */
     private static final int MIN_INTERVAL_CLASS_VALUE = 0;
-
     /** The highest interval class, better known as "an upward major seventh" */
     private static final int MAX_INTERVAL_CLASS_VALUE = 11;
 
     /** All possible interval classes */
-    private static final ArrayList<IntervalClass> ALL = new ArrayList<>();
-
-    // Initialize the "ALL" collection
+    private static final IntervalClass[] ALL = new IntervalClass[MAX_INTERVAL_CLASS_VALUE - MIN_INTERVAL_CLASS_VALUE + 1];
     static {
-        for(int intervalValue = MIN_INTERVAL_CLASS_VALUE; intervalValue < MAX_INTERVAL_CLASS_VALUE; intervalValue++)
-            ALL.add(getInstance(intervalValue));
+        for(int val = MIN_INTERVAL_CLASS_VALUE; val <= MAX_INTERVAL_CLASS_VALUE; val++) {
+            ALL[val] = new IntervalClass(val);
+        }
+        UNISON            = getInstance(0);
+        MINOR_SECOND      = getInstance(1);
+        MAJOR_SECOND      = getInstance(2);
+        MINOR_THIRD       = getInstance(3);
+        MAJOR_THIRD       = getInstance(4);
+        PERFECT_FOURTH    = getInstance(5);
+        TRITONE           = getInstance(6);
+        PERFECT_FIFTH     = getInstance(7);
+        MINOR_SIXTH       = getInstance(8);
+        MAJOR_SIXTH       = getInstance(9);
+        MINOR_SEVENTH     = getInstance(10);
+        MAJOR_SEVENTH     = getInstance(11);
     }
 
     //////////////////////////////
@@ -35,18 +48,18 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     //////////////////////////////
 
     /* These twelve IntervalClasses are all that can exist. */
-    public static final IntervalClass UNISON            = getInstance(0);
-    public static final IntervalClass MINOR_SECOND      = getInstance(1);
-    public static final IntervalClass MAJOR_SECOND      = getInstance(2);
-    public static final IntervalClass MINOR_THIRD       = getInstance(3);
-    public static final IntervalClass MAJOR_THIRD       = getInstance(4);
-    public static final IntervalClass PERFECT_FOURTH    = getInstance(5);
-    public static final IntervalClass TRITONE           = getInstance(6);
-    public static final IntervalClass PERFECT_FIFTH     = getInstance(7);
-    public static final IntervalClass MINOR_SIXTH       = getInstance(8);
-    public static final IntervalClass MAJOR_SIXTH       = getInstance(9);
-    public static final IntervalClass MINOR_SEVENTH     = getInstance(10);
-    public static final IntervalClass MAJOR_SEVENTH     = getInstance(11);
+    public static final IntervalClass UNISON;
+    public static final IntervalClass MINOR_SECOND;
+    public static final IntervalClass MAJOR_SECOND;
+    public static final IntervalClass MINOR_THIRD;
+    public static final IntervalClass MAJOR_THIRD;
+    public static final IntervalClass PERFECT_FOURTH;
+    public static final IntervalClass TRITONE;
+    public static final IntervalClass PERFECT_FIFTH;
+    public static final IntervalClass MINOR_SIXTH;
+    public static final IntervalClass MAJOR_SIXTH;
+    public static final IntervalClass MINOR_SEVENTH;
+    public static final IntervalClass MAJOR_SEVENTH;
 
     //////////////////////////////
     //      Static methods      //
@@ -57,7 +70,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      * @return An iterator over all valid interval classes
      */
     public static Iterator<IntervalClass> iterator() {
-        return ALL.iterator();
+        return new ArrayList<>(Arrays.asList(ALL)).iterator();
     }
 
     /**
@@ -67,7 +80,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      */
     public static IntervalClass getInstance(int size) {
         if(size >= MIN_INTERVAL_CLASS_VALUE && size <= MAX_INTERVAL_CLASS_VALUE) {
-            return ALL.get(size);
+            return ALL[size];
         }
         else {
             throw new Error("INTERVAL CLASS:\tInterval class out of range.");
@@ -91,7 +104,6 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      */
     private IntervalClass(int size) {
         this.size = size;
-        ALL.add(this);
     }
 
     //////////////////////////////

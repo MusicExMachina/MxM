@@ -100,7 +100,7 @@ public class LilyPondParser {
             }
             else throw new Error("LilyPondParser:\tAccidental \""+ pitchClassToken +"\" cannot be parsed");
         }
-        return PitchClass.getInstance(value);
+        return PitchClass.get(value);
     }
 
     private static ChordClass parseChordClass(String chordClassString) {
