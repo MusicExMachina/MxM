@@ -2,28 +2,38 @@ group 'com.musicexmachina'
 version '1.0-SNAPSHOT'
 
 allprojects {
+    // Java language compilation
     apply plugin: 'java'
+    // Python language compilation
+    //apply plugin: 'com.linkedin.python-sdist'
 
     repositories {
         mavenCentral()
     }
 
     dependencies {
+        // Make sure annotations like @NotNull are supported
         compile 'org.jetbrains:annotations:15.0'
+        // For Py4J (python use of Java classes)
+        compile group: 'net.sf.py4j', name: 'py4j', version: '0.10.4'
+        // For JUnit testing
         testCompile 'junit:junit4.9'
-    }
+        // Allows Python to be built in
+        //python 'pypi:requests:2.5.1'
+        //test 'pypi:mock:1.0.1'
 
+    }
     javadoc {
         source = sourceSets.main.allJava
         classpath = configurations.compile
     }
 }
 
+// Merges all of the project javadocs into one
 buildscript {
     repositories { jcenter() }
     dependencies {
         classpath 'com.netflix.nebula:gradle-aggregate-javadocs-plugin:2.2.+'
     }
 }
-
 apply plugin: 'nebula-aggregate-javadocs'

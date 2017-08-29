@@ -1,4 +1,4 @@
-package base.eventProps;
+package base;
 
 import base.sounds.ISound;
 

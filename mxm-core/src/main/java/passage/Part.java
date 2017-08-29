@@ -1,6 +1,6 @@
 package passage;
 
-import base.eventProps.Instrument;
+import base.Instrument;
 import base.sounds.*;
 import base.time.Tempo;
 import base.time.Time;
@@ -26,9 +26,9 @@ public abstract class Part<SoundType extends ISound> implements IPassage {
 
     // Iterators over specific event types
     @Override
-    public final @NotNull Iterator<TimeSigChange> timeSigChangeItr() { return getScore().timeSigChangeItr(); }
+    public final @NotNull SerialTimeline<TimeSigChange> getTimeSigChanges() { return getScore().getTimeSigChanges(); }
     @Override
-    public final @NotNull Iterator<TempoChange> tempoChangeItr() { return getScore().tempoChangeItr(); }
+    public final @NotNull SerialTimeline<TempoChange> getTempoChanges() { return getScore().getTempoChanges(); }
 
     // Getters for events during a specific time
     @Override

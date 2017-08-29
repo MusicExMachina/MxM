@@ -58,11 +58,9 @@ public abstract class Score implements IPassage {
     }
 
     @Override
-    public Iterator<TimeSigChange> timeSigChangeItr() { return timeSigChanges.iterator(); }
+    public final @NotNull SerialTimeline<TimeSigChange> getTimeSigChanges() { return timeSigChanges; }
     @Override
-    public Iterator<TempoChange> tempoChangeItr() { return tempoChanges.iterator(); }
-    @Override
-
+    public final @NotNull SerialTimeline<TempoChange> getTempoChanges() { return tempoChanges; }
 
     public Iterator<Note> noteItrAt(Time time) { return allNotes.getFrameBefore(time).eventsNotEndedItr(); }
     @Override

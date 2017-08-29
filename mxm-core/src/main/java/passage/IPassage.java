@@ -18,8 +18,8 @@ import java.util.Iterator;
  */
 public interface IPassage {
     // Iterators over specific event types
-    @NotNull Iterator<TimeSigChange> timeSigChangeItr();     // All time signature changes
-    @NotNull Iterator<TempoChange> tempoChangeItr();         // All tempo changes
+    @NotNull SerialTimeline<TimeSigChange> getTimeSigChanges();      // All time signature changes
+    @NotNull SerialTimeline<TempoChange> getTempoChanges();          // All tempo changes
 
     // Getters for iterators over events during a specific time
     @NotNull Iterator<Note> noteItrAt(Time time);                    // All notes

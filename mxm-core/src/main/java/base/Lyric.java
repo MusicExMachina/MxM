@@ -1,4 +1,4 @@
-package base.eventProps;
+package base;
 
 /**
  * Created by celenp on 6/11/2017.

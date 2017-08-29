@@ -28,8 +28,8 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
     private static final ArrayList<Pitch> ALL = new ArrayList<Pitch>();
     // Initialize all pitches
     static {
-        for(int midiValue = MIN_PITCH_VALUE; midiValue <= MAX_PITCH_VALUE; midiValue++) {
-            ALL.add(new Pitch(midiValue));
+        for(int value = MIN_PITCH_VALUE; value <= MAX_PITCH_VALUE; value++) {
+            ALL.add(new Pitch(value));
         }
     }
 

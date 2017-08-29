@@ -1,6 +1,6 @@
 package passage;
 
-import base.eventProps.Instrument;
+import base.Instrument;
 import base.sounds.*;
 import base.time.Time;
 import org.jetbrains.annotations.NotNull;

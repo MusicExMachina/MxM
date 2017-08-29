@@ -2,16 +2,16 @@
 <module external.linked.project.id=":mxm-learning:test" external.linked.project.path="$MODULE_DIR$/../../../mxm-learning" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="com.musicexmachina" external.system.module.type="sourceSet" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output-test url="file://$MODULE_DIR$/../../../mxm-learning/out/test/classes" />
-    <exclude-output />
     <content url="file://$MODULE_DIR$/../../../mxm-learning/src/test">
       <sourceFolder url="file://$MODULE_DIR$/../../../mxm-learning/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../mxm-learning/src/test/resources" type="java-test-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="mxm-core_main" />
-    <orderEntry type="library" name="Gradle: org.jetbrains:annotations:15.0" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit4.9:" level="project" />
+    <orderEntry type="module" module-name="mxm-core_main" />
+    <orderEntry type="library" name="Gradle: net.sf.py4j:py4j:0.10.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains:annotations:15.0" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="mxm-learning_main" />
 </module>

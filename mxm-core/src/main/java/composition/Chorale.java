@@ -2,7 +2,7 @@ package composition;
 
 import org.jetbrains.annotations.NotNull;
 
-import base.eventProps.Instrument;
+import base.Instrument;
 import base.sounds.Pitch;
 
 import passage.Line;

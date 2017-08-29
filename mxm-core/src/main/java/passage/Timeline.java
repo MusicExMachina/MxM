@@ -21,79 +21,6 @@ abstract class Timeline <MusicEventType extends IMusicEvent> {
 }
 
 
-@SuppressWarnings("unchecked")
-class SerialTimeline <MusicEventType extends IMusicEvent> implements Iterable<MusicEventType> {
-    private final TreeMap<Time, MusicEventType> events;
-
-    SerialTimeline() {
-        this.events = new TreeMap<>();
-    }
-
-    // ADDER
-    public void addEvent(MusicEventType event) {
-        if (events.get(event.getTiming()) == null) {
-            events.put(event.getTiming(), event);
-        } else {
-            throw new Error("Serial Timeline: Cannot add one event on top of another!");
-        }
-    }
-
-    // PUBLIC GETTERS
-    public MusicEventType getFirstEvent() { return events.firstEntry().getValue(); }
-    public MusicEventType getLastEvent() { return events.lastEntry().getValue(); }
-    public MusicEventType getEventAt(Time time) {
-        return events.get(time);
-    }
-    public MusicEventType getEventBefore(Time time) {
-        return events.floorEntry(time).getValue();
-    }
-    public MusicEventType getEventAfter(Time time) {
-        return events.ceilingEntry(time).getValue();
-    }
-
-    @Override
-    public @NotNull Iterator<MusicEventType> iterator() {
-        Collection constValues = java.util.Collections.unmodifiableCollection(events.values());
-        return constValues.iterator();
-    }
-}
-
-
-@SuppressWarnings("unchecked")
-class ParallelTimeline <MusicEventType extends IMusicEvent> implements Iterable<Frame<MusicEventType>> {
-    private final TreeMap<Time, Frame<MusicEventType>> frames;
-
-    ParallelTimeline() {
-        this.frames = new TreeMap<>();
-    }
-
-    // PUBLIC GETTERS
-    public @NotNull Frame<MusicEventType> getFirstFrame() { return frames.firstEntry().getValue(); }
-    public @NotNull Frame<MusicEventType> getLastFrame() { return frames.lastEntry().getValue(); }
-    public @NotNull Frame<MusicEventType> getFrameAt(Time time) {
-        return frames.get(time);
-    }
-    public @NotNull Frame<MusicEventType> getFrameBefore(Time time) {
-        return frames.floorEntry(time).getValue();
-    }
-    public @NotNull Frame<MusicEventType> getFrameAfter(Time time) {
-        return frames.ceilingEntry(time).getValue();
-    }
-
-    @Override
-    public @NotNull Iterator<Frame<MusicEventType>> iterator() {
-        Collection constValues = java.util.Collections.unmodifiableCollection(frames.values());
-        return constValues.iterator();
-    }
-}
-
-
-
-
-
-
-
-
 // Frames can
 @SuppressWarnings("unchecked")
 class Frame <MusicEventType extends IMusicEvent> {
@@ -112,29 +39,32 @@ class Frame <MusicEventType extends IMusicEvent> {
         this.eventsNotStarted   = new TreeSet<>();
         this.eventsNotEnded     = new TreeSet<>();
     }
-
-    public void add(@NotNull MusicEventType event) {
+    // Package private on purpose- we don't want users adding events, only scores.
+    void add(@NotNull MusicEventType event) {
         if(event instanceof InstantEvent) {
             eventsStarted.add((MusicEventType) event);
             eventsNotEnded.add((MusicEventType) event);
         }
         else throw new Error("Frame: Cannot add an event of type " + event.getClass());
     }
-    public void addStart(@NotNull MusicEventType event) {
+    // Package private on purpose- we don't want users adding events, only scores.
+    void addStart(@NotNull MusicEventType event) {
         if(event instanceof SpanningEvent) {
             eventsStarted.add((MusicEventType) event);
             eventsNotEnded.add((MusicEventType) event);
         }
         else throw new Error("Frame: Cannot add an event of type " + event.getClass());
     }
-    public void addContinue(@NotNull MusicEventType event) {
+    // Package private on purpose- we don't want users adding events, only scores.
+    void addContinue(@NotNull MusicEventType event) {
         if(event instanceof SpanningEvent) {
             eventsContinued.add((MusicEventType)event);
             eventsNotEnded.add((MusicEventType)event);
         }
         else throw new Error("Frame: Cannot add an event of type " + event.getClass());
     }
-    public void addEnd(@NotNull MusicEventType event) {
+    // Package private on purpose- we don't want users adding events, only scores.
+    void addEnd(@NotNull MusicEventType event) {
         if(event instanceof SpanningEvent) {
             eventsEnded.add((MusicEventType)event);
             eventsNotStarted.add((MusicEventType)event);
