@@ -1,4 +1,4 @@
-import base.MxM;
+import io.MxmLog;
 import base.sounds.Chord;
 import base.sounds.Pitch;
 import base.time.Tempo;
@@ -43,17 +43,17 @@ public class Test {
                 .add(Chord.get(C_NATURAL,MAJOR),        Time.get(1));
         // ========================================================================================================= //
         for(TimeSigChange timeSigChange : leadSheet.getTimeSigChanges()) {
-            MxM.log(timeSigChange.getTimeSig().toString(), 1);
+            MxmLog.log(timeSigChange.getTimeSig().toString(), 1);
         }
         for(TempoChange tempoChange : leadSheet.getTempoChanges()) {
-            MxM.log(tempoChange.getTempo().toString(),1);
+            MxmLog.log(tempoChange.getTempo().toString(),1);
         }
         // ========================================================================================================= //
         for(Note<Pitch> note : tune) {
-            MxM.log(note.getSound().toString(),0);
+            MxmLog.log(note.getSound().toString(),0);
         }
         for(Note<Chord> note : changes) {
-            MxM.log(note.getSound().toString(),0);
+            MxmLog.log(note.getSound().toString(),0);
         }
         // ========================================================================================================= //
     }

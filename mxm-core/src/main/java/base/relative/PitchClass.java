@@ -1,6 +1,6 @@
 package base.relative;
 
-import base.MxM;
+import io.MxmLog;
 import base.sounds.Pitch;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ public class PitchClass implements IRelative {
 
     static {
         // A bunch of useful logging of the initialization process
-        MxM.logHeader("PITCH CLASS");
-        MxM.log("Initialization started",1);
+        MxmLog.logHeader("PITCH CLASS");
+        MxmLog.log("Initialization started",1);
         ArrayList<String> allInitStr = new ArrayList<>();
         allInitStr.add("Initialized");
 
@@ -37,9 +37,9 @@ public class PitchClass implements IRelative {
         }
 
         // More useful logging, after the initialization is done
-        MxM.log(allInitStr,1);
-        MxM.log("Initialization completed",1);
-        MxM.logFooter();
+        MxmLog.log(allInitStr,1);
+        MxmLog.log("Initialization completed",1);
+        MxmLog.logFooter();
     }
 
     // C //

@@ -1,11 +1,11 @@
-package base;
+package io;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
 
-public abstract class MxM {
+public abstract class MxmLog {
     private static final int MAX_WIDTH = 64;
 
     public static void log(@NotNull String string, int level) {
