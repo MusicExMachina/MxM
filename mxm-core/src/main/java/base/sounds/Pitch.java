@@ -2,6 +2,7 @@ package base.sounds;
 
 import base.Interval;
 import base.relative.PitchClass;
+import io.MxmLog;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -25,12 +26,26 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
     /** The maximum midi sound value, B9. */
     private static final int MAX_PITCH_VALUE = 120;
     /** An ArrayList of all valid Pitches */
-    private static final ArrayList<Pitch> ALL = new ArrayList<Pitch>();
-    // Initialize all pitches
+    private static final ArrayList<Pitch> ALL = new ArrayList<>();
+
     static {
+        // A bunch of useful logging of the initialization process
+        MxmLog.logHeader("PITCH");
+        MxmLog.log("Initialization started",1);
+        ArrayList<String> allInitStr = new ArrayList<>();
+        allInitStr.add("Initialized");
+
+        // Initialize all Pitches
         for(int value = MIN_PITCH_VALUE; value <= MAX_PITCH_VALUE; value++) {
-            ALL.add(new Pitch(value));
+            Pitch pitch = new Pitch(value);
+            ALL.add(pitch);
+            allInitStr.add(pitch.toString());
         }
+
+        // More useful logging, after the initialization is done
+        MxmLog.log(allInitStr,1);
+        MxmLog.log("Initialization completed",1);
+        MxmLog.logFooter();
     }
 
     //////////////////////////////
@@ -46,9 +61,6 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
     /** The highest possible pitch */
     public static final Pitch MAX_PITCH = get(MAX_PITCH_VALUE);
 
-    public Pitch() {
-    }
-
     //////////////////////////////
     //      Static methods      //
     //////////////////////////////
@@ -57,11 +69,9 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
      * Gets an iterator which enumerates all valid Pitches.
      * @return An iterator over all valid Pitches.
      */
-    public static Iterator<Pitch> iterator() {
+    public static Iterator<Pitch> allItr() {
         return ALL.iterator();
     }
-
-
 
     /**
      * Gets an instance of a given pitch. This method creates the interning design pattern per pitch.
@@ -95,10 +105,8 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
 
     /** The sound class of this pitch */
     private PitchClass pitchClass;
-
     /** The octave of this pitch, between OCTAVE_MIN and OCTAVE_MAX */
     private int octave;
-
     /** The midi value of this pitch, between PITCH_MIN and PITCH_MAX */
     private int value;
 
@@ -201,12 +209,12 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
 
     /**
      * Checks if this pitch equals another object.
-     * @param o The other object
+     * @param object The other object
      * @return If this pitch is equal to the object
      */
     @Override
-    public boolean equals(Object o) {
-        return this == o;
+    public boolean equals(Object object) {
+        return this == object;
     }
 
     /**
@@ -215,6 +223,6 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
      */
     @Override
     public int hashCode() {
-        return (int) value;
+        return value;
     }
 }

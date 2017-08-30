@@ -1,5 +1,7 @@
 package base.relative;
 
+import base.sounds.Pitch;
+import io.MxmLog;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,12 +21,27 @@ public class PitchClass implements IRelative {
     private static final int MAX_PITCH_CLASS_VALUE = 11;
     /** A static array of all possible pitch classes, stored to implement the flyweight pattern */
     private static final PitchClass[] ALL = new PitchClass[MAX_PITCH_CLASS_VALUE - MIN_PITCH_CLASS_VALUE + 1];
-    // Initializes the "ALL" array
+
     static {
+        // A bunch of useful logging of the initialization process
+        MxmLog.logHeader("PITCH CLASS");
+        MxmLog.log("Initialization started",1);
+        ArrayList<String> allInitStr = new ArrayList<>();
+        allInitStr.add("Initialized");
+
+        // Initialize all Pitch Classes
         for(int val = MIN_PITCH_CLASS_VALUE; val <= MAX_PITCH_CLASS_VALUE; val++) {
-            ALL[val] = new PitchClass(val);
+            PitchClass pitchClass = new PitchClass(val);
+            ALL[val] = pitchClass;
+            allInitStr.add(pitchClass.toString());
         }
+
+        // More useful logging, after the initialization is done
+        MxmLog.log(allInitStr,1);
+        MxmLog.log("Initialization completed",1);
+        MxmLog.logFooter();
     }
+
     // C //
     /** The C flat pitch class */
     public static final PitchClass C_FLAT = get(11);
