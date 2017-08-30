@@ -1,4 +1,4 @@
-package base;
+package base.properties;
 
 import base.sounds.ISound;
 

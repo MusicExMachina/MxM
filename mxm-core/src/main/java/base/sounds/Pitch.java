@@ -1,8 +1,8 @@
 package base.sounds;
 
-import base.Interval;
+import base.analysis.Interval;
+import base.MxM;
 import base.relative.PitchClass;
-import io.MxmLog;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -30,8 +30,8 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
 
     static {
         // A bunch of useful logging of the initialization process
-        MxmLog.logHeader("PITCH");
-        MxmLog.log("Initialization started",1);
+        MxM.logHeader("PITCH");
+        MxM.log("Initialization started",1);
         ArrayList<String> allInitStr = new ArrayList<>();
         allInitStr.add("Initialized");
 
@@ -43,9 +43,9 @@ public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
         }
 
         // More useful logging, after the initialization is done
-        MxmLog.log(allInitStr,1);
-        MxmLog.log("Initialization completed",1);
-        MxmLog.logFooter();
+        MxM.log(allInitStr,1);
+        MxM.log("Initialization completed",1);
+        MxM.logFooter();
     }
 
     //////////////////////////////

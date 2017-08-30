@@ -1,7 +1,7 @@
 package passage;
 
-import base.Instrument;
-import base.sounds.*;
+import base.sounds.ISound;
+import base.properties.Instrument;
 import base.time.Time;
 import org.jetbrains.annotations.NotNull;
 import events.Note;

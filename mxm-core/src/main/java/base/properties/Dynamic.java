@@ -1,4 +1,4 @@
-package base;
+package base.properties;
 
 import java.util.Comparator;
 
@@ -40,8 +40,8 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
     }
 
     /**
-     * Compares this base.Dynamic to another base.Dynamic.
-     * @param other The other base.Dynamic.
+     * Compares this base.properties.Dynamic to another base.properties.Dynamic.
+     * @param other The other base.properties.Dynamic.
      * @return The comparison.
      */
     @Override
@@ -51,8 +51,8 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
 
     /**
      * Compares two Dynamics.
-     * @param p1 The first base.Dynamic.
-     * @param p2 The second base.Dynamic.
+     * @param p1 The first base.properties.Dynamic.
+     * @param p2 The second base.properties.Dynamic.
      * @return The comparison.
      */
     @Override
@@ -61,9 +61,9 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
     }
 
     /**
-     * Checks if this base.Dynamic equals another Object.
+     * Checks if this base.properties.Dynamic equals another Object.
      * @param o The other Object.
-     * @return If this base.Dynamic is equal to the Object.
+     * @return If this base.properties.Dynamic is equal to the Object.
      */
     @Override
     public boolean equals(Object o) {
@@ -75,7 +75,7 @@ public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
 
     /**
      * A simple hash code for storage of Dynamics in special Collections.
-     * @return The hash code for this base.Dynamic.
+     * @return The hash code for this base.properties.Dynamic.
      */
     @Override
     public int hashCode() {

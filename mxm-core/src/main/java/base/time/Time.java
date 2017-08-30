@@ -7,17 +7,17 @@ public abstract class Time implements Comparable<Time> {
     public static Measure PICKUP_MEASURE    = get(-1);
     public static Measure MEASURE_ONE       = get(0);
 
-    static Pair<Integer,Integer> reduce(int numerator, int denominator) {
+    static Pair<Integer,Integer> reduce(int num, int den) {
         // Euclid's gcd algorithm, everyone's favorite
-        int a = numerator, b = denominator;
-        if(a == 0){ denominator /= b; return new Pair<>(numerator,denominator); }
-        if(b == 0){ numerator /= a; return new Pair<>(numerator,denominator); }
+        int a = num, b = den;
+        if(a == 0){ den /= b; return new Pair<>(num,den); }
+        if(b == 0){ num /= a; return new Pair<>(num,den); }
         while (a != b) {
             if (a > b) a -= b; else b -= a;
         }
-        numerator   /= a;
-        denominator /= a;
-        return new Pair<>(numerator,denominator);
+        num   /= a;
+        den /= a;
+        return new Pair<>(num,den);
     }
 
     protected abstract int getNumerator();
@@ -46,8 +46,8 @@ public abstract class Time implements Comparable<Time> {
     public static Measure get(int measureNum) {
         return Measure.get(measureNum);
     }
-    public static Time get(int numerator, int denominator) {
-        Pair<Integer,Integer> pair = reduce(numerator,denominator);
+    public static Time get(int num, int den) {
+        Pair<Integer,Integer> pair = reduce(num,den);
         if(pair.getValue() == 1) return Measure.get(pair.getKey());
         else return new Count(pair.getKey(),pair.getValue());
     }

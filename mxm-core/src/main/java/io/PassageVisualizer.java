@@ -66,13 +66,13 @@ public class PassageVisualizer extends JFrame {
             //Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
             //Sequence sequence = MidiTools.download("http://www.bachcentral.com/WTCBkI/Prelude1.mid");
             //Sequence sequence = MidiTools.load("C:/users/celenp/desktop/test.mid");
-            //Sequence sequence = MidiTools.load("C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-midi\\src\\tests\\resources\\midi_schubertImpromptu.mid");
+            //Sequence sequence = MidiTools.load("C:\\Users\\celenp\\Desktop\\GitHub\\base.MxM\\mxm-midi\\src\\tests\\resources\\midi_schubertImpromptu.mid");
             //Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/bach/lttlef.mid");
             //Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/bach/bwv159-4.mid");
             Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/dvorak/dvs93.mid");
             //Sequence sequence = MidiTools.download("http://tedmuller.us/Piano/FlightOfTheBumblebee/FlightOfTheBumblebee.mid");
             TraditionalScore passage = MidiTools.parse(sequence);
-            MxmScoreWriter.write(passage,"C:\\Users\\celenp\\Desktop\\GitHub\\MxM\\mxm-gui\\src\\tests\\resources\\output");
+            MxmScoreWriter.write(passage,"C:\\Users\\celenp\\Desktop\\GitHub\\base.MxM\\mxm-gui\\src\\tests\\resources\\output");
             MidiTools.play(sequence);
             PassageVisualizer rtv = new PassageVisualizer(passage);
             Thread.sleep(100000);

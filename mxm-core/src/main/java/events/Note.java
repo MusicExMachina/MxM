@@ -2,9 +2,9 @@ package events;
 
 import base.time.Time;
 import org.jetbrains.annotations.NotNull;
-import base.Accent;
-import base.Dynamic;
-import base.Technique;
+import base.properties.Accent;
+import base.properties.Dynamic;
+import base.properties.Technique;
 import base.sounds.ISound;
 import passage.Part;
 

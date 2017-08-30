@@ -1,4 +1,4 @@
-package base.sounds;
+package base.analysis;
 
 import base.sounds.ISound;
 

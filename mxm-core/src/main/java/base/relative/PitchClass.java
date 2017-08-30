@@ -1,14 +1,14 @@
 package base.relative;
 
+import base.MxM;
 import base.sounds.Pitch;
-import io.MxmLog;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
 /**
- * Pitch classes represent a collapsing of {@link base.sounds.Pitch} about the octave. To put it another way, a C5 and
+ * Pitch classes represent a collapsing of {@link Pitch} about the octave. To put it another way, a C5 and
  * a C0 are the same pitch class- C. Pitch classes parallel pitches in many respects- they can be transposed, and also
  * follow the flyweight (interning) design pattern. There are only 12 pitch classes, which can be accessed via static
  * variables like {@link #C_NATURAL} or {@link #get(int)}.
@@ -24,8 +24,8 @@ public class PitchClass implements IRelative {
 
     static {
         // A bunch of useful logging of the initialization process
-        MxmLog.logHeader("PITCH CLASS");
-        MxmLog.log("Initialization started",1);
+        MxM.logHeader("PITCH CLASS");
+        MxM.log("Initialization started",1);
         ArrayList<String> allInitStr = new ArrayList<>();
         allInitStr.add("Initialized");
 
@@ -37,9 +37,9 @@ public class PitchClass implements IRelative {
         }
 
         // More useful logging, after the initialization is done
-        MxmLog.log(allInitStr,1);
-        MxmLog.log("Initialization completed",1);
-        MxmLog.logFooter();
+        MxM.log(allInitStr,1);
+        MxM.log("Initialization completed",1);
+        MxM.logFooter();
     }
 
     // C //

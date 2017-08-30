@@ -1,4 +1,4 @@
-package base;
+package base.properties;
 
 /**
  * Created by celenp on 6/11/2017.

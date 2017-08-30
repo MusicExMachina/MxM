@@ -1,6 +1,6 @@
 package base.relative;
 
-import base.Interval;
+import base.analysis.Interval;
 
 import java.util.Iterator;
 import java.util.TreeSet;

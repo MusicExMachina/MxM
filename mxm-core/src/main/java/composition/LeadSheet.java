@@ -1,9 +1,10 @@
 package composition;
 
+import base.sounds.Chord;
+import base.sounds.Pitch;
 import org.jetbrains.annotations.NotNull;
 
-import base.Instrument;
-import base.sounds.*;
+import base.properties.Instrument;
 
 import passage.Line;
 import passage.Score;

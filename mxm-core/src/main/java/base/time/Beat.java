@@ -11,12 +11,12 @@ public class Beat implements Comparable<Beat>, Comparator<Beat> {
     private int numerator;
     private int denominator;
 
-    public static Beat get(int numerator, int denominator) {
-        return new Beat(numerator,denominator);
+    public static Beat get(int num, int den) {
+        return new Beat(num,den);
     }
 
-    private Beat(int numerator, int denominator) {
-        Pair<Integer,Integer> pair = Time.reduce(numerator,denominator);
+    private Beat(int num, int den) {
+        Pair<Integer,Integer> pair = Time.reduce(num,den);
         this.numerator = pair.getKey();
         this.denominator = pair.getValue();
     }

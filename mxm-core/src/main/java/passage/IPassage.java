@@ -1,6 +1,8 @@
 package passage;
 
-import base.sounds.*;
+import base.sounds.Chord;
+import base.sounds.Noise;
+import base.sounds.Pitch;
 import events.Note;
 import base.time.Tempo;
 import base.time.TimeSig;

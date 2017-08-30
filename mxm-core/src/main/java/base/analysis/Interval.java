@@ -1,4 +1,4 @@
-package base;
+package base.analysis;
 
 import base.relative.IntervalClass;
 import base.sounds.Pitch;

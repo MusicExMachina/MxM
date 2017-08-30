@@ -1,6 +1,8 @@
 package passage;
 
-import base.sounds.*;
+import base.sounds.Chord;
+import base.sounds.Noise;
+import base.sounds.Pitch;
 import org.jetbrains.annotations.NotNull;
 import events.*;
 import base.time.Tempo;

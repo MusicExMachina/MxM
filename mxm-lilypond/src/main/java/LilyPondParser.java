@@ -1,10 +1,3 @@
-import base.relative.ChordClass;
-import base.sounds.Chord;
-import base.relative.PitchClass;
-import base.sounds.Pitch;
-
-import java.util.ArrayList;
-
 /*
 public class LilyPondParser {
 
