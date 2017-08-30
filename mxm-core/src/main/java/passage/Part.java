@@ -9,9 +9,9 @@ import base.time.Tempo;
 import base.time.Time;
 import base.time.TimeSig;
 import org.jetbrains.annotations.NotNull;
-import events.Note;
-import events.TempoChange;
-import events.TimeSigChange;
+import passage.musicEvents.Note;
+import passage.musicEvents.TempoChange;
+import passage.musicEvents.TimeSigChange;
 
 import java.util.Iterator;
 
@@ -33,7 +33,7 @@ public abstract class Part<SoundType extends ISound> implements IPassage {
     @Override
     public final @NotNull SerialTimeline<TempoChange> getTempoChanges() { return getScore().getTempoChanges(); }
 
-    // Getters for events during a specific time
+    // Getters for passage.musicEvents during a specific time
     @Override
     public final @NotNull Tempo getTempoAt(Time time) { return getScore().getTempoAt(time); }
     @Override

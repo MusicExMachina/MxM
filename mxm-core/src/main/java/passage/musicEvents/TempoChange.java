@@ -1,8 +1,7 @@
-package events;
+package passage.musicEvents;
 
 import base.time.Time;
 import org.jetbrains.annotations.NotNull;
-import events.InstantEvent;
 import base.time.Tempo;
 import passage.Score;
 

@@ -3,10 +3,10 @@ import base.sounds.Chord;
 import base.sounds.Pitch;
 import base.time.Tempo;
 import base.time.Time;
-import composition.LeadSheet;
-import events.Note;
-import events.TempoChange;
-import events.TimeSigChange;
+import passage.scoreTypes.LeadSheet;
+import passage.musicEvents.Note;
+import passage.musicEvents.TempoChange;
+import passage.musicEvents.TimeSigChange;
 import passage.Line;
 
 import static base.relative.ChordClass.*;

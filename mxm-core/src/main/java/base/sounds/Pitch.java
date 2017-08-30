@@ -12,7 +12,7 @@ import java.util.Iterator;
 /**
  * Pitch is a simple class which utilizes the interning design pattern to create only one
  * hundred twenty different values- all possible MIDI pitches. Pitches are usually found on
- * Notes, though they may be used in Collections. passage.events.sounding.Note that there should never be more than
+ * Notes, though they may be used in Collections. passage.passage.musicEvents.sounding.Note that there should never be more than
  * these 120 Pitches, and that an iterator() has been provided for easy access.
  */
 public class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {

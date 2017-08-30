@@ -1,4 +1,4 @@
-package events;
+package passage.musicEvents;
 
 import base.time.Time;
 import org.jetbrains.annotations.NotNull;

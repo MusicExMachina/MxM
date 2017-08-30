@@ -47,13 +47,13 @@ public class MidiReader implements Reader<TraditionalScore> {
         this.sequence = sequence;
         passage = new TraditionalScore();
 
-        System.out.println("MIDI PARSER:\tParsing midi passage.events...");
+        System.out.println("MIDI PARSER:\tParsing midi passage.passage.events...");
         parseAll();
-        System.out.println("MIDI PARSER:\tFinished parsing midi passage.events");
+        System.out.println("MIDI PARSER:\tFinished parsing midi passage.passage.events");
 
-        System.out.println("MIDI PARSER:\tInterpolating midi passage.events...");
+        System.out.println("MIDI PARSER:\tInterpolating midi passage.passage.events...");
         interpolateAll();
-        System.out.println("MIDI PARSER:\tFinished interpolating midi passage.events");
+        System.out.println("MIDI PARSER:\tFinished interpolating midi passage.passage.events");
 
         System.out.println("MIDI PARSER:\tConverting to counts...");
         convertToCounts();
@@ -241,7 +241,7 @@ public class MidiReader implements Reader<TraditionalScore> {
     private void parseTempoMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         Integer ppqn = (data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff);
-        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter passage.events.sounding.Note - I think this is right
+        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter passage.passage.events.sounding.Note - I think this is right
     }
 
     private void parseTimeSignatureMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {

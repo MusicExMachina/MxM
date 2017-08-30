@@ -3,12 +3,12 @@ package passage;
 import base.sounds.Chord;
 import base.sounds.Noise;
 import base.sounds.Pitch;
-import events.Note;
+import passage.musicEvents.Note;
 import base.time.Tempo;
 import base.time.TimeSig;
 import base.time.Time;
-import events.TempoChange;
-import events.TimeSigChange;
+import passage.musicEvents.TempoChange;
+import passage.musicEvents.TimeSigChange;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
@@ -23,13 +23,13 @@ public interface IPassage {
     @NotNull SerialTimeline<TimeSigChange> getTimeSigChanges();      // All time signature changes
     @NotNull SerialTimeline<TempoChange> getTempoChanges();          // All tempo changes
 
-    // Getters for iterators over events during a specific time
+    // Getters for iterators over passage.musicEvents during a specific time
     @NotNull Iterator<Note> noteItrAt(Time time);                    // All notes
     @NotNull Iterator<Note<Pitch>> pitchedNoteItrAt(Time time);      // All pitched notes
     @NotNull Iterator<Note<Noise>> unpitchedNoteItrAt(Time time);    // All unpitched notes
     @NotNull Iterator<Note<Chord>> chordNoteItrAt(Time time);        // All chord notes
 
-    // Getters for events during a specific time
+    // Getters for passage.musicEvents during a specific time
     @NotNull Tempo getTempoAt(Time time);            // Tempo at a time
     @NotNull TimeSig getTimeSigAt(Time time);        // Time Signature at a time
 

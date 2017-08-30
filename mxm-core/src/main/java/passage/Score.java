@@ -4,7 +4,7 @@ import base.sounds.Chord;
 import base.sounds.Noise;
 import base.sounds.Pitch;
 import org.jetbrains.annotations.NotNull;
-import events.*;
+import passage.musicEvents.*;
 import base.time.Tempo;
 import base.time.TimeSig;
 import base.time.*;
@@ -20,7 +20,7 @@ public abstract class Score implements IPassage {
     private SerialTimeline<TimeSigChange> timeSigChanges;
     private SerialTimeline<TempoChange> tempoChanges;
 
-    // Other passage.events
+    // Other passage.passage.musicEvents
     private ParallelTimeline<Note> allNotes;
     private ParallelTimeline<Note<Pitch>> allPitchedNotes;
     private ParallelTimeline<Note<Noise>> allUnpitchedNotes;

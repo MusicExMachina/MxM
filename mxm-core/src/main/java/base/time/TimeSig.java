@@ -88,7 +88,7 @@ public class TimeSig {
 
     /**
      * A constructor for base.time.TimeSig taking in a numerator and
-     * denominator. passage.events.sounding.Note that these do not need to be reduced,
+     * denominator. passage.passage.musicEvents.sounding.Note that these do not need to be reduced,
      * as TimeSignatures can be almost anything you want them
      * to be.
      * @param numerator The desired numerator.

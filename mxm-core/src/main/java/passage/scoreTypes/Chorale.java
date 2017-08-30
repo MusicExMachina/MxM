@@ -1,4 +1,4 @@
-package composition;
+package passage.scoreTypes;
 
 import org.jetbrains.annotations.NotNull;
 

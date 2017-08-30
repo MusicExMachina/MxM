@@ -1,4 +1,4 @@
-package composition;
+package passage.scoreTypes;
 
 import base.sounds.Chord;
 import base.sounds.Pitch;

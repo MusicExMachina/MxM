@@ -1,7 +1,7 @@
 package passage;
 
 import base.time.Time;
-import events.IMusicEvent;
+import passage.musicEvents.IMusicEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -17,7 +17,7 @@ public class SerialTimeline <MusicEventType extends IMusicEvent> implements Iter
     }
 
     // ADDER
-    // Package private on purpose- we don't want users adding events, only scores.
+    // Package private on purpose- we don't want users adding passage.musicEvents, only scores.
     void addEvent(MusicEventType event) {
         if (events.get(event.getTiming()) == null) {
             events.put(event.getTiming(), event);

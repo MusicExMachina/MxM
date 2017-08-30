@@ -4,7 +4,7 @@ import base.sounds.ISound;
 import base.properties.Instrument;
 import base.time.Time;
 import org.jetbrains.annotations.NotNull;
-import events.Note;
+import passage.musicEvents.Note;
 
 import java.util.Iterator;
 

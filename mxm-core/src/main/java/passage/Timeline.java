@@ -1,11 +1,10 @@
 package passage;
 
 import org.jetbrains.annotations.NotNull;
-import events.IMusicEvent;
+import passage.musicEvents.IMusicEvent;
 import base.time.Time;
-import events.InstantEvent;
-import events.SpanningEvent;
-import events.TempoChange;
+import passage.musicEvents.InstantEvent;
+import passage.musicEvents.SpanningEvent;
 
 import java.util.*;
 
@@ -39,7 +38,7 @@ class Frame <MusicEventType extends IMusicEvent> {
         this.eventsNotStarted   = new TreeSet<>();
         this.eventsNotEnded     = new TreeSet<>();
     }
-    // Package private on purpose- we don't want users adding events, only scores.
+    // Package private on purpose- we don't want users adding passage.musicEvents, only scores.
     void add(@NotNull MusicEventType event) {
         if(event instanceof InstantEvent) {
             eventsStarted.add((MusicEventType) event);
@@ -47,7 +46,7 @@ class Frame <MusicEventType extends IMusicEvent> {
         }
         else throw new Error("Frame: Cannot add an event of type " + event.getClass());
     }
-    // Package private on purpose- we don't want users adding events, only scores.
+    // Package private on purpose- we don't want users adding passage.musicEvents, only scores.
     void addStart(@NotNull MusicEventType event) {
         if(event instanceof SpanningEvent) {
             eventsStarted.add((MusicEventType) event);
@@ -55,7 +54,7 @@ class Frame <MusicEventType extends IMusicEvent> {
         }
         else throw new Error("Frame: Cannot add an event of type " + event.getClass());
     }
-    // Package private on purpose- we don't want users adding events, only scores.
+    // Package private on purpose- we don't want users adding passage.musicEvents, only scores.
     void addContinue(@NotNull MusicEventType event) {
         if(event instanceof SpanningEvent) {
             eventsContinued.add((MusicEventType)event);
@@ -63,7 +62,7 @@ class Frame <MusicEventType extends IMusicEvent> {
         }
         else throw new Error("Frame: Cannot add an event of type " + event.getClass());
     }
-    // Package private on purpose- we don't want users adding events, only scores.
+    // Package private on purpose- we don't want users adding passage.musicEvents, only scores.
     void addEnd(@NotNull MusicEventType event) {
         if(event instanceof SpanningEvent) {
             eventsEnded.add((MusicEventType)event);
