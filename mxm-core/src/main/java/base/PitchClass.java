@@ -1,8 +1,8 @@
-package base.relative;
+package base;
 
 import io.MxmLog;
-import base.sounds.Pitch;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -13,116 +13,119 @@ import java.util.Iterator;
  * follow the flyweight (interning) design pattern. There are only 12 pitch classes, which can be accessed via static
  * variables like {@link #C_NATURAL} or {@link #get(int)}.
  */
-public class PitchClass implements IRelative {
+public class PitchClass {
+
+    //////////////////////////////
+    // Static Variables         //
+    //////////////////////////////
 
     /** The maximum pitch class value, which represents C */
-    private static final int MIN_PITCH_CLASS_VALUE = 0;
+    public static final int MIN_VALUE = 0;
     /** The maximum pitch class value, which represents B */
-    private static final int MAX_PITCH_CLASS_VALUE = 11;
+    public static final int MAX_VALUE = 11;
+
     /** A static array of all possible pitch classes, stored to implement the flyweight pattern */
-    private static final PitchClass[] ALL = new PitchClass[MAX_PITCH_CLASS_VALUE - MIN_PITCH_CLASS_VALUE + 1];
-
+    private static final PitchClass[] ALL;
+    // Static initialization block
     static {
-        // A bunch of useful logging of the initialization process
-        MxmLog.logHeader("PITCH CLASS");
-        MxmLog.log("Initialization started",1);
-        ArrayList<String> allInitStr = new ArrayList<>();
-        allInitStr.add("Initialized");
-
-        // Initialize all Pitch Classes
-        for(int val = MIN_PITCH_CLASS_VALUE; val <= MAX_PITCH_CLASS_VALUE; val++) {
-            PitchClass pitchClass = new PitchClass(val);
-            ALL[val] = pitchClass;
-            allInitStr.add(pitchClass.toString());
+        // Keep track of the start time to know how long initialization takes
+        long startTime = System.nanoTime();
+        // Initialize all pitch classes
+        ALL = new PitchClass[MAX_VALUE - MIN_VALUE + 1];
+        for(int val = MIN_VALUE; val <= MAX_VALUE; val++) {
+            ALL[val] = new PitchClass(val);
         }
-
-        // More useful logging, after the initialization is done
-        MxmLog.log(allInitStr,1);
-        MxmLog.log("Initialization completed",1);
-        MxmLog.logFooter();
+        long endTime = System.nanoTime();
+        MxmLog.logInitialization("Pitch class", Arrays.asList(ALL),endTime - startTime);
     }
 
-    // C //
     /** The C flat pitch class */
     public static final PitchClass C_FLAT = get(11);
     /** The C natural pitch class */
     public static final PitchClass C_NATURAL = get(0);
     /** The C sharp pitch class */
     public static final PitchClass C_SHARP = get(1);
-    // D //
     /** The D flat pitch class */
     public static final PitchClass D_FLAT = get(1);
     /** The D natural pitch class */
     public static final PitchClass D_NATURAL = get(2);
     /** The D sharp pitch class */
     public static final PitchClass D_SHARP = get(3);
-    // E //
     /** The E flat pitch class */
     public static final PitchClass E_FLAT = get(3);
     /** The E natural pitch class */
     public static final PitchClass E_NATURAL = get(4);
     /** The E sharp pitch class */
     public static final PitchClass E_SHARP = get(5);
-    // F //
     /** The F flat pitch class */
     public static final PitchClass F_FLAT = get(4);
     /** The F natural pitch class */
     public static final PitchClass F_NATURAL = get(5);
     /** The F sharp pitch class */
     public static final PitchClass F_SHARP = get(6);
-    // G //
     /** The G flat pitch class */
     public static final PitchClass G_FLAT = get(6);
     /** The G natural pitch class */
     public static final PitchClass G_NATURAL = get(7);
     /** The G sharp pitch class */
     public static final PitchClass G_SHARP = get(8);
-    // A //
     /** The A flat pitch class */
     public static final PitchClass A_FLAT = get(8);
     /** The A natural pitch class */
     public static final PitchClass A_NATURAL = get(9);
     /** The A sharp pitch class */
     public static final PitchClass A_SHARP = get(10);
-    // B //
     /** The A flat pitch class */
     public static final PitchClass B_FLAT = get(10);
     /** The A natural pitch class */
     public static final PitchClass B_NATURAL = get(11);
     /** The A sharp pitch class */
     public static final PitchClass B_SHARP = get(0);
+
+    //////////////////////////////
+    // Member Variables         //
+    //////////////////////////////
+
+    /**
+     * Gets an iterator which enumerates all valid pitch classes.
+     * @return An iterator over all valid pitch classes
+     */
+    public static @NotNull Iterator<PitchClass> allItr() { return new ArrayList<>(Arrays.asList(ALL)).iterator(); }
     /**
      * Supports the flyweight design pattern by a factory-eque getter instead of a public constructor
      * @param value The value of this pitch class
      * @return a pitch class of this value
      */
     public static @NotNull PitchClass get(int value) {
-        if (value >= MIN_PITCH_CLASS_VALUE && value <= MAX_PITCH_CLASS_VALUE) {
+        if (value >= MIN_VALUE && value <= MAX_VALUE)
             return ALL[value];
-        } else {
+        else
             throw new Error("PITCH CLASS: Pitch class of size " + value + " is out of range.");
-        }
     }
-    /**
-     * Gets an iterator which enumerates all valid pitch classes.
-     * @return An iterator over all valid pitch classes
-     */
-    public static @NotNull Iterator<PitchClass> iterator() { return new ArrayList<>(Arrays.asList(ALL)).iterator(); }
 
-    /** The value of this pitch class (between MIN_PITCH_CLASS_VALUE and MAX_PITCH_CLASS_VALUE) */
-    private int value;
+    //////////////////////////////
+    // Member Variables         //
+    //////////////////////////////
+
+    /** The value of this pitch class (between MIN_SIZE and MAX_SIZE) */
+    private final int value;
+
+    //////////////////////////////
+    // Member methods           //
+    //////////////////////////////
+
     /**
      * A private constructor for PitchClass which is hidden by the flyweight design pattern (use get() instead).
      * @param value the value of this pitch class
      */
-    protected PitchClass(int value) {
+    private PitchClass(int value) {
         this.value = (byte)value;
     }
     /**
-     * A getter for the value of this pitch class (between MIN_PITCH_CLASS_VALUE and MAX_PITCH_CLASS_VALUE).
+     * A getter for the value of this pitch class (between MIN_SIZE and MAX_SIZE).
      * @return the value of this pitch class
      */
-    public int getValue() {
+    public final int getValue() {
         return value;
     }
     /**
@@ -130,7 +133,7 @@ public class PitchClass implements IRelative {
      * @param intervalClass the interval class to transpose this pitch class by
      * @return another pitch class which is "intervalclass" higher than this one
      */
-    public @NotNull PitchClass transpose(@NotNull IntervalClass intervalClass) {
+    public final @NotNull PitchClass transpose(@NotNull IntervalClass intervalClass) {
         return PitchClass.get((value + intervalClass.getSize()) % 12);
     }
     /**
@@ -138,7 +141,7 @@ public class PitchClass implements IRelative {
      * @return a string representation of this class
      */
     @Override
-    public @NotNull String toString() {
+    public final @NotNull String toString() {
         switch (value) {
             case 0:     return "C";
             case 1:     return "Db";
@@ -161,15 +164,15 @@ public class PitchClass implements IRelative {
      * @return if this pitch class is equal to another
      */
     @Override
-    public boolean equals(Object other) {
+    public final boolean equals(Object other) {
         return this == other;
     }
     /**
-     * A hash function for pitch classes to allow them to be stored various hashed collections.
-     * @return a hash of this pitch class
+     * A simple hash code in order to allow storage in certain Collections.
+     * @return The hash code for this interval class
      */
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return value;
     }
 }

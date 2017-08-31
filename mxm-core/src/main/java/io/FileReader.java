@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * FileReader is a public interface for any class that takes a file as input and outputs a passage. This means that there
+ * FileReader is a public interface for any class that takes a file as input and outputs a form. This means that there
  * may be MIDI readers, io.MxmLog readers, LilyPond readers, MusicXML readers, ABC readers, and so on. Note that the different
  * sound of passages will have different readers- a RealBookReader, a ScoreReader, a LineReader, etc.
  */

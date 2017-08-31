@@ -2,7 +2,7 @@ package base.analysis;
 
 import base.sounds.Chord;
 import base.relative.KeyClass;
-import base.relative.PitchClass;
+import base.PitchClass;
 
 import java.util.Set;
 

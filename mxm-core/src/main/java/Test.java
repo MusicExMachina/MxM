@@ -1,16 +1,17 @@
+import base.Interval;
 import io.MxmLog;
 import base.sounds.Chord;
-import base.sounds.Pitch;
+import base.Pitch;
 import base.time.Tempo;
 import base.time.Time;
-import passage.scoreTypes.LeadSheet;
-import passage.musicEvents.Note;
-import passage.musicEvents.TempoChange;
-import passage.musicEvents.TimeSigChange;
-import passage.Line;
+import form.scoreTypes.LeadSheet;
+import form.musicEvents.Note;
+import form.musicEvents.TempoChange;
+import form.musicEvents.TimeSigChange;
+import form.Line;
 
 import static base.relative.ChordClass.*;
-import static base.relative.PitchClass.*;
+import static base.PitchClass.*;
 
 public class Test {
 

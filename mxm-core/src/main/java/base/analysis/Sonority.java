@@ -2,8 +2,8 @@ package base.analysis;
 
 import base.sounds.Chord;
 import base.sounds.ISound;
-import base.sounds.Pitch;
-import base.relative.PitchClass;
+import base.Pitch;
+import base.PitchClass;
 
 import java.util.HashSet;
 import java.util.Set;

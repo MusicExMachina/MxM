@@ -1,9 +1,9 @@
-package passage.musicEvents;
+package form.musicEvents;
 
 import base.time.Time;
 import org.jetbrains.annotations.NotNull;
 import base.time.Tempo;
-import passage.Score;
+import form.Score;
 
 
 public class TempoChange extends InstantEvent implements IScoreEvent {

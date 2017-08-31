@@ -11,12 +11,12 @@ import java.util.Random;
 public class PassageVisualizer extends JFrame {
 
 /*
-    private TraditionalScore passage;
+    private TraditionalScore form;
 
-    public PassageVisualizer(TraditionalScore passage){
+    public PassageVisualizer(TraditionalScore form){
         super("ScoreEvent Visualizer");
 
-        this.passage = passage;
+        this.form = form;
 
         //you can set the content pane of the frame
         //to your custom class.
@@ -36,7 +36,7 @@ public class PassageVisualizer extends JFrame {
             int vScale = 400;
 
             for(int i = 0; i < 100; i++) {
-                TimeSig timeSig = passage.getTimeSignatureAt(new Count(i+1));
+                TimeSig timeSig = form.getTimeSignatureAt(new Count(i+1));
                 g.setColor(Color.darkGray);
                 g.drawLine(Math.round(i*hScale),0,Math.round(i*hScale),vScale);
                 for(int j = 1; j <= timeSig.getNumerator(); j++) {
@@ -45,7 +45,7 @@ public class PassageVisualizer extends JFrame {
                     g.drawLine(x,0,x,vScale);
                 }
             }
-            for(Part part : passage) {
+            for(Part part : form) {
                 Color color = Color.getHSBColor(rand.nextFloat(),1,1);
                 for(Note note: part) {
                     g.setColor(color);
@@ -71,10 +71,10 @@ public class PassageVisualizer extends JFrame {
             //Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/bach/bwv159-4.mid");
             Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/dvorak/dvs93.mid");
             //Sequence sequence = MidiTools.download("http://tedmuller.us/Piano/FlightOfTheBumblebee/FlightOfTheBumblebee.mid");
-            TraditionalScore passage = MidiTools.parse(sequence);
-            MxmScoreWriter.write(passage,"C:\\Users\\celenp\\Desktop\\GitHub\\io.MxmLog\\mxm-gui\\src\\tests\\resources\\output");
+            TraditionalScore form = MidiTools.parse(sequence);
+            MxmScoreWriter.write(form,"C:\\Users\\celenp\\Desktop\\GitHub\\io.MxmLog\\mxm-gui\\src\\tests\\resources\\output");
             MidiTools.play(sequence);
-            PassageVisualizer rtv = new PassageVisualizer(passage);
+            PassageVisualizer rtv = new PassageVisualizer(form);
             Thread.sleep(100000);
 
         } catch (Exception e) {

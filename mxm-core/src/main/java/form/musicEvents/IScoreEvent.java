@@ -1,6 +1,6 @@
-package passage.musicEvents;
+package form.musicEvents;
 
-import passage.Score;
+import form.Score;
 
 public interface IScoreEvent extends IMusicEvent {
     Score getScore();

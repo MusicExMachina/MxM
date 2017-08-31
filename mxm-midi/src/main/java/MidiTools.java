@@ -77,10 +77,10 @@ public abstract class MidiTools
         return midiReader.read(sequence);
     }
 
-    public static Sequence write(TraditionalScore passage) {
+    public static Sequence write(TraditionalScore form) {
         // Spawn off a parser object
         MidiWriter midiWriter = new MidiWriter();
-        return midiWriter.run(passage);
+        return midiWriter.run(form);
     }
 
     public static void play(Sequence sequence) throws MidiUnavailableException, InvalidMidiDataException {

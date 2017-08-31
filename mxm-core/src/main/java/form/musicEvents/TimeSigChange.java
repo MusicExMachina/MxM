@@ -1,9 +1,9 @@
-package passage.musicEvents;
+package form.musicEvents;
 
 import base.time.Measure;
 import org.jetbrains.annotations.NotNull;
 import base.time.TimeSig;
-import passage.Score;
+import form.Score;
 
 /**
  * Created by celenp on 6/11/2017.

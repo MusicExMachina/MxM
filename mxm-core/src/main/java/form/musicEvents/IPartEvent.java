@@ -1,7 +1,7 @@
-package passage.musicEvents;
+package form.musicEvents;
 
 import org.jetbrains.annotations.NotNull;
-import passage.Part;
+import form.Part;
 
 public interface IPartEvent extends IMusicEvent {
     public @NotNull

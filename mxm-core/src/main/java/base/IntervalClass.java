@@ -1,5 +1,6 @@
-package base.relative;
+package base;
 
+import io.MxmLog;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -12,52 +13,68 @@ import java.util.Iterator;
  * between sound classes. For instance, MINOR_SECOND represents both a movement of a minor second upward, a major
  * seventh downward, a minor ninth upward, so on and so forth such that octaves are always compressed.
  */
-public class IntervalClass implements Comparator<IntervalClass>, Comparable<IntervalClass>, IRelative{
+public class IntervalClass implements Comparator<IntervalClass>, Comparable<IntervalClass> {
+
+    //////////////////////////////
+    // Static Variables         //
+    //////////////////////////////
 
     /** The lowest interval class, better known as "an upward unison" */
-    private static final int MIN_INTERVAL_CLASS_VALUE = 0;
+    public static final int MIN_SIZE = 0;
     /** The highest interval class, better known as "an upward major seventh" */
-    private static final int MAX_INTERVAL_CLASS_VALUE = 11;
+    public static final int MAX_SIZE = 11;
+
     /** A static array of all possible interval classes, stored to implement the flyweight pattern */
-    private static final IntervalClass[] ALL = new IntervalClass[MAX_INTERVAL_CLASS_VALUE - MIN_INTERVAL_CLASS_VALUE + 1];
+    private static final IntervalClass[] ALL;
     // Initializes the "ALL" array
     static {
-        for(int val = MIN_INTERVAL_CLASS_VALUE; val <= MAX_INTERVAL_CLASS_VALUE; val++) {
+        // Keep track of the start time to know how long initialization takes
+        long startTime = System.nanoTime();
+        // Initialize all interval classes
+        ALL = new IntervalClass[MAX_SIZE - MIN_SIZE + 1];
+        for(int val = MIN_SIZE; val <= MAX_SIZE; val++) {
             ALL[val] = new IntervalClass(val);
         }
+        long endTime = System.nanoTime();
+        MxmLog.logInitialization("Interval class", Arrays.asList(ALL),endTime - startTime);
     }
+
     /** The unison interval class */
-    public static final IntervalClass UNISON = getInstance(0);
+    public static final IntervalClass UNISON = get(0);
     /** The minor second interval class */
-    public static final IntervalClass MINOR_SECOND = getInstance(1);
+    public static final IntervalClass MINOR_SECOND = get(1);
     /** The major second interval class */
-    public static final IntervalClass MAJOR_SECOND = getInstance(2);
+    public static final IntervalClass MAJOR_SECOND = get(2);
     /** The minor third interval class */
-    public static final IntervalClass MINOR_THIRD = getInstance(3);
+    public static final IntervalClass MINOR_THIRD = get(3);
     /** The major third interval class */
-    public static final IntervalClass MAJOR_THIRD = getInstance(4);
+    public static final IntervalClass MAJOR_THIRD = get(4);
     /** The perfect fourth interval class */
-    public static final IntervalClass PERFECT_FOURTH = getInstance(5);
+    public static final IntervalClass PERFECT_FOURTH = get(5);
     /** The tritone interval class */
-    public static final IntervalClass TRITONE = getInstance(6);
+    public static final IntervalClass TRITONE = get(6);
     /** The perfect fifth interval class */
-    public static final IntervalClass PERFECT_FIFTH = getInstance(7);
+    public static final IntervalClass PERFECT_FIFTH = get(7);
     /** The minor sixth interval class */
-    public static final IntervalClass MINOR_SIXTH = getInstance(8);
+    public static final IntervalClass MINOR_SIXTH = get(8);
     /** The major sixth interval class */
-    public static final IntervalClass MAJOR_SIXTH = getInstance(9);
+    public static final IntervalClass MAJOR_SIXTH = get(9);
     /** The minor seventh interval class */
-    public static final IntervalClass MINOR_SEVENTH = getInstance(10);
+    public static final IntervalClass MINOR_SEVENTH = get(10);
     /** The major seventh interval class */
-    public static final IntervalClass MAJOR_SEVENTH = getInstance(11);
+    public static final IntervalClass MAJOR_SEVENTH = get(11);
+
+    //////////////////////////////
+    // Static Methods           //
+    //////////////////////////////
 
     /**
      * Gets an instance of a given interval class. This method creates the interning design pattern per interval class.
      * @param size The size (in half steps) of this interval class
      * @return An intervalClass of this value
      */
-    public static IntervalClass getInstance(int size) {
-        if(size >= MIN_INTERVAL_CLASS_VALUE && size <= MAX_INTERVAL_CLASS_VALUE) {
+    public static IntervalClass get(int size) {
+        if(size >= MIN_SIZE && size <= MAX_SIZE) {
             return ALL[size];
         }
         else {
@@ -68,12 +85,21 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      * Gets an iterator which enumerates all valid interval classes.
      * @return An iterator over all valid interval classes
      */
-    public static Iterator<IntervalClass> iterator() {
+    public static Iterator<IntervalClass> allItr() {
         return new ArrayList<>(Arrays.asList(ALL)).iterator();
     }
 
+    //////////////////////////////
+    // Member variables         //
+    //////////////////////////////
+
     /** The size of the interval class. */
-    private int size;
+    private final int size;
+
+    //////////////////////////////
+    // Member methods           //
+    //////////////////////////////
+
     /**
      * A private constructor for IntervalClass which is hidden by the flyweight design pattern (use get() instead).
      * @param size the size of this interval class
@@ -82,15 +108,11 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
         this.size = size;
     }
 
-    //////////////////////////////
-    //   Public member methods  //
-    //////////////////////////////
-
     /**
      * A getter for the size of this interval class, in half-steps.
      * @return the size of this interval class, in half-steps
      */
-    public int getSize() {
+    public final int getSize() {
         return size;
     }
     /**
@@ -100,25 +122,25 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      * @param other the other interval class to add to this one
      * @return the new interval class that corresponds to the addition of this interval class and other
      */
-    public @NotNull IntervalClass plus(@NotNull IntervalClass other) {
-        return getInstance((this.size + other.size)%12);
+    public final @NotNull IntervalClass plus(@NotNull IntervalClass other) {
+        return get((this.size + other.size)%12);
     }
     /**
      * Creates a new interval class that is the difference between this and another. For instance, a MAJOR_THIRD minus a
      * MINOR_SECOND would be a MINOR_THIRD and so forth. Note that this wraps around the octave such that a UNISON minus
-     * a MAJOR_SECOND equals a MINOR_SEVENTH.
+     * a MAJOR_SECOND equals a MIN_SEVENTH.
      * @param other the other interval class to subtract from this one
      * @return the new interval class that corresponds to the difference between this and other
      */
-    public @NotNull IntervalClass minus(@NotNull IntervalClass other) {
-        return getInstance((this.size - other.size + 12)%12);
+    public final @NotNull IntervalClass minus(@NotNull IntervalClass other) {
+        return get((this.size - other.size + 12)%12);
     }
     /**
      * Returns a nicely-formatted string of this interval class (for debug).
      * @return A nicely-formatted string of this interval class
      */
     @Override
-    public @NotNull String toString() {
+    public final @NotNull String toString() {
         switch (size) {
             case 0:     return "PU";
             case 1:     return "m2";
@@ -141,7 +163,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      * @return The comparison between the two
      */
     @Override
-    public int compareTo(@NotNull IntervalClass other) {
+    public final int compareTo(@NotNull IntervalClass other) {
         return new Integer(size).compareTo(other.size);
     }
     /**
@@ -151,27 +173,24 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      * @return The comparison between the two
      */
     @Override
-    public int compare(@NotNull IntervalClass ic1, @NotNull IntervalClass ic2) {
+    public final int compare(@NotNull IntervalClass ic1, @NotNull IntervalClass ic2) {
         return new Integer(ic1.size).compareTo(ic2.size);
     }
     /**
-     * A noteQualities (generated) equals() method for IntervalClasses.
-     * @param o The Object to compare this to
-     * @return If these two Objects are equal
+     * Checks if this interval class is equal to another object. Note that since the flyweight pattern is used, literal
+     * (reference) equality is enough to ensure that these objects are actually equal.
+     * @return if this interval class is equal to another
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        IntervalClass intervalClass = (IntervalClass) o;
-        return size == intervalClass.size;
+    public final boolean equals(Object object) {
+        return this == object;
     }
     /**
      * A simple hash code in order to allow storage in certain Collections.
-     * @return The hash code for this interval class.
+     * @return The hash code for this interval class
      */
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return size;
     }
 }

@@ -2,11 +2,19 @@ package io;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * This is a class for special logging functionality, essentially just to make logs prettier and more standard.
+ */
 public abstract class MxmLog {
+    ////////////////////////////////////////////////////////////////
+
     private static final int MAX_WIDTH = 64;
+
+    ////////////////////////////////////////////////////////////////
 
     public static void log(@NotNull String string, int level) {
         System.out.println(fill("|",level) + " "
@@ -14,9 +22,10 @@ public abstract class MxmLog {
                             + " " + fill("|",level));
     }
 
-    public static void log(@NotNull Collection<String> strings, int level) {
+    public static void log(@NotNull Collection objects, int level) {
         String line = "";
-        for(String string : strings) {
+        for(Object object : objects) {
+            String string = object.toString();
             if(line.length() + string.length()+1 > (MAX_WIDTH - level*2 - 2)) {
                 log(line, level);
                 line = "";
@@ -26,17 +35,34 @@ public abstract class MxmLog {
         log(line, level);
     }
 
-    public static void logHeader(@NotNull String headerTitle) {
-        logBar();
-        log(headerTitle, 1);
-        logBar();
+    public static void logInitialization(@NotNull String title, @NotNull Collection objects, @NotNull long nsElapsed) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        logHeader(title);
+        log("Initializing the following: ",1);
+        log(objects,1);
+        log("Inititalization complete",1);
+        log("Time elapsed: " + formatter.format(nsElapsed) + " ns",1);
+        logBarEnds();
+        logEmpty();
     }
-    public static void logFooter() {
-        logBar();
+
+    ////////////////////////////////////////////////////////////////
+
+    private static void logHeader(@NotNull String headerTitle) {
+        logBarEnds();
+        log(headerTitle, 1);
+        logBarEnds();
+    }
+    private static void logBarEnds() {
+        System.out.println("+" + fill("-",MAX_WIDTH-2)+ "+");
     }
 
     private static void logBar() {
         System.out.println(fill("-",MAX_WIDTH));
+    }
+
+    private static void logEmpty() {
+        System.out.println("");
     }
 
     private static @NotNull String fill(@NotNull String string, int size) {

@@ -3,8 +3,8 @@ package base.sounds;
 import org.jetbrains.annotations.NotNull;
 
 import base.relative.ChordClass;
-import base.relative.IntervalClass;
-import base.relative.PitchClass;
+import base.IntervalClass;
+import base.PitchClass;
 
 import java.util.HashSet;
 import java.util.Iterator;

@@ -1,10 +1,10 @@
-package passage;
+package form;
 
 import base.sounds.ISound;
 import base.properties.Instrument;
 import base.time.Time;
 import org.jetbrains.annotations.NotNull;
-import passage.musicEvents.Note;
+import form.musicEvents.Note;
 
 import java.util.Iterator;
 

@@ -1,4 +1,4 @@
-package passage.musicEvents;
+package form.musicEvents;
 
 import base.time.Time;
 import org.jetbrains.annotations.NotNull;
@@ -6,7 +6,7 @@ import base.properties.Accent;
 import base.properties.Dynamic;
 import base.properties.Technique;
 import base.sounds.ISound;
-import passage.Part;
+import form.Part;
 
 
 public class Note<SoundType extends ISound> extends SpanningEvent implements IPartEvent {

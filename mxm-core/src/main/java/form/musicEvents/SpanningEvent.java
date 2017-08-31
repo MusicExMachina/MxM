@@ -1,4 +1,4 @@
-package passage.musicEvents;
+package form.musicEvents;
 
 import base.time.Time;
 
