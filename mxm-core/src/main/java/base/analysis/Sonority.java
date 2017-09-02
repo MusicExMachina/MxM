@@ -1,6 +1,6 @@
 package base.analysis;
 
-import base.sounds.Chord;
+import base.Chord;
 import base.sounds.ISound;
 import base.Pitch;
 import base.PitchClass;

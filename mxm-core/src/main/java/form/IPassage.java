@@ -1,10 +1,10 @@
 package form;
 
-import base.sounds.Chord;
+import base.Chord;
 import base.sounds.Noise;
 import base.Pitch;
 import form.musicEvents.Note;
-import base.time.Tempo;
+import base.Tempo;
 import base.time.TimeSig;
 import base.time.Time;
 import form.musicEvents.TempoChange;

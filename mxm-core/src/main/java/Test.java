@@ -1,8 +1,7 @@
-import base.Interval;
 import io.MxmLog;
-import base.sounds.Chord;
+import base.Chord;
 import base.Pitch;
-import base.time.Tempo;
+import base.Tempo;
 import base.time.Time;
 import form.scoreTypes.LeadSheet;
 import form.musicEvents.Note;
@@ -10,7 +9,7 @@ import form.musicEvents.TempoChange;
 import form.musicEvents.TimeSigChange;
 import form.Line;
 
-import static base.relative.ChordClass.*;
+import static base.ChordClass.*;
 import static base.PitchClass.*;
 
 public class Test {

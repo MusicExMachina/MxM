@@ -2,7 +2,7 @@ package form.musicEvents;
 
 import base.time.Time;
 import org.jetbrains.annotations.NotNull;
-import base.time.Tempo;
+import base.Tempo;
 import form.Score;
 
 

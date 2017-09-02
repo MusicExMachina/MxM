@@ -12,17 +12,27 @@ import java.util.Iterator;
  * There are only twelve interval classes which represent the twelve possible (always positive) vector differences
  * between sound classes. For instance, MINOR_SECOND represents both a movement of a minor second upward, a major
  * seventh downward, a minor ninth upward, so on and so forth such that octaves are always compressed.
+ *
+ *
+ *
+ * <p> <b>Design Details:</b>
+ * This class is <i>immutable</i> and implements the <b>flyweight design pattern</b>- there is exactly one instance for
+ * each value such that two ADTs (Abstract Data Types) with the same value are, in fact, the same instance. This
+ * simplifies equality checks and can prevent memory waste. Unlike the <b>interning design pattern</b>, all possible
+ * instances are created upfront during static initialization.
  */
 public class IntervalClass implements Comparator<IntervalClass>, Comparable<IntervalClass> {
 
     //////////////////////////////
-    // Static Variables         //
+    // Static variables         //
     //////////////////////////////
 
     /** The lowest interval class, better known as "an upward unison" */
     public static final int MIN_SIZE = 0;
     /** The highest interval class, better known as "an upward major seventh" */
     public static final int MAX_SIZE = 11;
+    /** The total number of pitch classes */
+    public static final int TOTAL_NUM = (MAX_SIZE - MIN_SIZE) + 1;
 
     /** A static array of all possible interval classes, stored to implement the flyweight pattern */
     private static final IntervalClass[] ALL;
@@ -30,11 +40,13 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     static {
         // Keep track of the start time to know how long initialization takes
         long startTime = System.nanoTime();
+
         // Initialize all interval classes
-        ALL = new IntervalClass[MAX_SIZE - MIN_SIZE + 1];
+        ALL = new IntervalClass[TOTAL_NUM];
         for(int val = MIN_SIZE; val <= MAX_SIZE; val++) {
             ALL[val] = new IntervalClass(val);
         }
+
         long endTime = System.nanoTime();
         MxmLog.logInitialization("Interval class", Arrays.asList(ALL),endTime - startTime);
     }

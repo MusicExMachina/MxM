@@ -1,6 +1,6 @@
 package form.scoreTypes;
 
-import base.sounds.Chord;
+import base.Chord;
 import base.Pitch;
 import org.jetbrains.annotations.NotNull;
 

@@ -12,17 +12,26 @@ import java.util.Iterator;
  * a C0 are the same pitch class- C. Pitch classes parallel pitches in many respects- they can be transposed, and also
  * follow the flyweight (interning) design pattern. There are only 12 pitch classes, which can be accessed via static
  * variables like {@link #C_NATURAL} or {@link #get(int)}.
+ *
+ *
+ * <p> <b>Design Details:</b>
+ * This class is <i>immutable</i> and implements the <b>flyweight design pattern</b>- there is exactly one instance for
+ * each value such that two ADTs (Abstract Data Types) with the same value are, in fact, the same instance. This
+ * simplifies equality checks and can prevent memory waste. Unlike the <b>interning design pattern</b>, all possible
+ * instances are created upfront during static initialization.
  */
 public class PitchClass {
 
     //////////////////////////////
-    // Static Variables         //
+    // Static variables         //
     //////////////////////////////
 
     /** The maximum pitch class value, which represents C */
     public static final int MIN_VALUE = 0;
     /** The maximum pitch class value, which represents B */
     public static final int MAX_VALUE = 11;
+    /** The total number of pitch classes */
+    public static final int TOTAL_NUM = (MAX_VALUE - MIN_VALUE) + 1;
 
     /** A static array of all possible pitch classes, stored to implement the flyweight pattern */
     private static final PitchClass[] ALL;
@@ -30,11 +39,13 @@ public class PitchClass {
     static {
         // Keep track of the start time to know how long initialization takes
         long startTime = System.nanoTime();
+
         // Initialize all pitch classes
-        ALL = new PitchClass[MAX_VALUE - MIN_VALUE + 1];
+        ALL = new PitchClass[TOTAL_NUM];
         for(int val = MIN_VALUE; val <= MAX_VALUE; val++) {
             ALL[val] = new PitchClass(val);
         }
+
         long endTime = System.nanoTime();
         MxmLog.logInitialization("Pitch class", Arrays.asList(ALL),endTime - startTime);
     }
@@ -83,7 +94,7 @@ public class PitchClass {
     public static final PitchClass B_SHARP = get(0);
 
     //////////////////////////////
-    // Member Variables         //
+    // Static methods           //
     //////////////////////////////
 
     /**

@@ -1,11 +1,11 @@
 package form;
 
-import base.sounds.Chord;
+import base.Chord;
 import base.sounds.Noise;
 import base.Pitch;
 import org.jetbrains.annotations.NotNull;
 import form.musicEvents.*;
-import base.time.Tempo;
+import base.Tempo;
 import base.time.TimeSig;
 import base.time.*;
 

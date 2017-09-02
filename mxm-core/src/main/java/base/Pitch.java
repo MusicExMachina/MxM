@@ -4,7 +4,6 @@ import base.sounds.ISound;
 import io.MxmLog;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -14,17 +13,26 @@ import java.util.Iterator;
  * hundred twenty different values- all possible MIDI pitches. Pitches are usually found on
  * Notes, though they may be used in Collections. form.form.musicEvents.sounding.Note that there should never be more than
  * these 120 Pitches, and that an iterator() has been provided for easy access.
+ *
+ *
+ * <p> <b>Design Details:</b>
+ * This class is <i>immutable</i> and implements the <b>flyweight design pattern</b>- there is exactly one instance for
+ * each value such that two ADTs (Abstract Data Types) with the same value are, in fact, the same instance. This
+ * simplifies equality checks and can prevent memory waste. Unlike the <b>interning design pattern</b>, all possible
+ * instances are created upfront during static initialization.
  */
 public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
 
     //////////////////////////////
-    // Static Variables         //
+    // Static variables         //
     //////////////////////////////
 
     /** The minimum pitch value, C-1. */
     public static final int MIN_VALUE = 0;
     /** The maximum pitch value, B9. */
     public static final int MAX_VALUE = 120;
+    /** The total number of pitches */
+    public static final int TOTAL_NUM = (MAX_VALUE - MIN_VALUE) + 1;
 
     /** A static array of all possible pitches, stored to implement the flyweight pattern */
     private static final Pitch[] ALL;
@@ -32,11 +40,13 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
     static {
         // Keep track of the start time to know how long initialization takes
         long startTime = System.nanoTime();
+
         // Initialize all pitch classes
-        ALL = new Pitch[MAX_VALUE - MIN_VALUE + 1];
+        ALL = new Pitch[TOTAL_NUM];
         for(int val = MIN_VALUE; val <= MAX_VALUE; val++) {
             ALL[val] = new Pitch(val);
         }
+
         long endTime = System.nanoTime();
         MxmLog.logInitialization("Pitch", Arrays.asList(ALL),endTime - startTime);
     }
