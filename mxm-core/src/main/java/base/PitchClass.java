@@ -8,17 +8,19 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 /**
+ * <p> <b>Class Overview:</b>
  * Pitch classes represent a collapsing of {@link Pitch} about the octave. To put it another way, a C5 and
  * a C0 are the same pitch class- C. Pitch classes parallel pitches in many respects- they can be transposed, and also
  * follow the flyweight (interning) design pattern. There are only 12 pitch classes, which can be accessed via static
- * variables like {@link #C_NATURAL} or {@link #get(int)}.
- *
+ * variables like {@link #C_NATURAL} or {@link #get(int)}. </p>
  *
  * <p> <b>Design Details:</b>
  * This class is <i>immutable</i> and implements the <b>flyweight design pattern</b>- there is exactly one instance for
  * each value such that two ADTs (Abstract Data Types) with the same value are, in fact, the same instance. This
  * simplifies equality checks and can prevent memory waste. Unlike the <b>interning design pattern</b>, all possible
  * instances are created upfront during static initialization.
+ *
+ * @author Patrick Celentano
  */
 public class PitchClass {
 
@@ -46,8 +48,8 @@ public class PitchClass {
             ALL[val] = new PitchClass(val);
         }
 
-        long endTime = System.nanoTime();
-        MxmLog.logInitialization("Pitch class", Arrays.asList(ALL),endTime - startTime);
+        // Log the initialization
+        MxmLog.logInitialization("Pitch class", Arrays.asList(ALL),System.nanoTime() - startTime);
     }
 
     /** The C flat pitch class */
@@ -108,17 +110,17 @@ public class PitchClass {
      * @return a pitch class of this value
      */
     public static @NotNull PitchClass get(int value) {
-        if (value >= MIN_VALUE && value <= MAX_VALUE)
+        if (value >= MIN_VALUE && value <= MAX_VALUE) {
             return ALL[value];
-        else
-            throw new Error("PITCH CLASS: Pitch class of size " + value + " is out of range.");
+        }
+        else throw new Error("PITCH CLASS: Pitch class of size " + value + " is out of range.");
     }
 
     //////////////////////////////
     // Member Variables         //
     //////////////////////////////
 
-    /** The value of this pitch class (between MIN_SIZE and MAX_SIZE) */
+    /** The value of this pitch class */
     private final int value;
 
     //////////////////////////////
@@ -133,23 +135,23 @@ public class PitchClass {
         this.value = (byte)value;
     }
     /**
-     * A getter for the value of this pitch class (between MIN_SIZE and MAX_SIZE).
+     * A getter for the value of this pitch class.
      * @return the value of this pitch class
      */
     public final int getValue() {
         return value;
     }
     /**
-     * Transposes a pitch class by an interval class. Note that this wraps about the octave.
+     * Transposes a pitch class by an interval class. Note that this wraps around the octave.
      * @param intervalClass the interval class to transpose this pitch class by
-     * @return another pitch class which is "intervalclass" higher than this one
+     * @return another pitch class which is an interval class higher than this one
      */
     public final @NotNull PitchClass transpose(@NotNull IntervalClass intervalClass) {
         return PitchClass.get((value + intervalClass.getSize()) % 12);
     }
     /**
-     * Gets a string representation of this class.
-     * @return a string representation of this class
+     * Returns a string representation of this pitch class.
+     * @return A string representation of this pitch class
      */
     @Override
     public final @NotNull String toString() {
@@ -172,15 +174,16 @@ public class PitchClass {
     /**
      * Checks if this pitch class is equal to another object. Note that since the flyweight pattern is used, literal
      * (reference) equality is enough to ensure that these objects are actually equal.
-     * @return if this pitch class is equal to another
+     * @param other the object to compare this pitch class to
+     * @return if this pitch class is equal to this object
      */
     @Override
     public final boolean equals(Object other) {
         return this == other;
     }
     /**
-     * A simple hash code in order to allow storage in certain Collections.
-     * @return The hash code for this interval class
+     * A simple hash code in order to allow storage in certain collections.
+     * @return The hash code for this pitch class
      */
     @Override
     public final int hashCode() {

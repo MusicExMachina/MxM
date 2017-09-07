@@ -1,17 +1,17 @@
 package form;
 
-import base.properties.Instrument;
+import base.Instrument;
 import base.Chord;
-import base.sounds.ISound;
-import base.sounds.Noise;
+import base.ISound;
+import base.Noise;
 import base.Pitch;
 import base.Tempo;
 import base.time.Time;
-import base.time.TimeSig;
+import base.TimeSig;
 import org.jetbrains.annotations.NotNull;
-import form.musicEvents.Note;
-import form.musicEvents.TempoChange;
-import form.musicEvents.TimeSigChange;
+import form.events.Note;
+import form.events.TempoChange;
+import form.events.TimeSigChange;
 
 import java.util.Iterator;
 
@@ -33,7 +33,7 @@ public abstract class Part<SoundType extends ISound> implements IPassage {
     @Override
     public final @NotNull SerialTimeline<TempoChange> getTempoChanges() { return getScore().getTempoChanges(); }
 
-    // Getters for form.musicEvents during a specific time
+    // Getters for form.events during a specific time
     @Override
     public final @NotNull Tempo getTempoAt(Time time) { return getScore().getTempoAt(time); }
     @Override

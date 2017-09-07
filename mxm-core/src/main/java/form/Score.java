@@ -1,12 +1,12 @@
 package form;
 
 import base.Chord;
-import base.sounds.Noise;
+import base.Noise;
 import base.Pitch;
 import org.jetbrains.annotations.NotNull;
-import form.musicEvents.*;
+import form.events.*;
 import base.Tempo;
-import base.time.TimeSig;
+import base.TimeSig;
 import base.time.*;
 
 import java.util.*;
@@ -20,7 +20,7 @@ public abstract class Score implements IPassage {
     private SerialTimeline<TimeSigChange> timeSigChanges;
     private SerialTimeline<TempoChange> tempoChanges;
 
-    // Other form.form.musicEvents
+    // Other form.form.events
     private ParallelTimeline<Note> allNotes;
     private ParallelTimeline<Note<Pitch>> allPitchedNotes;
     private ParallelTimeline<Note<Noise>> allUnpitchedNotes;

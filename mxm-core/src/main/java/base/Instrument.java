@@ -1,6 +1,6 @@
-package base.properties;
+package base;
 
-import base.sounds.ISound;
+import base.properties.Technique;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,7 +10,7 @@ import java.util.Set;
  * A class for storing information about a specific instrument. Note that this is specific enough to be "Horn in F"
  * instead of just "Horn" given that different transpositions of the "same" instrument have different tendencies.
  */
-public class Instrument {
+public class Instrument implements IPartProperty {
 
     private static final ArrayList<Instrument> GeneralMIDIInstrumentSet = new ArrayList<>();
 
@@ -33,7 +33,12 @@ public class Instrument {
     public Iterator<ISound> possibleSoundItr() {
         return possibleSounds.iterator();
     }
-
+    public Iterator<Noise> possibleNoiseItr() {
+        return null;
+    }
+    public Iterator<Pitch> possiblePitchItr() {
+        return null;
+    }
     public Iterator<Technique> possibleTechniqueItr() {
         return possibleTechniques.iterator();
     }
@@ -51,9 +56,12 @@ public class Instrument {
         Instrument instrument = (Instrument) o;
         return name != null ? name.equals(instrument.name) : instrument.name == null;
     }
-
+    /**
+     * A simple hash code in order to allow storage in certain Collections.
+     * @return The hash code for this instrument
+     */
     @Override
-    public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+    public final int hashCode() {
+        return name.hashCode();
     }
 }

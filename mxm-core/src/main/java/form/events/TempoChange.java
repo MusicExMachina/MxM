@@ -1,4 +1,4 @@
-package form.musicEvents;
+package form.events;
 
 import base.time.Time;
 import org.jetbrains.annotations.NotNull;

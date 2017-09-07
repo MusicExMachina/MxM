@@ -1,4 +1,4 @@
-package base.sounds;
+package base;
 
 /**
  * ISound represents any "type" of sound that can be produced. Note that pitches are "types" of sound that have definite
@@ -10,7 +10,9 @@ package base.sounds;
  * identifying characteristics such as "an octave" in such examples as no such relations exist.
  *
  * Note that sounds do not necessarily have inherent comparators, though some implementations (like Pitch) might.
+ *
+ * @author Patrick Celentano
  */
-public interface ISound {
+public interface ISound extends INoteProperty {
 
 }

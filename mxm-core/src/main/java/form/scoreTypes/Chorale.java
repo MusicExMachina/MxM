@@ -2,7 +2,7 @@ package form.scoreTypes;
 
 import org.jetbrains.annotations.NotNull;
 
-import base.properties.Instrument;
+import base.Instrument;
 import base.Pitch;
 
 import form.Line;

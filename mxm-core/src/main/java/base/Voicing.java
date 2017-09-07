@@ -1,4 +1,4 @@
-package base.relative;
+package base;
 
 import base.Interval;
 

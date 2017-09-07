@@ -1,10 +1,10 @@
 package form;
 
 import org.jetbrains.annotations.NotNull;
-import form.musicEvents.IMusicEvent;
+import form.events.IMusicEvent;
 import base.time.Time;
-import form.musicEvents.InstantEvent;
-import form.musicEvents.SpanningEvent;
+import form.events.InstantEvent;
+import form.events.SpanningEvent;
 
 import java.util.*;
 
@@ -38,7 +38,7 @@ class Frame <MusicEventType extends IMusicEvent> {
         this.eventsNotStarted   = new TreeSet<>();
         this.eventsNotEnded     = new TreeSet<>();
     }
-    // Package private on purpose- we don't want users adding form.musicEvents, only scores.
+    // Package private on purpose- we don't want users adding form.events, only scores.
     void add(@NotNull MusicEventType event) {
         if(event instanceof InstantEvent) {
             eventsStarted.add((MusicEventType) event);
@@ -46,7 +46,7 @@ class Frame <MusicEventType extends IMusicEvent> {
         }
         else throw new Error("Frame: Cannot add an event of type " + event.getClass());
     }
-    // Package private on purpose- we don't want users adding form.musicEvents, only scores.
+    // Package private on purpose- we don't want users adding form.events, only scores.
     void addStart(@NotNull MusicEventType event) {
         if(event instanceof SpanningEvent) {
             eventsStarted.add((MusicEventType) event);
@@ -54,7 +54,7 @@ class Frame <MusicEventType extends IMusicEvent> {
         }
         else throw new Error("Frame: Cannot add an event of type " + event.getClass());
     }
-    // Package private on purpose- we don't want users adding form.musicEvents, only scores.
+    // Package private on purpose- we don't want users adding form.events, only scores.
     void addContinue(@NotNull MusicEventType event) {
         if(event instanceof SpanningEvent) {
             eventsContinued.add((MusicEventType)event);
@@ -62,7 +62,7 @@ class Frame <MusicEventType extends IMusicEvent> {
         }
         else throw new Error("Frame: Cannot add an event of type " + event.getClass());
     }
-    // Package private on purpose- we don't want users adding form.musicEvents, only scores.
+    // Package private on purpose- we don't want users adding form.events, only scores.
     void addEnd(@NotNull MusicEventType event) {
         if(event instanceof SpanningEvent) {
             eventsEnded.add((MusicEventType)event);

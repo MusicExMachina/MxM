@@ -1,12 +1,14 @@
 package base.properties;
 
+import base.INoteProperty;
+
 import java.util.Comparator;
 
 /**
  * The dynamic class is a glorified byte wrapper, which allows for a little more dress and avoiding confusion down the
  * line. Note that we still use the MIDI standard's definition of loudness, just as we use midi note values.
  */
-public class Dynamic implements Comparator<Dynamic>, Comparable<Dynamic> {
+public class Dynamic implements INoteProperty, Comparator<Dynamic>, Comparable<Dynamic> {
 
     /* Variable bounds */
     private static int MIN_DYNAMIC = 0;

@@ -1,7 +1,7 @@
 package form;
 
 import base.time.Time;
-import form.musicEvents.IMusicEvent;
+import form.events.IMusicEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -17,7 +17,7 @@ public class SerialTimeline <MusicEventType extends IMusicEvent> implements Iter
     }
 
     // ADDER
-    // Package private on purpose- we don't want users adding form.musicEvents, only scores.
+    // Package private on purpose- we don't want users adding form.events, only scores.
     void addEvent(MusicEventType event) {
         if (events.get(event.getTiming()) == null) {
             events.put(event.getTiming(), event);

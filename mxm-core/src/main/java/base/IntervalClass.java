@@ -9,17 +9,18 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 /**
+ * <p> <b>Class Overview:</b>
  * There are only twelve interval classes which represent the twelve possible (always positive) vector differences
  * between sound classes. For instance, MINOR_SECOND represents both a movement of a minor second upward, a major
- * seventh downward, a minor ninth upward, so on and so forth such that octaves are always compressed.
- *
- *
+ * seventh downward, a minor ninth upward, so on and so forth such that octaves are always compressed. </p>
  *
  * <p> <b>Design Details:</b>
  * This class is <i>immutable</i> and implements the <b>flyweight design pattern</b>- there is exactly one instance for
  * each value such that two ADTs (Abstract Data Types) with the same value are, in fact, the same instance. This
  * simplifies equality checks and can prevent memory waste. Unlike the <b>interning design pattern</b>, all possible
  * instances are created upfront during static initialization.
+ *
+ * @author Patrick Celentano
  */
 public class IntervalClass implements Comparator<IntervalClass>, Comparable<IntervalClass> {
 
@@ -47,8 +48,8 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
             ALL[val] = new IntervalClass(val);
         }
 
-        long endTime = System.nanoTime();
-        MxmLog.logInitialization("Interval class", Arrays.asList(ALL),endTime - startTime);
+        // Log the initialization
+        MxmLog.logInitialization("Interval class", Arrays.asList(ALL),System.nanoTime() - startTime);
     }
 
     /** The unison interval class */
@@ -89,9 +90,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
         if(size >= MIN_SIZE && size <= MAX_SIZE) {
             return ALL[size];
         }
-        else {
-            throw new Error("INTERVAL CLASS:\tInterval class out of range.");
-        }
+        else throw new Error("INTERVAL CLASS:\tInterval class out of range.");
     }
     /**
      * Gets an iterator which enumerates all valid interval classes.
@@ -119,7 +118,6 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     private IntervalClass(int size) {
         this.size = size;
     }
-
     /**
      * A getter for the size of this interval class, in half-steps.
      * @return the size of this interval class, in half-steps
@@ -148,8 +146,8 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
         return get((this.size - other.size + 12)%12);
     }
     /**
-     * Returns a nicely-formatted string of this interval class (for debug).
-     * @return A nicely-formatted string of this interval class
+     * Returns a string representation of this interval class.
+     * @return A string representation of this interval class
      */
     @Override
     public final @NotNull String toString() {

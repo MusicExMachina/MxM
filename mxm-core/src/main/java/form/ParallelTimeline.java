@@ -1,7 +1,7 @@
 package form;
 
 import base.time.Time;
-import form.musicEvents.IMusicEvent;
+import form.events.IMusicEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;

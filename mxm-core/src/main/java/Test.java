@@ -4,12 +4,12 @@ import base.Pitch;
 import base.Tempo;
 import base.time.Time;
 import form.scoreTypes.LeadSheet;
-import form.musicEvents.Note;
-import form.musicEvents.TempoChange;
-import form.musicEvents.TimeSigChange;
+import form.events.Note;
+import form.events.TempoChange;
+import form.events.TimeSigChange;
 import form.Line;
 
-import static base.ChordClass.*;
+import static base.ChordType.*;
 import static base.PitchClass.*;
 
 public class Test {
@@ -21,9 +21,9 @@ public class Test {
         Line<Pitch> tune = leadSheet.getTune();
         Line<Chord> changes = leadSheet.getChanges();
         // ========================================================================================================= //
-        leadSheet.add(new Tempo(120),Time.get(0));
-        leadSheet.add(new Tempo(100),Time.get(10));
-        leadSheet.add(new Tempo(120),Time.get(32));
+        leadSheet.add(Tempo.get(120),Time.get(0));
+        leadSheet.add(Tempo.get(100),Time.get(10));
+        leadSheet.add(Tempo.get(120),Time.get(32));
         // ========================================================================================================= //
         System.out.println("Creating tune");
         tune.add(Pitch.get(C_NATURAL,4),        Time.get(1,4))

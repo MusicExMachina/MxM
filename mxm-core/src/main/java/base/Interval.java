@@ -3,24 +3,23 @@ package base;
 import io.MxmLog;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * Interval is a simple class which utilizes the interning design pattern to create only two hundred forty different
- * values- all possible MIDI basic differences. Intervals are usually used for analysis, though they may be used in
- * Collections. Note that there should never be more than these 240 Intervals, and that an iterator() has been provided
- * for easy access. Also note that Intervals may be negative, though IntervalClasses never are.
- *
- *
+ * <p> <b>Class Overview:</b>
+ * There are two hundred and forty-one intervals which represent the twelve possible differences between pitches.
+ * Intervals are usually used for analysis, though they may of course be stored in Collections and manipulated like most
+ * of MxM's basic classes. Note that Intervals may be negative, while {@link IntervalClass} may never be.</p>
  *
  * <p> <b>Design Details:</b>
  * This class is <i>immutable</i> and implements the <b>flyweight design pattern</b>- there is exactly one instance for
  * each value such that two ADTs (Abstract Data Types) with the same value are, in fact, the same instance. This
  * simplifies equality checks and can prevent memory waste. Unlike the <b>interning design pattern</b>, all possible
  * instances are created upfront during static initialization.
+ *
+ * @author Patrick Celentano
  */
 public class Interval implements Comparator<Interval>, Comparable<Interval> {
 
@@ -28,12 +27,14 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
     // Static variables         //
     //////////////////////////////
 
-    /** The most negative an interval can be */
-    public static final int MIN_SIZE = -(Pitch.MAX_VALUE - Pitch.MIN_VALUE);
-    /** The most positive an interval can be */
+    /** The largest (absolute value) size an interval can be */
     public static final int MAX_SIZE = Pitch.MAX_VALUE - Pitch.MIN_VALUE;
+    /** The most negative an interval can be */
+    public static final int MIN_VALUE = -MAX_SIZE;
+    /** The most positive an interval can be */
+    public static final int MAX_VALUE = MAX_SIZE;
     /** The total number of pitches */
-    public static final int TOTAL_NUM = (MAX_SIZE - MIN_SIZE) + 1;
+    public static final int TOTAL_NUM = (MAX_VALUE - MIN_VALUE) + 1;
 
     /** A static array of all possible intervals, stored to implement the flyweight pattern */
     private static final Interval[] ALL;
@@ -44,8 +45,8 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
 
         // Initialize all interval classes
         ALL = new Interval[TOTAL_NUM];
-        for(int size = MIN_SIZE; size <= MAX_SIZE; size++) {
-            ALL[size - MIN_SIZE] = new Interval(size);
+        for(int size = MIN_VALUE; size <= MAX_VALUE; size++) {
+            ALL[size - MIN_VALUE] = new Interval(size);
         }
 
         long endTime = System.nanoTime();
@@ -53,9 +54,9 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
     }
 
     /** The largest downward interval */
-    public static final Interval MIN = get(MIN_SIZE);
+    public static final Interval MIN = get(MIN_VALUE);
     /** The largest upward interval */
-    public static final Interval MAX = get(MAX_SIZE);
+    public static final Interval MAX = get(MAX_VALUE);
 
     //////////////////////////////
     // Static methods           //
@@ -74,8 +75,8 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      * @return An interval of this size
      */
     public static Interval get(int value) {
-        if(value >= MIN_SIZE && value <= MAX_SIZE)
-            return ALL[value - MIN_SIZE];
+        if(value >= MIN_VALUE && value <= MAX_VALUE)
+            return ALL[value - MIN_VALUE];
         else
             throw new Error("INTERVAL:\tInterval out of range.");
     }
@@ -101,7 +102,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      */
     private Interval(int size) {
         this.size = size;
-        this.intervalClass = IntervalClass.get((Math.abs(size) + MAX_SIZE) % 12);
+        this.intervalClass = IntervalClass.get((Math.abs(size) + MAX_VALUE) % 12);
         this.octaves = size/12;
     }
     /**
@@ -132,7 +133,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      */
     public @NotNull Interval plus(@NotNull Interval other) {
         int newSize = size + other.size;
-        if(newSize >= MIN_SIZE && newSize <= MAX_SIZE)
+        if(newSize >= MIN_VALUE && newSize <= MAX_VALUE)
             return get(newSize);
         else
             throw new Error("INTERVAL:\tResultant interval out of range!");
@@ -144,15 +145,16 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      */
     public @NotNull Interval minus(@NotNull Interval other) {
         int newSize = size - other.size;
-        if(newSize >= MIN_SIZE && newSize <= MAX_SIZE)
-            return get(MIN_SIZE);
+        if(newSize >= MIN_VALUE && newSize <= MAX_VALUE)
+            return get(MIN_VALUE);
         else
             throw new Error("INTERVAL:\nResultant interval out of range!");
     }
     /**
-     * Returns a string representation of this class
-     * @return A string representation of this pitch
+     * Returns a string representation of this interval.
+     * @return A string representation of this interval
      */
+    @Override
     public final @NotNull String toString() {
         if(octaves == 0)
             return intervalClass.toString();
@@ -183,11 +185,12 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
     /**
      * Checks if this interval is equal to another object. Note that since the flyweight pattern is used, literal
      * (reference) equality is enough to ensure that these objects are actually equal.
-     * @return if this interval class is equal to another
-     */
+     * @param object the object to compare to
+     * @return if this interval is equal to this object
+     * */
     @Override
-    public boolean equals(Object o) {
-        return this == o;
+    public boolean equals(Object object) {
+        return this == object;
     }
     /**
      * A simple hash code in order to allow storage in certain Collections.

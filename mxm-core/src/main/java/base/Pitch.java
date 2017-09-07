@@ -1,6 +1,5 @@
 package base;
 
-import base.sounds.ISound;
 import io.MxmLog;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,17 +8,19 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * Pitch is a simple class which utilizes the interning design pattern to create only one
- * hundred twenty different values- all possible MIDI pitches. Pitches are usually found on
- * Notes, though they may be used in Collections. form.form.musicEvents.sounding.Note that there should never be more than
- * these 120 Pitches, and that an iterator() has been provided for easy access.
- *
+ * <p> <b>Class Overview:</b>
+ * Pitch is a simple class which represents a pitch in the traditional Western music sense: equal-temperament, A440,
+ * with octave equivalence and so forth. To use a pitch, simply call Pitch.get() with the midi value of the desired
+ * pitch (C4 = 60) or with the desired {@link PitchClass} and octave number. (i.e. Pitch.get(C,2)) To easily enumerate
+ * all pitches, use Pitch.allItr() which starts at the lowest possible pitch, and runs to the highest possible. </p>
  *
  * <p> <b>Design Details:</b>
  * This class is <i>immutable</i> and implements the <b>flyweight design pattern</b>- there is exactly one instance for
  * each value such that two ADTs (Abstract Data Types) with the same value are, in fact, the same instance. This
  * simplifies equality checks and can prevent memory waste. Unlike the <b>interning design pattern</b>, all possible
  * instances are created upfront during static initialization.
+ *
+ * @author Patrick Celentano
  */
 public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
 
@@ -41,14 +42,14 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
         // Keep track of the start time to know how long initialization takes
         long startTime = System.nanoTime();
 
-        // Initialize all pitch classes
+        // Initialize all pitches
         ALL = new Pitch[TOTAL_NUM];
         for(int val = MIN_VALUE; val <= MAX_VALUE; val++) {
             ALL[val] = new Pitch(val);
         }
 
-        long endTime = System.nanoTime();
-        MxmLog.logInitialization("Pitch", Arrays.asList(ALL),endTime - startTime);
+        // Log the initialization
+        MxmLog.logInitialization("Pitch", Arrays.asList(ALL),System.nanoTime() - startTime);
     }
 
     /** The lowest possible pitch */
@@ -68,29 +69,29 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
         return Arrays.asList(ALL).iterator();
     }
     /**
-     * Gets an instance of a given pitch. This method creates the interning design pattern per pitch.
-     * @param value The (midi) value of this pitch.
-     * @return An pitch of this (midi) value
+     * Gets an instance of a given pitch.
+     * @param value The value of this pitch.
+     * @return An pitch of this value
      */
     public static Pitch get(int value) {
-        if(value >= MIN_VALUE && value <= MAX_VALUE)
+        if(value >= MIN_VALUE && value <= MAX_VALUE) {
             return ALL[value - MIN_VALUE];
-        else
-            throw new Error("INTERVAL:\tInterval out of range.");
+        }
+        else throw new Error("PITCH:\tInterval out of range.");
     }
     /**
-     * Gets an instance of a given pitch. This method creates the interning design pattern per pitch.
-     * @param pitchClass The pitch class of this pitch (C, Ab, F#)
+     * Gets an instance of a given pitch.
+     * @param pitchClass The pitch class of this pitch
      * @param octave The octave of this pitch
      * @return A pitch of this pitch class and octave
      */
     public static Pitch get(@NotNull PitchClass pitchClass, int octave) {
         // Remember that we must add one to the octave to support the lowest octave, -1
         int value = pitchClass.getValue()+ (octave+1)*12;
-        if(value >= MIN_VALUE && value <= MAX_VALUE)
+        if(value >= MIN_VALUE && value <= MAX_VALUE) {
             return ALL[value - MIN_VALUE];
-        else
-            throw new Error("PITCH:\tPitch out of range.");
+        }
+        else throw new Error("PITCH:\tPitch out of range.");
     }
 
     //////////////////////////////
@@ -109,8 +110,8 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
     //////////////////////////////
 
     /**
-     * The pitch constructor, which is private to enforce the interning design pattern (one instance per value).
-     * @param value The (midi) value of this pitch
+     * The pitch constructor, which is private to enforce the flyweight design pattern
+     * @param value The value of this pitch
      */
     private Pitch(int value) {
         this.value = value;
@@ -118,8 +119,8 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
         this.octave = value/12;
     }
     /**
-     * Gets the (midi) value of this pitch.
-     * @return The (midi) value of this pitch
+     * Gets the value of this pitch.
+     * @return The value of this pitch
      */
     public final int getValue() {
         return value;
@@ -139,7 +140,7 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
         return pitchClass;
     }
     /**
-     * Transposes a pitch up by a given interval
+     * Returns another pitch which is transposed by a given interval
      * @param interval The interval to transpose by
      * @return The new, resulting pitch
      */
@@ -147,7 +148,7 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
         return Pitch.get(value + interval.getSize());
     }
     /**
-     * Transposes a pitch down by a given interval
+     * Returns another pitch which is transposed by a given interval
      * @param interval The interval to transpose by
      * @return The new, resulting pitch
      */
@@ -163,26 +164,27 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
         return Interval.get(other.value - this.value);
     }
     /**
-     * Returns a string representation of this class
+     * Returns a string representation of this pitch.
      * @return A string representation of this pitch
      */
+    @Override
     public final @NotNull String toString() {
         return pitchClass.toString() + (octave - 1);
     }
     /**
-     * Compares this pitch to another pitch.
+     * Compares this pitch to another based on perceived height.
      * @param other The other pitch
-     * @return The comparison
+     * @return The comparison between these two pitches
      */
     @Override
     public final int compareTo(@NotNull Pitch other) {
         return Integer.compare(value, other.value);
     }
     /**
-     * Compares two pitches.
+     * Compares two pitches based on perceived height.
      * @param p1 The first pitch
      * @param p2 The second pitch
-     * @return The comparison
+     * @return The comparison between these two pitches
      */
     @Override
     public final int compare(@NotNull Pitch p1, @NotNull Pitch p2) {
@@ -191,15 +193,16 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
     /**
      * Checks if this pitch is equal to another object. Note that since the flyweight pattern is used, literal
      * (reference) equality is enough to ensure that these objects are actually equal.
-     * @return if this pitch is equal to another
+     * @param object the object to compare this pitch to
+     * @return if this pitch is equal to this object
      */
     @Override
     public final boolean equals(Object object) {
         return this == object;
     }
     /**
-     * A simple hash code in order to allow storage in certain Collections.
-     * @return The hash code for this interval class
+     * A simple hash code in order to allow storage in certain collections.
+     * @return The hash code for this pitch
      */
     @Override
     public final int hashCode() {

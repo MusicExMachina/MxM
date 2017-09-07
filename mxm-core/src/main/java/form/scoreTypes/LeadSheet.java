@@ -4,7 +4,7 @@ import base.Chord;
 import base.Pitch;
 import org.jetbrains.annotations.NotNull;
 
-import base.properties.Instrument;
+import base.Instrument;
 
 import form.Line;
 import form.Score;

@@ -1,4 +1,4 @@
-package form.musicEvents;
+package form.events;
 
 import form.Score;
 
