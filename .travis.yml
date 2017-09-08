@@ -4,14 +4,6 @@ jdk:
 cache:
   directories:
   - "$HOME/.m2"
-env:
-  global:
-  - secure: gxJ2tRdX9NFIhRtX+/4vzjylvXI/5lgr4LtRCt+y8MVdnVrmUxD61h/IfG3LqJKWAr995rEtCKj274yL2O/jp5LgZPHjUIrdFk6zz07ZlIWIiP4N+npMxQjcwnZx135KKnWKLPQSgyFHlYGEuFTTDJZri96slbIW1PH1mdGBoGlp6CZWNiWsf6zH+k+DTS2LjcOTNn+qu6n9nRzUl9C2MfMvJV3e+wmVBmC9ZsE8H3lnNXT+ztNex3bXg+vPiYLLbGMiSW4XxLJFIcWRjaHDaMytJtg5yoesSX1EDsaB45+gxKIPp0TGl5ErvVvAmAD2EEUJy4cXEEQSHHqK6Tt+aAlgSmsIt2+GUKezaJV6tRvIiN5WAaLwv3Ua8OHDFSlx5Go/gseIMIhABYLfOFFXwVIjmra72da1+d2sC0VcfK6CtRmU/f9QGSiLPluE8NKP+N5yfHfexEhdmXM2ih/iu7zzCs4HK3xw0DfHrhpANpnBu9pbRcuvRW7PP+VKp3O4PCQgZ6MpQ+LA4ZorLrmDkC8aa8ZEU2ZF7b45ukqpm6c2K/GGwkje3vfKaOxggW6SQX8f0bFcO08HIEwFUVoZOsfxVxxk8iwV/OYVwc1Kk6bc4g/OJKuPwtxXT/FqDPCHMU71sfKMpM1EvP5rMXy8dc+L7fUnjPew1bK/33hdZr0=
-before_install:
-- chmod +x .utility/push-javadoc.sh
-branches:
-  except:
-  - gh-pages
 notifications:
   email: false
 script:

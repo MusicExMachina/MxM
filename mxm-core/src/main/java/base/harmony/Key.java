@@ -29,7 +29,7 @@ public class Key {
     }
     /**
      * Gets the implicit harmony (set of pitch classes) in this key
-     * @return
+     * @return the harmony implied by this key
      */
     public final @NotNull Harmony getHarmony() {
         return harmony;
