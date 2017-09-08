@@ -26,7 +26,7 @@ public final class Beat implements Comparable<Beat>, Comparator<Beat> {
     /** A "0/1" beat. Represents the lowest point in a measure. */
     public static final Beat ZERO = Beat.get(0,1);
     /** A "1/1" beat. Represents exactly one measure. */
-    public static final Beat ONE = Beat.get(1,0);
+    public static final Beat ONE = Beat.get(1,1);
 
     //////////////////////////////
     // Static methods           //

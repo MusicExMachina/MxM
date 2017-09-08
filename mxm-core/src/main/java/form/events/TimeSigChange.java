@@ -2,8 +2,8 @@ package form.events;
 
 import base.time.Measure;
 import org.jetbrains.annotations.NotNull;
-import base.TimeSig;
-import form.Score;
+import base.time.TimeSig;
+import form.timelines.Score;
 
 /**
  * Created by celenp on 6/11/2017.

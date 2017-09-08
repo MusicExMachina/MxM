@@ -1,16 +1,16 @@
 import io.MxmLog;
-import base.Chord;
-import base.Pitch;
-import base.Tempo;
+import base.harmony.Chord;
+import base.pitch.Pitch;
+import base.time.Tempo;
 import base.time.Time;
 import form.scoreTypes.LeadSheet;
 import form.events.Note;
 import form.events.TempoChange;
 import form.events.TimeSigChange;
-import form.Line;
+import form.timelines.Line;
 
-import static base.ChordType.*;
-import static base.PitchClass.*;
+import static base.harmony.ChordClass.*;
+import static base.pitch.PitchClass.*;
 
 public class Test {
 

@@ -2,11 +2,11 @@ package form.scoreTypes;
 
 import org.jetbrains.annotations.NotNull;
 
-import base.Instrument;
-import base.Pitch;
+import base.properties.Instrument;
+import base.pitch.Pitch;
 
-import form.Line;
-import form.Score;
+import form.timelines.Line;
+import form.timelines.Score;
 
 /**
  * Chorales are a common classical music genre with four vocal parts: soprano, alto, tenor, and bass.

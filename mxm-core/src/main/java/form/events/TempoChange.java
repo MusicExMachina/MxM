@@ -2,8 +2,8 @@ package form.events;
 
 import base.time.Time;
 import org.jetbrains.annotations.NotNull;
-import base.Tempo;
-import form.Score;
+import base.time.Tempo;
+import form.timelines.Score;
 
 
 public class TempoChange extends InstantEvent implements IScoreEvent {

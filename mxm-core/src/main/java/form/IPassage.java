@@ -1,11 +1,11 @@
 package form;
 
-import base.Chord;
-import base.Noise;
-import base.Pitch;
+import base.harmony.Chord;
+import base.properties.Noise;
+import base.pitch.Pitch;
 import form.events.Note;
-import base.Tempo;
-import base.TimeSig;
+import base.time.Tempo;
+import base.time.TimeSig;
 import base.time.Time;
 import form.events.TempoChange;
 import form.events.TimeSigChange;
@@ -19,9 +19,6 @@ import java.util.Iterator;
  * of a whole piece.
  */
 public interface IPassage {
-    // Iterators over specific event types
-    @NotNull SerialTimeline<TimeSigChange> getTimeSigChanges();      // All time signature changes
-    @NotNull SerialTimeline<TempoChange> getTempoChanges();          // All tempo changes
 
     // Getters for iterators over form.events during a specific time
     @NotNull Iterator<Note> noteItrAt(Time time);                    // All notes
@@ -32,6 +29,10 @@ public interface IPassage {
     // Getters for form.events during a specific time
     @NotNull Tempo getTempoAt(Time time);            // Tempo at a time
     @NotNull TimeSig getTimeSigAt(Time time);        // Time Signature at a time
+
+    // Iterators over specific event types
+    @NotNull ISerialTimeline<TimeSigChange> getTimeSigChanges();      // All time signature changes
+    @NotNull ISerialTimeline<TempoChange> getTempoChanges();          // All tempo changes
 
     /*
     @NotNull Harmony getHarmonyAt(Time time);        // Harmony at a time

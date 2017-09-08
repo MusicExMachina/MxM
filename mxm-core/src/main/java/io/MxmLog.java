@@ -12,13 +12,17 @@ import java.util.Collections;
 public abstract class MxmLog {
     ////////////////////////////////////////////////////////////////
 
-    private static final int MAX_WIDTH = 128;
+    private static final int MAX_TOTAL_WIDTH = 128;
+    private static final int MAX_CONTENT_WIDTH = MAX_TOTAL_WIDTH - 16;
+
+    public enum LogLevel { LOW, MEDIUM, HIGH }
+    public static final LogLevel LOG_LEVEL = LogLevel.LOW;
 
     ////////////////////////////////////////////////////////////////
 
     public static void log(@NotNull String string, int level) {
         System.out.println(fill("|",level) + " "
-                            + padRight(string,MAX_WIDTH-2-(level*2))
+                            + padRight(string, MAX_TOTAL_WIDTH -2-(level*2))
                             + " " + fill("|",level));
     }
 
@@ -26,7 +30,7 @@ public abstract class MxmLog {
         String line = "";
         for(Object object : objects) {
             String string = object.toString();
-            if(line.length() + string.length()+1 > (MAX_WIDTH - level*2 - 2)) {
+            if(line.length() + string.length()+1 > (MAX_CONTENT_WIDTH - level*2 - 2)) {
                 log(line, level);
                 line = "";
             }
@@ -35,32 +39,43 @@ public abstract class MxmLog {
         log(line, level);
     }
 
-    public static void logInitialization(@NotNull String title, @NotNull Collection objects, @NotNull long nsElapsed) {
+    public static void logStaticInit(@NotNull String title, @NotNull Collection objects, @NotNull long nsElapsed) {
         DecimalFormat formatter = new DecimalFormat("#,###");
-        logHeader(title);
-        log("Initializing the following: ",1);
-        log(objects,1);
-        log("Inititalization complete",1);
-        log("Time elapsed: " + formatter.format(nsElapsed) + " ns",1);
-        logBarEnds();
-        logEmpty();
+        if(LOG_LEVEL == LogLevel.HIGH) {
+            logHeader(title);
+            log("Initializing the following: ", 1);
+            log(objects, 1);
+            log("Inititalization complete", 1);
+            log("Time elapsed: " + formatter.format(nsElapsed) + " ns", 1);
+            logBarWithEnds();
+            logEmpty();
+        }
+        else if(LOG_LEVEL == LogLevel.MEDIUM) {
+            logHeader(title);
+            log("Time elapsed: " + formatter.format(nsElapsed) + " ns", 1);
+            logBarWithEnds();
+            logEmpty();
+        }
+        else if(LOG_LEVEL == LogLevel.LOW) {
+            logBarWithEnds();
+            log(title + " initialized. Time elapsed: " + formatter.format(nsElapsed) + " ns.", 1);
+            logBarWithEnds();
+        }
     }
 
     ////////////////////////////////////////////////////////////////
 
     private static void logHeader(@NotNull String headerTitle) {
-        logBarEnds();
+        logBarWithEnds();
         log(headerTitle, 1);
-        logBarEnds();
+        logBarWithEnds();
     }
-    private static void logBarEnds() {
-        System.out.println("+" + fill("-",MAX_WIDTH-2)+ "+");
+    private static void logBarWithEnds() {
+        System.out.println("+" + fill("-", MAX_TOTAL_WIDTH -2)+ "+");
     }
-
     private static void logBar() {
-        System.out.println(fill("-",MAX_WIDTH));
+        System.out.println(fill("-", MAX_TOTAL_WIDTH));
     }
-
     private static void logEmpty() {
         System.out.println("");
     }
@@ -68,11 +83,9 @@ public abstract class MxmLog {
     private static @NotNull String fill(@NotNull String string, int size) {
         return String.join("", Collections.nCopies(size, string));
     }
-
     private static @NotNull String padRight(@NotNull String string, int size) {
         return String.format("%1$-" + size + "s", string);
     }
-
     private static @NotNull String padLeft(@NotNull String string, int size) {
         return String.format("%1$" + size + "s", string);
     }

@@ -6,7 +6,7 @@ import base.properties.Accent;
 import base.properties.Dynamic;
 import base.properties.Technique;
 import base.ISound;
-import form.Part;
+import form.timelines.Part;
 
 
 public class Note<SoundType extends ISound> extends SpanningEvent implements IPartEvent {

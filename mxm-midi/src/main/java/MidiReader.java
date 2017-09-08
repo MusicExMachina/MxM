@@ -84,8 +84,8 @@ public class MidiReader implements Reader<TraditionalScore> {
 
             // Set the initial instrument of this track (it may change)
             // Note that "-1" here just means anything else will override it
-            //TreeMap<Long,base.Instrument> init = new TreeMap<>();
-            //init.put(-1L,base.Instrument.DEFAULT);
+            //TreeMap<Long,base.properties.Instrument> init = new TreeMap<>();
+            //init.put(-1L,base.properties.Instrument.DEFAULT);
             //instChangeLong.put(track,init);
             // TODO: Instrument change stuff
 

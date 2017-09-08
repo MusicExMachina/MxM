@@ -1,6 +1,6 @@
 package form.events;
 
-import form.Score;
+import form.timelines.Score;
 
 public interface IScoreEvent extends IMusicEvent {
     Score getScore();

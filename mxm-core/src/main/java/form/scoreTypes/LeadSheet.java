@@ -1,13 +1,13 @@
 package form.scoreTypes;
 
-import base.Chord;
-import base.Pitch;
+import base.harmony.Chord;
+import base.pitch.Pitch;
 import org.jetbrains.annotations.NotNull;
 
-import base.Instrument;
+import base.properties.Instrument;
 
-import form.Line;
-import form.Score;
+import form.timelines.Line;
+import form.timelines.Score;
 
 /**
  * Lead sheets are a common jazz notation in which there is a "tune" (or melody) and "changes" (or a chord progression).

@@ -1,10 +1,10 @@
-import base.IntervalClass;
-import base.PitchClass;
+import base.pitch.IntervalClass;
+import base.pitch.PitchClass;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 
-import static base.PitchClass.*;
+import static base.pitch.PitchClass.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PitchClassTest {
