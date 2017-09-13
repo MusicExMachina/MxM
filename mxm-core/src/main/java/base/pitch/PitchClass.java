@@ -1,6 +1,6 @@
 package base.pitch;
 
-import io.MxmLog;
+import io.Log;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class PitchClass {
         }
 
         // Log the initialization
-        MxmLog.logStaticInit("Pitch class", Arrays.asList(ALL),System.nanoTime() - startTime);
+        Log.logStaticInit("Pitch class", Arrays.asList(ALL),System.nanoTime() - startTime);
     }
 
     /** The C flat pitch class */

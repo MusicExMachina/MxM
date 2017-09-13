@@ -1,4 +1,4 @@
-import io.MxmLog;
+import io.Log;
 import base.harmony.Chord;
 import base.pitch.Pitch;
 import base.time.Tempo;
@@ -9,12 +9,21 @@ import form.events.TempoChange;
 import form.events.TimeSigChange;
 import form.timelines.Line;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import static base.harmony.ChordClass.*;
 import static base.pitch.PitchClass.*;
 
 public class Test {
+    private static final Logger LOGGER = Logger.getLogger( Test.class.getSimpleName() );
+
+    static {
+        LOGGER.setLevel(Level.ALL);
+    }
 
     public static void main(String[] args) {
+        LOGGER.setLevel(Level.ALL);
         // ========================================================================================================= //
         System.out.println("Creating lead sheet");
         LeadSheet leadSheet = new LeadSheet("My lead sheet");
@@ -42,19 +51,11 @@ public class Test {
                 .add(Chord.get(C_NATURAL,DOM_SEVENTH),  Time.get(1,2))
                 .add(Chord.get(C_NATURAL,MAJOR),        Time.get(1));
         // ========================================================================================================= //
-        for(TimeSigChange timeSigChange : leadSheet.getTimeSigChanges()) {
-            MxmLog.log(timeSigChange.getTimeSig().toString(), 1);
-        }
-        for(TempoChange tempoChange : leadSheet.getTempoChanges()) {
-            MxmLog.log(tempoChange.getTempo().toString(),1);
-        }
+        leadSheet.getTimeSigChanges().forEach((TimeSigChange tsc) -> LOGGER.log(Level.FINE,tsc.getTimeSig().toString()));
+        leadSheet.getTempoChanges().forEach((TempoChange tc) -> LOGGER.log(Level.FINE,tc.getTempo().toString()));
         // ========================================================================================================= //
-        for(Note<Pitch> note : tune) {
-            MxmLog.log(note.getSound().toString(),0);
-        }
-        for(Note<Chord> note : changes) {
-            MxmLog.log(note.getSound().toString(),0);
-        }
+        tune.forEach((Note note) -> LOGGER.log(Level.FINE,note.getSound().toString()));
+        changes.forEach((Note note) -> LOGGER.log(Level.INFO,note.getSound().toString()));
         // ========================================================================================================= //
     }
 }

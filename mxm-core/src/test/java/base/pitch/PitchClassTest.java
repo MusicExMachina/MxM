@@ -1,3 +1,5 @@
+package base.pitch;
+
 import base.pitch.IntervalClass;
 import base.pitch.PitchClass;
 import org.junit.jupiter.api.Test;

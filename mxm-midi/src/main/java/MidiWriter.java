@@ -75,7 +75,6 @@ class MidiWriter implements Writer<TraditionalScore> {
         MidiEvent me = new MidiEvent(sm,(long)0);
         track.add(me);
 
-        /*
         //****  set track name (meta event)  ****
         MetaMessage mt = new MetaMessage();
         String TrackName = "Control Track";

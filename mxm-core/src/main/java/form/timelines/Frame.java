@@ -3,8 +3,8 @@ package form.timelines;
 import base.time.Time;
 import form.IFrame;
 import form.events.IMusicEvent;
-import form.events.InstantEvent;
-import form.events.SpanningEvent;
+import form.events.AbstractInstantEvent;
+import form.events.AbstractSpanningEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -31,7 +31,7 @@ class Frame <MusicEventType extends IMusicEvent> implements IFrame<MusicEventTyp
     }
     // Package private on purpose- we don't want users adding form.events, only scores.
     void add(@NotNull MusicEventType event) {
-        if(event instanceof InstantEvent) {
+        if(event instanceof AbstractInstantEvent) {
             eventsStarted.add((MusicEventType) event);
             eventsNotEnded.add((MusicEventType) event);
         }
@@ -39,7 +39,7 @@ class Frame <MusicEventType extends IMusicEvent> implements IFrame<MusicEventTyp
     }
     // Package private on purpose- we don't want users adding form.events, only scores.
     void addStart(@NotNull MusicEventType event) {
-        if(event instanceof SpanningEvent) {
+        if(event instanceof AbstractSpanningEvent) {
             eventsStarted.add((MusicEventType) event);
             eventsNotEnded.add((MusicEventType) event);
         }
@@ -47,7 +47,7 @@ class Frame <MusicEventType extends IMusicEvent> implements IFrame<MusicEventTyp
     }
     // Package private on purpose- we don't want users adding form.events, only scores.
     void addContinue(@NotNull MusicEventType event) {
-        if(event instanceof SpanningEvent) {
+        if(event instanceof AbstractSpanningEvent) {
             eventsContinued.add((MusicEventType)event);
             eventsNotEnded.add((MusicEventType)event);
         }
@@ -55,7 +55,7 @@ class Frame <MusicEventType extends IMusicEvent> implements IFrame<MusicEventTyp
     }
     // Package private on purpose- we don't want users adding form.events, only scores.
     void addEnd(@NotNull MusicEventType event) {
-        if(event instanceof SpanningEvent) {
+        if(event instanceof AbstractSpanningEvent) {
             eventsEnded.add((MusicEventType)event);
             eventsNotStarted.add((MusicEventType)event);
         }

@@ -2,17 +2,17 @@ package form.scoreTypes;
 
 import base.harmony.Chord;
 import base.pitch.Pitch;
+import form.timelines.AbstractScore;
 import org.jetbrains.annotations.NotNull;
 
 import base.properties.Instrument;
 
 import form.timelines.Line;
-import form.timelines.Score;
 
 /**
  * Lead sheets are a common jazz notation in which there is a "tune" (or melody) and "changes" (or a chord progression).
  */
-public final class LeadSheet extends Score {
+public final class LeadSheet extends AbstractScore {
     /** The tune, i.e. the melody */
     private final Line<Pitch> tune;
     /** The changes, i.e. the chord progression */

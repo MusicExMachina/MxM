@@ -2,10 +2,10 @@ package form.events;
 
 import base.time.Time;
 
-public abstract class InstantEvent implements IMusicEvent {
+public abstract class AbstractInstantEvent implements IMusicEvent {
     private final Time time;
 
-    protected InstantEvent(Time time) {
+    protected AbstractInstantEvent(Time time) {
         this.time = time;
     }
 

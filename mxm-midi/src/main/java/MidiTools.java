@@ -1,47 +1,34 @@
 import com.sun.media.sound.StandardMidiFileReader;
+import form.IPassage;
+import io.Log;
+import org.jetbrains.annotations.NotNull;
 
 import javax.sound.midi.*;
 import javax.sound.midi.spi.MidiFileReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
+
 /*
 public abstract class MidiTools
 {
-    public static void printInfo() {
+    public static void debug() {
         try {
             Sequencer sequencer = MidiSystem.getSequencer();
-
-            System.out.println("MIDI:\tReceivers:");
-            List<Receiver> receivers = sequencer.getReceivers();
-            for(Receiver receiver : receivers) {
-                System.out.println("MIDI:\t\t"+receiver.toString());
-            }
-
-            System.out.println("MIDI:\tTransmitters:");
-            List<Transmitter> transmitters = sequencer.getTransmitters();
-            for(Transmitter transmitter : transmitters) {
-                System.out.println("MIDI:\t\t"+transmitter.toString());
-            }
-
-            Synthesizer synthesizer = MidiSystem.getSynthesizer();
-
-            System.out.println("MIDI:\tInstruments:");
-            Instrument[] instruments = synthesizer.getAvailableInstruments();
-            for(Instrument instrument : instruments) {
-                System.out.println("MIDI:\t\t"+instrument.getSoundbank().getName() + " - " + instrument.getName());
-            }
-            System.out.println("");
-
+            Log.debug("MidiTools Sequencer","receivers",sequencer.getReceivers());
+            Log.debug("MidiTools Sequencer","transmitters",sequencer.getTransmitters());
+            Log.debug("MidiTools System","synthesizer",MidiSystem.getSynthesizer());
+            Log.debug("MidiTools System","available instruments", Arrays.asList(MidiSystem.getSynthesizer().getAvailableInstruments()));
+            Log.debug("MidiTools System","loaded instruments", Arrays.asList(MidiSystem.getSynthesizer().getLoadedInstruments()));
         } catch (MidiUnavailableException e) {
-            System.out.println("MIDI:\tThe sequencer is unavailable");
+            Log.warning("MidiTools",e.getMessage());
         }
     }
 
-
-    public static Sequence load (String fileName) throws IOException, InvalidMidiDataException {
+    public static @NotNull Sequence load (@NotNull String fileName) throws IOException, InvalidMidiDataException {
         MidiFileReader reader = new StandardMidiFileReader();
         return reader.getSequence(new FileInputStream(fileName));
     }
@@ -71,19 +58,19 @@ public abstract class MidiTools
         return toReturn;
     }
 
-    public static TraditionalScore parse(Sequence sequence) {
+    public static @NotNull IPassage parse(@NotNull Sequence sequence) {
         // Spawn off a parser object
         MidiReader midiReader = new MidiReader();
         return midiReader.read(sequence);
     }
 
-    public static Sequence write(TraditionalScore form) {
+    public static @NotNull Sequence write(@NotNull IPassage passage) {
         // Spawn off a parser object
         MidiWriter midiWriter = new MidiWriter();
         return midiWriter.run(form);
     }
 
-    public static void play(Sequence sequence) throws MidiUnavailableException, InvalidMidiDataException {
+    public static void play(@NotNull Sequence sequence) throws MidiUnavailableException, InvalidMidiDataException {
         Sequencer sequencer = MidiSystem.getSequencer();
         sequencer.open();
         sequencer.setSequence(sequence);

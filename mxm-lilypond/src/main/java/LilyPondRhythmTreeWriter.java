@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /*
-public class LilyPondRhythmTreeWriter extends FileWriter<RhythmTree> {
+public class LilyPondRhythmTreeWriter extends IFileWriter<RhythmTree> {
 
     @Override
     public void write(RhythmTree rhythmTree, String filename) {
@@ -109,7 +109,7 @@ public class LilyPondRhythmTreeWriter extends FileWriter<RhythmTree> {
         trees.add(new RhythmTree(new int[]{2,3,3,0,0,0,0,0,0}));
         trees.add(new RhythmTree(new int[]{3,2,2,2,0,0,0,0,0,0}));
         trees.add(new RhythmTree(new int[]{2,0,2,0,2,0,2,0,1}));
-        FileWriter writer = new LilyPondRhythmTreeWriter();
+        IFileWriter writer = new LilyPondRhythmTreeWriter();
 
         writer.write(trees,"test");
         LilyPondTools.engrave("test.ly");

@@ -2,7 +2,7 @@ package base.harmony;
 
 import base.pitch.IntervalClass;
 import base.pitch.PitchClass;
-import io.MxmLog;
+import io.Log;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -54,7 +54,7 @@ public final class ChordClass implements Iterable<IntervalClass> {
         }
 
         // Log the initialization
-        MxmLog.logStaticInit("Chord class", Arrays.asList(ALL),System.nanoTime() - startTime);
+        Log.logStaticInit("Chord class", Arrays.asList(ALL),System.nanoTime() - startTime);
     }
     /** Major chords */
     public static final ChordClass MAJOR = get(MAJOR_THIRD, PERFECT_FIFTH);
@@ -119,7 +119,7 @@ public final class ChordClass implements Iterable<IntervalClass> {
         if(id < TOTAL_NUM) {
             return ALL[id];
         }
-        else throw new Error("CHORD CLASS: This class id (" + id + ") does not exist!");
+        else throw Log.error("ChordClass", "This class id (" + id + ") does not exist!");
     }
     public static @NotNull ChordClass get(@NotNull IntervalClass... factors) {
         return new ChordClass(0,Arrays.asList(factors)); // TODO: Remove this!

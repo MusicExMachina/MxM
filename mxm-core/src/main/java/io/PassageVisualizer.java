@@ -45,7 +45,7 @@ public class PassageVisualizer extends JFrame {
                     g.drawLine(x,0,x,vScale);
                 }
             }
-            for(Part part : form) {
+            for(AbstractPart part : form) {
                 Color color = Color.getHSBColor(rand.nextFloat(),1,1);
                 for(Note note: part) {
                     g.setColor(color);
@@ -66,13 +66,13 @@ public class PassageVisualizer extends JFrame {
             //Sequence sequence = MidiTools.download("http://www.classicalmidi.co.uk/music2/Pergynt4.mid");
             //Sequence sequence = MidiTools.download("http://www.bachcentral.com/WTCBkI/Prelude1.mid");
             //Sequence sequence = MidiTools.load("C:/users/celenp/desktop/test.mid");
-            //Sequence sequence = MidiTools.load("C:\\Users\\celenp\\Desktop\\GitHub\\io.MxmLog\\mxm-midi\\src\\tests\\resources\\midi_schubertImpromptu.mid");
+            //Sequence sequence = MidiTools.load("C:\\Users\\celenp\\Desktop\\GitHub\\io.Log\\mxm-midi\\src\\tests\\resources\\midi_schubertImpromptu.mid");
             //Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/bach/lttlef.mid");
             //Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/bach/bwv159-4.mid");
             Sequence sequence = MidiTools.download("http://www.midiworld.com/midis/other/dvorak/dvs93.mid");
             //Sequence sequence = MidiTools.download("http://tedmuller.us/Piano/FlightOfTheBumblebee/FlightOfTheBumblebee.mid");
             TraditionalScore form = MidiTools.parse(sequence);
-            MxmScoreWriter.write(form,"C:\\Users\\celenp\\Desktop\\GitHub\\io.MxmLog\\mxm-gui\\src\\tests\\resources\\output");
+            MxmScoreWriter.write(form,"C:\\Users\\celenp\\Desktop\\GitHub\\io.Log\\mxm-gui\\src\\tests\\resources\\output");
             MidiTools.play(sequence);
             PassageVisualizer rtv = new PassageVisualizer(form);
             Thread.sleep(100000);

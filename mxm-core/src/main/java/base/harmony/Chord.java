@@ -3,8 +3,8 @@ package base.harmony;
 import base.ISound;
 import base.pitch.IntervalClass;
 import base.pitch.PitchClass;
-import composite.Voicing;
-import io.MxmLog;
+import base.composite.Voicing;
+import io.Log;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class Chord implements ISound, Iterable<PitchClass> {
         }
 
         // Log the initialization
-        MxmLog.logStaticInit("Chord", Arrays.asList(ALL),System.nanoTime() - startTime);
+        Log.logStaticInit("Chord", Arrays.asList(ALL),System.nanoTime() - startTime);
     }
 
     //////////////////////////////

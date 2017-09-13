@@ -1,4 +1,4 @@
-package composite;
+package base.composite;
 
 import base.pitch.Interval;
 

@@ -3,6 +3,9 @@ package base.time;
 import org.jetbrains.annotations.NotNull;
 import javafx.util.Pair;
 
+/**
+ *
+ */
 public abstract class Time implements Comparable<Time> {
     public static Measure PICKUP_MEASURE    = get(-1);
     public static Measure MEASURE_ONE       = get(0);

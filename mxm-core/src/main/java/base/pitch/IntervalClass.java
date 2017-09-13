@@ -1,6 +1,6 @@
 package base.pitch;
 
-import io.MxmLog;
+import io.Log;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
         }
 
         // Log the initialization
-        MxmLog.logStaticInit("Interval class", Arrays.asList(ALL),System.nanoTime() - startTime);
+        Log.logStaticInit("Interval class", Arrays.asList(ALL),System.nanoTime() - startTime);
     }
 
     /** The unison interval class */

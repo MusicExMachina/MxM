@@ -3,7 +3,9 @@ package form.timelines;
 import base.time.Time;
 import form.ISerialTimeline;
 import form.events.IMusicEvent;
+import form.exceptions.SerialTimelineOverlapException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -23,20 +25,29 @@ final class SerialTimeline <MusicEventType extends IMusicEvent> implements ISeri
         if (events.get(event.getTiming()) == null) {
             events.put(event.getTiming(), event);
         } else {
-            throw new Error("Serial Timeline: Cannot add one event on top of another!");
+            try {
+                throw new SerialTimelineOverlapException();
+            } catch (SerialTimelineOverlapException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     // PUBLIC GETTERS
+    @Nullable
     public MusicEventType getFirstEvent() { return events.firstEntry().getValue(); }
+    @Nullable
     public MusicEventType getLastEvent() { return events.lastEntry().getValue(); }
-    public MusicEventType getEventAt(Time time) {
+    @Nullable
+    public MusicEventType getEventAt(@NotNull Time time) {
         return events.get(time);
     }
-    public MusicEventType getEventBefore(Time time) {
+    @Nullable
+    public MusicEventType getEventBefore(@NotNull Time time) {
         return events.floorEntry(time).getValue();
     }
-    public MusicEventType getEventAfter(Time time) {
+    @Nullable
+    public MusicEventType getEventAfter(@NotNull Time time) {
         return events.ceilingEntry(time).getValue();
     }
 

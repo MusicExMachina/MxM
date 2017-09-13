@@ -1,4 +1,4 @@
-package composite;
+package base.composite;
 
 import base.ISound;
 import base.harmony.Harmony;
@@ -26,9 +26,7 @@ public class Sonority implements ISound {
     private Sonority(Collection<Pitch> pitches) {
         this.pitches = new TreeSet<>(pitches);
         Set<PitchClass> pitchClasses = new HashSet<>();
-        for(Pitch pitch : pitches) {
-            pitchClasses.add(pitch.getPitchClass());
-        }
+        pitches.parallelStream().forEach((Pitch pitch) -> pitchClasses.add(pitch.getPitchClass()));
         this.harmony = Harmony.get(pitchClasses);
     }
 

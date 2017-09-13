@@ -1,9 +1,9 @@
 package form.events;
 
 import org.jetbrains.annotations.NotNull;
-import form.timelines.Part;
+import form.timelines.AbstractPart;
 
 public interface IPartEvent extends IMusicEvent {
     public @NotNull
-    Part getPart();
+    AbstractPart getPart();
 }

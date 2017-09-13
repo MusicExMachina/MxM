@@ -1,12 +1,14 @@
 package base.pitch;
 
+import base.AbstractRandomizableProp;
 import base.ISound;
-import io.MxmLog;
+import io.Log;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * <p> <b>Class Overview:</b>
@@ -50,7 +52,7 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
         }
 
         // Log the initialization
-        MxmLog.logStaticInit("Pitch", Arrays.asList(ALL),System.nanoTime() - startTime);
+        Log.logStaticInit("Pitch", Arrays.asList(ALL),System.nanoTime() - startTime);
     }
 
     /** The lowest possible pitch */
@@ -208,5 +210,13 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
     @Override
     public final int hashCode() {
         return value;
+    }
+    /**
+     * Returns a random instance of this class
+     * @return a random valid Pitch
+     */
+    //@Override
+    public static @NotNull Pitch random() {
+        return get(ThreadLocalRandom.current().nextInt(MIN_VALUE, MAX_VALUE + 1));
     }
 }

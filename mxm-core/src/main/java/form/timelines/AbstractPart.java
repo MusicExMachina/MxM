@@ -17,16 +17,16 @@ import form.events.TimeSigChange;
 
 import java.util.Iterator;
 
-public abstract class Part<SoundType extends ISound> implements IPassage {
-    private final Score score;
+public abstract class AbstractPart<SoundType extends ISound> implements IPassage {
+    private final AbstractScore score;
     private final Instrument instrument;
 
-    Part(Score score, Instrument instrument) {
+    AbstractPart(AbstractScore score, Instrument instrument) {
         this.score = score;
         this.instrument = instrument;
     }
 
-    public final @NotNull Score getScore() { return score; }
+    public final @NotNull AbstractScore getScore() { return score; }
     public final @NotNull Instrument getInstrument() { return instrument; }
 
     // Iterators over specific event types
@@ -44,8 +44,10 @@ public abstract class Part<SoundType extends ISound> implements IPassage {
 
 
 
+    @NotNull
     @Override
     public Iterator<Note> noteItrAt(Time time) { return null; }
+    @NotNull
     @Override
     public Iterator<Note<Pitch>> pitchedNoteItrAt(Time time) { return null; }
     @Override

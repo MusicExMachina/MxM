@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * <p> <b>Class Overview:</b>
  * Time signatures are exactly what they sound like in the Western music theory- representing metrical (that is to say,
- * measure-based) repetitive patterns of rhythm. These are in many ways structurally similar to {@link Time}. The major
+ * measure-based) repetitive base.patterns of rhythm. These are in many ways structurally similar to {@link Time}. The major
  * difference is that there's no reason to ever reduce a time signature from say, 4/4 to 2/2.
  *
  * <p> <b>Design Details:</b>

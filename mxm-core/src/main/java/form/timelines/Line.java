@@ -8,15 +8,22 @@ import form.events.Note;
 
 import java.util.Iterator;
 
-public class Line<SoundType extends ISound> extends Part<SoundType> implements Iterable<Note<SoundType>> {
+/**
+ * The
+ * @param <SoundType>
+ */
+public class Line<SoundType extends ISound> extends AbstractPart<SoundType> implements Iterable<Note<SoundType>> {
+
+    /** All of the notes in this line, which may not overlap */
     private final SerialTimeline<Note<SoundType>> notes;
+    /** We must save the last-written-to time in this Line */
     private Time writeHead;
 
     //////////////////
     // Constructors //
     //////////////////
 
-    public Line(@NotNull Score score, @NotNull Instrument instrument) {
+    public Line(@NotNull AbstractScore score, @NotNull Instrument instrument) {
         super(score,instrument);
         this.notes = new SerialTimeline<>();
         this.writeHead = Time.MEASURE_ONE;

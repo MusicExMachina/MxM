@@ -1,11 +1,11 @@
 package base.harmony;
 
-import composite.Sonority;
+import base.composite.Sonority;
 import base.pitch.IntervalClass;
 import base.pitch.PitchClass;
-import io.MxmLog;
+import io.Log;
 import org.jetbrains.annotations.NotNull;
-import patterns.Scale;
+import base.patterns.Scale;
 
 import java.util.*;
 
@@ -42,7 +42,7 @@ public class Harmony {
         }
 
         // Log the initialization
-        MxmLog.logStaticInit("Harmony", Arrays.asList(ALL),System.nanoTime() - startTime);
+        Log.logStaticInit("Harmony", Arrays.asList(ALL),System.nanoTime() - startTime);
     }
     /** The trivial, empty harmony, with no constituent pitch classes. */
     public static final Harmony EMPTY = get(0);
@@ -69,7 +69,7 @@ public class Harmony {
         if(id < TOTAL_NUM) {
             return ALL[id];
         }
-        else throw new Error("HARMONY:\tThis id (" + id + ") does not exist!");
+        else throw Log.error("Harmony","This id (" + id + ") does not exist!");
     }
     /**
      * Gets an instance of a given harmony. This method enforces the flyweight design pattern per noise.

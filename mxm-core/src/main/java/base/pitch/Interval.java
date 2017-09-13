@@ -1,6 +1,6 @@
 package base.pitch;
 
-import io.MxmLog;
+import io.Log;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -50,7 +50,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
         }
 
         long endTime = System.nanoTime();
-        MxmLog.logStaticInit("Interval", Arrays.asList(ALL),endTime - startTime);
+        Log.logStaticInit("Interval", Arrays.asList(ALL),endTime - startTime);
     }
 
     /** The largest downward interval */
