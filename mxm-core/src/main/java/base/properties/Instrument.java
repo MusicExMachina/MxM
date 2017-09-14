@@ -1,7 +1,6 @@
 package base.properties;
 
-import base.IPartProperty;
-import base.sound.ISoundProperty;
+import base.sound.ISound;
 import base.sound.Noise;
 import base.sound.Pitch;
 
@@ -13,7 +12,7 @@ import java.util.Set;
  * A class for storing information about a specific instrument. Note that this is specific enough to be "Horn in F"
  * instead of just "Horn" given that different transpositions of the "same" instrument have different tendencies.
  */
-public class Instrument implements IPartProperty {
+public class Instrument {
 
     private static final ArrayList<Instrument> GeneralMIDIInstrumentSet = new ArrayList<>();
 
@@ -22,7 +21,7 @@ public class Instrument implements IPartProperty {
     public static final Instrument DEFAULT = GRAND_PIANO;
 
     private String name;
-    private Set<ISoundProperty> possibleSounds;
+    private Set<ISound> possibleSounds;
     private Set<Technique> possibleTechniques;
 
     public Instrument(String name) {
@@ -33,7 +32,7 @@ public class Instrument implements IPartProperty {
      * Returns an iterator over all possible sounds that this instrument can produce.
      * @return An iterator over all possible sounds that this instrument can produce
      */
-    public Iterator<ISoundProperty> possibleSoundItr() {
+    public Iterator<ISound> possibleSoundItr() {
         return possibleSounds.iterator();
     }
     public Iterator<Noise> possibleNoiseItr() {

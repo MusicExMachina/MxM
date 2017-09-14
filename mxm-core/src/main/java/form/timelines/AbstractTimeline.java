@@ -8,9 +8,9 @@ import base.time.Time;
 import java.util.*;
 
 // mutable
-abstract class Timeline <MusicEventType extends IMusicEvent> {
+public abstract class AbstractTimeline<MusicEventType extends IMusicEvent> {
     private final TreeMap<ITime, Frame<MusicEventType>> frames;
-    Timeline() {
+    AbstractTimeline() {
         this.frames = new TreeMap<>();
     }
     private @NotNull Frame<MusicEventType> getFrameAtOrAdd(@NotNull ITime time) {

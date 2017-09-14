@@ -1,13 +1,12 @@
 package form;
 
-import base.harmony.Chord;
+import base.sound.Chord;
 import base.sound.Noise;
 import base.sound.Pitch;
 import base.time.ITime;
 import form.events.Note;
 import base.time.Tempo;
 import base.time.TimeSig;
-import base.time.Time;
 import form.events.TempoChange;
 import form.events.TimeSigChange;
 import org.jetbrains.annotations.NotNull;

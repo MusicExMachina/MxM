@@ -1,12 +1,12 @@
 package base;
 
-public abstract class AbstractReducedFractProp extends AbstractFractionProp {
+public abstract class AbstractReducedFractionProp extends AbstractFractionProp {
 
     //////////////////////////////
     // Member methods           //
     //////////////////////////////
 
-    protected AbstractReducedFractProp(int num, int den) {
+    protected AbstractReducedFractionProp(int num, int den) {
         super(num,den);
         reduce();
     }

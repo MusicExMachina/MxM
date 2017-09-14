@@ -1,16 +1,25 @@
-import base.properties.Dynamic;
 import base.sound.*;
-
-import java.util.stream.IntStream;
 
 public class OtherOtherTest {
     public static void main(String[] args) {
-        IntStream.range(0,10).forEach(i -> {
-            System.out.println(Pitch.random());
-            System.out.println(PitchClass.random());
-            System.out.println(Interval.random());
-            System.out.println(IntervalClass.random());
-            System.out.println(Dynamic.random());
-        });
+        // SERIAL
+        Pitch.all().forEach(System.out::println);
+        PitchClass.all().forEach(System.out::println);
+        Interval.all().forEach(System.out::println);
+        IntervalClass.all().forEach(System.out::println);
+        Chord.all().forEach(System.out::println);
+        ChordClass.all().forEach(System.out::println);
+        // Print all valid noises
+        // STATIC INITIALIZATION PROBLEMS: Noise.all().forEach(System.out::println);
+
+        // PARALLEL
+        Pitch.all().parallelStream().forEach(System.out::println);
+        PitchClass.all().parallelStream().forEach(System.out::println);
+        Interval.all().parallelStream().forEach(System.out::println);
+        IntervalClass.all().parallelStream().forEach(System.out::println);
+        Chord.all().parallelStream().forEach(System.out::println);
+        ChordClass.all().parallelStream().forEach(System.out::println);
+        // Print all valid noises
+        // STATIC INITIALIZATION PROBLEMS: Noise.all().parallelStream().forEach(System.out::println);
     }
 }

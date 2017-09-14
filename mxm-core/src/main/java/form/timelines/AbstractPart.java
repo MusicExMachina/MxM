@@ -1,13 +1,12 @@
 package form.timelines;
 
 import base.properties.Instrument;
-import base.harmony.Chord;
-import base.sound.ISoundProperty;
+import base.sound.Chord;
+import base.sound.ISound;
 import base.sound.Noise;
 import base.sound.Pitch;
 import base.time.ITime;
 import base.time.Tempo;
-import base.time.Time;
 import base.time.TimeSig;
 import form.IPassage;
 import form.ISerialTimeline;
@@ -18,7 +17,7 @@ import form.events.TimeSigChange;
 
 import java.util.Iterator;
 
-public abstract class AbstractPart<SoundType extends ISoundProperty> implements IPassage {
+public abstract class AbstractPart<SoundType extends ISound> implements IPassage {
     private final AbstractScore score;
     private final Instrument instrument;
 

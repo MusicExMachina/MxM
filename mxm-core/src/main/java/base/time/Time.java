@@ -2,9 +2,7 @@ package base.time;
 
 import base.AbstractFractionProp;
 import base.AbstractIntegerProp;
-import base.AbstractReducedFractProp;
 import org.jetbrains.annotations.NotNull;
-import javafx.util.Pair;
 
 /**
  *

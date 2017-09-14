@@ -1,6 +1,6 @@
 package form.timelines;
 
-import base.sound.ISoundProperty;
+import base.sound.ISound;
 import base.properties.Instrument;
 import base.time.ITime;
 import base.time.Time;
@@ -11,9 +11,9 @@ import java.util.Iterator;
 
 /**
  * The
- * @param <SoundType>
+ * @param <SoundType> s
  */
-public class Line<SoundType extends ISoundProperty> extends AbstractPart<SoundType> implements Iterable<Note<SoundType>> {
+public class Line<SoundType extends ISound> extends AbstractPart<SoundType> implements Iterable<Note<SoundType>> {
 
     /** All of the notes in this line, which may not overlap */
     private final SerialTimeline<Note<SoundType>> notes;

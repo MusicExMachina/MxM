@@ -1,6 +1,6 @@
 package form.timelines;
 
-import base.harmony.Chord;
+import base.sound.Chord;
 import base.sound.Noise;
 import base.sound.Pitch;
 import form.IPassage;
@@ -33,7 +33,7 @@ public abstract class AbstractScore implements IPassage {
 
     /**
      *
-     * @param title
+     * @param title a
      */
     protected AbstractScore(String title) {
         this.title = title;

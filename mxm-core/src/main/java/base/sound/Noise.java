@@ -3,8 +3,8 @@ package base.sound;
 import base.AbstractStringProp;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -17,7 +17,7 @@ import java.util.Iterator;
  *
  * @author Patrick Celentano
  */
-public final class Noise extends AbstractStringProp implements ISoundProperty {
+public final class Noise extends AbstractStringProp implements ISound {
 
     //////////////////////////////
     // Static variables         //
@@ -36,13 +36,6 @@ public final class Noise extends AbstractStringProp implements ISoundProperty {
     //////////////////////////////
 
     /**
-     * Gets an iterator which enumerates all valid noises.
-     * @return An iterator over all valid noises
-     */
-    public static Iterator<Noise> allItr() {
-        return ALL.values().iterator();
-    }
-    /**
      * Gets an instance of a given noise. This method creates the interning design pattern per noise.
      * @param name The name of this noise
      * @return A noise of this name
@@ -58,6 +51,20 @@ public final class Noise extends AbstractStringProp implements ISoundProperty {
         Noise newNoise = new Noise(name);
         ALL.put(name,newNoise);
         return newNoise;
+    }
+    /**
+     * Returns an immutable collection of all valid noises, useful for iteration or streams
+     * @return an immutable collection of all valid noises
+     */
+    public static @NotNull Collection<Noise> all() {
+        return Collections.unmodifiableCollection(ALL.values());
+    }
+    /**
+     * Returns a random instance of this class
+     * @return a random valid Noise
+     */
+    public static @NotNull Noise random() {
+        return get(new ArrayList<>(ALL.keySet()).get(ThreadLocalRandom.current().nextInt(ALL.size())));
     }
 
     //////////////////////////////

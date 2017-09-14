@@ -1,6 +1,6 @@
 package form.scoreTypes;
 
-import base.harmony.Chord;
+import base.sound.Chord;
 import base.sound.Pitch;
 import form.timelines.AbstractScore;
 import org.jetbrains.annotations.NotNull;

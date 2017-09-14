@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 /**
  *
- * @param <MusicEventType>
+ * @param <MusicEventType> s
  */
 public interface IFrame <MusicEventType extends IMusicEvent> {
     /**
@@ -19,27 +19,27 @@ public interface IFrame <MusicEventType extends IMusicEvent> {
     @NotNull ITime getTime();
     /**
      *
-     * @return
+     * @return a
      */
     @NotNull Iterator<MusicEventType> eventsStartedItr();
     /**
      *
-     * @return
+     * @return a
      */
     @NotNull Iterator<MusicEventType> eventsContinuedItr();
     /**
      *
-     * @return
+     * @return a
      */
     @NotNull Iterator<MusicEventType> eventsEndedItr();
     /**
      *
-     * @return
+     * @return a
      */
     @NotNull Iterator<MusicEventType> eventsNotStartedItr();
     /**
      *
-     * @return
+     * @return a
      */
     @NotNull Iterator<MusicEventType> eventsNotEndedItr();
 }

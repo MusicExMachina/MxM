@@ -1,7 +1,6 @@
 package base.properties;
 
 import base.AbstractIntegerProp;
-import base.INoteProperty;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
@@ -15,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * TODO: this comment
  */
-public class Dynamic extends AbstractIntegerProp implements INoteProperty, Comparator<Dynamic>, Comparable<Dynamic> {
+public class Dynamic extends AbstractIntegerProp implements Comparator<Dynamic>, Comparable<Dynamic> {
 
     //////////////////////////////
     // Static variables         //

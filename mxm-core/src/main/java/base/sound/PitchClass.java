@@ -4,9 +4,7 @@ import base.AbstractIntegerProp;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -102,11 +100,6 @@ public final class PitchClass extends AbstractIntegerProp {
     //////////////////////////////
 
     /**
-     * Gets an iterator which enumerates all valid sound classes.
-     * @return An iterator over all valid sound classes
-     */
-    public static @NotNull Iterator<PitchClass> allItr() { return new ArrayList<>(Arrays.asList(ALL)).iterator(); }
-    /**
      * Supports the flyweight design pattern by a factory-eque getter instead of a public constructor
      * @param value The value of this sound class
      * @return a sound class of this value
@@ -116,6 +109,13 @@ public final class PitchClass extends AbstractIntegerProp {
             return ALL[value];
         }
         else throw new Error("PITCH CLASS: Pitch class of size " + value + " is out of range.");
+    }
+    /**
+     * Returns an immutable collection of all valid pitch classes, useful for iteration or streams
+     * @return an immutable collection of all valid pitch classes
+     */
+    public static @NotNull Collection<PitchClass> all() {
+        return Collections.unmodifiableList(Arrays.asList(ALL));
     }
     /**
      * Returns a random instance of this class

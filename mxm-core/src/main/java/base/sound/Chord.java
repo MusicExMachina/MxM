@@ -1,15 +1,12 @@
-package base.harmony;
+package base.sound;
 
-import base.sound.ISoundProperty;
-import base.sound.IntervalClass;
-import base.sound.PitchClass;
+import base.harmony.Harmony;
 import base.composite.Voicing;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * <p> <b>Class overview:</b>
@@ -27,7 +24,7 @@ import java.util.Iterator;
  *
  * @author Patrick Celentano
  */
-public class Chord implements ISoundProperty, Iterable<PitchClass> {
+public class Chord implements ISound, Iterable<PitchClass> {
 
     //////////////////////////////
     // Static variables         //
@@ -59,15 +56,23 @@ public class Chord implements ISoundProperty, Iterable<PitchClass> {
     // Static methods           //
     //////////////////////////////
 
-    /**
-     * Gets an iterator which enumerates all valid chords.
-     * @return An iterator over all valid chords
-     */
-    public static @NotNull Iterator<Chord> allItr() {
-        return Arrays.asList(ALL).iterator();
-    }
     public static @NotNull Chord get(@NotNull PitchClass root, @NotNull ChordClass chordClass) {
         return ALL[(root.getValue() * ChordClass.TOTAL_NUM) + chordClass.getID()];
+    }
+
+    /**
+     * Returns an immutable collection of all valid chords, useful for iteration or streams
+     * @return an immutable collection of all valid chords
+     */
+    public static @NotNull Collection<Chord> all() {
+        return Collections.unmodifiableList(Arrays.asList(ALL));
+    }
+    /**
+     * Returns a random instance of this class
+     * @return a random valid chord
+     */
+    public static @NotNull Chord random() {
+        return get(PitchClass.random(),ChordClass.random());
     }
 
     //////////////////////////////

@@ -1,16 +1,15 @@
 package form.events;
 
+import base.sound.ISound;
 import base.time.ITime;
-import base.time.Time;
 import form.timelines.AbstractPart;
 import org.jetbrains.annotations.NotNull;
 import base.properties.Accent;
 import base.properties.Dynamic;
 import base.properties.Technique;
-import base.sound.ISoundProperty;
 
 
-public class Note<SoundType extends ISoundProperty> extends AbstractSpanningEvent implements IPartEvent {
+public class Note<SoundType extends ISound> extends AbstractSpanningEvent implements IPartEvent {
 
     // NOTE PROPERTIES
     private final AbstractPart part;

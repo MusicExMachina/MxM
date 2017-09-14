@@ -4,10 +4,7 @@ import base.AbstractIntegerProp;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Iterator;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -95,11 +92,11 @@ public final class IntervalClass extends AbstractIntegerProp implements Comparat
         else throw new Error("INTERVAL CLASS:\tInterval class out of range.");
     }
     /**
-     * Gets an iterator which enumerates all valid interval classes.
-     * @return An iterator over all valid interval classes
+     * Returns an immutable collection of all valid interval classes, useful for iteration or streams
+     * @return an immutable collection of all valid interval classes
      */
-    public static Iterator<IntervalClass> allItr() {
-        return new ArrayList<>(Arrays.asList(ALL)).iterator();
+    public static @NotNull Collection<IntervalClass> all() {
+        return Collections.unmodifiableList(Arrays.asList(ALL));
     }
     /**
      * Returns a random instance of this class

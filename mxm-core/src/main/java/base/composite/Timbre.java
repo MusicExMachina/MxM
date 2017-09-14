@@ -1,6 +1,6 @@
 package base.composite;
 
-import base.sound.ISoundProperty;
+import base.sound.ISound;
 
-public class Timbre implements ISoundProperty {
+public class Timbre implements ISound {
 }

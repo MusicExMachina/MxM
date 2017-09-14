@@ -4,9 +4,7 @@ import base.AbstractIntegerProp;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Iterator;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -65,13 +63,6 @@ public final class Interval extends AbstractIntegerProp implements Comparator<In
     //////////////////////////////
 
     /**
-     * Gets an iterator which enumerates all valid intervals.
-     * @return An iterator over all valid intervals.
-     */
-    public static Iterator<Interval> allItr() {
-        return Arrays.asList(ALL).iterator();
-    }
-    /**
      * Gets an instance of a given interval size. This method creates the interning design pattern per interval.
      * @param value The size (in half steps) of this interval
      * @return An interval of this size
@@ -80,6 +71,13 @@ public final class Interval extends AbstractIntegerProp implements Comparator<In
         if (value < MIN_VALUE || value > MAX_VALUE)  throw new Error("INTERVAL:\tInterval out of range.");
 
         return ALL[value - MIN_VALUE];
+    }
+    /**
+     * Returns an immutable collection of all valid intervals, useful for iteration or streams
+     * @return an immutable collection of all valid intervals
+     */
+    public static @NotNull Collection<Interval> all() {
+        return Collections.unmodifiableList(Arrays.asList(ALL));
     }
     /**
      * Returns a random instance of this class
@@ -149,7 +147,7 @@ public final class Interval extends AbstractIntegerProp implements Comparator<In
      * @param other The other interval to subtract from this one
      * @return The new interval difference
      */
-    public @NotNull Interval minus(@NotNull Interval other) {
+    public final @NotNull Interval minus(@NotNull Interval other) {
         int newSize = getSize() - other.getSize();
         if(newSize >= MIN_VALUE && newSize <= MAX_VALUE)
             return get(MIN_VALUE);

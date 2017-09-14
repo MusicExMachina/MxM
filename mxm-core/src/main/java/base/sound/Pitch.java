@@ -4,10 +4,10 @@ import base.AbstractIntegerProp;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Iterator;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Stream;
 
 /**
  * <p> <b>Class Overview:</b>
@@ -24,7 +24,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author Patrick Celentano
  */
-public final class Pitch extends AbstractIntegerProp implements ISoundProperty, Comparator<Pitch>, Comparable<Pitch> {
+public final class Pitch extends AbstractIntegerProp implements ISound, Comparator<Pitch>, Comparable<Pitch> {
 
     //////////////////////////////
     // Static variables         //
@@ -64,22 +64,18 @@ public final class Pitch extends AbstractIntegerProp implements ISoundProperty, 
     //////////////////////////////
 
     /**
-     * Gets an iterator which enumerates all valid Pitches.
-     * @return An iterator over all valid Pitches.
-     */
-    public static Iterator<Pitch> allItr() {
-        return Arrays.asList(ALL).iterator();
-    }
-    /**
      * Gets an instance of a given sound.
+     *
+     * <b>Direct "value" static getters should be private and hidden from public view</b>
+     *
      * @param value The value of this sound.
      * @return An sound of this value
      */
-    public static @NotNull Pitch get(int value) {
-        if(value >= MIN_VALUE && value <= MAX_VALUE) {
-            return ALL[value - MIN_VALUE];
-        }
-        else throw new Error("PITCH:\tInterval out of range.");
+    private static @NotNull Pitch get(int value) {
+        if (value < MIN_VALUE || value > MAX_VALUE)
+            throw new Error("PITCH:\tInterval out of range.");
+
+        return ALL[value - MIN_VALUE];
     }
     /**
      * Gets an instance of a given sound.
@@ -94,6 +90,13 @@ public final class Pitch extends AbstractIntegerProp implements ISoundProperty, 
             return ALL[value - MIN_VALUE];
         }
         else throw new Error("PITCH:\tPitch out of range.");
+    }
+    /**
+     * Returns an immutable collection of all valid pitches, useful for iteration or streams
+     * @return an immutable collection of all valid pitches
+     */
+    public static @NotNull Collection<Pitch> all() {
+        return Collections.unmodifiableList(Arrays.asList(ALL));
     }
     /**
      * Returns a random instance of this class

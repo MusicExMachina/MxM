@@ -1,10 +1,7 @@
 package base.time;
 
-import base.AbstractReducedFractProp;
-import javafx.util.Pair;
+import base.AbstractReducedFractionProp;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Comparator;
 
 /***
  * <p> <b>Class overview:</b>
@@ -18,7 +15,7 @@ import java.util.Comparator;
  *
  * @author Patrick Celentano
  */
-public final class Beat extends AbstractReducedFractProp implements Comparable<Beat> {
+public final class Beat extends AbstractReducedFractionProp implements Comparable<Beat> {
 
     //////////////////////////////
     // Static variables         //

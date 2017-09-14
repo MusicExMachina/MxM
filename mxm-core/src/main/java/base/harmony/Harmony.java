@@ -2,6 +2,7 @@ package base.harmony;
 
 import base.composite.Sonority;
 import base.sound.IntervalClass;
+import base.sound.Pitch;
 import base.sound.PitchClass;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
@@ -156,13 +157,11 @@ public class Harmony {
      */
     public final @NotNull String toString() {
         StringBuilder toReturn = new StringBuilder();
-        Iterator<PitchClass> pcItr = PitchClass.allItr();
-        while(pcItr.hasNext()) {
-            PitchClass pc = pcItr.next();
-            if(pitchClasses.contains(pc)) {
-                toReturn.append(pc.toString());
+        PitchClass.all().forEach(pitchClass -> {
+            if(pitchClasses.contains(pitchClass)) {
+                toReturn.append(pitchClass.toString());
             }
-        }
+        });
         return toReturn.toString();
     }
     /**

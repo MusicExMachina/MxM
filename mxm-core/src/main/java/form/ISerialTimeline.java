@@ -39,19 +39,19 @@ public interface ISerialTimeline <MusicEventType extends IMusicEvent> extends IT
     @Nullable MusicEventType getEventAt(@NotNull ITime time);
     /**
      *
-     * @param time
-     * @return
+     * @param time a
+     * @return a
      */
     @Nullable MusicEventType getEventBefore(@NotNull ITime time);
     /**
      *
-     * @param time
-     * @return
+     * @param time a
+     * @return a
      */
     @Nullable MusicEventType getEventAfter(@NotNull ITime time);
     /**
      *
-     * @return
+     * @return a
      */
     @NotNull Iterator<MusicEventType> iterator();
 

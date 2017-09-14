@@ -1,7 +1,5 @@
 package base.properties;
 
-import base.INoteProperty;
-
 /**
  * Techniques encompass any style of playing on an instrument that modifies the tone/style of any Pitch an instrument
  * can play. For instance, muting is a common technique that changes the timbre of a violin, trumpet, or clarinet's tone
@@ -15,7 +13,7 @@ import base.INoteProperty;
  * It is perhaps useful to think of Techniques as accents of sorts, applicable to any note an instrument can produce to
  * modify its sound.
  */
-public class Technique implements INoteProperty {
+public class Technique {
     public static Technique DEFAULT;
     public static Technique PIZZICATO;
     public static Technique STOP_MUTE;

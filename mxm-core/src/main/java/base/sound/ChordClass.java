@@ -1,11 +1,10 @@
-package base.harmony;
+package base.sound;
 
-import base.sound.IntervalClass;
-import base.sound.PitchClass;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static base.sound.IntervalClass.*;
 
@@ -111,10 +110,6 @@ public final class ChordClass implements Iterable<IntervalClass> {
     // Static methods           //
     //////////////////////////////
 
-    public static Iterator<ChordClass> allItr() {
-        return Arrays.asList(ALL).iterator();
-    }
-
     public static @NotNull ChordClass get(int id) {
         if(id < TOTAL_NUM) {
             return ALL[id];
@@ -128,6 +123,21 @@ public final class ChordClass implements Iterable<IntervalClass> {
         return new ChordClass(0,factors); // TODO: Remove this!
     }
 
+
+    /**
+     * Returns an immutable collection of all valid chord classes, useful for iteration or streams
+     * @return an immutable collection of all valid chord classes
+     */
+    public static @NotNull Collection<ChordClass> all() {
+        return Collections.unmodifiableList(Arrays.asList(ALL));
+    }
+    /**
+     * Returns a random instance of this class
+     * @return a random valid chord class
+     */
+    public static @NotNull ChordClass random() {
+        return get(ThreadLocalRandom.current().nextInt(MIN_SIZE, MAX_SIZE + 1));
+    }
     //////////////////////////////
     // Member variables         //
     //////////////////////////////

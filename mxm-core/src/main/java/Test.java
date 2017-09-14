@@ -1,4 +1,4 @@
-import base.harmony.Chord;
+import base.sound.Chord;
 import base.sound.Pitch;
 import base.time.Tempo;
 import base.time.Time;
@@ -11,7 +11,7 @@ import form.timelines.Line;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static base.harmony.ChordClass.*;
+import static base.sound.ChordClass.*;
 import static base.sound.PitchClass.*;
 
 public class Test {
@@ -50,11 +50,11 @@ public class Test {
                 .add(Chord.get(C_NATURAL,DOM_SEVENTH),  Time.get(1,2))
                 .add(Chord.get(C_NATURAL,MAJOR),        Time.get(1));
         // ========================================================================================================= //
-        leadSheet.getTimeSigChanges().forEach((TimeSigChange tsc) -> LOGGER.log(Level.FINE,tsc.getTimeSig().toString()));
-        leadSheet.getTempoChanges().forEach((TempoChange tc) -> LOGGER.log(Level.FINE,tc.getTempo().toString()));
+        leadSheet.getTimeSigChanges().forEach(tsc -> LOGGER.log(Level.FINE,tsc.getTimeSig().toString()));
+        leadSheet.getTempoChanges().forEach(tc -> LOGGER.log(Level.FINE,tc.getTempo().toString()));
         // ========================================================================================================= //
-        tune.forEach((Note note) -> LOGGER.log(Level.FINE,note.getSound().toString()));
-        changes.forEach((Note note) -> LOGGER.log(Level.INFO,note.getSound().toString()));
+        tune.forEach(note -> LOGGER.log(Level.FINE,note.getSound().toString()));
+        changes.forEach(note -> LOGGER.log(Level.INFO,note.getSound().toString()));
         // ========================================================================================================= //
     }
 }
