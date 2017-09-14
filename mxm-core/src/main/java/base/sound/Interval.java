@@ -1,11 +1,13 @@
-package base.pitch;
+package base.sound;
 
+import base.AbstractIntegerProp;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * <p> <b>Class Overview:</b>
@@ -21,20 +23,20 @@ import java.util.Iterator;
  *
  * @author Patrick Celentano
  */
-public class Interval implements Comparator<Interval>, Comparable<Interval> {
+public final class Interval extends AbstractIntegerProp implements Comparator<Interval>, Comparable<Interval> {
 
     //////////////////////////////
     // Static variables         //
     //////////////////////////////
 
     /** The largest (absolute value) size an interval can be */
-    public static final int MAX_SIZE = Pitch.MAX_VALUE - Pitch.MIN_VALUE;
+    static final int MAX_SIZE = Pitch.MAX_VALUE - Pitch.MIN_VALUE;
     /** The most negative an interval can be */
-    public static final int MIN_VALUE = -MAX_SIZE;
+    static final int MIN_VALUE = -MAX_SIZE;
     /** The most positive an interval can be */
-    public static final int MAX_VALUE = MAX_SIZE;
+    static final int MAX_VALUE = MAX_SIZE;
     /** The total number of pitches */
-    public static final int TOTAL_NUM = (MAX_VALUE - MIN_VALUE) + 1;
+    private static final int TOTAL_NUM = (MAX_VALUE - MIN_VALUE) + 1;
 
     /** A static array of all possible intervals, stored to implement the flyweight pattern */
     private static final Interval[] ALL;
@@ -75,18 +77,22 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      * @return An interval of this size
      */
     public static Interval get(int value) {
-        if(value >= MIN_VALUE && value <= MAX_VALUE)
-            return ALL[value - MIN_VALUE];
-        else
-            throw new Error("INTERVAL:\tInterval out of range.");
+        if (value < MIN_VALUE || value > MAX_VALUE)  throw new Error("INTERVAL:\tInterval out of range.");
+
+        return ALL[value - MIN_VALUE];
+    }
+    /**
+     * Returns a random instance of this class
+     * @return a random valid interval
+     */
+    public static @NotNull Interval random() {
+        return get(ThreadLocalRandom.current().nextInt(MIN_VALUE, MAX_VALUE + 1));
     }
 
     //////////////////////////////
     // Member variables         //
     //////////////////////////////
 
-    /** The immutable size of this interval in half-steps. */
-    private int size;
     /** The number of octaves inside this interval positive or negative. */
     private int octaves;
     /** The immutable noteQualities interval class of this interval. */
@@ -101,29 +107,29 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      * @param size The size of the interval in half-steps
      */
     private Interval(int size) {
-        this.size = size;
-        this.intervalClass = IntervalClass.get((Math.abs(size) + MAX_VALUE) % 12);
+       super(size);
         this.octaves = size/12;
+        this.intervalClass = IntervalClass.get((Math.abs(size) + MAX_VALUE) % 12);
     }
     /**
      * A getter for the size of this interval, (positive or negative) in half-steps.
      * @return The size of this interval, (positive or negative) in half-steps.
      */
-    public int getSize() {
-        return size;
+    public final int getSize() {
+        return getValue();
     }
     /**
      * A getter for the number of octaves (positive or negative) in this interval.
      * @return The number of octaves (positive or negative) in this interval.
      */
-    public int getOctaves() {
+    public final int getOctaves() {
         return octaves;
     }
     /**
      * A getter for the interval class of this interval.
      * @return The interval class of this interval
      */
-    public @NotNull IntervalClass getIntervalClass() {
+    public final @NotNull IntervalClass getIntervalClass() {
         return intervalClass;
     }
     /**
@@ -131,8 +137,8 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      * @param other The other interval to add to this one
      * @return  The new interval sum
      */
-    public @NotNull Interval plus(@NotNull Interval other) {
-        int newSize = size + other.size;
+    public final @NotNull Interval plus(@NotNull Interval other) {
+        int newSize = getSize() + other.getSize();
         if(newSize >= MIN_VALUE && newSize <= MAX_VALUE)
             return get(newSize);
         else
@@ -144,7 +150,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      * @return The new interval difference
      */
     public @NotNull Interval minus(@NotNull Interval other) {
-        int newSize = size - other.size;
+        int newSize = getSize() - other.getSize();
         if(newSize >= MIN_VALUE && newSize <= MAX_VALUE)
             return get(MIN_VALUE);
         else
@@ -169,8 +175,8 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      * @return The comparison between the two
      */
     @Override
-    public int compareTo(@NotNull Interval other) {
-        return Integer.compare(size, other.size);
+    public final int compareTo(@NotNull Interval other) {
+        return Integer.compare(getSize(), other.getSize());
     }
     /**
      * Compares two Intervals, purely based on size and direction.
@@ -179,8 +185,8 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      * @return The comparison between the two
      */
     @Override
-    public int compare(@NotNull Interval i1, @NotNull Interval i2) {
-        return Integer.compare(i1.size, i2.size);
+    public final int compare(@NotNull Interval i1, @NotNull Interval i2) {
+        return Integer.compare(i1.getSize(), i2.getSize());
     }
     /**
      * Checks if this interval is equal to another object. Note that since the flyweight pattern is used, literal
@@ -189,15 +195,7 @@ public class Interval implements Comparator<Interval>, Comparable<Interval> {
      * @return if this interval is equal to this object
      * */
     @Override
-    public boolean equals(Object object) {
+    public final boolean equals(Object object) {
         return this == object;
-    }
-    /**
-     * A simple hash code in order to allow storage in certain Collections.
-     * @return The hash code for this interval
-     */
-    @Override
-    public int hashCode() {
-        return size;
     }
 }

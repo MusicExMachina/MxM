@@ -1,12 +1,10 @@
-package base.pitch;
+package base.sound;
 
-import base.pitch.IntervalClass;
-import base.pitch.PitchClass;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 
-import static base.pitch.PitchClass.*;
+import static base.sound.PitchClass.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PitchClassTest {

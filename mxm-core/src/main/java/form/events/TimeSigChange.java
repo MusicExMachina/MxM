@@ -1,6 +1,6 @@
 package form.events;
 
-import base.time.Measure;
+import base.time.IMeasure;
 import form.timelines.AbstractScore;
 import org.jetbrains.annotations.NotNull;
 import base.time.TimeSig;
@@ -12,7 +12,7 @@ public class TimeSigChange extends AbstractInstantEvent implements IScoreEvent {
     private final AbstractScore score;
     private final TimeSig timeSig;
 
-    public TimeSigChange(@NotNull AbstractScore score, @NotNull Measure timing, @NotNull TimeSig timeSig) {
+    public TimeSigChange(@NotNull AbstractScore score, @NotNull IMeasure timing, @NotNull TimeSig timeSig) {
         super(timing);
         this.score = score;
         this.timeSig = timeSig;

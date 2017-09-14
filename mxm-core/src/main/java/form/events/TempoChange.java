@@ -1,5 +1,6 @@
 package form.events;
 
+import base.time.ITime;
 import base.time.Time;
 import form.timelines.AbstractScore;
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +13,7 @@ public class TempoChange extends AbstractInstantEvent implements IScoreEvent {
     private final Tempo tempo;
 
     // CONSTRUCTORS
-    public TempoChange(@NotNull AbstractScore score, @NotNull Time timing, @NotNull Tempo tempo) {
+    public TempoChange(@NotNull AbstractScore score, @NotNull ITime timing, @NotNull Tempo tempo) {
         super(timing);
         this.score = score;
         this.tempo = tempo;

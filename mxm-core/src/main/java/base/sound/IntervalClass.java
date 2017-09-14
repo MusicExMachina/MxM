@@ -1,5 +1,6 @@
-package base.pitch;
+package base.sound;
 
+import base.AbstractIntegerProp;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
 
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * <p> <b>Class Overview:</b>
@@ -22,7 +24,7 @@ import java.util.Iterator;
  *
  * @author Patrick Celentano
  */
-public class IntervalClass implements Comparator<IntervalClass>, Comparable<IntervalClass> {
+public final class IntervalClass extends AbstractIntegerProp implements Comparator<IntervalClass>, Comparable<IntervalClass> {
 
     //////////////////////////////
     // Static variables         //
@@ -32,8 +34,8 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     public static final int MIN_SIZE = 0;
     /** The highest interval class, better known as "an upward major seventh" */
     public static final int MAX_SIZE = 11;
-    /** The total number of pitch classes */
-    public static final int TOTAL_NUM = (MAX_SIZE - MIN_SIZE) + 1;
+    /** The total number of sound classes */
+    private static final int TOTAL_NUM = (MAX_SIZE - MIN_SIZE) + 1;
 
     /** A static array of all possible interval classes, stored to implement the flyweight pattern */
     private static final IntervalClass[] ALL;
@@ -99,13 +101,13 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     public static Iterator<IntervalClass> allItr() {
         return new ArrayList<>(Arrays.asList(ALL)).iterator();
     }
-
-    //////////////////////////////
-    // Member variables         //
-    //////////////////////////////
-
-    /** The size of the interval class. */
-    private final int size;
+    /**
+     * Returns a random instance of this class
+     * @return a random valid interval class
+     */
+    public static @NotNull IntervalClass random() {
+        return get(ThreadLocalRandom.current().nextInt(MIN_SIZE, MAX_SIZE + 1));
+    }
 
     //////////////////////////////
     // Member methods           //
@@ -116,14 +118,14 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      * @param size the size of this interval class
      */
     private IntervalClass(int size) {
-        this.size = size;
+        super(size);
     }
     /**
      * A getter for the size of this interval class, in half-steps.
      * @return the size of this interval class, in half-steps
      */
     public final int getSize() {
-        return size;
+        return getValue();
     }
     /**
      * Returns the interval class that is the summation of this and another. For instance, MAJOR_THIRD.plus(MINOR_THIRD)
@@ -133,7 +135,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      * @return the new interval class that corresponds to the addition of this interval class and other
      */
     public final @NotNull IntervalClass plus(@NotNull IntervalClass other) {
-        return get((this.size + other.size)%12);
+        return get((this.getSize() + other.getSize()) % 12);
     }
     /**
      * Creates a new interval class that is the difference between this and another. For instance, a MAJOR_THIRD minus a
@@ -143,7 +145,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      * @return the new interval class that corresponds to the difference between this and other
      */
     public final @NotNull IntervalClass minus(@NotNull IntervalClass other) {
-        return get((this.size - other.size + 12)%12);
+        return get((this.getSize() - other.getSize() + 12) % 12);
     }
     /**
      * Returns a string representation of this interval class.
@@ -151,7 +153,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      */
     @Override
     public final @NotNull String toString() {
-        switch (size) {
+        switch (getSize()) {
             case 0:     return "PU";
             case 1:     return "m2";
             case 2:     return "M2";
@@ -174,7 +176,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      */
     @Override
     public final int compareTo(@NotNull IntervalClass other) {
-        return new Integer(size).compareTo(other.size);
+        return new Integer(getSize()).compareTo(other.getSize());
     }
     /**
      * Compares two IntervalClasses, purely based on size.
@@ -184,7 +186,7 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
      */
     @Override
     public final int compare(@NotNull IntervalClass ic1, @NotNull IntervalClass ic2) {
-        return new Integer(ic1.size).compareTo(ic2.size);
+        return new Integer(ic1.getSize()).compareTo(ic2.getSize());
     }
     /**
      * Checks if this interval class is equal to another object. Note that since the flyweight pattern is used, literal
@@ -194,13 +196,5 @@ public class IntervalClass implements Comparator<IntervalClass>, Comparable<Inte
     @Override
     public final boolean equals(Object object) {
         return this == object;
-    }
-    /**
-     * A simple hash code in order to allow storage in certain Collections.
-     * @return The hash code for this interval class
-     */
-    @Override
-    public final int hashCode() {
-        return size;
     }
 }

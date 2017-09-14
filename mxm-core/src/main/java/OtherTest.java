@@ -1,8 +1,6 @@
-import base.pitch.Pitch;
-import io.Log;
+import base.sound.Pitch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 

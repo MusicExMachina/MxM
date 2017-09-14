@@ -1,8 +1,8 @@
 package form.timelines;
 
 import base.harmony.Chord;
-import base.properties.Noise;
-import base.pitch.Pitch;
+import base.sound.Noise;
+import base.sound.Pitch;
 import form.IPassage;
 import form.ISerialTimeline;
 import org.jetbrains.annotations.NotNull;
@@ -59,12 +59,12 @@ public abstract class AbstractScore implements IPassage {
         return this;
     }
     // Adds a time signature change
-    public @NotNull AbstractScore add(@NotNull TimeSig timeSig, @NotNull Measure time) {
+    public @NotNull AbstractScore add(@NotNull TimeSig timeSig, @NotNull IMeasure time) {
         timeSigChanges.addEvent(new TimeSigChange(this, time, timeSig));
         return this;
     }
     // Adds a tempo change
-    public @NotNull AbstractScore add(@NotNull Tempo tempo, @NotNull Time time) {
+    public @NotNull AbstractScore add(@NotNull Tempo tempo, @NotNull ITime time) {
         tempoChanges.addEvent(new TempoChange(this, time, tempo));
         return this;
     }
@@ -75,17 +75,17 @@ public abstract class AbstractScore implements IPassage {
     public final @NotNull ISerialTimeline<TempoChange> getTempoChanges() { return tempoChanges; }
 
     @NotNull
-    public Iterator<Note> noteItrAt(Time time) { return allNotes.getFrameBefore(time).eventsNotEndedItr(); }
+    public Iterator<Note> noteItrAt(ITime time) { return allNotes.getFrameBefore(time).eventsNotEndedItr(); }
     @NotNull
     @Override
-    public Iterator<Note<Pitch>> pitchedNoteItrAt(Time time) { return allPitchedNotes.getFrameBefore(time).eventsNotEndedItr(); }
+    public Iterator<Note<Pitch>> pitchedNoteItrAt(ITime time) { return allPitchedNotes.getFrameBefore(time).eventsNotEndedItr(); }
     @Override
-    public Iterator<Note<Noise>> unpitchedNoteItrAt(Time time) { return allUnpitchedNotes.getFrameBefore(time).eventsNotEndedItr(); }
+    public Iterator<Note<Noise>> unpitchedNoteItrAt(ITime time) { return allUnpitchedNotes.getFrameBefore(time).eventsNotEndedItr(); }
     @Override
-    public Iterator<Note<Chord>> chordNoteItrAt(Time time) { return allChordNotes.getFrameBefore(time).eventsNotEndedItr(); }
+    public Iterator<Note<Chord>> chordNoteItrAt(ITime time) { return allChordNotes.getFrameBefore(time).eventsNotEndedItr(); }
 
     @Override
-    public @NotNull Tempo getTempoAt(Time time) { return tempoChanges.getEventBefore(time).getTempo(); }
+    public @NotNull Tempo getTempoAt(ITime time) { return tempoChanges.getEventBefore(time).getTempo(); }
     @Override
-    public @NotNull TimeSig getTimeSigAt(Time time) { return timeSigChanges.getEventBefore(time).getTimeSig(); }
+    public @NotNull TimeSig getTimeSigAt(ITime time) { return timeSigChanges.getEventBefore(time).getTimeSig(); }
 }

@@ -1,8 +1,8 @@
 package base.harmony;
 
 import base.composite.Sonority;
-import base.pitch.IntervalClass;
-import base.pitch.PitchClass;
+import base.sound.IntervalClass;
+import base.sound.PitchClass;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
 import base.patterns.Scale;
@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * <p> <b>Class Overview:</b>
  * Harmony is one of the most components of many MxM base classes, as it represents a specific subset of all possible
- * pitch classes. This may be a vertical consideration (as in {@link Sonority}) or a horizonal one (as in {@link Scale})
+ * sound classes. This may be a vertical consideration (as in {@link Sonority}) or a horizonal one (as in {@link Scale})
  * or a totally abstract one (as in {@link Key}). In all cases, such Harmonies can be compared, added to make new ones,
  * or otherwise modified.</p>
  *
@@ -44,9 +44,9 @@ public class Harmony {
         // Log the initialization
         Log.logStaticInit("Harmony", Arrays.asList(ALL),System.nanoTime() - startTime);
     }
-    /** The trivial, empty harmony, with no constituent pitch classes. */
+    /** The trivial, empty harmony, with no constituent sound classes. */
     public static final Harmony EMPTY = get(0);
-    /** The full harmony, with all pitch classes accounted for. */
+    /** The full harmony, with all sound classes accounted for. */
     public static final Harmony FULL = get(TOTAL_NUM-1);
 
     //////////////////////////////
@@ -62,7 +62,7 @@ public class Harmony {
     }
     /**
      * Gets an instance of a given harmony. This method enforces the flyweight design pattern per noise.
-     * @param id The id of this harmony, which is a special bitmask of all the pitch classes
+     * @param id The id of this harmony, which is a special bitmask of all the sound classes
      * @return A harmony with this id
      */
     private static @NotNull Harmony get(int id) {
@@ -73,11 +73,11 @@ public class Harmony {
     }
     /**
      * Gets an instance of a given harmony. This method enforces the flyweight design pattern per noise.
-     * @param pitchClasses All of the pitch classes in this harmony
-     * @return A harmony with these pitch classes
+     * @param pitchClasses All of the sound classes in this harmony
+     * @return A harmony with these sound classes
      */
     public static @NotNull Harmony get(@NotNull PitchClass... pitchClasses) {
-        // Use our bitmask trick again with an integer id that's really just T/F bits for each possible pitch class
+        // Use our bitmask trick again with an integer id that's really just T/F bits for each possible sound class
         int pitchClassMask = 0;
         for(PitchClass pitchClass : pitchClasses) {
             pitchClassMask = pitchClassMask | (1 << pitchClass.getValue());
@@ -86,11 +86,11 @@ public class Harmony {
     }
     /**
      * Gets an instance of a given harmony. This method enforces the flyweight design pattern per noise.
-     * @param pitchClasses All of the pitch classes in this harmony
-     * @return A harmony with these pitch classes
+     * @param pitchClasses All of the sound classes in this harmony
+     * @return A harmony with these sound classes
      */
     public static @NotNull Harmony get(Collection<PitchClass> pitchClasses) {
-        // Use our bitmask trick again with an integer id that's really just T/F bits for each possible pitch class
+        // Use our bitmask trick again with an integer id that's really just T/F bits for each possible sound class
         int pitchClassMask = 0;
         for(PitchClass pitchClass : pitchClasses) {
             pitchClassMask = pitchClassMask | (1 << pitchClass.getValue());
@@ -113,12 +113,12 @@ public class Harmony {
 
     /**
      * A private constructor for a harmony which takes only an "id" which is essentially a bitmask of all constituent
-     * pitch classes such that id bit 0 would be C, id bit 1 would be C#, and so forth
+     * sound classes such that id bit 0 would be C, id bit 1 would be C#, and so forth
      * @param id The id of this harmony
      */
     private Harmony(int id) {
         this.id = id;
-        // We use some fun bit-math in order to generate all permutations of pitch classes
+        // We use some fun bit-math in order to generate all permutations of sound classes
         this.pitchClasses = new HashSet<>();
         for(int pcVal = PitchClass.MIN_VALUE; pcVal < PitchClass.MAX_VALUE; pcVal++) {
             if(((id >> (pcVal + IntervalClass.MIN_SIZE)) & 1) == 1)
@@ -134,7 +134,7 @@ public class Harmony {
     }
     /**
      * Returns a harmony that is the sum of this harmony and another. Note that this simply combines their constituent
-     * pitch classes into another, with overlapping meaning nothing.
+     * sound classes into another, with overlapping meaning nothing.
      * @param other the other harmony to add with this one
      * @return a new harmony that is the sum of this and other
      */
@@ -143,7 +143,7 @@ public class Harmony {
     }
     /**
      * Returns a harmony that is the difference of this harmony and another. Note that this simply subtracts the
-     * constituent pitch classes of the second from the first
+     * constituent sound classes of the second from the first
      * @param other the other harmony to subtract from this one
      * @return a new harmony that is the difference between this and other
      */

@@ -4,7 +4,7 @@ import form.timelines.AbstractScore;
 import org.jetbrains.annotations.NotNull;
 
 import base.properties.Instrument;
-import base.pitch.Pitch;
+import base.sound.Pitch;
 
 import form.timelines.Line;
 

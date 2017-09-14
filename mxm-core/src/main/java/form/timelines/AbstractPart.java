@@ -2,9 +2,10 @@ package form.timelines;
 
 import base.properties.Instrument;
 import base.harmony.Chord;
-import base.ISound;
-import base.properties.Noise;
-import base.pitch.Pitch;
+import base.sound.ISoundProperty;
+import base.sound.Noise;
+import base.sound.Pitch;
+import base.time.ITime;
 import base.time.Tempo;
 import base.time.Time;
 import base.time.TimeSig;
@@ -17,7 +18,7 @@ import form.events.TimeSigChange;
 
 import java.util.Iterator;
 
-public abstract class AbstractPart<SoundType extends ISound> implements IPassage {
+public abstract class AbstractPart<SoundType extends ISoundProperty> implements IPassage {
     private final AbstractScore score;
     private final Instrument instrument;
 
@@ -37,21 +38,21 @@ public abstract class AbstractPart<SoundType extends ISound> implements IPassage
 
     // Getters for form.events during a specific time
     @Override
-    public final @NotNull Tempo getTempoAt(Time time) { return getScore().getTempoAt(time); }
+    public final @NotNull Tempo getTempoAt(ITime time) { return getScore().getTempoAt(time); }
     @Override
-    public final @NotNull TimeSig getTimeSigAt(Time time) { return getScore().getTimeSigAt(time); }
+    public final @NotNull TimeSig getTimeSigAt(ITime time) { return getScore().getTimeSigAt(time); }
 
 
 
 
     @NotNull
     @Override
-    public Iterator<Note> noteItrAt(Time time) { return null; }
+    public Iterator<Note> noteItrAt(ITime time) { return null; }
     @NotNull
     @Override
-    public Iterator<Note<Pitch>> pitchedNoteItrAt(Time time) { return null; }
+    public Iterator<Note<Pitch>> pitchedNoteItrAt(ITime time) { return null; }
     @Override
-    public Iterator<Note<Noise>> unpitchedNoteItrAt(Time time) { return null; }
+    public Iterator<Note<Noise>> unpitchedNoteItrAt(ITime time) { return null; }
     @Override
-    public Iterator<Note<Chord>> chordNoteItrAt(Time time) { return null; }
+    public Iterator<Note<Chord>> chordNoteItrAt(ITime time) { return null; }
 }

@@ -1,5 +1,6 @@
 package form.timelines;
 
+import base.time.ITime;
 import base.time.Time;
 import form.IFrame;
 import form.IParallelTimeline;
@@ -12,7 +13,7 @@ import java.util.TreeMap;
 
 @SuppressWarnings("unchecked")
 final class ParallelTimeline <MusicEventType extends IMusicEvent> implements IParallelTimeline<MusicEventType> {
-    private final TreeMap<Time, Frame<MusicEventType>> frames;
+    private final TreeMap<ITime, Frame<MusicEventType>> frames;
 
     ParallelTimeline() {
         this.frames = new TreeMap<>();
@@ -24,15 +25,15 @@ final class ParallelTimeline <MusicEventType extends IMusicEvent> implements IPa
     @Override
     public final @NotNull IFrame<MusicEventType> getLastFrame() { return frames.lastEntry().getValue(); }
     @Override
-    public final @NotNull IFrame<MusicEventType> getFrameAt(@NotNull Time time) {
+    public final @NotNull IFrame<MusicEventType> getFrameAt(@NotNull ITime time) {
         return frames.get(time);
     }
     @Override
-    public final @NotNull IFrame<MusicEventType> getFrameBefore(@NotNull Time time) {
+    public final @NotNull IFrame<MusicEventType> getFrameBefore(@NotNull ITime time) {
         return frames.floorEntry(time).getValue();
     }
     @Override
-    public final @NotNull IFrame<MusicEventType> getFrameAfter(@NotNull Time time) {
+    public final @NotNull IFrame<MusicEventType> getFrameAfter(@NotNull ITime time) {
         return frames.ceilingEntry(time).getValue();
     }
 

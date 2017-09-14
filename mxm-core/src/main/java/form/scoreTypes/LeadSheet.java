@@ -1,7 +1,7 @@
 package form.scoreTypes;
 
 import base.harmony.Chord;
-import base.pitch.Pitch;
+import base.sound.Pitch;
 import form.timelines.AbstractScore;
 import org.jetbrains.annotations.NotNull;
 

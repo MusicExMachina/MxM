@@ -1,6 +1,5 @@
-import io.Log;
 import base.harmony.Chord;
-import base.pitch.Pitch;
+import base.sound.Pitch;
 import base.time.Tempo;
 import base.time.Time;
 import form.scoreTypes.LeadSheet;
@@ -13,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static base.harmony.ChordClass.*;
-import static base.pitch.PitchClass.*;
+import static base.sound.PitchClass.*;
 
 public class Test {
     private static final Logger LOGGER = Logger.getLogger( Test.class.getSimpleName() );

@@ -1,6 +1,7 @@
 package base.time;
 
-import base.pitch.Pitch;
+import base.AbstractFractionProp;
+import base.sound.Pitch;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Patrick Celentano
  */
-public class TimeSig {
+public class TimeSig extends AbstractFractionProp {
 
     //////////////////////////////
     // Static variables         //
@@ -62,67 +63,36 @@ public class TimeSig {
     }
 
     //////////////////////////////
-    // Member variables         //
-    //////////////////////////////
-
-    /** The fractional numerator of this time signature */
-    private int numerator;
-    /** The fractional denominator of this time signature */
-    private int denominator;
-
-    //////////////////////////////
     // Member methods           //
     //////////////////////////////
 
     /**
-     * A constructor for time signature taking in a numerator and denominator. Note that the denominator must be a power
-     * of two, as is standard for Western music notation.
+     * A constructor for time signature taking in a numerator and denominator.
      * @param num The desired numerator
      * @param den The desired denominator
      */
     private TimeSig(int num, int den) {
-        this.numerator = num;
-        this.denominator = den;
+        super(num,den);
     }
     /**
-     * Gets the denominator of this base.time.TimeSig.
-     * @return This base.time.TimeSig's denominator.
-     */
-    public int getNumerator() {
-        return numerator;
-    }
-    /**
-     * Gets the denominator of this base.time.TimeSig.
-     * @return This base.time.TimeSig's denominator.
-     */
-    public int getDenominator() {
-        return denominator;
-    }
-    /**
-     * Returns a String representation of this time signature
+     * Returns a basic string representation of this time signature
      * @return a String representation of this time signature
      */
-    public String toString() {
-        return getNumerator() + "/" + getDenominator();
+    @Override
+    public final @NotNull String toString() {
+        return super.toString()+ " time";
     }
     /**
      * A noteQualities (generated) equals() method for base.time.TimeSig.
-     * @param o The Object to compare this to.
+     * @param object The Object to compare this to.
      * @return If these two Objects are equal.
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TimeSig timeSignature = (TimeSig) o;
-        return numerator == timeSignature.numerator && denominator == timeSignature.denominator;
-    }
-    /**
-     * A simple hash code in order to allow storage in certain Collections, like HashSets.
-     * @return The hash code for this time signature
-     */
-    @Override
-    public int hashCode() {
-        return (31 * numerator) + denominator;
+    public final boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        TimeSig timeSignature = (TimeSig) object;
+        return denominator == timeSignature.denominator &&
+                numerator == timeSignature.numerator;
     }
 }

@@ -1,13 +1,13 @@
 package base.harmony;
 
-import base.pitch.IntervalClass;
-import base.pitch.PitchClass;
+import base.sound.IntervalClass;
+import base.sound.PitchClass;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-import static base.pitch.IntervalClass.*;
+import static base.sound.IntervalClass.*;
 
 /**
  * <p> <b>Class overview:</b>

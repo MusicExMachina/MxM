@@ -1,6 +1,6 @@
-package base.properties;
+package base.sound;
 
-import base.ISound;
+import base.AbstractStringProp;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import java.util.Iterator;
  *
  * @author Patrick Celentano
  */
-public class Noise implements ISound {
+public final class Noise extends AbstractStringProp implements ISoundProperty {
 
     //////////////////////////////
     // Static variables         //
@@ -61,36 +61,22 @@ public class Noise implements ISound {
     }
 
     //////////////////////////////
-    // Member Variables         //
-    //////////////////////////////
-
-    /** The name of this noise */
-    private final String name;
-
-    //////////////////////////////
     // Member methods           //
     //////////////////////////////
 
     /**
      * The noise constructor, which is private to enforce the interning design pattern (one instance per value).
-     * @param value The (midi) value of this pitch
+     * @param name The name of this noise
      */
-    private Noise(String value) {
-        this.name = value;
+    private Noise(String name) {
+        super(name);
     }
     /**
      * Gets the name of this noise.
      * @return The name of this noise
      */
-    public final String getName() {
-        return name;
-    }
-    /**
-     * Returns a string representation of this noise
-     * @return A string representation of this noise
-     */
-    public final @NotNull String toString() {
-        return name;
+    public final @NotNull String getName() {
+        return getValue();
     }
     /**
      * Checks if this noise is equal to another object. Note that since the interning pattern is used, literal
@@ -100,13 +86,5 @@ public class Noise implements ISound {
     @Override
     public final boolean equals(Object object) {
         return this == object;
-    }
-    /**
-     * A simple hash code in order to allow storage in certain Collections.
-     * @return The hash code for this noise
-     */
-    @Override
-    public final int hashCode() {
-        return name.hashCode();
     }
 }

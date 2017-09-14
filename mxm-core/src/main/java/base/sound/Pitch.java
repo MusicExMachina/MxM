@@ -1,7 +1,6 @@
-package base.pitch;
+package base.sound;
 
-import base.AbstractRandomizableProp;
-import base.ISound;
+import base.AbstractIntegerProp;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,10 +11,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * <p> <b>Class Overview:</b>
- * Pitch is a simple class which represents a pitch in the traditional Western music sense: equal-temperament, A440,
- * with octave equivalence and so forth. To use a pitch, simply call Pitch.get() with the midi value of the desired
- * pitch (C4 = 60) or with the desired {@link PitchClass} and octave number. (i.e. Pitch.get(C,2)) To easily enumerate
- * all pitches, use Pitch.allItr() which starts at the lowest possible pitch, and runs to the highest possible. </p>
+ * Pitch is a simple class which represents a sound in the traditional Western music sense: equal-temperament, A440,
+ * with octave equivalence and so forth. To use a sound, simply call Pitch.get() with the midi value of the desired
+ * sound (C4 = 60) or with the desired {@link PitchClass} and octave number. (i.e. Pitch.get(C,2)) To easily enumerate
+ * all pitches, use Pitch.allItr() which starts at the lowest possible sound, and runs to the highest possible. </p>
  *
  * <p> <b>Design Details:</b>
  * This class is <i>immutable</i> and implements the <b>flyweight design pattern</b>- there is exactly one instance for
@@ -25,18 +24,18 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author Patrick Celentano
  */
-public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch> {
+public final class Pitch extends AbstractIntegerProp implements ISoundProperty, Comparator<Pitch>, Comparable<Pitch> {
 
     //////////////////////////////
     // Static variables         //
     //////////////////////////////
 
-    /** The minimum pitch value, C-1. */
-    public static final int MIN_VALUE = 0;
-    /** The maximum pitch value, B9. */
-    public static final int MAX_VALUE = 120;
+    /** The minimum sound value, C-1. */
+    static final int MIN_VALUE = 0;
+    /** The maximum sound value, B9. */
+    static final int MAX_VALUE = 120;
     /** The total number of pitches */
-    public static final int TOTAL_NUM = (MAX_VALUE - MIN_VALUE) + 1;
+    private static final int TOTAL_NUM = (MAX_VALUE - MIN_VALUE) + 1;
 
     /** A static array of all possible pitches, stored to implement the flyweight pattern */
     private static final Pitch[] ALL;
@@ -55,9 +54,9 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
         Log.logStaticInit("Pitch", Arrays.asList(ALL),System.nanoTime() - startTime);
     }
 
-    /** The lowest possible pitch */
+    /** The lowest possible sound */
     public static final Pitch MIN = get(MIN_VALUE);
-    /** The highest possible pitch */
+    /** The highest possible sound */
     public static final Pitch MAX = get(MAX_VALUE);
 
     //////////////////////////////
@@ -72,23 +71,23 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
         return Arrays.asList(ALL).iterator();
     }
     /**
-     * Gets an instance of a given pitch.
-     * @param value The value of this pitch.
-     * @return An pitch of this value
+     * Gets an instance of a given sound.
+     * @param value The value of this sound.
+     * @return An sound of this value
      */
-    public static Pitch get(int value) {
+    public static @NotNull Pitch get(int value) {
         if(value >= MIN_VALUE && value <= MAX_VALUE) {
             return ALL[value - MIN_VALUE];
         }
         else throw new Error("PITCH:\tInterval out of range.");
     }
     /**
-     * Gets an instance of a given pitch.
-     * @param pitchClass The pitch class of this pitch
-     * @param octave The octave of this pitch
-     * @return A pitch of this pitch class and octave
+     * Gets an instance of a given sound.
+     * @param pitchClass The sound class of this sound
+     * @param octave The octave of this sound
+     * @return A sound of this sound class and octave
      */
-    public static Pitch get(@NotNull PitchClass pitchClass, int octave) {
+    public static @NotNull Pitch get(@NotNull PitchClass pitchClass, int octave) {
         // Remember that we must add one to the octave to support the lowest octave, -1
         int value = pitchClass.getValue()+ (octave+1)*12;
         if(value >= MIN_VALUE && value <= MAX_VALUE) {
@@ -96,16 +95,21 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
         }
         else throw new Error("PITCH:\tPitch out of range.");
     }
+    /**
+     * Returns a random instance of this class
+     * @return a random valid Pitch
+     */
+    public static @NotNull Pitch random() {
+        return get(ThreadLocalRandom.current().nextInt(MIN_VALUE, MAX_VALUE + 1));
+    }
 
     //////////////////////////////
     // Member Variables         //
     //////////////////////////////
 
-    /** The octave of this pitch */
+    /** The octave of this sound */
     private final int octave;
-    /** The midi value of this pitch, between MIN_VALUE and MAX_VALUE */
-    private final int value;
-    /** The pitch class of this pitch */
+    /** The sound class of this sound */
     private final PitchClass pitchClass;
 
     //////////////////////////////
@@ -113,70 +117,63 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
     //////////////////////////////
 
     /**
-     * The pitch constructor, which is private to enforce the flyweight design pattern
-     * @param value The value of this pitch
+     * The sound constructor, which is private to enforce the flyweight design pattern
+     * @param value The value of this sound
      */
     private Pitch(int value) {
-        this.value = value;
-        this.pitchClass = PitchClass.get(value%12);
+        super(value);
         this.octave = value/12;
+        this.pitchClass = PitchClass.get(value%12);
     }
     /**
-     * Gets the value of this pitch.
-     * @return The value of this pitch
-     */
-    public final int getValue() {
-        return value;
-    }
-    /**
-     * Gets the octave of this pitch.
-     * @return The octave of this pitch
+     * Gets the octave of this sound.
+     * @return The octave of this sound
      */
     public final int getOctave() {
         return octave;
     }
     /**
-     * Gets the pitch class of this pitch.
-     * @return The pitch class of this pitch
+     * Gets the sound class of this sound.
+     * @return The sound class of this sound
      */
     public final @NotNull PitchClass getPitchClass() {
         return pitchClass;
     }
     /**
-     * Returns another pitch which is transposed by a given interval
+     * Returns another sound which is transposed by a given interval
      * @param interval The interval to transpose by
-     * @return The new, resulting pitch
+     * @return The new, resulting sound
      */
     public final @NotNull Pitch plus(@NotNull Interval interval) {
         return Pitch.get(value + interval.getSize());
     }
     /**
-     * Returns another pitch which is transposed by a given interval
+     * Returns another sound which is transposed by a given interval
      * @param interval The interval to transpose by
-     * @return The new, resulting pitch
+     * @return The new, resulting sound
      */
     public final @NotNull Pitch minus(@NotNull Interval interval) {
         return Pitch.get(value - interval.getSize());
     }
     /**
-     * Gets the interval between this pitch and another.
-     * @param other The other pitch to subtract from this one
-     * @return The interval between this pitch and another
+     * Gets the interval between this sound and another.
+     * @param other The other sound to subtract from this one
+     * @return The interval between this sound and another
      */
     public final @NotNull Interval minus(@NotNull Pitch other) {
         return Interval.get(other.value - this.value);
     }
     /**
-     * Returns a string representation of this pitch.
-     * @return A string representation of this pitch
+     * Returns a string representation of this sound.
+     * @return A string representation of this sound
      */
     @Override
     public final @NotNull String toString() {
         return pitchClass.toString() + (octave - 1);
     }
     /**
-     * Compares this pitch to another based on perceived height.
-     * @param other The other pitch
+     * Compares this sound to another based on perceived height.
+     * @param other The other sound
      * @return The comparison between these two pitches
      */
     @Override
@@ -185,8 +182,8 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
     }
     /**
      * Compares two pitches based on perceived height.
-     * @param p1 The first pitch
-     * @param p2 The second pitch
+     * @param p1 The first sound
+     * @param p2 The second sound
      * @return The comparison between these two pitches
      */
     @Override
@@ -194,29 +191,13 @@ public final class Pitch implements ISound, Comparator<Pitch>, Comparable<Pitch>
         return Integer.compare(p1.value, p2.value);
     }
     /**
-     * Checks if this pitch is equal to another object. Note that since the flyweight pattern is used, literal
+     * Checks if this sound is equal to another object. Note that since the flyweight pattern is used, literal
      * (reference) equality is enough to ensure that these objects are actually equal.
-     * @param object the object to compare this pitch to
-     * @return if this pitch is equal to this object
+     * @param object the object to compare this sound to
+     * @return if this sound is equal to this object
      */
     @Override
     public final boolean equals(Object object) {
         return this == object;
-    }
-    /**
-     * A simple hash code in order to allow storage in certain collections.
-     * @return The hash code for this pitch
-     */
-    @Override
-    public final int hashCode() {
-        return value;
-    }
-    /**
-     * Returns a random instance of this class
-     * @return a random valid Pitch
-     */
-    //@Override
-    public static @NotNull Pitch random() {
-        return get(ThreadLocalRandom.current().nextInt(MIN_VALUE, MAX_VALUE + 1));
     }
 }

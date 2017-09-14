@@ -1,8 +1,9 @@
 package base.properties;
 
 import base.IPartProperty;
-import base.ISound;
-import base.pitch.Pitch;
+import base.sound.ISoundProperty;
+import base.sound.Noise;
+import base.sound.Pitch;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,7 +22,7 @@ public class Instrument implements IPartProperty {
     public static final Instrument DEFAULT = GRAND_PIANO;
 
     private String name;
-    private Set<ISound> possibleSounds;
+    private Set<ISoundProperty> possibleSounds;
     private Set<Technique> possibleTechniques;
 
     public Instrument(String name) {
@@ -32,7 +33,7 @@ public class Instrument implements IPartProperty {
      * Returns an iterator over all possible sounds that this instrument can produce.
      * @return An iterator over all possible sounds that this instrument can produce
      */
-    public Iterator<ISound> possibleSoundItr() {
+    public Iterator<ISoundProperty> possibleSoundItr() {
         return possibleSounds.iterator();
     }
     public Iterator<Noise> possibleNoiseItr() {

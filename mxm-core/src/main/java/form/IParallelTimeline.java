@@ -1,5 +1,6 @@
 package form;
 
+import base.time.ITime;
 import base.time.Time;
 import form.events.IMusicEvent;
 import org.jetbrains.annotations.NotNull;
@@ -22,8 +23,8 @@ public interface IParallelTimeline <MusicEventType extends IMusicEvent> extends 
                                                                                 Iterable<IFrame<MusicEventType>> {
     @NotNull IFrame<MusicEventType> getFirstFrame();
     @NotNull IFrame<MusicEventType> getLastFrame();
-    @NotNull IFrame<MusicEventType> getFrameAt(@NotNull Time time);
-    @NotNull IFrame<MusicEventType> getFrameBefore(@NotNull Time time);
-    @NotNull IFrame<MusicEventType> getFrameAfter(@NotNull Time time);
+    @NotNull IFrame<MusicEventType> getFrameAt(@NotNull ITime time);
+    @NotNull IFrame<MusicEventType> getFrameBefore(@NotNull ITime time);
+    @NotNull IFrame<MusicEventType> getFrameAfter(@NotNull ITime time);
     @NotNull Iterator<IFrame<MusicEventType>> iterator();
 }

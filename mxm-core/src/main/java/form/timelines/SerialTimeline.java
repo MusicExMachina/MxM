@@ -1,5 +1,6 @@
 package form.timelines;
 
+import base.time.ITime;
 import base.time.Time;
 import form.ISerialTimeline;
 import form.events.IMusicEvent;
@@ -13,7 +14,7 @@ import java.util.TreeMap;
 
 @SuppressWarnings("unchecked")
 final class SerialTimeline <MusicEventType extends IMusicEvent> implements ISerialTimeline<MusicEventType> {
-    private final TreeMap<Time, MusicEventType> events;
+    private final TreeMap<ITime, MusicEventType> events;
 
     SerialTimeline() {
         this.events = new TreeMap<>();
@@ -39,15 +40,15 @@ final class SerialTimeline <MusicEventType extends IMusicEvent> implements ISeri
     @Nullable
     public MusicEventType getLastEvent() { return events.lastEntry().getValue(); }
     @Nullable
-    public MusicEventType getEventAt(@NotNull Time time) {
+    public MusicEventType getEventAt(@NotNull ITime time) {
         return events.get(time);
     }
     @Nullable
-    public MusicEventType getEventBefore(@NotNull Time time) {
+    public MusicEventType getEventBefore(@NotNull ITime time) {
         return events.floorEntry(time).getValue();
     }
     @Nullable
-    public MusicEventType getEventAfter(@NotNull Time time) {
+    public MusicEventType getEventAfter(@NotNull ITime time) {
         return events.ceilingEntry(time).getValue();
     }
 

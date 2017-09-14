@@ -1,5 +1,6 @@
 package form;
 
+import base.time.ITime;
 import base.time.Time;
 import form.events.IMusicEvent;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +16,7 @@ public interface IFrame <MusicEventType extends IMusicEvent> {
      * Getter for the time at which this frame occurs
      * @return the time at which this frame occurs
      */
-    @NotNull Time getTime();
+    @NotNull ITime getTime();
     /**
      *
      * @return

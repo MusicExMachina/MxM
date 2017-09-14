@@ -1,15 +1,16 @@
 package form.events;
 
+import base.time.ITime;
 import base.time.Time;
 import form.timelines.AbstractPart;
 import org.jetbrains.annotations.NotNull;
 import base.properties.Accent;
 import base.properties.Dynamic;
 import base.properties.Technique;
-import base.ISound;
+import base.sound.ISoundProperty;
 
 
-public class Note<SoundType extends ISound> extends AbstractSpanningEvent implements IPartEvent {
+public class Note<SoundType extends ISoundProperty> extends AbstractSpanningEvent implements IPartEvent {
 
     // NOTE PROPERTIES
     private final AbstractPart part;
@@ -19,7 +20,7 @@ public class Note<SoundType extends ISound> extends AbstractSpanningEvent implem
     private Accent accent;
 
     // CONSTRUCTOR
-    public Note(@NotNull AbstractPart part, @NotNull SoundType sound, @NotNull Time startTime, @NotNull Time endTime) {
+    public Note(@NotNull AbstractPart part, @NotNull SoundType sound, @NotNull ITime startTime, @NotNull ITime endTime) {
         super(startTime, endTime);
         this.part = part;
         this.sound = sound;

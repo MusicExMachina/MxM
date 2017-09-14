@@ -1,17 +1,19 @@
-package base.pitch;
+package base.sound;
 
+import base.AbstractIntegerProp;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * <p> <b>Class Overview:</b>
  * Pitch classes represent a collapsing of {@link Pitch} about the octave. To put it another way, a C5 and
- * a C0 are the same pitch class- C. Pitch classes parallel pitches in many respects- they can be transposed, and also
- * follow the flyweight (interning) design pattern. There are only 12 pitch classes, which can be accessed via static
+ * a C0 are the same sound class- C. Pitch classes parallel pitches in many respects- they can be transposed, and also
+ * follow the flyweight (interning) design pattern. There are only 12 sound classes, which can be accessed via static
  * variables like {@link #C_NATURAL} or {@link #get(int)}. </p>
  *
  * <p> <b>Design Details:</b>
@@ -22,27 +24,27 @@ import java.util.Iterator;
  *
  * @author Patrick Celentano
  */
-public class PitchClass {
+public final class PitchClass extends AbstractIntegerProp {
 
     //////////////////////////////
     // Static variables         //
     //////////////////////////////
 
-    /** The maximum pitch class value, which represents C */
+    /** The maximum sound class value, which represents C */
     public static final int MIN_VALUE = 0;
-    /** The maximum pitch class value, which represents B */
+    /** The maximum sound class value, which represents B */
     public static final int MAX_VALUE = 11;
-    /** The total number of pitch classes */
+    /** The total number of sound classes */
     public static final int TOTAL_NUM = (MAX_VALUE - MIN_VALUE) + 1;
 
-    /** A static array of all possible pitch classes, stored to implement the flyweight pattern */
+    /** A static array of all possible sound classes, stored to implement the flyweight pattern */
     private static final PitchClass[] ALL;
     // Static initialization block
     static {
         // Keep track of the start time to know how long initialization takes
         long startTime = System.nanoTime();
 
-        // Initialize all pitch classes
+        // Initialize all sound classes
         ALL = new PitchClass[TOTAL_NUM];
         for(int val = MIN_VALUE; val <= MAX_VALUE; val++) {
             ALL[val] = new PitchClass(val);
@@ -52,47 +54,47 @@ public class PitchClass {
         Log.logStaticInit("Pitch class", Arrays.asList(ALL),System.nanoTime() - startTime);
     }
 
-    /** The C flat pitch class */
+    /** The C flat sound class */
     public static final PitchClass C_FLAT = get(11);
-    /** The C natural pitch class */
+    /** The C natural sound class */
     public static final PitchClass C_NATURAL = get(0);
-    /** The C sharp pitch class */
+    /** The C sharp sound class */
     public static final PitchClass C_SHARP = get(1);
-    /** The D flat pitch class */
+    /** The D flat sound class */
     public static final PitchClass D_FLAT = get(1);
-    /** The D natural pitch class */
+    /** The D natural sound class */
     public static final PitchClass D_NATURAL = get(2);
-    /** The D sharp pitch class */
+    /** The D sharp sound class */
     public static final PitchClass D_SHARP = get(3);
-    /** The E flat pitch class */
+    /** The E flat sound class */
     public static final PitchClass E_FLAT = get(3);
-    /** The E natural pitch class */
+    /** The E natural sound class */
     public static final PitchClass E_NATURAL = get(4);
-    /** The E sharp pitch class */
+    /** The E sharp sound class */
     public static final PitchClass E_SHARP = get(5);
-    /** The F flat pitch class */
+    /** The F flat sound class */
     public static final PitchClass F_FLAT = get(4);
-    /** The F natural pitch class */
+    /** The F natural sound class */
     public static final PitchClass F_NATURAL = get(5);
-    /** The F sharp pitch class */
+    /** The F sharp sound class */
     public static final PitchClass F_SHARP = get(6);
-    /** The G flat pitch class */
+    /** The G flat sound class */
     public static final PitchClass G_FLAT = get(6);
-    /** The G natural pitch class */
+    /** The G natural sound class */
     public static final PitchClass G_NATURAL = get(7);
-    /** The G sharp pitch class */
+    /** The G sharp sound class */
     public static final PitchClass G_SHARP = get(8);
-    /** The A flat pitch class */
+    /** The A flat sound class */
     public static final PitchClass A_FLAT = get(8);
-    /** The A natural pitch class */
+    /** The A natural sound class */
     public static final PitchClass A_NATURAL = get(9);
-    /** The A sharp pitch class */
+    /** The A sharp sound class */
     public static final PitchClass A_SHARP = get(10);
-    /** The A flat pitch class */
+    /** The A flat sound class */
     public static final PitchClass B_FLAT = get(10);
-    /** The A natural pitch class */
+    /** The A natural sound class */
     public static final PitchClass B_NATURAL = get(11);
-    /** The A sharp pitch class */
+    /** The A sharp sound class */
     public static final PitchClass B_SHARP = get(0);
 
     //////////////////////////////
@@ -100,14 +102,14 @@ public class PitchClass {
     //////////////////////////////
 
     /**
-     * Gets an iterator which enumerates all valid pitch classes.
-     * @return An iterator over all valid pitch classes
+     * Gets an iterator which enumerates all valid sound classes.
+     * @return An iterator over all valid sound classes
      */
     public static @NotNull Iterator<PitchClass> allItr() { return new ArrayList<>(Arrays.asList(ALL)).iterator(); }
     /**
      * Supports the flyweight design pattern by a factory-eque getter instead of a public constructor
-     * @param value The value of this pitch class
-     * @return a pitch class of this value
+     * @param value The value of this sound class
+     * @return a sound class of this value
      */
     public static @NotNull PitchClass get(int value) {
         if (value >= MIN_VALUE && value <= MAX_VALUE) {
@@ -115,13 +117,13 @@ public class PitchClass {
         }
         else throw new Error("PITCH CLASS: Pitch class of size " + value + " is out of range.");
     }
-
-    //////////////////////////////
-    // Member Variables         //
-    //////////////////////////////
-
-    /** The value of this pitch class */
-    private final int value;
+    /**
+     * Returns a random instance of this class
+     * @return a random valid pitch class
+     */
+    public static @NotNull PitchClass random() {
+        return get(ThreadLocalRandom.current().nextInt(MIN_VALUE, MAX_VALUE + 1));
+    }
 
     //////////////////////////////
     // Member methods           //
@@ -129,33 +131,26 @@ public class PitchClass {
 
     /**
      * A private constructor for PitchClass which is hidden by the flyweight design pattern (use get() instead).
-     * @param value the value of this pitch class
+     * @param value the value of this sound class
      */
     private PitchClass(int value) {
-        this.value = (byte)value;
+        super(value);
     }
     /**
-     * A getter for the value of this pitch class.
-     * @return the value of this pitch class
-     */
-    public final int getValue() {
-        return value;
-    }
-    /**
-     * Transposes a pitch class by an interval class. Note that this wraps around the octave.
-     * @param intervalClass the interval class to transpose this pitch class by
-     * @return another pitch class which is an interval class higher than this one
+     * Transposes a sound class by an interval class. Note that this wraps around the octave.
+     * @param intervalClass the interval class to transpose this sound class by
+     * @return another sound class which is an interval class higher than this one
      */
     public final @NotNull PitchClass transpose(@NotNull IntervalClass intervalClass) {
         return PitchClass.get((value + intervalClass.getSize()) % 12);
     }
     /**
-     * Returns a string representation of this pitch class.
-     * @return A string representation of this pitch class
+     * Returns a string representation of this sound class.
+     * @return A string representation of this sound class
      */
     @Override
     public final @NotNull String toString() {
-        switch (value) {
+        switch (getValue()) {
             case 0:     return "C";
             case 1:     return "Db";
             case 2:     return "D";
@@ -172,21 +167,13 @@ public class PitchClass {
         }
     }
     /**
-     * Checks if this pitch class is equal to another object. Note that since the flyweight pattern is used, literal
+     * Checks if this sound class is equal to another object. Note that since the flyweight pattern is used, literal
      * (reference) equality is enough to ensure that these objects are actually equal.
-     * @param other the object to compare this pitch class to
-     * @return if this pitch class is equal to this object
+     * @param other the object to compare this sound class to
+     * @return if this sound class is equal to this object
      */
     @Override
     public final boolean equals(Object other) {
         return this == other;
-    }
-    /**
-     * A simple hash code in order to allow storage in certain collections.
-     * @return The hash code for this pitch class
-     */
-    @Override
-    public final int hashCode() {
-        return value;
     }
 }

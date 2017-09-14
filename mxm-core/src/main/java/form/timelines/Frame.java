@@ -1,5 +1,6 @@
 package form.timelines;
 
+import base.time.ITime;
 import base.time.Time;
 import form.IFrame;
 import form.events.IMusicEvent;
@@ -14,14 +15,14 @@ import java.util.TreeSet;
 // Frames can
 @SuppressWarnings("unchecked")
 class Frame <MusicEventType extends IMusicEvent> implements IFrame<MusicEventType> {
-    private final Time time;
+    private final ITime time;
     final TreeSet<MusicEventType> eventsStarted;
     final TreeSet<MusicEventType> eventsContinued;
     final TreeSet<MusicEventType> eventsEnded;
     final TreeSet<MusicEventType> eventsNotStarted;
     final TreeSet<MusicEventType> eventsNotEnded;
 
-    Frame(@NotNull Time time) {
+    Frame(@NotNull ITime time) {
         this.time = time;
         this.eventsStarted      = new TreeSet<>();
         this.eventsContinued    = new TreeSet<>();
@@ -62,7 +63,7 @@ class Frame <MusicEventType extends IMusicEvent> implements IFrame<MusicEventTyp
         else throw new Error("Frame: Cannot add an event of type " + event.getClass());
     }
 
-    public final @NotNull Time getTime() {
+    public final @NotNull ITime getTime() {
         return time;
     }
     public final @NotNull Iterator<MusicEventType> eventsStartedItr() {

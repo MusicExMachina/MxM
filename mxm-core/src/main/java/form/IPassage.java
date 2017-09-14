@@ -1,8 +1,9 @@
 package form;
 
 import base.harmony.Chord;
-import base.properties.Noise;
-import base.pitch.Pitch;
+import base.sound.Noise;
+import base.sound.Pitch;
+import base.time.ITime;
 import form.events.Note;
 import base.time.Tempo;
 import base.time.TimeSig;
@@ -21,14 +22,14 @@ import java.util.Iterator;
 public interface IPassage {
 
     // Getters for iterators over form.events during a specific time
-    @NotNull Iterator<Note> noteItrAt(Time time);                    // All notes
-    @NotNull Iterator<Note<Pitch>> pitchedNoteItrAt(Time time);      // All pitched notes
-    @NotNull Iterator<Note<Noise>> unpitchedNoteItrAt(Time time);    // All unpitched notes
-    @NotNull Iterator<Note<Chord>> chordNoteItrAt(Time time);        // All chord notes
+    @NotNull Iterator<Note> noteItrAt(ITime time);                    // All notes
+    @NotNull Iterator<Note<Pitch>> pitchedNoteItrAt(ITime time);      // All pitched notes
+    @NotNull Iterator<Note<Noise>> unpitchedNoteItrAt(ITime time);    // All unpitched notes
+    @NotNull Iterator<Note<Chord>> chordNoteItrAt(ITime time);        // All chord notes
 
     // Getters for form.events during a specific time
-    @NotNull Tempo getTempoAt(Time time);            // Tempo at a time
-    @NotNull TimeSig getTimeSigAt(Time time);        // Time Signature at a time
+    @NotNull Tempo getTempoAt(ITime time);            // Tempo at a time
+    @NotNull TimeSig getTimeSigAt(ITime time);        // Time Signature at a time
 
     // Iterators over specific event types
     @NotNull ISerialTimeline<TimeSigChange> getTimeSigChanges();      // All time signature changes

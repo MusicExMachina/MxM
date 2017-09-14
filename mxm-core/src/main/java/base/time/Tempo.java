@@ -1,6 +1,7 @@
 package base.time;
 
-import base.pitch.Pitch;
+import base.AbstractIntegerProp;
+import base.sound.Pitch;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
@@ -17,7 +18,7 @@ import java.util.Comparator;
  *
  * @author Patrick Celentano
  */
-public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
+public final class Tempo extends AbstractIntegerProp implements Comparator<Tempo>, Comparable<Tempo> {
 
     //////////////////////////////
     // Static variables         //
@@ -36,15 +37,10 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
      * @return a tempo of this speed (in beats per minute)
      */
     public static @NotNull Tempo get(int bpm) {
+        if(bpm <= 0) throw new Error("Tempo:\tInvalid tempo! (" + bpm + " bpm)");
+
         return new Tempo(bpm);
     }
-
-    //////////////////////////////
-    // Member variables         //
-    //////////////////////////////
-
-    /** Stores a tempo value, in BPM */
-    private final int value;
 
     //////////////////////////////
     // Member methods           //
@@ -52,27 +48,25 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
 
     /**
      * Constructor taking in a tempo, in beats per minute.
-     * @param value The tempo, in beats per minute
+     * @param bpm The tempo, in beats per minute
      */
-    private Tempo(int value) {
-        if(value > 0) {
-            this.value = value;
-        }
-        else throw new Error("TEMPO:\tInvalid tempo! (" + value + " bpm)");
+    private Tempo(int bpm) {
+        super(bpm);
     }
     /**
      * Returns the number of beats per minute this tempo represents.
      * @return The BPM of this tempo
      */
-    public int getBPM() {
-        return value;
+    public final int getBPM() {
+        return getValue();
     }
     /**
      * Returns a nicely-formatted string of this tempo (for debug).
      * @return This tempo's string representation
      */
-    public String toString() {
-        return getBPM() + " bpm";
+    @Override
+    public final @NotNull String toString() {
+        return super.toString() + " bpm";
     }
     /**
      * Compares this tempo to another.
@@ -80,18 +74,18 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
      * @return The comparison between these two tempi
      */
     @Override
-    public int compareTo(@NotNull Tempo other) {
+    public final int compareTo(@NotNull Tempo other) {
         return Integer.compare(value, other.value);
     }
     /**
      * Compares two tempi.
-     * @param p1 The first tempo
-     * @param p2 The second tempo
+     * @param tempo1 The first tempo
+     * @param tempo2 The second tempo
      * @return The comparison between these two tempi
      */
     @Override
-    public int compare(@NotNull Tempo p1, @NotNull Tempo p2) {
-        return Integer.compare(p1.value, p2.value);
+    public final int compare(@NotNull Tempo tempo1, @NotNull Tempo tempo2) {
+        return Integer.compare(tempo1.value, tempo2.value);
     }
     /**
      * Checks if this tempo equals another object.
@@ -99,18 +93,10 @@ public class Tempo implements Comparator<Tempo>, Comparable<Tempo> {
      * @return If this tempo is equal to the object
      */
     @Override
-    public boolean equals(Object object) {
+    public final boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Tempo tempo = (Tempo) object;
         return value == tempo.value;
-    }
-    /**
-     * A simple hash code for storage of tempi in special collections.
-     * @return The hash code for this tempo
-     */
-    @Override
-    public int hashCode() {
-        return value;
     }
 }

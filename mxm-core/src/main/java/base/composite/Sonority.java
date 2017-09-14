@@ -1,15 +1,15 @@
 package base.composite;
 
-import base.ISound;
+import base.sound.ISoundProperty;
 import base.harmony.Harmony;
-import base.pitch.Pitch;
-import base.pitch.PitchClass;
+import base.sound.Pitch;
+import base.sound.PitchClass;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 // IMMUTABLE;
-public class Sonority implements ISound {
+public class Sonority implements ISoundProperty {
 
     /** The pitches inside this sonority */
     private TreeSet<Pitch> pitches;

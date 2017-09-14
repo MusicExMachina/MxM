@@ -1,5 +1,6 @@
 package form;
 
+import base.time.ITime;
 import base.time.Time;
 import form.events.IMusicEvent;
 import org.jetbrains.annotations.NotNull;
@@ -35,19 +36,19 @@ public interface ISerialTimeline <MusicEventType extends IMusicEvent> extends IT
      * @param time the time to check
      * @return the event that occurs <i>exactly</i> at a specified time
      */
-    @Nullable MusicEventType getEventAt(@NotNull Time time);
+    @Nullable MusicEventType getEventAt(@NotNull ITime time);
     /**
      *
      * @param time
      * @return
      */
-    @Nullable MusicEventType getEventBefore(@NotNull Time time);
+    @Nullable MusicEventType getEventBefore(@NotNull ITime time);
     /**
      *
      * @param time
      * @return
      */
-    @Nullable MusicEventType getEventAfter(@NotNull Time time);
+    @Nullable MusicEventType getEventAfter(@NotNull ITime time);
     /**
      *
      * @return

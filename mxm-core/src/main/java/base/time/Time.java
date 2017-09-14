@@ -1,5 +1,8 @@
 package base.time;
 
+import base.AbstractFractionProp;
+import base.AbstractIntegerProp;
+import base.AbstractReducedFractProp;
 import org.jetbrains.annotations.NotNull;
 import javafx.util.Pair;
 
@@ -7,103 +10,94 @@ import javafx.util.Pair;
  *
  */
 public abstract class Time implements Comparable<Time> {
-    public static Measure PICKUP_MEASURE    = get(-1);
-    public static Measure MEASURE_ONE       = get(0);
 
-    static Pair<Integer,Integer> reduce(int num, int den) {
-        // Euclid's gcd algorithm, everyone's favorite
-        int a = num, b = den;
-        if(a == 0){ den /= b; return new Pair<>(num,den); }
-        if(b == 0){ num /= a; return new Pair<>(num,den); }
-        while (a != b) {
-            if (a > b) a -= b; else b -= a;
-        }
-        num   /= a;
-        den /= a;
-        return new Pair<>(num,den);
-    }
+    //////////////////////////////
+    // Static variables         //
+    //////////////////////////////
 
-    protected abstract int getNumerator();
-    protected abstract int getDenominator();
+    /***/
+    public static IMeasure PICKUP_MEASURE = get(-1);
+    /***/
+    public static IMeasure MEASURE_ONE = get(0);
 
-    public final @NotNull Time plus(Time other) {
-        int newNumerator = this.getNumerator() * other.getDenominator() + other.getNumerator() * this.getDenominator();
-        int newDenominator = this.getDenominator() * other.getDenominator();
-        return get(newNumerator, newDenominator);
-    }
-    public final @NotNull Time minus(Time other) {
-        int newNumerator = this.getNumerator() * other.getDenominator() - other.getNumerator() * this.getDenominator();
-        int newDenominator = this.getDenominator() * other.getDenominator();
-        return get(newNumerator, newDenominator);
-    }
-    public final @NotNull Time times(int factor) {
-        int newNumerator = this.getNumerator() * factor;
-        return get(newNumerator, getDenominator());
-    }
-    public final @NotNull Time divBy(int factor) {
-        int newDenominator = this.getDenominator() * factor;
-        return get(getNumerator(), newDenominator);
+    //////////////////////////////
+    // Static Methods           //
+    //////////////////////////////
+
+    public static IMeasure get(int measureNum) {
+        return new Measure(measureNum);
     }
 
-
-    public static Measure get(int measureNum) {
-        return Measure.get(measureNum);
-    }
-    public static Time get(int num, int den) {
-        Pair<Integer,Integer> pair = reduce(num,den);
-        if(pair.getValue() == 1) return Measure.get(pair.getKey());
-        else return new Count(pair.getKey(),pair.getValue());
-    }
-    public static Time get(int numerator, int denominator, int measureNum) {
-        int newNumerator = numerator + denominator*measureNum;
-        return get(newNumerator,denominator);
+    public static ITime get(int num, int den) {
+        // If the denominator reduces to 0
+        if(num % den == 0) return new Measure(num / den);
+        else return new Count(num, den);
     }
 
-    public abstract @NotNull Beat getBeat();
-    public abstract @NotNull Measure getMeasure();
+    public static ITime get(int num, int den, int measNum) {
+        int newNum = num + den * measNum;
+        return get(newNum,den);
+    }
 
     @Override
     public abstract @NotNull String toString();
 
-    @Override
-    public final int compareTo(Time other) {
-        if(this.equals(other)) return 0;
-        if(this.getMeasure().getNumber() > other.getMeasure().getNumber()) return 1;
-        if(this.getMeasure().getNumber() > other.getMeasure().getNumber()) return -1;
-        return this.getBeat().compareTo(other.getBeat());
+
+}
+
+
+final class Count extends AbstractFractionProp implements ITime {
+
+    private Beat beat;
+    private IMeasure measure;
+
+    /**
+     * A constructor for a count
+     *
+     * @param num the numerator of this count
+     * @param den the denominator of this count
+     */
+    protected Count(int num, int den) {
+        super(num, den);
+        beat = Beat.get(num,den);
+        measure = Time.get(num/den);
     }
-    public final boolean equals(Time other) {
-        // @@@@@@
-        return this == other;
-    }
+
     @Override
-    public final int hashCode() {
-        return getBeat().hashCode() + 31*getMeasure().hashCode();
+    public @NotNull Beat getBeat() {
+        return beat;
+    }
+
+    @Override
+    public @NotNull IMeasure getMeasure() {
+        return measure;
     }
 }
 
-class Count extends Time {
-    private final int numerator;
-    private final int denominator;
-    private final Beat beat;
-    private final Measure measure;
 
-    Count(int numerator, int denominator) {
-        this.numerator = numerator;
-        this.denominator = denominator;
-        this.beat = Beat.get(numerator % denominator, denominator);
-        this.measure = Measure.get(this.numerator/this.denominator);
+
+final class Measure extends AbstractIntegerProp implements IMeasure {
+
+    Measure(int value) {
+        super(value);
     }
 
     @Override
-    protected final int getNumerator() { return numerator; }
+    public final int getNumerator() {
+        return getValue();
+    }
     @Override
-    protected final int getDenominator() { return denominator; }
-
+    public final int getDenominator() {
+        return 1;
+    }
     @Override
-    public @NotNull Beat getBeat() { return beat; }
+    public final @NotNull Beat getBeat() {
+        return Beat.ZERO;
+    }
     @Override
-    public @NotNull Measure getMeasure() { return measure; }
+    public final @NotNull Measure getMeasure() {
+        return this;
+    }
     @Override
-    public String toString() { return measure.toString() + " & " + beat.toString(); }
+    public final @NotNull String toString() { return "m. " + super.toString(); }
 }

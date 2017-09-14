@@ -1,8 +1,8 @@
 package base.harmony;
 
-import base.ISound;
-import base.pitch.IntervalClass;
-import base.pitch.PitchClass;
+import base.sound.ISoundProperty;
+import base.sound.IntervalClass;
+import base.sound.PitchClass;
 import base.composite.Voicing;
 import io.Log;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +13,7 @@ import java.util.Iterator;
 
 /**
  * <p> <b>Class overview:</b>
- * The {@link Chord} class represents a specific set of pitch classes. Note that every chord as a root note and a
+ * The {@link Chord} class represents a specific set of sound classes. Note that every chord as a root note and a
  * series of factors above that root note. These might include a third, a fifth, a seventh, and so on. They might just
  * as well contain a second, a third, a fourth, and a fifth, forming a cluster. All that matters is that the order of
  * these IntervalClasses is preserved. Note that this is not a {@link Voicing}, as voicings involve
@@ -27,7 +27,7 @@ import java.util.Iterator;
  *
  * @author Patrick Celentano
  */
-public class Chord implements ISound, Iterable<PitchClass> {
+public class Chord implements ISoundProperty, Iterable<PitchClass> {
 
     //////////////////////////////
     // Static variables         //
@@ -43,7 +43,7 @@ public class Chord implements ISound, Iterable<PitchClass> {
         // Keep track of the start time to know how long initialization takes
         long startTime = System.nanoTime();
 
-        // Initialize all pitch classes
+        // Initialize all sound classes
         ALL = new Chord[PitchClass.TOTAL_NUM * ChordClass.TOTAL_NUM];
         for(int pcVal = PitchClass.MIN_VALUE; pcVal <= PitchClass.MAX_VALUE; pcVal++) {
             for(int ccVal = 0; ccVal < ChordClass.TOTAL_NUM; ccVal++) {
@@ -76,9 +76,9 @@ public class Chord implements ISound, Iterable<PitchClass> {
 
     /** Each position in this array represents the position of the factors in order from root through thirteenth. */
     private ArrayList<PitchClass> factorsInOrder;
-    /** Harmonies are essentially just sets of pitch classes and do not preserve factor order. */
+    /** Harmonies are essentially just sets of sound classes and do not preserve factor order. */
     private Harmony harmony;
-    /** Chord classes represent the types of intervals (interval classes) above the root pitch class. */
+    /** Chord classes represent the types of intervals (interval classes) above the root sound class. */
     private ChordClass chordClass;
 
     //////////////////////////////

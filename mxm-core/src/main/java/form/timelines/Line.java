@@ -1,7 +1,8 @@
 package form.timelines;
 
-import base.ISound;
+import base.sound.ISoundProperty;
 import base.properties.Instrument;
+import base.time.ITime;
 import base.time.Time;
 import org.jetbrains.annotations.NotNull;
 import form.events.Note;
@@ -12,12 +13,12 @@ import java.util.Iterator;
  * The
  * @param <SoundType>
  */
-public class Line<SoundType extends ISound> extends AbstractPart<SoundType> implements Iterable<Note<SoundType>> {
+public class Line<SoundType extends ISoundProperty> extends AbstractPart<SoundType> implements Iterable<Note<SoundType>> {
 
     /** All of the notes in this line, which may not overlap */
     private final SerialTimeline<Note<SoundType>> notes;
     /** We must save the last-written-to time in this Line */
-    private Time writeHead;
+    private ITime writeHead;
 
     //////////////////
     // Constructors //
@@ -34,13 +35,13 @@ public class Line<SoundType extends ISound> extends AbstractPart<SoundType> impl
     /////////////////
 
     // Adds a note
-    public @NotNull Line<SoundType> add(@NotNull SoundType sound, @NotNull Time length) {
+    public @NotNull Line<SoundType> add(@NotNull SoundType sound, @NotNull ITime length) {
         notes.addEvent(new Note<>(this, sound, writeHead, writeHead.plus(length)));
         writeHead = writeHead.plus(length);
         return this;
     }
     // Adds a rest
-    public @NotNull Line<SoundType> add(@NotNull Time length) {
+    public @NotNull Line<SoundType> add(@NotNull ITime length) {
         writeHead = writeHead.plus(length);
         return this;
     }

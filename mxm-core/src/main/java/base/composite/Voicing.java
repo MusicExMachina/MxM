@@ -1,6 +1,6 @@
 package base.composite;
 
-import base.pitch.Interval;
+import base.sound.Interval;
 
 import java.util.Iterator;
 import java.util.TreeSet;
