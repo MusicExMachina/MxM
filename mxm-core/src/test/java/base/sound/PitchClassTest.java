@@ -81,7 +81,7 @@ class PitchClassTest {
     }
     @Test
     void allItrTest() {
-        Iterator<PitchClass> pitchClassItr = PitchClass.allItr();
+        Iterator<PitchClass> pitchClassItr = PitchClass.all().iterator();
         for(int value = 0; value < 12; value++) {
             assertTrue(pitchClassItr.next() == get(value));
         }

@@ -17,8 +17,8 @@ allprojects {
         // For Py4J (python use of Java classes)
         compile group: 'net.sf.py4j', name: 'py4j', version: '0.10.4'
         // Allows Python to be built in
-        // python 'pypi:requests:2.5.1'
-        // test 'pypi:mock:1.0.1'
+          // python 'pypi:requests:2.5.1'
+          // test 'pypi:mock:1.0.1'
         // JUnit testing
         testCompile("org.junit.jupiter:junit-jupiter-api:5.0.0-RC3")
         testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.0-RC3")
@@ -38,11 +38,13 @@ buildscript {
         jcenter()
     }
     dependencies {
-        // For JUnit testing
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-RC3'
         // For Javadoc aggregation
         classpath 'com.netflix.nebula:gradle-aggregate-javadocs-plugin:2.2.+'
+        // For JUnit testing
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-RC3'
     }
 }
+// For Javadoc aggregation
 apply plugin: 'nebula-aggregate-javadocs'
+// For JUnit testing
 apply plugin: 'org.junit.platform.gradle.plugin'
