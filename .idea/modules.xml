@@ -15,7 +15,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-midi/mxm-midi.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-midi/mxm-midi.iml" group="mxm-midi" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-midi/mxm-midi_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-midi/mxm-midi_main.iml" group="mxm-midi" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-midi/mxm-midi_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-midi/mxm-midi_test.iml" group="mxm-midi" />
-      <module fileurl="file://$PROJECT_DIR$/mxm-python/mxm-python.iml" filepath="$PROJECT_DIR$/mxm-python/mxm-python.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm_main.iml" group="mxm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm_test.iml" group="mxm" />
     </modules>
   </component>
 </project>
