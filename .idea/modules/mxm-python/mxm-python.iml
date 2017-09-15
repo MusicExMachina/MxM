@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="mxm-python" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$" external.system.id="GRADLE" type="PYTHON_MODULE" version="4">
+<module external.linked.project.id=":mxm-python" external.linked.project.path="$MODULE_DIR$/../../../mxm-python" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="com.musicexmachina" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/test" />
+    <content url="file://$MODULE_DIR$/../../../mxm-python">
+      <excludeFolder url="file://$MODULE_DIR$/../../../mxm-python/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../mxm-python/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../mxm-python/out" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 2.4.5 (C:\Program Files (x86)\LilyPond\usr\bin\python.exe)" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

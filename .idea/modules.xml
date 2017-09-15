@@ -15,6 +15,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-midi/mxm-midi.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-midi/mxm-midi.iml" group="mxm-midi" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-midi/mxm-midi_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-midi/mxm-midi_main.iml" group="mxm-midi" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-midi/mxm-midi_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-midi/mxm-midi_test.iml" group="mxm-midi" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python.iml" group="mxm-python" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python_main.iml" group="mxm-python" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python_test.iml" group="mxm-python" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm_main.iml" group="mxm" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm_test.iml" group="mxm" />
     </modules>
