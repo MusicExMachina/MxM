@@ -3,8 +3,8 @@ package form.scoreTypes;
 import form.timelines.AbstractScore;
 import org.jetbrains.annotations.NotNull;
 
-import base.properties.Instrument;
-import base.sound.Pitch;
+import properties.note.Instrument;
+import properties.sound.Pitch;
 
 import form.timelines.Line;
 

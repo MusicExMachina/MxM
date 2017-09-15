@@ -1,14 +1,14 @@
 package form;
 
-import base.sound.Chord;
-import base.sound.Noise;
-import base.sound.Pitch;
-import base.time.ITime;
-import form.events.Note;
-import base.time.Tempo;
-import base.time.TimeSig;
-import form.events.TempoChange;
-import form.events.TimeSigChange;
+import properties.sound.Chord;
+import properties.sound.Noise;
+import properties.sound.Pitch;
+import properties.time.ITime;
+import events.sound.Note;
+import properties.time.Tempo;
+import properties.time.TimeSig;
+import events.time.TempoChange;
+import events.time.TimeSigChange;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
@@ -20,13 +20,13 @@ import java.util.Iterator;
  */
 public interface IPassage {
 
-    // Getters for iterators over form.events during a specific time
+    // Getters for iterators over events during a specific time
     @NotNull Iterator<Note> noteItrAt(ITime time);                    // All notes
     @NotNull Iterator<Note<Pitch>> pitchedNoteItrAt(ITime time);      // All pitched notes
     @NotNull Iterator<Note<Noise>> unpitchedNoteItrAt(ITime time);    // All unpitched notes
     @NotNull Iterator<Note<Chord>> chordNoteItrAt(ITime time);        // All chord notes
 
-    // Getters for form.events during a specific time
+    // Getters for events during a specific time
     @NotNull Tempo getTempoAt(ITime time);            // Tempo at a time
     @NotNull TimeSig getTimeSigAt(ITime time);        // Time Signature at a time
 

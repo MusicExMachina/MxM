@@ -1,18 +1,15 @@
-import base.sound.Chord;
-import base.sound.Pitch;
-import base.time.Tempo;
-import base.time.Time;
+import properties.sound.Chord;
+import properties.sound.Pitch;
+import properties.time.Tempo;
+import properties.time.Time;
 import form.scoreTypes.LeadSheet;
-import form.events.Note;
-import form.events.TempoChange;
-import form.events.TimeSigChange;
 import form.timelines.Line;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static base.sound.ChordClass.*;
-import static base.sound.PitchClass.*;
+import static properties.sound.ChordClass.*;
+import static properties.sound.PitchClass.*;
 
 public class Test {
     private static final Logger LOGGER = Logger.getLogger( Test.class.getSimpleName() );

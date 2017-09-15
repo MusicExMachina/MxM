@@ -1,6 +1,6 @@
 package analysis;
 
-import base.time.Beat;
+import properties.time.Beat;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- * A conceptualization of rhythm as gradual, equal subdivisions of some concrete amount of base.time.
+ * A conceptualization of rhythm as gradual, equal subdivisions of some concrete amount of note.time.
  * RhythmTrees operate like many other data structures save that their only "real" storage is in
  * their leaf nodes.
  */

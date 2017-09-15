@@ -1,4 +1,4 @@
-import base.sound.*;
+import properties.sound.*;
 
 public class OtherOtherTest {
     public static void main(String[] args) {

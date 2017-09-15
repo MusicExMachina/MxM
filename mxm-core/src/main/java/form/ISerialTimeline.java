@@ -1,8 +1,7 @@
 package form;
 
-import base.time.ITime;
-import base.time.Time;
-import form.events.IMusicEvent;
+import properties.time.ITime;
+import events.IMusicEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

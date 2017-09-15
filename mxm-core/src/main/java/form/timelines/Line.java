@@ -1,11 +1,11 @@
 package form.timelines;
 
-import base.sound.ISound;
-import base.properties.Instrument;
-import base.time.ITime;
-import base.time.Time;
+import properties.sound.ISound;
+import properties.note.Instrument;
+import properties.time.ITime;
+import properties.time.Time;
 import org.jetbrains.annotations.NotNull;
-import form.events.Note;
+import events.sound.Note;
 
 import java.util.Iterator;
 

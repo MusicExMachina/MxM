@@ -1,4 +1,4 @@
-import base.sound.Pitch;
+import properties.sound.Pitch;
 
 import java.util.ArrayList;
 import java.util.List;

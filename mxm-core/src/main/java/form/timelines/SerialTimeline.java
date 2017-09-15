@@ -1,9 +1,8 @@
 package form.timelines;
 
-import base.time.ITime;
-import base.time.Time;
+import properties.time.ITime;
 import form.ISerialTimeline;
-import form.events.IMusicEvent;
+import events.IMusicEvent;
 import form.exceptions.SerialTimelineOverlapException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,7 +20,7 @@ final class SerialTimeline <MusicEventType extends IMusicEvent> implements ISeri
     }
 
     // ADDER
-    // Package private on purpose- we don't want users adding form.events, only scores.
+    // Package private on purpose- we don't want users adding events, only scores.
     void addEvent(MusicEventType event) {
         if (events.get(event.getTiming()) == null) {
             events.put(event.getTiming(), event);

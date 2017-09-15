@@ -1,11 +1,11 @@
 package form.scoreTypes;
 
-import base.sound.Chord;
-import base.sound.Pitch;
+import properties.sound.Chord;
+import properties.sound.Pitch;
 import form.timelines.AbstractScore;
 import org.jetbrains.annotations.NotNull;
 
-import base.properties.Instrument;
+import properties.note.Instrument;
 
 import form.timelines.Line;
 

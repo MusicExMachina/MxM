@@ -1,6 +1,6 @@
 package form;
 
-import form.events.IMusicEvent;
+import events.IMusicEvent;
 
 /**
  * We don't want classes outside this package instantiating timelines, but we want

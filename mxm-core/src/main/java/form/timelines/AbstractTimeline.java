@@ -1,9 +1,8 @@
 package form.timelines;
 
-import base.time.ITime;
+import properties.time.ITime;
 import org.jetbrains.annotations.NotNull;
-import form.events.IMusicEvent;
-import base.time.Time;
+import events.IMusicEvent;
 
 import java.util.*;
 

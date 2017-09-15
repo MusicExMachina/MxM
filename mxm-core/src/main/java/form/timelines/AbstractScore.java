@@ -1,15 +1,17 @@
 package form.timelines;
 
-import base.sound.Chord;
-import base.sound.Noise;
-import base.sound.Pitch;
+import events.sound.Note;
+import events.time.TempoChange;
+import events.time.TimeSigChange;
+import properties.sound.Chord;
+import properties.sound.Noise;
+import properties.sound.Pitch;
 import form.IPassage;
 import form.ISerialTimeline;
 import org.jetbrains.annotations.NotNull;
-import form.events.*;
-import base.time.Tempo;
-import base.time.TimeSig;
-import base.time.*;
+import properties.time.Tempo;
+import properties.time.TimeSig;
+import properties.time.*;
 
 import java.util.*;
 

@@ -1,19 +1,19 @@
 package form.timelines;
 
-import base.properties.Instrument;
-import base.sound.Chord;
-import base.sound.ISound;
-import base.sound.Noise;
-import base.sound.Pitch;
-import base.time.ITime;
-import base.time.Tempo;
-import base.time.TimeSig;
+import properties.note.Instrument;
+import properties.sound.Chord;
+import properties.sound.ISound;
+import properties.sound.Noise;
+import properties.sound.Pitch;
+import properties.time.ITime;
+import properties.time.Tempo;
+import properties.time.TimeSig;
 import form.IPassage;
 import form.ISerialTimeline;
 import org.jetbrains.annotations.NotNull;
-import form.events.Note;
-import form.events.TempoChange;
-import form.events.TimeSigChange;
+import events.sound.Note;
+import events.time.TempoChange;
+import events.time.TimeSigChange;
 
 import java.util.Iterator;
 
@@ -35,7 +35,7 @@ public abstract class AbstractPart<SoundType extends ISound> implements IPassage
     @Override
     public final @NotNull ISerialTimeline<TempoChange> getTempoChanges() { return getScore().getTempoChanges(); }
 
-    // Getters for form.events during a specific time
+    // Getters for events during a specific time
     @Override
     public final @NotNull Tempo getTempoAt(ITime time) { return getScore().getTempoAt(time); }
     @Override

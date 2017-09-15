@@ -1,11 +1,10 @@
 package form.timelines;
 
-import base.time.ITime;
-import base.time.Time;
+import properties.time.ITime;
 import form.IFrame;
-import form.events.IMusicEvent;
-import form.events.AbstractInstantEvent;
-import form.events.AbstractSpanningEvent;
+import events.IMusicEvent;
+import events.AbstractInstantEvent;
+import events.AbstractSpanningEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -30,7 +29,7 @@ class Frame <MusicEventType extends IMusicEvent> implements IFrame<MusicEventTyp
         this.eventsNotStarted   = new TreeSet<>();
         this.eventsNotEnded     = new TreeSet<>();
     }
-    // Package private on purpose- we don't want users adding form.events, only scores.
+    // Package private on purpose- we don't want users adding events, only scores.
     void add(@NotNull MusicEventType event) {
         if(event instanceof AbstractInstantEvent) {
             eventsStarted.add((MusicEventType) event);
@@ -38,7 +37,7 @@ class Frame <MusicEventType extends IMusicEvent> implements IFrame<MusicEventTyp
         }
         else throw new Error("Frame: Cannot add an event of type " + event.getClass());
     }
-    // Package private on purpose- we don't want users adding form.events, only scores.
+    // Package private on purpose- we don't want users adding events, only scores.
     void addStart(@NotNull MusicEventType event) {
         if(event instanceof AbstractSpanningEvent) {
             eventsStarted.add((MusicEventType) event);
@@ -46,7 +45,7 @@ class Frame <MusicEventType extends IMusicEvent> implements IFrame<MusicEventTyp
         }
         else throw new Error("Frame: Cannot add an event of type " + event.getClass());
     }
-    // Package private on purpose- we don't want users adding form.events, only scores.
+    // Package private on purpose- we don't want users adding events, only scores.
     void addContinue(@NotNull MusicEventType event) {
         if(event instanceof AbstractSpanningEvent) {
             eventsContinued.add((MusicEventType)event);
@@ -54,7 +53,7 @@ class Frame <MusicEventType extends IMusicEvent> implements IFrame<MusicEventTyp
         }
         else throw new Error("Frame: Cannot add an event of type " + event.getClass());
     }
-    // Package private on purpose- we don't want users adding form.events, only scores.
+    // Package private on purpose- we don't want users adding events, only scores.
     void addEnd(@NotNull MusicEventType event) {
         if(event instanceof AbstractSpanningEvent) {
             eventsEnded.add((MusicEventType)event);
