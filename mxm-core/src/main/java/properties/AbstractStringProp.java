@@ -1,11 +1,17 @@
 package properties;
 
-import properties.note.Accent;
-import properties.note.Instrument;
-import properties.note.Technique;
+import org.jetbrains.annotations.NotNull;
 
 /**
- * There are several types of note (notably {@link Accent}, {@link Technique}, and {@link Instrument}) which are
+ * <p> <b>Class overview:</b>
+ * This class wraps a basic property: an string for use in classes like {@link properties.note.Accent},
+ * {@link properties.note.Technique}, and {@link properties.note.Instrument}.</p>
+ *
+ * <p> <b>Design Details:</b>
+ * This abstract class represents an underlying property, and provides basic variables and methods for all derived
+ * classes to utilize. Essentially, this just prevents unnecessary code duplication. </p>
+ *
+ * @author Patrick Celentano
  */
 public abstract class AbstractStringProp {
 
@@ -27,7 +33,6 @@ public abstract class AbstractStringProp {
         // Set the member variables
         this.value = value;
     }
-
     /**
      * A getter for the value of this string property
      * @return the value of this string property
@@ -40,7 +45,7 @@ public abstract class AbstractStringProp {
      * @return a string representation of this fraction
      */
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return value;
     }
     /**

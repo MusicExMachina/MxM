@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p> <b>Design Details:</b>
  * This abstract class represents an underlying property, and provides basic variables and methods for all derived
- * classes to utilize. Essentially, this just prevents copy + pasted code. </p>
+ * classes to utilize. Essentially, this just prevents unnecessary code duplication. </p>
  *
  * @author Patrick Celentano
  */

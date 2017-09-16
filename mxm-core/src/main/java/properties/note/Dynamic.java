@@ -6,13 +6,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Comparator;
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * The dynamic class is a glorified byte wrapper, which allows for a little more dress and avoiding confusion down the
- * line. Note that we still use the MIDI standard's definition of loudness, just as we use midi note values.
+/***
+ * <p> <b>Class overview:</b>
+ * The dynamic class is a glorified integer wrapper, which allows for a little more dress and avoiding confusion down the
+ * line. Note that we still use the MIDI standard's definition of loudness, just as we use midi note values.</p>
  *
+ * <p> <b>Design Details:</b>
+ * ASDF</p>
  *
- *
- * TODO: this comment
+ * @author Patrick Celentano
  */
 public class Dynamic extends AbstractIntegerProp implements Comparator<Dynamic>, Comparable<Dynamic> {
 

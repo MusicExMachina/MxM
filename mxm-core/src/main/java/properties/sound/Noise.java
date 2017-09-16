@@ -8,8 +8,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * <p> <b>Class Overview:</b>
- * Noises represent non-pitched sounds, which range from hits and strikes to brushes and... TODO: Finish this documentation
- * </p>
+ * Noises represent non-pitched sounds meant to be used in place of {@link Pitch}es, such as in unpitched percussion
+ * parts. Noises are backed by a string- their name- and have no intrinsic ordering, unlike pitches.</p>
  *
  * <p> <b>Design Details:</b>
  * This class is <i>immutable</i> and implements the <b>flyweight design pattern</b>- there is exactly one instance for

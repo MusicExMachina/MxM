@@ -1,5 +1,7 @@
 package properties;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * <p> <b>Class overview:</b>
  * This class wraps a basic property: an integer for use in classes like {@link properties.time.Tempo} or even
@@ -7,7 +9,7 @@ package properties;
  *
  * <p> <b>Design Details:</b>
  * This abstract class represents an underlying property, and provides basic variables and methods for all derived
- * classes to utilize. Essentially, this just prevents copy + pasted code. </p>
+ * classes to utilize. Essentially, this just prevents unnecessary code duplication. </p>
  *
  * @author Patrick Celentano
  */
@@ -32,7 +34,6 @@ public abstract class AbstractIntegerProp {
         // Set the member variables
         this.value = value;
     }
-
     /**
      * A getter for the value of this integer prop
      * @return the value of this integer prop
@@ -45,7 +46,7 @@ public abstract class AbstractIntegerProp {
      * @return a string representation of this fraction
      */
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return value + "";
     }
     /**

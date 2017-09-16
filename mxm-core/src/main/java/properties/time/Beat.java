@@ -3,7 +3,7 @@ package properties.time;
 import properties.AbstractReducedFractProp;
 import org.jetbrains.annotations.NotNull;
 
-/***
+/**
  * <p> <b>Class overview:</b>
  * The {@link Beat} class represents a subdivision of a measure- a fraction which amounts to under 1. Beats may be
  * manipulated like other {@link Time} representations, but may never be larger than 1 (i.e. greater than a measure)

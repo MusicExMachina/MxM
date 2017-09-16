@@ -11,11 +11,8 @@ import static properties.sound.IntervalClass.*;
 /**
  * <p> <b>Class overview:</b>
  * A chord class is MxM's representation of a fundamental chord type- major, minor, diminished, augmented and so on.
- * The importance of
- *
- *  Note that static chord classes use shorter names than interval classes in order to avoid name clashing, as well as to
- * avoid very long names for chords (think half diminished seventh)
- * </p>
+ * Note that static chord classes use shorter names than interval classes in order to avoid name clashing, as well as
+ * to avoid very long names for chords (think half diminished seventh). </p>
  *
  * <p> <b>Design Details:</b>
  * This class is <i>immutable</i> and implements the <b>flyweight design pattern</b>- there is exactly one instance for
