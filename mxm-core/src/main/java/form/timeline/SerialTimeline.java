@@ -1,7 +1,6 @@
-package form.timelines;
+package form.timeline;
 
 import properties.time.ITime;
-import form.ISerialTimeline;
 import events.IMusicEvent;
 import form.exceptions.SerialTimelineOverlapException;
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +11,7 @@ import java.util.Iterator;
 import java.util.TreeMap;
 
 @SuppressWarnings("unchecked")
-final class SerialTimeline <MusicEventType extends IMusicEvent> implements ISerialTimeline<MusicEventType> {
+public final class SerialTimeline <MusicEventType extends IMusicEvent> implements ISerialTimeline<MusicEventType> {
     private final TreeMap<ITime, MusicEventType> events;
 
     SerialTimeline() {
@@ -20,7 +19,7 @@ final class SerialTimeline <MusicEventType extends IMusicEvent> implements ISeri
     }
 
     // ADDER
-    // Package private on purpose- we don't want users adding events, only scores.
+    // Package private on purpose- we don't want users adding events, only score.
     void addEvent(MusicEventType event) {
         if (events.get(event.getTiming()) == null) {
             events.put(event.getTiming(), event);

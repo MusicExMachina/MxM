@@ -10,13 +10,13 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * <p> <b>Class Overview:</b>
  * Pitch is a simple class which represents a sound in the traditional Western music sense: equal-temperament, A440,
- * with octave equivalence and so forth. To use a sound, simply call Pitch.get() with the midi value of the desired
- * sound (C4 = 60) or with the desired {@link PitchClass} and octave number. (i.e. Pitch.get(C,2)) To easily enumerate
- * all pitches, use Pitch.allItr() which starts at the lowest possible sound, and runs to the highest possible. </p>
+ * and octave equivalence. To use a sound, simply call Pitch.get() with the midi value of the desired sound (C4 = 60)
+ * or with the desired {@link PitchClass} and octave number. (i.e. Pitch.get(C,2)) To easily enumerate all pitches,
+ * use Pitch.allItr() which starts at the lowest possible sound, and runs to the highest possible. </p>
  *
  * <p> <b>Design Details:</b>
- * This class is <i>immutable</i> and implements the <b>flyweight design pattern</b>- there is exactly one instance for
- * each value such that two ADTs (Abstract Data Types) with the same value are, in fact, the same instance. This
+ * This class is <i>immutable</i> and implements the <b>flyweight design pattern</b>- there is exactly one instance
+ * for each value such that two ADTs (Abstract Data Types) with the same value are, in fact, the same instance. This
  * simplifies equality checks and can prevent memory waste. Unlike the <b>interning design pattern</b>, all possible
  * instances are created upfront during static initialization.
  *

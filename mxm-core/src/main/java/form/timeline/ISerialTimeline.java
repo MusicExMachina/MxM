@@ -1,5 +1,7 @@
-package form;
+package form.timeline;
 
+import form.IFrame;
+import form.ITimeline;
 import properties.time.ITime;
 import events.IMusicEvent;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +20,7 @@ import java.util.Iterator;
  *
  * @author Patrick Celentano
  */
-public interface ISerialTimeline <MusicEventType extends IMusicEvent> extends ITimeline <MusicEventType>,
+public interface ISerialTimeline <MusicEventType extends IMusicEvent> extends ITimeline<MusicEventType>,
                                                                                 Iterable<MusicEventType> {
     /**
      * A getter for the first event that occurs in this timeline

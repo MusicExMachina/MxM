@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Patrick Celentano
  */
-public abstract class AbstractFractionProp {
+public abstract class AbstractFractionProp implements IMusicProperty {
 
     //////////////////////////////
     // Member variables         //

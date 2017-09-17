@@ -3,6 +3,13 @@ package properties.note;
 import properties.AbstractStringProp;
 
 /**
+ * <p> <b>Class overview:</b>
+ * ASDF</p>
+ *
+ * <p> <b>Design Details:</b>
+ * ASDF</p>
+ *
+ * TODO: this comment
  * Techniques encompass any style of playing on an instrument that modifies the tone/style of any Pitch an instrument
  * can play. For instance, muting is a common technique that changes the timbre of a violin, trumpet, or clarinet's tone
  * without actually modifying the sound being played.
@@ -14,6 +21,8 @@ import properties.AbstractStringProp;
  *
  * It is perhaps useful to think of Techniques as accents of sorts, applicable to any note an instrument can produce to
  * modify its sound.
+ *
+ * @author Patrick Celentano
  */
 public class Technique extends AbstractStringProp {
     public static Technique DEFAULT;

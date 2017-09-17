@@ -1,7 +1,10 @@
 import properties.sound.*;
+import theory.harmony.Harmony;
 
 public class OtherOtherTest {
     public static void main(String[] args) {
+        Harmony h = Harmony.FULL;
+
         // SERIAL
         Pitch.all().forEach(System.out::println);
         PitchClass.all().forEach(System.out::println);

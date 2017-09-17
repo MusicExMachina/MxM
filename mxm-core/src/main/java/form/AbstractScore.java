@@ -1,13 +1,15 @@
-package form.timelines;
+package form;
 
 import events.sound.Note;
 import events.time.TempoChange;
 import events.time.TimeSigChange;
+import form.score.IScore;
+import form.timeline.ISerialTimeline;
+import form.timeline.ParallelTimeline;
+import form.timeline.SerialTimeline;
 import properties.sound.Chord;
 import properties.sound.Noise;
 import properties.sound.Pitch;
-import form.IPassage;
-import form.ISerialTimeline;
 import org.jetbrains.annotations.NotNull;
 import properties.time.Tempo;
 import properties.time.TimeSig;
@@ -18,7 +20,7 @@ import java.util.*;
 /**
  * We store the public interfaces of such
  */
-public abstract class AbstractScore implements IPassage {
+public abstract class AbstractScore extends AbstractPassage implements IScore {
 
     private String title;
     private Set<AbstractPart> parts;
@@ -27,12 +29,6 @@ public abstract class AbstractScore implements IPassage {
     private SerialTimeline<TimeSigChange> timeSigChanges;
     private SerialTimeline<TempoChange> tempoChanges;
 
-    // Other music events
-    private ParallelTimeline<Note> allNotes;
-    private ParallelTimeline<Note<Pitch>> allPitchedNotes;
-    private ParallelTimeline<Note<Noise>> allUnpitchedNotes;
-    private ParallelTimeline<Note<Chord>> allChordNotes;
-
     /**
      *
      * @param title a
@@ -40,19 +36,13 @@ public abstract class AbstractScore implements IPassage {
     protected AbstractScore(String title) {
         this.title = title;
         this.parts = new HashSet<>();
-
         // Initialize timing timelines
         this.timeSigChanges = new SerialTimeline<>();
         this.tempoChanges = new SerialTimeline<>();
-
-        this.allNotes = new ParallelTimeline<>();
-        this.allPitchedNotes = new ParallelTimeline<>();
-        this.allUnpitchedNotes = new ParallelTimeline<>();
-        this.allChordNotes = new ParallelTimeline<>();
     }
 
     //////////////////
-    // AbstractScore Adders //
+    // AbstractPassage Adders //
     //////////////////
 
     // Adds a part
@@ -72,15 +62,19 @@ public abstract class AbstractScore implements IPassage {
     }
 
     @Override
-    public final @NotNull ISerialTimeline<TimeSigChange> getTimeSigChanges() { return timeSigChanges; }
+    public final @NotNull ISerialTimeline<TimeSigChange> timeSigChanges() { return timeSigChanges; }
     @Override
     public final @NotNull ISerialTimeline<TempoChange> getTempoChanges() { return tempoChanges; }
 
     @NotNull
-    public Iterator<Note> noteItrAt(ITime time) { return allNotes.getFrameBefore(time).eventsNotEndedItr(); }
+    public Collection<Note> notesAt(ITime time) {
+        return allNotes.getFrameBefore(time).eventsNotEndedItr();
+    }
     @NotNull
     @Override
-    public Iterator<Note<Pitch>> pitchedNoteItrAt(ITime time) { return allPitchedNotes.getFrameBefore(time).eventsNotEndedItr(); }
+    public Iterator<Note<Pitch>> pitchedNoteItrAt(ITime time) {
+        return allPitchedNotes.getFrameBefore(time).eventsNotEndedItr();
+    }
     @Override
     public Iterator<Note<Noise>> unpitchedNoteItrAt(ITime time) { return allUnpitchedNotes.getFrameBefore(time).eventsNotEndedItr(); }
     @Override

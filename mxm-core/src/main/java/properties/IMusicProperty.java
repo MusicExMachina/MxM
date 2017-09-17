@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * <p> <b>Interface Overview:</b>
- * Music properties are self-contained, atomic musical descriptors which may be applied to musical events, timelines,
+ * Music properties are self-contained, atomic musical descriptors which may be applied to musical events, timeline,
  * and so forth.</p>
  *
  * <p> <b>Design Details:</b>

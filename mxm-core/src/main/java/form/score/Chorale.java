@@ -1,17 +1,30 @@
-package form.scoreTypes;
+package form.score;
 
-import form.timelines.AbstractScore;
+import form.AbstractScore;
 import org.jetbrains.annotations.NotNull;
 
 import properties.note.Instrument;
 import properties.sound.Pitch;
 
-import form.timelines.Line;
+import form.part.Line;
 
 /**
- * Chorales are a common classical music genre with four vocal parts: soprano, alto, tenor, and bass.
+ * <p> <b>Class overview:</b>
+ * Chorales are a common classical music genre with four vocal parts: soprano, alto, tenor, and bass, each of which is
+ * a proper line- one note after the other, with no polyphony inside a single part.</p>
+ *
+ * <p> <b>Design Details:</b>
+ * Subclasses of {@link AbstractScore} are intended to ease users in their composition by restricting the number and
+ * type of parts.</p>
+ *
+ * @author Patrick Celentano
  */
 public final class Chorale extends AbstractScore {
+
+    //////////////////////////////
+    // Member variables         //
+    //////////////////////////////
+
     /** The soprano part */
     private final Line<Pitch> soprano;
     /** The alto part */
@@ -20,16 +33,23 @@ public final class Chorale extends AbstractScore {
     private final Line<Pitch> tenor;
     /** The bass part */
     private final Line<Pitch> bass;
+
+    //////////////////////////////
+    // Member methods           //
+    //////////////////////////////
+
     /**
      * The chorale constructor, taking a title.
      * @param title the title of this chorale
      */
     public Chorale(@NotNull String title) {
         super(title);
+        // Create four parts
         this.soprano = new Line<>(this,Instrument.DEFAULT);
         this.alto = new Line<>(this,Instrument.DEFAULT);
         this.tenor = new Line<>(this,Instrument.DEFAULT);
         this.bass = new Line<>(this,Instrument.DEFAULT);
+        // Add them to our AbstractPassage
         this.add(soprano);
         this.add(alto);
         this.add(tenor);

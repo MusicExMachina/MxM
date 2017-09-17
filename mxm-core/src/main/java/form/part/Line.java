@@ -1,5 +1,8 @@
-package form.timelines;
+package form.part;
 
+import form.AbstractPart;
+import form.AbstractScore;
+import form.timeline.SerialTimeline;
 import properties.sound.ISound;
 import properties.note.Instrument;
 import properties.time.ITime;

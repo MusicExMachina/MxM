@@ -1,5 +1,7 @@
-package form;
+package form.timeline;
 
+import form.IFrame;
+import form.ITimeline;
 import properties.time.ITime;
 import events.IMusicEvent;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +20,7 @@ import java.util.Iterator;
  *
  * @author Patrick Celentano
  */
-public interface IParallelTimeline <MusicEventType extends IMusicEvent> extends ITimeline <MusicEventType>,
+public interface IParallelTimeline <MusicEventType extends IMusicEvent> extends ITimeline<MusicEventType>,
                                                                                 Iterable<IFrame<MusicEventType>> {
     @NotNull IFrame<MusicEventType> getFirstFrame();
     @NotNull IFrame<MusicEventType> getLastFrame();

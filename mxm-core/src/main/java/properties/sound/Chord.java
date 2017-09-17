@@ -1,5 +1,6 @@
 package properties.sound;
 
+import properties.AbstractIntegerProp;
 import theory.harmony.Harmony;
 import theory.composite.Voicing;
 import io.Log;
@@ -9,11 +10,8 @@ import java.util.*;
 
 /**
  * <p> <b>Class overview:</b>
- * The {@link Chord} class represents a specific set of sound classes. Note that every chord as a root note and a
- * series of factors above that root note. These might include a third, a fifth, a seventh, and so on. They might just
- * as well contain a second, a third, a fourth, and a fifth, forming a cluster. All that matters is that the order of
- * these IntervalClasses is preserved. Note that this is not a {@link Voicing}, as voicings involve
- * actual intervals- octaves and all, while chords simply refer to music theory-based relations.</p>
+ * Chords represent a root pitch class (such as C) and a chord type (such as major), with no suggestion as to voicing
+ * or even pitch. Their purpose is purely to represent what information the words "C major" might imply.</p>
  *
  * <p> <b>Design Details:</b>
  * This class is <i>immutable</i> and implements the <b>interning design pattern</b>- there is exactly one instance for
@@ -23,7 +21,7 @@ import java.util.*;
  *
  * @author Patrick Celentano
  */
-public class Chord implements ISound, Iterable<PitchClass> {
+public final class Chord extends AbstractIntegerProp implements ISound, Iterable<PitchClass> {
 
     //////////////////////////////
     // Static variables         //
@@ -31,9 +29,9 @@ public class Chord implements ISound, Iterable<PitchClass> {
 
     /** The total number of chord classes */
     public static final int TOTAL_NUM = ChordClass.TOTAL_NUM * PitchClass.TOTAL_NUM;
-
     /** A static array of all possible pitches, stored to implement the flyweight pattern */
     private static final Chord[] ALL;
+
     // Static initialization block
     static {
         // Keep track of the start time to know how long initialization takes
@@ -43,7 +41,8 @@ public class Chord implements ISound, Iterable<PitchClass> {
         ALL = new Chord[PitchClass.TOTAL_NUM * ChordClass.TOTAL_NUM];
         for(int pcVal = PitchClass.MIN_VALUE; pcVal <= PitchClass.MAX_VALUE; pcVal++) {
             for(int ccVal = 0; ccVal < ChordClass.TOTAL_NUM; ccVal++) {
-                ALL[(pcVal * ChordClass.TOTAL_NUM) + ccVal] = new Chord(PitchClass.get(pcVal), ChordClass.get(ccVal));
+                int chordVal = (pcVal * ChordClass.TOTAL_NUM) + ccVal;
+                ALL[chordVal] = new Chord(chordVal,PitchClass.get(pcVal), ChordClass.get(ccVal));
             }
         }
 
@@ -55,10 +54,15 @@ public class Chord implements ISound, Iterable<PitchClass> {
     // Static methods           //
     //////////////////////////////
 
+    /**
+     * Returns a chord with a given root (i.e. C) and chord type (i.e. major)
+     * @param root the root pitch class of this chord
+     * @param chordClass the type of chord
+     * @return a chord of this type with this root
+     */
     public static @NotNull Chord get(@NotNull PitchClass root, @NotNull ChordClass chordClass) {
         return ALL[(root.getValue() * ChordClass.TOTAL_NUM) + chordClass.getID()];
     }
-
     /**
      * Returns an immutable collection of all valid chords, useful for iteration or streams
      * @return an immutable collection of all valid chords
@@ -78,18 +82,30 @@ public class Chord implements ISound, Iterable<PitchClass> {
     // Member variables         //
     //////////////////////////////
 
-    /** Each position in this array represents the position of the factors in order from root through thirteenth. */
-    private ArrayList<PitchClass> factorsInOrder;
-    /** Harmonies are essentially just sets of sound classes and do not preserve factor order. */
-    private Harmony harmony;
+    /** The pitch class which this chord is built on top of. */
+    private final PitchClass root;
     /** Chord classes represent the types of intervals (interval classes) above the root sound class. */
-    private ChordClass chordClass;
+    private final ChordClass chordClass;
+    /** Each position in this array represents the position of the factors in order from root through thirteenth. */
+    private final ArrayList<PitchClass> factorsInOrder;
+    /** Harmonies are essentially just sets of sound classes and do not preserve factor order. */
+    private final Harmony harmony;
 
     //////////////////////////////
     // Member methods           //
     //////////////////////////////
 
-    protected Chord(@NotNull PitchClass root, @NotNull ChordClass chordClass) {
+    /**
+     * A private constructor for a Chord which takes in a "chordVal" (its place in the ALL array), root, and chord type
+     * @param chordVal a special value used for looking up this chord in the ALL array
+     * @param root the root pitch class of this chord
+     * @param chordClass the type of this chord
+     */
+    private Chord(int chordVal, @NotNull PitchClass root, @NotNull ChordClass chordClass) {
+        super(chordVal);
+        this.root = root;
+        this.chordClass = chordClass;
+
         this.factorsInOrder = new ArrayList<>();
         // For every interval in the ChordClass (which holds all intervals above the root, add a chord factor that is
         // also that high above the root. Note that ninths become seconds,m as to interval classes wrap at the octave
@@ -97,22 +113,49 @@ public class Chord implements ISound, Iterable<PitchClass> {
             factorsInOrder.add(root.transpose(intervalClass));
         }
         this.harmony = Harmony.get(factorsInOrder);
-        this.chordClass = chordClass;
     }
-    public @NotNull ChordClass getChordClass() {
+    /**
+     * A getter for the root pitch class of this chord
+     * @return the root pitch class of this chord
+     */
+    public final @NotNull PitchClass getRoot() {
+        return root;
+    }
+    /**
+     * A getter for the type of this chord (major/minor/augmented/diminished...)
+     * @return the type of this chord
+     */
+    public final @NotNull ChordClass getChordClass() {
         return chordClass;
     }
-    public @NotNull Harmony getHarmony() {
+    /**
+     * Getter for this chord's implicit harmony
+     * @return the harmony implicit in this chord
+     */
+    public final @NotNull Harmony getHarmony() {
         return harmony;
     }
-
-
+    /**
+     * Returns a string representation of this class
+     * @return a string representing this Chord
+     */
     @Override
-    public @NotNull String toString() {
-        return ""; // TODO: return factorsInOrder.get(0).toString() + " " + chordClass.toString();
+    public final @NotNull String toString() {
+        return root.toString() + " " + chordClass.toString();
     }
+
+
+
+
+
+
+
+    /**
+     *
+     * @return
+     */
     @Override
-    public @NotNull Iterator<PitchClass> iterator() {
+    public final @NotNull Iterator<PitchClass> iterator() {
         return factorsInOrder.iterator();
     }
 }

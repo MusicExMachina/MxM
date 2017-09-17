@@ -2,8 +2,8 @@ import properties.sound.Chord;
 import properties.sound.Pitch;
 import properties.time.Tempo;
 import properties.time.Time;
-import form.scoreTypes.LeadSheet;
-import form.timelines.Line;
+import form.score.LeadSheet;
+import form.part.Line;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,7 +47,7 @@ public class Test {
                 .add(Chord.get(C_NATURAL,DOM_SEVENTH),  Time.get(1,2))
                 .add(Chord.get(C_NATURAL,MAJOR),        Time.get(1));
         // ========================================================================================================= //
-        leadSheet.getTimeSigChanges().forEach(tsc -> LOGGER.log(Level.FINE,tsc.getTimeSig().toString()));
+        leadSheet.timeSigChanges().forEach(tsc -> LOGGER.log(Level.FINE,tsc.getTimeSig().toString()));
         leadSheet.getTempoChanges().forEach(tc -> LOGGER.log(Level.FINE,tc.getTempo().toString()));
         // ========================================================================================================= //
         tune.forEach(note -> LOGGER.log(Level.FINE,note.getSound().toString()));

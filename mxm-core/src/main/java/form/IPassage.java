@@ -1,8 +1,7 @@
 package form;
 
-import properties.sound.Chord;
-import properties.sound.Noise;
-import properties.sound.Pitch;
+import form.timeline.ISerialTimeline;
+import properties.sound.*;
 import properties.time.ITime;
 import events.sound.Note;
 import properties.time.Tempo;
@@ -10,33 +9,93 @@ import properties.time.TimeSig;
 import events.time.TempoChange;
 import events.time.TimeSigChange;
 import org.jetbrains.annotations.NotNull;
+import theory.composite.Sonority;
+import theory.composite.Timbre;
+import theory.harmony.Harmony;
 
-import java.util.Iterator;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
- * Line is an interface representing any collection of notes that may be iterated over, regardless of who plays them.
- * For instance, both a TraditionalScore and a AbstractPart are implementations of Passages- even though they represent different subsets
- * of a whole piece.
+ *
  */
 public interface IPassage {
-
     // Getters for iterators over events during a specific time
-    @NotNull Iterator<Note> noteItrAt(ITime time);                    // All notes
-    @NotNull Iterator<Note<Pitch>> pitchedNoteItrAt(ITime time);      // All pitched notes
-    @NotNull Iterator<Note<Noise>> unpitchedNoteItrAt(ITime time);    // All unpitched notes
-    @NotNull Iterator<Note<Chord>> chordNoteItrAt(ITime time);        // All chord notes
+
+    /**
+     *
+     * @param time
+     * @return
+     */
+    @NotNull Collection<Note> getNotesAt(@NotNull ITime time);
+    /**
+     * Returns the sonority at this point in the passage
+     * @param time the time at which to sample the passage
+     * @return the sonority at this point in the passage
+     */
+    default @NotNull Sonority getSonorityAt(@NotNull ITime time) {
+        HashSet<Pitch> pitches = new HashSet<>();
+        for(Note note : getNotesAt(time)) {
+            ISound sound = note.getSound();
+            if(sound instanceof Pitch) {
+                pitches.add((Pitch)sound);
+            }
+        }
+        return Sonority.get(pitches);
+    }
+    /**
+     * Returns the harmony at this point in the passage
+     * @param time the time at which to sample the passage
+     * @return the harmony at this point in the passage
+     */
+    default @NotNull Harmony getHarmonyAt(@NotNull ITime time) {
+        HashSet<PitchClass> pitchClasses = new HashSet<>();
+        for(Note note : getNotesAt(time)) {
+            ISound sound = note.getSound();
+            if(sound instanceof Pitch) {
+                pitchClasses.add(((Pitch)sound).getPitchClass());
+            }
+        }
+        return Harmony.get(pitchClasses);
+    }
+    /**
+     * Returns the timbre at this point in the passage
+     * @param time the time at which to sample the passage
+     * @return the timbre at this point in the passage
+     */
+    default @NotNull Timbre getTimbreAt(@NotNull ITime time) {
+        HashSet<Noise> noises = new HashSet<>();
+        for(Note note : getNotesAt(time)) {
+            ISound sound = note.getSound();
+            if(sound instanceof Noise) {
+                noises.add((Noise)sound);
+            }
+        }
+        return Timbre.get(noises);
+    }
 
     // Getters for events during a specific time
-    @NotNull Tempo getTempoAt(ITime time);            // Tempo at a time
-    @NotNull TimeSig getTimeSigAt(ITime time);        // Time Signature at a time
 
-    // Iterators over specific event types
-    @NotNull ISerialTimeline<TimeSigChange> getTimeSigChanges();      // All time signature changes
-    @NotNull ISerialTimeline<TempoChange> getTempoChanges();          // All tempo changes
-
-    /*
-    @NotNull Harmony getHarmonyAt(Time time);        // Harmony at a time
-    @NotNull Sonority getSonorityAt(Time time);      // Sonority at a time
-    @NotNull Timbre getTimbreAt(Time time);          // Timbre at a time
-    */
+    /**
+     *
+     * @param time
+     * @return
+     */
+    @NotNull Tempo getTempoAt(ITime time);
+    /**
+     *
+     * @param time
+     * @return
+     */
+    @NotNull TimeSig getTimeSigAt(ITime time);
+    /**
+     *
+     * @return
+     */
+    @NotNull ISerialTimeline<TimeSigChange> timeSigChanges();
+    /**
+     *
+     * @return
+     */
+    @NotNull ISerialTimeline<TempoChange> tempoChanges();
 }

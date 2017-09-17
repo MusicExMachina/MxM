@@ -2,8 +2,8 @@ package properties;
 
 /**
  * <p> <b>Class overview:</b>
- * This class wraps a basic property: an integer for use in classes like {@link properties.time.Tempo} or even
- * {@link properties.sound.Pitch}.</p>
+ * This class wraps a basic property: an fraction which must always be reduced for use in classes like
+ * {@link properties.time.Beat} or  {@link properties.time.Time}.</p>
  *
  * <p> <b>Design Details:</b>
  * This abstract class represents an underlying property, and provides basic variables and methods for all derived
