@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class Time implements Comparable<Time> {
 
+    public static final ITime ZERO = Time.get(0);
+
     //////////////////////////////
     // Static variables         //
     //////////////////////////////

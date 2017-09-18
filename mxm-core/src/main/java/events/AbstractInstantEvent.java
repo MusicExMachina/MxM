@@ -11,5 +11,5 @@ public abstract class AbstractInstantEvent implements IMusicEvent {
 
     // GETTERS
     @Override
-    public final ITime getTiming() { return time; }
+    public final ITime getTime() { return time; }
 }

@@ -47,11 +47,11 @@ public class Test {
                 .add(Chord.get(C_NATURAL,DOM_SEVENTH),  Time.get(1,2))
                 .add(Chord.get(C_NATURAL,MAJOR),        Time.get(1));
         // ========================================================================================================= //
-        leadSheet.timeSigChanges().forEach(tsc -> LOGGER.log(Level.FINE,tsc.getTimeSig().toString()));
+        leadSheet.getTimeSigChanges().forEach(tsc -> LOGGER.log(Level.FINE,tsc.getTimeSig().toString()));
         leadSheet.getTempoChanges().forEach(tc -> LOGGER.log(Level.FINE,tc.getTempo().toString()));
         // ========================================================================================================= //
-        tune.forEach(note -> LOGGER.log(Level.FINE,note.getSound().toString()));
-        changes.forEach(note -> LOGGER.log(Level.INFO,note.getSound().toString()));
+        tune.getNotes().forEach(note -> LOGGER.log(Level.FINE,note.getSound().toString()));
+        changes.getNotes().forEach(note -> LOGGER.log(Level.INFO,note.getSound().toString()));
         // ========================================================================================================= //
     }
 }

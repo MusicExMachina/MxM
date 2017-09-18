@@ -1,6 +1,7 @@
 package form;
 
-import form.timeline.ISerialTimeline;
+import form.timeline.IFrame;
+import org.jetbrains.annotations.Nullable;
 import properties.sound.*;
 import properties.time.ITime;
 import events.sound.Note;
@@ -13,6 +14,7 @@ import theory.composite.Sonority;
 import theory.composite.Timbre;
 import theory.harmony.Harmony;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -22,17 +24,7 @@ import java.util.HashSet;
 public interface IPassage {
     // Getters for iterators over events during a specific time
 
-    /**
-     *
-     * @param time
-     * @return
-     */
-    @NotNull Collection<Note> getNotesAt(@NotNull ITime time);
-    /**
-     * Returns the sonority at this point in the passage
-     * @param time the time at which to sample the passage
-     * @return the sonority at this point in the passage
-     */
+    /*
     default @NotNull Sonority getSonorityAt(@NotNull ITime time) {
         HashSet<Pitch> pitches = new HashSet<>();
         for(Note note : getNotesAt(time)) {
@@ -43,11 +35,6 @@ public interface IPassage {
         }
         return Sonority.get(pitches);
     }
-    /**
-     * Returns the harmony at this point in the passage
-     * @param time the time at which to sample the passage
-     * @return the harmony at this point in the passage
-     */
     default @NotNull Harmony getHarmonyAt(@NotNull ITime time) {
         HashSet<PitchClass> pitchClasses = new HashSet<>();
         for(Note note : getNotesAt(time)) {
@@ -58,11 +45,6 @@ public interface IPassage {
         }
         return Harmony.get(pitchClasses);
     }
-    /**
-     * Returns the timbre at this point in the passage
-     * @param time the time at which to sample the passage
-     * @return the timbre at this point in the passage
-     */
     default @NotNull Timbre getTimbreAt(@NotNull ITime time) {
         HashSet<Noise> noises = new HashSet<>();
         for(Note note : getNotesAt(time)) {
@@ -73,29 +55,35 @@ public interface IPassage {
         }
         return Timbre.get(noises);
     }
-
+    */
     // Getters for events during a specific time
 
-    /**
-     *
-     * @param time
-     * @return
-     */
-    @NotNull Tempo getTempoAt(ITime time);
-    /**
-     *
-     * @param time
-     * @return
-     */
-    @NotNull TimeSig getTimeSigAt(ITime time);
-    /**
-     *
-     * @return
-     */
-    @NotNull ISerialTimeline<TimeSigChange> timeSigChanges();
-    /**
-     *
-     * @return
-     */
-    @NotNull ISerialTimeline<TempoChange> tempoChanges();
+    default @Nullable Tempo getTempoAt(@NotNull ITime time) {
+        TempoChange tempoChange = getTempoChanges().getBefore(time);
+        if (tempoChange != null) {
+            return tempoChange.getTempo();
+        }
+        return null;
+    }
+    default @Nullable TimeSig getTimeSigAt(@NotNull ITime time) {
+        TimeSigChange timeSigChange = getTimeSigChanges().getBefore(time);
+        if(timeSigChange != null) {
+            return timeSigChange.getTimeSig();
+        }
+        return null;
+    }
+    /*
+    default @NotNull Collection<Note> getNotesAt(@NotNull ITime time) {
+        IFrame<Note> frame = getNotes().getBefore(time);
+        if(frame != null) {
+            return getNotes().getAt(time).ongoingEvents();
+        }
+        // Return a trivial collection
+        return new ArrayList<>();
+    }
+
+    @NotNull ITimeline<IFrame<Note>> getNotes();
+    */
+    @NotNull ITimeline<TimeSigChange> getTimeSigChanges();
+    @NotNull ITimeline<TempoChange> getTempoChanges();
 }

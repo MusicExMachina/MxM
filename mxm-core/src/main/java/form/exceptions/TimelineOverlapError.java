@@ -6,11 +6,11 @@ package form.exceptions;
  *
  * @author Patrick Celentano
  */
-public class SerialTimelineOverlapException extends Exception {
+public class TimelineOverlapError extends Error {
     /**
      * A basic constructor, that uses {@link Exception}'s
      */
-    public SerialTimelineOverlapException() {
+    public TimelineOverlapError() {
         super("Cannot add one event on top of another in a Serial Timeline!\"");
     }
 }

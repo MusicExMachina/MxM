@@ -1,7 +1,8 @@
 package form.part;
 
-import form.AbstractPart;
-import form.AbstractScore;
+import form.ITimeline;
+import form.exceptions.TimelineOverlapError;
+import form.score.AbstractScore;
 import form.timeline.SerialTimeline;
 import properties.sound.ISound;
 import properties.note.Instrument;
@@ -10,13 +11,11 @@ import properties.time.Time;
 import org.jetbrains.annotations.NotNull;
 import events.sound.Note;
 
-import java.util.Iterator;
-
 /**
  * The
  * @param <SoundType> s
  */
-public class Line<SoundType extends ISound> extends AbstractPart<SoundType> implements Iterable<Note<SoundType>> {
+public class Line<SoundType extends ISound> extends AbstractPart<SoundType> {
 
     /** All of the notes in this line, which may not overlap */
     private final SerialTimeline<Note<SoundType>> notes;
@@ -37,9 +36,8 @@ public class Line<SoundType extends ISound> extends AbstractPart<SoundType> impl
     // Line Adders //
     /////////////////
 
-    // Adds a note
     public @NotNull Line<SoundType> add(@NotNull SoundType sound, @NotNull ITime length) {
-        notes.addEvent(new Note<>(this, sound, writeHead, writeHead.plus(length)));
+        notes.add(new Note<>(this, sound, writeHead, writeHead.plus(length)));
         writeHead = writeHead.plus(length);
         return this;
     }
@@ -49,10 +47,7 @@ public class Line<SoundType extends ISound> extends AbstractPart<SoundType> impl
         return this;
     }
 
-    //////////////
-    // Iterator //
-    //////////////
-
-    @Override
-    public Iterator<Note<SoundType>> iterator() { return notes.iterator(); }
+    public @NotNull ITimeline<Note<SoundType>> getNotes() {
+        return notes;
+    }
 }
