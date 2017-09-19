@@ -15,7 +15,7 @@ allprojects {
         // Make sure annotations like @NotNull are supported
         compile 'org.jetbrains:annotations:15.0'
         // For Py4J (python use of Java classes)
-        compile group: 'net.sf.py4j', name: 'py4j', version: '0.10.4'
+        //compile group: 'net.sf.py4j', name: 'py4j', version: '0.10.4'
         // Allows Python to be built in
           // python 'pypi:requests:2.5.1'
           // test 'pypi:mock:1.0.1'
