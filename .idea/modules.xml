@@ -3,12 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-analysis/mxm-analysis.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-analysis/mxm-analysis.iml" group="mxm-analysis" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-analysis/mxm-analysis_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-analysis/mxm-analysis_main.iml" group="mxm-analysis" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-analysis/mxm-analysis_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-analysis/mxm-analysis_test.iml" group="mxm-analysis" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-core/mxm-core.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-core/mxm-core.iml" group="mxm-core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-core/mxm-core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-core/mxm-core_main.iml" group="mxm-core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-core/mxm-core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-core/mxm-core_test.iml" group="mxm-core" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-learning/mxm-learning.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-learning/mxm-learning.iml" group="mxm-learning" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-learning/mxm-learning_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-learning/mxm-learning_main.iml" group="mxm-learning" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-learning/mxm-learning_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-learning/mxm-learning_test.iml" group="mxm-learning" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-lilypond/mxm-lilypond.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-lilypond/mxm-lilypond.iml" group="mxm-lilypond" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-lilypond/mxm-lilypond_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-lilypond/mxm-lilypond_main.iml" group="mxm-lilypond" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-lilypond/mxm-lilypond_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-lilypond/mxm-lilypond_test.iml" group="mxm-lilypond" />
@@ -18,8 +18,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python.iml" group="mxm-python" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python_main.iml" group="mxm-python" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python_test.iml" group="mxm-python" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm_main.iml" group="mxm" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm_test.iml" group="mxm" />
     </modules>
   </component>
 </project>

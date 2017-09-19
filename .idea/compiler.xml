@@ -4,8 +4,8 @@
     <bytecodeTargetLevel>
       <module name="mxm-core_main" target="1.8" />
       <module name="mxm-core_test" target="1.8" />
-      <module name="mxm-learning_main" target="1.8" />
-      <module name="mxm-learning_test" target="1.8" />
+      <module name="mxm-analysis_main" target="1.8" />
+      <module name="mxm-analysis_test" target="1.8" />
       <module name="mxm-lilypond_main" target="1.8" />
       <module name="mxm-lilypond_test" target="1.8" />
       <module name="mxm-midi_main" target="1.8" />
