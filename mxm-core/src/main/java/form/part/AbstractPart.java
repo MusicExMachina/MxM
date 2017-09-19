@@ -1,6 +1,5 @@
 package form.part;
 
-import form.ITimeline;
 import form.score.AbstractScore;
 import form.score.IScore;
 import properties.note.Instrument;
@@ -8,16 +7,7 @@ import properties.sound.Chord;
 import properties.sound.ISound;
 import properties.sound.Noise;
 import properties.sound.Pitch;
-import properties.time.ITime;
-import properties.time.Tempo;
-import properties.time.TimeSig;
 import org.jetbrains.annotations.NotNull;
-import events.sound.Note;
-import events.time.TempoChange;
-import events.time.TimeSigChange;
-
-import java.util.Arrays;
-import java.util.Collection;
 
 /**
  * ASDF
@@ -32,7 +22,7 @@ public abstract class AbstractPart <SoundType extends ISound> implements IPart {
     //////////////////////////////
 
     /** The score to which this part belongs */
-    private final AbstractScore score;
+    private final IScore score;
     /** The instrument playing this part */
     private final Instrument instrument;
 
@@ -40,7 +30,7 @@ public abstract class AbstractPart <SoundType extends ISound> implements IPart {
     // Member methods           //
     //////////////////////////////
 
-    protected AbstractPart(@NotNull AbstractScore score, @NotNull Instrument instrument) {
+    protected AbstractPart(@NotNull IScore score, @NotNull Instrument instrument) {
         this.score = score;
         this.instrument = instrument;
     }

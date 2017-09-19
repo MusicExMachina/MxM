@@ -2,7 +2,6 @@ package form.timeline;
 
 import events.AbstractInstantEvent;
 import events.AbstractSpanningEvent;
-import form.ITimeline;
 import properties.time.ITime;
 import events.IMusicEvent;
 import org.jetbrains.annotations.NotNull;

@@ -1,5 +1,6 @@
-package form;
+package form.timeline;
 
+import form.ITimed;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import properties.time.ITime;

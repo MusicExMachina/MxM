@@ -1,9 +1,7 @@
 package form.timeline;
 
-import form.ITimeline;
 import properties.time.ITime;
 import events.IMusicEvent;
-import form.exceptions.TimelineOverlapError;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,11 +30,11 @@ public final class SerialTimeline <MusicEventType extends IMusicEvent> implement
 
     // ADDER
     // Package private on purpose- we don't want users adding events, only score.
-    public void add(MusicEventType event) throws TimelineOverlapError {
+    public void add(MusicEventType event) {
         if (events.get(event.getTime()) == null) {
             events.put(event.getTime(), event);
         } else {
-            throw new TimelineOverlapError();
+            throw new Error("Cannot add one event on top of another in a Serial Timeline!");
         }
     }
 
