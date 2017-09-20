@@ -1,10 +1,9 @@
 group 'com.musicexmachina'
 version '1.0-SNAPSHOT'
-
+/*
 plugins {
     id "com.linkedin.python-sdist" version "0.4.9"
 }
-
 dependencies {
     // We need MxM's core classes
     compile project(':mxm-core')
@@ -16,3 +15,4 @@ dependencies {
 repositories {
     pyGradlePyPi()
 }
+*/

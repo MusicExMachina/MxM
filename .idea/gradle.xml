@@ -10,8 +10,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/mxm-analysis" />
             <option value="$PROJECT_DIR$/mxm-core" />
-            <option value="$PROJECT_DIR$/mxm-learning" />
             <option value="$PROJECT_DIR$/mxm-lilypond" />
             <option value="$PROJECT_DIR$/mxm-midi" />
             <option value="$PROJECT_DIR$/mxm-python" />

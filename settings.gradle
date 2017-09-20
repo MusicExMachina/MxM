@@ -1,4 +1,3 @@
-rootProject.name = 'mxm'
 include 'mxm-core'
 include 'mxm-analysis'
 include 'mxm-lilypond'

@@ -2,6 +2,9 @@ group 'com.musicexmachina'
 version '1.0-SNAPSHOT'
 
 allprojects {
+    // The current version for all submodules
+    version = 0.1
+
     // Java language compilation
     apply plugin: 'java'
 
@@ -20,6 +23,29 @@ allprojects {
     javadoc {
         source = sourceSets.main.allJava
         classpath = configurations.compile
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+
+    sourceCompatibility = 1.8 // java 8
+    targetCompatibility = 1.8
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
     }
 }
 

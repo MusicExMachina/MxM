@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MxM.iml" filepath="$PROJECT_DIR$/.idea/modules/MxM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MxM_main.iml" filepath="$PROJECT_DIR$/.idea/modules/MxM_main.iml" group="MxM" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MxM_test.iml" filepath="$PROJECT_DIR$/.idea/modules/MxM_test.iml" group="MxM" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-analysis/mxm-analysis.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-analysis/mxm-analysis.iml" group="mxm-analysis" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-analysis/mxm-analysis_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-analysis/mxm-analysis_main.iml" group="mxm-analysis" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-analysis/mxm-analysis_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-analysis/mxm-analysis_test.iml" group="mxm-analysis" />
