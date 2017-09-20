@@ -2,10 +2,11 @@ group 'com.musicexmachina'
 version '1.0-SNAPSHOT'
 
 allprojects {
+    // The current version for all submodules
+    version = 0.1
+
     // Java language compilation
     apply plugin: 'java'
-    // Python language compilation
-    //apply plugin: 'com.linkedin.python-sdist'
 
     repositories {
         mavenCentral()
@@ -14,11 +15,6 @@ allprojects {
     dependencies {
         // Make sure annotations like @NotNull are supported
         compile 'org.jetbrains:annotations:15.0'
-        // For Py4J (python use of Java classes)
-        compile group: 'net.sf.py4j', name: 'py4j', version: '0.10.4'
-        // Allows Python to be built in
-          // python 'pypi:requests:2.5.1'
-          // test 'pypi:mock:1.0.1'
         // JUnit testing
         testCompile("org.junit.jupiter:junit-jupiter-api:5.0.0-RC3")
         testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.0-RC3")
@@ -27,6 +23,29 @@ allprojects {
     javadoc {
         source = sourceSets.main.allJava
         classpath = configurations.compile
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+
+    sourceCompatibility = 1.8 // java 8
+    targetCompatibility = 1.8
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
     }
 }
 
@@ -44,6 +63,7 @@ buildscript {
         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-RC3'
     }
 }
+
 
 // For Javadoc aggregation
 apply plugin: 'nebula-aggregate-javadocs'

@@ -4,7 +4,7 @@ import events.AbstractSpanningEvent;
 import events.IPartEvent;
 import properties.sound.ISound;
 import properties.time.ITime;
-import form.AbstractPart;
+import form.part.AbstractPart;
 import org.jetbrains.annotations.NotNull;
 import properties.note.Accent;
 import properties.note.Dynamic;

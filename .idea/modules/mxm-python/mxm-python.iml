@@ -7,7 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/../../../mxm-python/build" />
       <excludeFolder url="file://$MODULE_DIR$/../../../mxm-python/out" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 2.4.5 (C:\Program Files (x86)\LilyPond\usr\bin\python.exe)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
