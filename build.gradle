@@ -3,46 +3,54 @@ version '1.0-SNAPSHOT'
 
 allprojects {
     // The current version for all submodules
-    version = 0.1
+    version = '0.1.0'
 
     // Java language compilation
     apply plugin: 'java'
 
+    // Required for most plugins
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        // Make sure annotations like @NotNull are supported
+        // @NotNull, @Nullable, etc.
         compile 'org.jetbrains:annotations:15.0'
         // JUnit testing
         testCompile("org.junit.jupiter:junit-jupiter-api:5.0.0-RC3")
         testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.0-RC3")
 
     }
+
     javadoc {
         source = sourceSets.main.allJava
         classpath = configurations.compile
     }
+
+    // For JUnit testing
+    apply plugin: 'org.junit.platform.gradle.plugin'
 }
 
 subprojects {
+    // Both required by JitPack
     apply plugin: 'java'
     apply plugin: 'maven'
 
-    sourceCompatibility = 1.8 // java 8
+    // MxM is built for Java 1.8
+    sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
+    // Required by JitPack
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier = 'sources'
         from sourceSets.main.allSource
     }
-
+    // Required by JitPack
     task javadocJar(type: Jar, dependsOn: javadoc) {
         classifier = 'javadoc'
         from javadoc.destinationDir
     }
-
+    // Required by JitPack
     artifacts {
         archives sourcesJar
         archives javadocJar
@@ -64,8 +72,5 @@ buildscript {
     }
 }
 
-
 // For Javadoc aggregation
 apply plugin: 'nebula-aggregate-javadocs'
-// For JUnit testing
-apply plugin: 'org.junit.platform.gradle.plugin'
