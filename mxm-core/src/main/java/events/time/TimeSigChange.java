@@ -3,7 +3,7 @@ package events.time;
 import events.AbstractInstantEvent;
 import events.IScoreEvent;
 import properties.time.IMeasure;
-import form.AbstractScore;
+import form.score.AbstractScore;
 import org.jetbrains.annotations.NotNull;
 import properties.time.TimeSig;
 

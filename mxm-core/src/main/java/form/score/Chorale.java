@@ -1,6 +1,5 @@
 package form.score;
 
-import form.AbstractScore;
 import org.jetbrains.annotations.NotNull;
 
 import properties.note.Instrument;

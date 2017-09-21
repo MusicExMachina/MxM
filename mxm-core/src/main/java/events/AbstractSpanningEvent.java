@@ -17,7 +17,7 @@ public abstract class AbstractSpanningEvent implements IMusicEvent {
 
     // GETTERS
     @Override
-    public final ITime getTiming() { return startITime; }
+    public final ITime getTime() { return startITime; }
     public final ITime getStart() { return endITime; }
     public final ITime getDuration() { return duration; }
 }

@@ -1,17 +1,3 @@
-import com.sun.media.sound.StandardMidiFileReader;
-import form.IPassage;
-import io.Log;
-import org.jetbrains.annotations.NotNull;
-
-import javax.sound.midi.*;
-import javax.sound.midi.spi.MidiFileReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ArrayList;
-
 /*
 public abstract class MidiTools
 {
