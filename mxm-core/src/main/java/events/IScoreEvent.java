@@ -1,6 +1,6 @@
 package events;
 
-import form.AbstractScore;
+import form.score.AbstractScore;
 
 public interface IScoreEvent extends IMusicEvent {
     AbstractScore getScore();

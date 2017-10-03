@@ -1,5 +1,6 @@
-package form;
+package form.timeline;
 
+import form.ITimed;
 import properties.time.ITime;
 import events.IMusicEvent;
 import org.jetbrains.annotations.NotNull;
@@ -15,12 +16,7 @@ import java.util.Collection;
  *
  * @param <MusicEventType> the type of music event that may be found in this frame
  */
-public interface IFrame <MusicEventType extends IMusicEvent> {
-    /**
-     * Getter for the time at which this frame occurs
-     * @return the time at which this frame occurs
-     */
-    @NotNull ITime getTime();
+public interface IFrame <MusicEventType extends IMusicEvent> extends ITimed {
     /**
      * Gets a collection of all events which start exactly on this frame
      * @return a collection of all events which start exactly on this frame

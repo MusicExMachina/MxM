@@ -1,6 +1,5 @@
 package form.score;
 
-import form.AbstractScore;
 import properties.sound.Chord;
 import properties.sound.Pitch;
 import org.jetbrains.annotations.NotNull;
