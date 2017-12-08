@@ -41,8 +41,6 @@ learning_rate = 0.001
 training_iters = 50000
 display_step = 1000
 n_input = 3
-
-# number of units in RNN cell
 n_hidden = 512
 
 # tf Graph input
