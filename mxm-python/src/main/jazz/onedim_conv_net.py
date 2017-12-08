@@ -137,17 +137,17 @@ def evaluate(time_series, window_size):
 		time_series = time_series.T  # Convert 1D vectors to 2D column vectors
 
 	num_samples, num_series = time_series.shape
-	print('\n\nTimeseries ({} samples by {} series):\n'.format(num_samples, num_series), time_series)
+	print('\n\nPhrases ({} samples by {} series):\n'.format(num_samples, num_series), time_series)
 	model = make_regressor(wsize=window_size, filter_size=filter_length, num_input_series=num_series,
 	                       num_outputs=num_series, num_filt=num_filt)
-	print('\n\nModel with input size {}, output size {}, {} conv filters of length {}'.format(model.input_shape,
+	print('\n\nInput Size {}, Output Size {}, {} Conv Filter Size {}'.format(model.input_shape,
 	                                                                                          model.output_shape,
 	                                                                                          num_filt, filter_length))
 	model.summary()
 
 	X, y, q = make_instances(time_series, window_size)
 	print('\n\nInput features:', X, '\n\nOutput labels:', y, '\n\nQuery vector:', q, sep='\n')
-	test_size = int(0.01 * num_samples)  # In real life you'd want to use 0.2 - 0.5
+	test_size = int(0.01 * num_samples)
 	train_xs, test_xs, train_ys, test_ys = X[:-test_size], X[-test_size:], y[:-test_size], y[-test_size:]
 	model.fit(train_xs, train_ys, nb_epoch=25, batch_size=2, validation_data=(test_xs, test_ys))
 
@@ -159,7 +159,6 @@ def evaluate(time_series, window_size):
 
 
 def main():
-	"""Prepare input data, build model, evaluate."""
 	np.set_printoptions(threshold=25)
 	ts_length = 1000
 	window_size = 50
