@@ -2,7 +2,6 @@ package events;
 
 import form.ITimed;
 import org.jetbrains.annotations.NotNull;
-import properties.time.ITime;
 
 // An event can be in multiple frames, but only one score
 public interface IMusicEvent extends ITimed {

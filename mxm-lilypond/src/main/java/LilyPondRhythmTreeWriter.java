@@ -49,7 +49,7 @@ public class LilyPondRhythmTreeWriter extends IFileWriter<RhythmTree> {
     public static String getRhythmTreeString(RhythmTree rhythmTree, String treeName){
         return "\\score { \n" +
                 "\t\\new Staff {\n" +
-                "\t\t"+getNoteString(rhythmTree.getRoot(),0, TimeSig.get(4,4)) + "\n" +
+                "\t\t"+getNoteString(rhythmTree.getRoot(),0, TimeSig.of(4,4)) + "\n" +
                 "\t}\n" +
                 "\t\\header {\n" +
                 "\t\tpiece = \"" + treeName + "\"\n" +

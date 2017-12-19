@@ -236,7 +236,7 @@ lowerVoice = {
   d2. <a'\4 d>8. a'16 | %5b
   <a'-3 cis'-1>2. <a' cis'>8. <a'\4>16 | %6b
   <a'\4 d>2 <bes' g-3> | %7b
-  <a' c'>2 <g'-2 c'-1\4>4 <c''-2 c'-1> | %8b %Alier had d' instead of c' in 2nd chord
+  <a' c'>2 <g'-2 c'-1\4>4 <c''-2 c'-1> | %8b %Alier had d' instead of c' in 2nd sound
   <f' f>2 f | %9b
   f2. <aes' f'>8. aes'16 | %10b
   ees'2 s2 | %11b

@@ -1,23 +1,24 @@
 package events;
 
 
-import properties.time.ITime;
+import time.Duration;
+import time.Time;
 
 public abstract class AbstractSpanningEvent implements IMusicEvent {
-    private final ITime startITime;
-    private final ITime endITime;
-    private final ITime duration;
+    private final Time startITime;
+    private final Time endITime;
+    private final Duration duration;
 
     // GETTERS
-    protected AbstractSpanningEvent(ITime startITime, ITime endITime) {
+    protected AbstractSpanningEvent(Time startITime, Time endITime) {
         this.startITime = startITime;
         this.endITime = endITime;
-        this.duration = endITime.minus(endITime);
+        this.duration = endITime.minus(startITime);
     }
 
     // GETTERS
     @Override
-    public final ITime getTime() { return startITime; }
-    public final ITime getStart() { return endITime; }
-    public final ITime getDuration() { return duration; }
+    public final Time getTime() { return startITime; }
+    public final Time getStart() { return endITime; }
+    public final Duration getDuration() { return duration; }
 }

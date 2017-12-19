@@ -1,12 +1,10 @@
-import properties.sound.*;
-import theory.harmony.Harmony;
 
-import static properties.sound.PitchClass.*;
+import static sound.PitchClass.*;
 
 public class OtherOtherTest {
     public static void main(String[] args) {
-        Harmony h = Harmony.get(C_NATURAL,E_NATURAL,G_NATURAL);
-        System.out.println(h);
+        // Harmony h = Harmony.of(C_NATURAL,E_NATURAL,G_NATURAL);
+        // System.out.println(h);
 
         /*
         // SERIAL

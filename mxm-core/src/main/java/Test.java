@@ -1,15 +1,16 @@
-import properties.sound.Chord;
-import properties.sound.Pitch;
-import properties.time.Tempo;
-import properties.time.Time;
-import form.score.LeadSheet;
-import form.part.Line;
+import sound.Chord;
+import sound.Pitch;
+import time.Duration;
+import time.Tempo;
+import time.Time;
+import form.LeadSheet;
+import form.Line;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static properties.sound.ChordClass.*;
-import static properties.sound.PitchClass.*;
+import static sound.ChordClass.*;
+import static sound.PitchClass.*;
 
 public class Test {
     private static final Logger LOGGER = Logger.getLogger( Test.class.getSimpleName() );
@@ -26,26 +27,26 @@ public class Test {
         Line<Pitch> tune = leadSheet.getTune();
         Line<Chord> changes = leadSheet.getChanges();
         // ========================================================================================================= //
-        leadSheet.add(Tempo.get(120),Time.get(0));
-        leadSheet.add(Tempo.get(100),Time.get(10));
-        leadSheet.add(Tempo.get(120),Time.get(32));
+        leadSheet.add(Tempo.of(120), Time.of(0));
+        leadSheet.add(Tempo.of(100), Time.of(10));
+        leadSheet.add(Tempo.of(120), Time.of(32));
         // ========================================================================================================= //
         System.out.println("Creating tune");
-        tune.add(Pitch.get(C_NATURAL,4),        Time.get(1,4))
-                .add(Pitch.get(D_NATURAL,4),    Time.get(1,4))
-                .add(Pitch.get(E_NATURAL,4),    Time.get(1,4))
-                .add(Pitch.get(F_NATURAL,4),    Time.get(1,4))
-                .add(Pitch.get(G_NATURAL,4),    Time.get(1,4))
-                .add(Pitch.get(A_NATURAL,4),    Time.get(1,4))
-                .add(Pitch.get(B_NATURAL,4),    Time.get(1,4))
-                .add(Pitch.get(C_NATURAL,5),    Time.get(1,4));
+        tune.add(Pitch.get(C_NATURAL,4),        Duration.of(1,4))
+                .add(Pitch.get(D_NATURAL,4),    Duration.of(1,4))
+                .add(Pitch.get(E_NATURAL,4),    Duration.of(1,4))
+                .add(Pitch.get(F_NATURAL,4),    Duration.of(1,4))
+                .add(Pitch.get(G_NATURAL,4),    Duration.of(1,4))
+                .add(Pitch.get(A_NATURAL,4),    Duration.of(1,4))
+                .add(Pitch.get(B_NATURAL,4),    Duration.of(1,4))
+                .add(Pitch.get(C_NATURAL,5),    Duration.of(1,4));
         // ========================================================================================================= //
         System.out.println("Creating changes");
-        changes.add(Chord.get(C_NATURAL,MAJOR),         Time.get(1,2))
-                .add(Chord.get(D_NATURAL,MINOR),        Time.get(1,2))
-                .add(Chord.get(G_NATURAL,MAJOR),        Time.get(1,2))
-                .add(Chord.get(C_NATURAL,DOM_SEVENTH),  Time.get(1,2))
-                .add(Chord.get(C_NATURAL,MAJOR),        Time.get(1));
+        changes.add(Chord.get(C_NATURAL,MAJOR),         Duration.of(1,2))
+                .add(Chord.get(D_NATURAL,MINOR),        Duration.of(1,2))
+                .add(Chord.get(G_NATURAL,MAJOR),        Duration.of(1,2))
+                .add(Chord.get(C_NATURAL,DOM_SEVENTH),  Duration.of(1,2))
+                .add(Chord.get(C_NATURAL,MAJOR),        Duration.of(1));
         // ========================================================================================================= //
         leadSheet.getTimeSigChanges().forEach(tsc -> LOGGER.log(Level.FINE,tsc.getTimeSig().toString()));
         leadSheet.getTempoChanges().forEach(tc -> LOGGER.log(Level.FINE,tc.getTempo().toString()));

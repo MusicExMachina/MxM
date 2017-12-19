@@ -14,9 +14,9 @@ public class MidiTest {
         String pathStr = "src/tests/resources/";
 
         // Get the path to the resource we want
-        Path curPath = Paths.get("").toAbsolutePath();
+        Path curPath = Paths.of("").toAbsolutePath();
         String curPathStr = curPath.toString();
-        Path path = Paths.get(curPathStr, pathStr);
+        Path path = Paths.of(curPathStr, pathStr);
         Charset charset = Charset.forName("UTF-8");
 
         // Get the resources folder
@@ -45,9 +45,9 @@ public class MidiTest {
         String pathStr = "src/tests/resources/";
 
         // Get the path to the resource we want
-        Path curPath = Paths.get("").toAbsolutePath();
+        Path curPath = Paths.of("").toAbsolutePath();
         String curPathStr = curPath.toString();
-        Path path = Paths.get(curPathStr, pathStr);
+        Path path = Paths.of(curPathStr, pathStr);
         Charset charset = Charset.forName("UTF-8");
 
         // Get the resources folder
@@ -83,9 +83,9 @@ public class MidiTest {
         String filename = "src/tests/resources/url_sources.txt";
 
         // Get the path to the resource we want
-        Path curPath = Paths.get("").toAbsolutePath();
+        Path curPath = Paths.of("").toAbsolutePath();
         String curPathStr = curPath.toString();
-        Path path = Paths.get(curPathStr, filename);
+        Path path = Paths.of(curPathStr, filename);
         Charset charset = Charset.forName("UTF-8");
 
         // Read each line in the sources file
@@ -111,9 +111,9 @@ public class MidiTest {
         String filename = "src/tests/resources/url_sources.txt";
 
         // Get the path to the resource we want
-        Path curPath = Paths.get("").toAbsolutePath();
+        Path curPath = Paths.of("").toAbsolutePath();
         String curPathStr = curPath.toString();
-        Path path = Paths.get(curPathStr, filename);
+        Path path = Paths.of(curPathStr, filename);
         Charset charset = Charset.forName("UTF-8");
 
         // Read each line in the sources file
@@ -138,9 +138,9 @@ public class MidiTest {
         String pathStr = "src/tests/resources/";
 
         // Get the path to the resource we want
-        Path curPath = Paths.get("").toAbsolutePath();
+        Path curPath = Paths.of("").toAbsolutePath();
         String curPathStr = curPath.toString();
-        Path path = Paths.get(curPathStr, pathStr);
+        Path path = Paths.of(curPathStr, pathStr);
         Charset charset = Charset.forName("UTF-8");
 
         // Get the resources folder
@@ -162,9 +162,9 @@ public class MidiTest {
         String pathStr = "src/tests/resources/";
 
         // Get the path to the resource we want
-        Path curPath = Paths.get("").toAbsolutePath();
+        Path curPath = Paths.of("").toAbsolutePath();
         String curPathStr = curPath.toString();
-        Path path = Paths.get(curPathStr, pathStr);
+        Path path = Paths.of(curPathStr, pathStr);
         Charset charset = Charset.forName("UTF-8");
 
         // Get the resources folder
