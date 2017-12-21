@@ -1,3 +1,5 @@
+package general;
+
 import sound.Chord;
 import sound.pitch.Pitch;
 import time.Duration;

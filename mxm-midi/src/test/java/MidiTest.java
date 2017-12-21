@@ -9,7 +9,7 @@ import java.util.List;
 /*
 public class MidiTest {
 
-    @Test
+    @general.Test
     public void sequentialLoadTest() {
         String pathStr = "src/tests/resources/";
 
@@ -40,7 +40,7 @@ public class MidiTest {
             }
         }
     }
-    @Test
+    @general.Test
     public void concurrentLoadTest() {
         String pathStr = "src/tests/resources/";
 
@@ -76,7 +76,7 @@ public class MidiTest {
             System.err.println(e);
         }
     }
-    @Test
+    @general.Test
     public void sequentialDownloadTest() {
 
         // The file that holds all the urls we're going to download from
@@ -104,7 +104,7 @@ public class MidiTest {
             System.err.println(e);
         }
     }
-    @Test
+    @general.Test
     public void concurrentDownloadTest() {
 
         // The file that holds all the urls we're going to download from
@@ -133,7 +133,7 @@ public class MidiTest {
             System.err.println(e);
         }
     }
-    @Test
+    @general.Test
     public void playTest() {
         String pathStr = "src/tests/resources/";
 
@@ -157,7 +157,7 @@ public class MidiTest {
             e.printStackTrace();
         }
     }
-    @Test
+    @general.Test
     public void parseTest() {
         String pathStr = "src/tests/resources/";
 
