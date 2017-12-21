@@ -1,14 +1,12 @@
-package sound;
+package sound.pitched;
 
 import util.io.Log;
 import org.jetbrains.annotations.NotNull;
-import sound.pitch.IntervalClass;
-import sound.pitch.PitchClass;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static sound.pitch.IntervalClass.*;
+import static sound.pitched.IntervalClass.*;
 
 /**
  * <p> <b>Class overview:</b>

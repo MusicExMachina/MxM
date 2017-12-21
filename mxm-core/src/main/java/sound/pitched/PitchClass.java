@@ -1,4 +1,4 @@
-package sound.pitch;
+package sound.pitched;
 
 import util.io.Log;
 import org.jetbrains.annotations.NotNull;
@@ -43,7 +43,7 @@ public final class PitchClass {
     }
     /**
      * Returns a random instance of this class
-     * @return a random valid sound.pitch class
+     * @return a random valid sound.pitched class
      */
     public static @NotNull PitchClass random() {
         return get(ThreadLocalRandom.current().nextInt(MIN_VALUE, MAX_VALUE + 1));

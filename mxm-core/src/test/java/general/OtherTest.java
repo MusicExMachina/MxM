@@ -1,6 +1,6 @@
 package general;
 
-import sound.pitch.Pitch;
+import sound.pitched.Pitch;
 
 import java.util.ArrayList;
 import java.util.List;

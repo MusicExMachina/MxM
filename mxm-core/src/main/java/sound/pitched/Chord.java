@@ -1,9 +1,8 @@
-package sound;
+package sound.pitched;
 
+import sound.ISound;
 import util.io.Log;
 import org.jetbrains.annotations.NotNull;
-import sound.pitch.IntervalClass;
-import sound.pitch.PitchClass;
 
 import java.util.*;
 

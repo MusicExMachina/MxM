@@ -1,4 +1,4 @@
-package util;
+package util.timeline;
 
 import form.events.InstantEvent;
 import form.events.SpanningEvent;

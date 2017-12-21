@@ -1,7 +1,7 @@
 package form.passage;
 
-import sound.Chord;
-import sound.pitch.Pitch;
+import sound.pitched.Chord;
+import sound.pitched.Pitch;
 import org.jetbrains.annotations.NotNull;
 
 import sound.attributes.Instrument;

@@ -3,7 +3,7 @@ package form;
 import form.events.IEvent;
 import org.jetbrains.annotations.NotNull;
 import time.Time;
-import util.Frame;
+import util.timeline.Frame;
 
 /**
  * <p> <b>Interface Overview:</b>

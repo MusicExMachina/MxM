@@ -1,7 +1,7 @@
 package general;
 
-import sound.Chord;
-import sound.pitch.Pitch;
+import sound.pitched.Chord;
+import sound.pitched.Pitch;
 import time.Duration;
 import time.Measure;
 import time.Tempo;
@@ -12,8 +12,8 @@ import form.passage.Line;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static sound.ChordClass.*;
-import static sound.pitch.PitchClass.*;
+import static sound.pitched.ChordClass.*;
+import static sound.pitched.PitchClass.*;
 
 public class Test {
     private static final Logger LOGGER = Logger.getLogger( Test.class.getSimpleName() );
