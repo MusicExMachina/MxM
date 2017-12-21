@@ -1,8 +1,9 @@
-package util;
+package util.timeline;
 
 import time.Time;
 import form.events.IEvent;
 import org.jetbrains.annotations.NotNull;
+import util.Frame;
 
 import java.util.*;
 import java.util.stream.Stream;

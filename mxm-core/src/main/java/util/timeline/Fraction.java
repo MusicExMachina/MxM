@@ -1,4 +1,4 @@
-package util;
+package util.timeline;
 
 import org.jetbrains.annotations.NotNull;
 

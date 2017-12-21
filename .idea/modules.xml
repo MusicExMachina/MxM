@@ -20,6 +20,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python.iml" group="mxm-python" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python_main.iml" group="mxm-python" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mxm-python/mxm-python_test.iml" group="mxm-python" />
+      <module fileurl="file://$PROJECT_DIR$/mxm-analysis/src/test/test.iml" filepath="$PROJECT_DIR$/mxm-analysis/src/test/test.iml" />
     </modules>
   </component>
 </project>

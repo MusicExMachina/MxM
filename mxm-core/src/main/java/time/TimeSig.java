@@ -1,7 +1,7 @@
 package time;
 
 import org.jetbrains.annotations.NotNull;
-import util.Fraction;
+import util.timeline.Fraction;
 
 import java.util.Objects;
 

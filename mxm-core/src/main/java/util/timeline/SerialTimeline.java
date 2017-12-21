@@ -1,9 +1,10 @@
-package util;
+package util.timeline;
 
 import form.events.IEvent;
 import time.Time;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import util.Frame;
 
 import java.util.Iterator;
 import java.util.Spliterator;

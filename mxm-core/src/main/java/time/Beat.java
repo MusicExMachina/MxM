@@ -1,7 +1,6 @@
 package time;
 
 import org.jetbrains.annotations.NotNull;
-import util.Fraction;
 import util.ReducedFraction;
 
 public final class Beat implements Comparable<Beat> {

@@ -1,4 +1,4 @@
-package util;
+package util.timeline;
 
 import form.ITimed;
 import org.jetbrains.annotations.NotNull;

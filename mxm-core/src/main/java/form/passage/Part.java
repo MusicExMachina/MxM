@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import time.Tempo;
 import time.Time;
 import time.TimeSig;
-import util.ITimeline;
+import util.timeline.ITimeline;
 
 public abstract class Part<SoundType> implements IPassage {
 

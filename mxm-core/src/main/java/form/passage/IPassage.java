@@ -1,7 +1,7 @@
 package form.passage;
 
 import time.Time;
-import util.ITimeline;
+import util.timeline.ITimeline;
 import time.Tempo;
 import time.TimeSig;
 import form.events.TempoChange;
