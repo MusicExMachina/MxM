@@ -1,6 +1,6 @@
 package form.events;
 
-import time.Time;
+import form.time.Time;
 import form.passage.Part;
 import org.jetbrains.annotations.NotNull;
 import sound.attributes.Accent;

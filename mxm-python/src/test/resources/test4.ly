@@ -327,7 +327,7 @@ lowerVoice = {
     \new Staff = "guitar"
     <<
       \clef "treble"
-      \time 4/4
+      \form.time 4/4
       \key d \minor
       \mergeDifferentlyHeadedOn
       \mergeDifferentlyDottedOn
@@ -343,7 +343,7 @@ lowerVoice = {
   <<
     \set Staff.midiInstrument = #"acoustic guitar (nylon)"
     \clef "treble"
-    \time 4/4
+    \form.time 4/4
     \key d \minor
     \context Voice = "upperVoice" \upperVoice
     \context Voice = "lowerVoice" \lowerVoice

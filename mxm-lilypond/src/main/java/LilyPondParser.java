@@ -31,7 +31,7 @@ public class LilyPondParser {
         for(String noteToken : notes) {
             Note note = parseNote(noteToken, curTime);
             toReturn.add(note);
-            // Keep track of the base.time
+            // Keep track of the base.form.time
             curTime = curTime.plus(note.getDuration());
         }
         return toReturn;

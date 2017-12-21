@@ -79,7 +79,7 @@ public class LilyPondLeadSheetWriter {
         System.out.println("\t\t\t\\new Voice=\"Voice\"");
         System.out.println("\t\t\t\\relative c' {");
         System.out.println("\t\t\t\t\\tempo \"Allegro\" 4 = 168");
-        System.out.println("\t\t\t\t\\base.time 4/4");
+        System.out.println("\t\t\t\t\\base.form.time 4/4");
         System.out.println("\t\t\t\t\\key c \\major");
         System.out.println("\t\t\t\t% This is where a pickup measure goes: \"\\partial\"");
         System.out.println("\t\t\t\t\\repeat volta 2 {");
@@ -96,18 +96,18 @@ public class LilyPondLeadSheetWriter {
         System.out.println("\t\t\\new Lyrics=\"Lyrics\" \\lyricsto \"Voice\"");
 
         // Each lyricmoded block contains all sections of music in order. Seperate blocks represent lyrics for
-        // each base.time through (if there's a repeat, we might see different lyrics the second base.time around).
+        // each base.form.time through (if there's a repeat, we might see different lyrics the second base.form.time around).
 
         System.out.println("\t\t\\lyricmode {");
         System.out.println("\t\t\t% These are the lyrics to the song");
         System.out.println("\t\t}");
         System.out.println("\t\t\\new Lyrics=\"Lyrics\" \\lyricsto \"Voice\"");
         System.out.println("\t\t\\lyricmode {");
-        System.out.println("\t\t\t% These are the lyrics the second base.time through");
+        System.out.println("\t\t\t% These are the lyrics the second base.form.time through");
         System.out.println("\t\t}");
         System.out.println("\t\t\\new Lyrics=\"Lyrics\" \\lyricsto \"Voice\"");
         System.out.println("\t\t\\lyricmode {");
-        System.out.println("\t\t\t% And these are the lyrics the third base.time through");
+        System.out.println("\t\t\t% And these are the lyrics the third base.form.time through");
         System.out.println("\t\t}");
     }
 

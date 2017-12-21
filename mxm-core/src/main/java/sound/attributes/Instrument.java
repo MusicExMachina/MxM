@@ -2,8 +2,8 @@ package sound.attributes;
 
 import org.jetbrains.annotations.NotNull;
 import sound.ISound;
-import sound.Noise;
-import sound.pitch.Pitch;
+import sound.unpitched.Noise;
+import sound.pitched.Pitch;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -1,14 +1,12 @@
-package sound;
+package sound.pitched;
 
 import util.io.Log;
 import org.jetbrains.annotations.NotNull;
-import sound.pitch.IntervalClass;
-import sound.pitch.PitchClass;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static sound.pitch.IntervalClass.*;
+import static sound.pitched.IntervalClass.*;
 
 /**
  * <p> <b>Class overview:</b>
@@ -36,7 +34,7 @@ public final class ChordClass implements Iterable<IntervalClass> {
     private static final ChordClass[] ALL;
     // Initializes the "ALL" array
     static {
-        // Keep track of the start time to know how long initialization takes
+        // Keep track of the start form.time to know how long initialization takes
         long startTime = System.nanoTime();
 
         // Initialize all interval classes

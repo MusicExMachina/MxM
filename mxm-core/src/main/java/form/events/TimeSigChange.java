@@ -1,10 +1,10 @@
 package form.events;
 
 import form.passage.Score;
-import time.Measure;
+import form.time.Measure;
 import org.jetbrains.annotations.NotNull;
-import time.Time;
-import time.TimeSig;
+import form.time.Time;
+import form.attributes.TimeSig;
 
 public class TimeSigChange extends InstantEvent {
 

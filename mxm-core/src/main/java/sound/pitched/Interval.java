@@ -1,4 +1,4 @@
-package sound.pitch;
+package sound.pitched;
 
 import util.io.Log;
 import org.jetbrains.annotations.NotNull;

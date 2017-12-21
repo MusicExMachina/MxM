@@ -1,7 +1,7 @@
-package util;
+package util.timeline;
 
 import form.events.IEvent;
-import time.Time;
+import form.time.Time;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

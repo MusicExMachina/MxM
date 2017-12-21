@@ -19,11 +19,11 @@ class MidiWriter implements Writer<TraditionalScore> {
             MetaMessage metaMessage;
             MidiEvent event;
 
-            // Create and initialize the control track (for tempi and base.time signatures)
+            // Create and initialize the control track (for tempi and base.form.time signatures)
             Track controlTrack = sequence.createTrack();
             initTrack(controlTrack);
 
-            // Set the default base.time signature... should be removed
+            // Set the default base.form.time signature... should be removed
             metaMessage = new MetaMessage();
             byte[] bt = {0x04, 0x04, (byte)resolution, (byte)8}; // Should work... should.
             metaMessage.setMessage(0x58 ,bt, 3);
@@ -119,24 +119,24 @@ class MidiWriter implements Writer<TraditionalScore> {
         track.add(me);
     }
 
-    private long interpolate(float base.time) {
-        // Get the base.time points before and after this tick
-        float earlierTime    = timePoints.floorKey(base.time);
-        float laterTime      = timePoints.ceilingKey(base.time);
+    private long interpolate(float base.form.time) {
+        // Get the base.form.time points before and after this tick
+        float earlierTime    = timePoints.floorKey(base.form.time);
+        float laterTime      = timePoints.ceilingKey(base.form.time);
 
-        // If we're right on the base.time point we want
+        // If we're right on the base.form.time point we want
         if(Float.compare(earlierTime,laterTime) == 0) {
-            System.out.println("Interpolated "+base.time+" to exactly "+(timePoints.get(earlierTime)));
+            System.out.println("Interpolated "+base.form.time+" to exactly "+(timePoints.get(earlierTime)));
             return timePoints.get(earlierTime);
         }
         // If we have to interpolate
         else {
-            // Figure out what fractions-of-a-measure those base.time points
+            // Figure out what fractions-of-a-measure those base.form.time points
             // represent, and lerp between them to figure out where "tick" is
             long earlierTimePoint  = timePoints.get(earlierTime);
             long laterTimePoint    = timePoints.get(laterTime);
-            float relativePosition  = ((base.time - earlierTime) / (laterTime - earlierTime));
-            System.out.println("Interpolated "+base.time+" to "+(relativePosition * (laterTimePoint - earlierTimePoint )) + earlierTimePoint);
+            float relativePosition  = ((base.form.time - earlierTime) / (laterTime - earlierTime));
+            System.out.println("Interpolated "+base.form.time+" to "+(relativePosition * (laterTimePoint - earlierTimePoint )) + earlierTimePoint);
             return (long)(relativePosition * (laterTimePoint - earlierTimePoint )) + earlierTimePoint;
         }
     }
@@ -145,12 +145,12 @@ class MidiWriter implements Writer<TraditionalScore> {
         // Put a starting point in
         timePoints.put(0f,(long)0);
 
-        // The measure that the base.time signature last changed
+        // The measure that the base.form.time signature last changed
         int lastTimeSigChange = 0;
         // The size of those measures in ticks
         long lastMeasureSize = 0;
 
-        // The iterator over all the passage's base.time signatures
+        // The iterator over all the passage's base.form.time signatures
         Iterator<Integer> timeSigItr = passage.timeSignatureIterator();
 
         // Add all of the timeSignature changes
@@ -176,7 +176,7 @@ class MidiWriter implements Writer<TraditionalScore> {
 
             byte[] bytes = {(byte)timeSignature.getNumerator(), (byte)cc, (byte)resolution, (byte)8};
 
-            // Create a base.time signature change event
+            // Create a base.form.time signature change event
             MetaMessage metaMessage = new MetaMessage();
             metaMessage.setMessage(0x58 ,bytes, 3);
             MidiEvent event = new MidiEvent(metaMessage,newTimePoint);
@@ -186,7 +186,7 @@ class MidiWriter implements Writer<TraditionalScore> {
             lastTimeSigChange = curMeasure;
         }
 
-        // Create a base.time point waaaaaaay after the end of the piece to ensure our interpolator can work
+        // Create a base.form.time point waaaaaaay after the end of the piece to ensure our interpolator can work
         timePoints.put((float)lastTimeSigChange+10000,timePoints.lastEntry().getValue()+lastMeasureSize*10000);
     }
 
@@ -194,15 +194,15 @@ class MidiWriter implements Writer<TraditionalScore> {
         // Add all of the tempo changes
         Iterator<Count> tempoItr = passage.tempoChangeIterator();
         while(tempoItr.hasNext()) {
-            Count base.time = tempoItr.next();
-            Tempo tempo = passage.getTempoAt(base.time);
+            Count base.form.time = tempoItr.next();
+            Tempo tempo = passage.getTempoAt(base.form.time);
             int ppqn = 60000000 / tempo.getBPM();
 
             // Set tempo
             MetaMessage metaMessage = new MetaMessage();
             byte[] bytes = new byte[]{(byte) (ppqn >> 16), (byte) (ppqn >> 8), (byte) (ppqn)}; // Should work... should.
             metaMessage.setMessage(0x51, bytes, 3);
-            MidiEvent event = new MidiEvent(metaMessage,interpolate(base.time.toFloat()));
+            MidiEvent event = new MidiEvent(metaMessage,interpolate(base.form.time.toFloat()));
             track.add(event);
         }
     }

@@ -1,42 +1,43 @@
-package time;
+package form.time;
 
 import org.jetbrains.annotations.NotNull;
-import util.Fraction;
-import util.ReducedFraction;
+import util.fraction.ReducedFraction;
 
-public final class Beat implements Comparable<Beat> {
+import java.util.Objects;
+
+public final class Measure implements Comparable<Measure> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //  Static variables                                                                          //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final Beat ZERO = Beat.of(0,1);
-    public static final Beat ONE = Beat.of(1,1);
+    public static final Measure PICKUP = Measure.of(0);
+    public static final Measure ONE = Measure.of(1);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //  Static methods                                                                            //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static Beat of(int num, int den) {
-        return new Beat(num,den);
+    public static @NotNull Measure of(int num) {
+        return new Measure(num);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //  Member variables                                                                          //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private final ReducedFraction fraction;
+    private final int number;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //  Instance methods                                                                          //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private Beat(int num, int den) {
-        this.fraction = ReducedFraction.of(num,den);
+    private Measure(int number) {
+        this.number = number;
     }
 
-    public final @NotNull String toString() {
-        return "b " + fraction;
+    public final int getNumber() {
+        return number;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +45,7 @@ public final class Beat implements Comparable<Beat> {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     final @NotNull ReducedFraction getFraction() {
-        return fraction;
+        return ReducedFraction.of(number,1);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,14 +53,22 @@ public final class Beat implements Comparable<Beat> {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public final int compareTo(@NotNull Beat other) {
-        return this.fraction.compareTo(other.fraction);
+    public final @NotNull String toString() {
+        return "m." + number;
     }
     @Override
-    public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Beat beat = (Beat) o;
-        return this.fraction.equals(beat.fraction);
+    public final int compareTo(@NotNull Measure other) {
+        return Integer.compare(number, other.number);
+    }
+    @Override
+    public final boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Measure measure = (Measure) object;
+        return number == measure.number;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(number);
     }
 }

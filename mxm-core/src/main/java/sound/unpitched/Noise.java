@@ -1,6 +1,7 @@
-package sound;
+package sound.unpitched;
 
 import org.jetbrains.annotations.NotNull;
+import sound.ISound;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;

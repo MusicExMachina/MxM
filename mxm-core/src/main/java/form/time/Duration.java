@@ -1,30 +1,32 @@
-package time;
+package form.time;
 
 import org.jetbrains.annotations.NotNull;
-import util.ReducedFraction;
+import util.fraction.ReducedFraction;
 
 import java.util.Objects;
 
-public final class Time implements Comparable<Time> {
+public final class Duration implements Comparable<Duration> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //  Static methods                                                                            //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static @NotNull Time of(@NotNull Measure measure) {
-        return of(measure.getFraction());
+    public static Duration of(int measNum) {
+        return of(measNum, 1);
     }
-
-    public static @NotNull Time of(@NotNull Beat beat, @NotNull Measure measure) {
-        return of(measure.getFraction().plus(beat.getFraction()));
+    public static Duration of(int num, int den, int measNum) {
+        return of(num + (den * measNum), den);
+    }
+    public static Duration of(int num, int den) {
+        return of(ReducedFraction.of(num, den));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    //  Package-private methods                                                                   //
+    //  Package-private static methods                                                            //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    static @NotNull Time of(@NotNull ReducedFraction fraction) {
-        return new Time(fraction);
+    static Duration of(ReducedFraction fraction) {
+        return new Duration(fraction);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,35 +38,46 @@ public final class Time implements Comparable<Time> {
     private final Beat beat;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    //  Instance methods                                                                          //
+    //  Constructor                                                                               //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private Time(ReducedFraction fraction) {
+    private Duration(ReducedFraction fraction) {
         this.fraction = fraction;
         beat = Beat.of(fraction.getNumerator() % fraction.getDenominator(), fraction.getDenominator());
         measure = Measure.of(fraction.getNumerator() / fraction.getDenominator());
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //  Instance methods                                                                          //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     public final @NotNull Beat getBeat() {
         return beat;
     }
+
     public final @NotNull Measure getMeasure() {
         return measure;
     }
-    public final @NotNull Time plus(Duration duration) {
-        return Time.of(fraction.plus(duration.getFraction()));
+
+    public final @NotNull Duration plus(Duration duration) {
+        return Duration.of(fraction.plus(duration.fraction));
     }
-    public final @NotNull Time minus(Duration duration) {
-        return Time.of(fraction.minus(duration.getFraction()));
-    }
-    public final @NotNull Duration minus(Time duration) {
+    public final @NotNull Duration minus(Duration duration) {
         return Duration.of(fraction.minus(duration.fraction));
     }
-    public final @NotNull Time times(int factor) {
-        return Time.of(fraction.times(factor));
+    public final @NotNull Duration times(int factor) {
+        return Duration.of(fraction.times(factor));
     }
-    public final @NotNull Time divBy(int factor) {
-        return Time.of(fraction.divBy(factor));
+    public final @NotNull Duration divBy(int factor) {
+        return Duration.of(fraction.divBy(factor));
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //  Package-private methods                                                                   //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    final @NotNull ReducedFraction getFraction() {
+        return fraction;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,18 +89,18 @@ public final class Time implements Comparable<Time> {
         return fraction.toString();
     }
     @Override
-    public final int compareTo(@NotNull Time other) {
+    public final int compareTo(@NotNull Duration other) {
         return fraction.compareTo(other.fraction);
     }
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Time time = (Time) o;
-        return Objects.equals(fraction, time.fraction);
+        Duration duration = (Duration) o;
+        return Objects.equals(fraction, duration.fraction);
     }
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(fraction);
     }
 }

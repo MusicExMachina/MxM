@@ -3,7 +3,7 @@ package form.passage;
 import org.jetbrains.annotations.NotNull;
 
 import sound.attributes.Instrument;
-import sound.pitch.Pitch;
+import sound.pitched.Pitch;
 
 /**
  * <p> <b>Class overview:</b>
