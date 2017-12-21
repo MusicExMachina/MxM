@@ -3,9 +3,9 @@ package util.timeline;
 import form.ITimed;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import time.Duration;
-import time.Measure;
-import time.Time;
+import form.time.Duration;
+import form.time.Measure;
+import form.time.Time;
 
 import java.util.Iterator;
 import java.util.Spliterator;

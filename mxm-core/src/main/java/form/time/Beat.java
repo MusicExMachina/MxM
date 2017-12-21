@@ -1,43 +1,49 @@
-package time;
+package form.time;
 
 import org.jetbrains.annotations.NotNull;
+import util.fraction.ReducedFraction;
 
-import java.util.Objects;
-
-public final class Tempo implements Comparable<Tempo> {
+public final class Beat implements Comparable<Beat> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //  Static variables                                                                          //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final Tempo DEFAULT = of(120);
+    public static final Beat ZERO = Beat.of(0,1);
+    public static final Beat ONE = Beat.of(1,1);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //  Static methods                                                                            //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static @NotNull Tempo of(int bpm) {
-        if(bpm <= 0) throw new Error("Tempo:\tInvalid tempo! (" + bpm + " bpm)");
-
-        return new Tempo(bpm);
+    public static Beat of(int num, int den) {
+        return new Beat(num,den);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //  Member variables                                                                          //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private final int bpm;
+    private final ReducedFraction fraction;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //  Instance methods                                                                          //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private Tempo(int bpm) {
-        this.bpm = bpm;
+    private Beat(int num, int den) {
+        this.fraction = ReducedFraction.of(num,den);
     }
 
-    public final int getBPM() {
-        return bpm;
+    public final @NotNull String toString() {
+        return "b " + fraction;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //  Package-private methods                                                                   //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    final @NotNull ReducedFraction getFraction() {
+        return fraction;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,22 +51,14 @@ public final class Tempo implements Comparable<Tempo> {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public final @NotNull String toString() {
-        return bpm + " bpm";
+    public final int compareTo(@NotNull Beat other) {
+        return this.fraction.compareTo(other.fraction);
     }
     @Override
-    public final int compareTo(@NotNull Tempo other) {
-        return Integer.compare(bpm, other.bpm);
-    }
-    @Override
-    public final boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        Tempo tempo = (Tempo) object;
-        return bpm == tempo.bpm;
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(bpm);
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Beat beat = (Beat) o;
+        return this.fraction.equals(beat.fraction);
     }
 }

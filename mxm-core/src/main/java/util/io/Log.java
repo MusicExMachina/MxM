@@ -71,11 +71,11 @@ public abstract class Log {
         DecimalFormat formatter = new DecimalFormat("#,###");
         if(LOG_LEVEL == LogLevel.HIGH) {
             debug(tag,"initialization",objects);
-            debug(tag,"time elapsed: " + formatter.format(nsElapsed) + " ns");
+            debug(tag,"form.time elapsed: " + formatter.format(nsElapsed) + " ns");
         }
         else if(LOG_LEVEL == LogLevel.MEDIUM || LOG_LEVEL == LogLevel.LOW) {
             debug(tag,"initialization");
-            debug(tag,"time elapsed: " + formatter.format(nsElapsed) + " ns");
+            debug(tag,"form.time elapsed: " + formatter.format(nsElapsed) + " ns");
         }
     }
 

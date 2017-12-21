@@ -2,12 +2,12 @@ package form.passage;
 
 import form.events.Note;
 import sound.ISound;
-import time.Duration;
-import time.Measure;
+import form.time.Duration;
+import form.time.Measure;
 import util.timeline.ITimeline;
 import util.timeline.SerialTimeline;
 import sound.attributes.Instrument;
-import time.Time;
+import form.time.Time;
 import org.jetbrains.annotations.NotNull;
 
 public class Line<SoundType extends ISound> extends Part<SoundType> {

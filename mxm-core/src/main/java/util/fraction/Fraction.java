@@ -1,15 +1,15 @@
-package util;
+package util.fraction;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class ReducedFraction implements Comparable<ReducedFraction> {
+public final class Fraction implements Comparable<Fraction> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static @NotNull ReducedFraction of(int num, int den) {
-        return new ReducedFraction(num, den);
+    public static @NotNull Fraction of(int num, int den) {
+        return new Fraction(num, den);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -17,27 +17,12 @@ public class ReducedFraction implements Comparable<ReducedFraction> {
     private final int numerator;
     private final int denominator;
 
-    private @NotNull ReducedFraction(int numerator, int denominator) {
-        if (numerator == 0) {
-            this.numerator = numerator;
-            this.denominator = 1;
-            return;
-        }
+    private Fraction(int numerator, int denominator) {
         if (denominator == 0) {
-            throw new Error("Cannot create a reduced fraction with a denominator of 0!");
+            throw new Error("Cannot create a fraction with a denominator of 0!");
         }
-
-        // Euclid's gcd algorithm, everyone's favorite
-        int a = numerator, b = denominator;
-        while (a != b) {
-            if (a > b) {
-                a -= b;
-            } else {
-                b -= a;
-            }
-        }
-        this.numerator = numerator / a;
-        this.denominator = denominator / a;
+        this.numerator = numerator;
+        this.denominator = denominator;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,25 +35,26 @@ public class ReducedFraction implements Comparable<ReducedFraction> {
         return denominator;
     }
 
-    public final @NotNull ReducedFraction plus(@NotNull ReducedFraction other) {
+    public final @NotNull Fraction plus(@NotNull Fraction other) {
         int newNumerator = this.numerator * other.denominator + other.numerator * this.denominator;
         int newDenominator = this.denominator * other.denominator;
-        return ReducedFraction.of(newNumerator, newDenominator);
+        return Fraction.of(newNumerator, newDenominator);
     }
-
-    public final @NotNull ReducedFraction minus(@NotNull ReducedFraction other) {
+    
+    public final @NotNull Fraction minus(@NotNull Fraction other) {
         int newNumerator = this.numerator * other.denominator - other.numerator * this.denominator;
         int newDenominator = this.denominator * other.denominator;
-        return ReducedFraction.of(newNumerator, newDenominator);
-    }
-    public final @NotNull ReducedFraction times(@NotNull int factor) {
-        int newNumerator = this.numerator * factor;
-        return ReducedFraction.of(newNumerator, denominator);
+        return Fraction.of(newNumerator, newDenominator);
     }
 
-    public final @NotNull ReducedFraction divBy(@NotNull int factor) {
+    public final @NotNull Fraction times(@NotNull int factor) {
+        int newNumerator = this.numerator * factor;
+        return Fraction.of(newNumerator, denominator);
+    }
+
+    public final @NotNull Fraction divBy(@NotNull int factor) {
         int newDenominator = this.denominator * factor;
-        return ReducedFraction.of(numerator, newDenominator);
+        return Fraction.of(numerator, newDenominator);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,7 +64,7 @@ public class ReducedFraction implements Comparable<ReducedFraction> {
     }
 
     @Override
-    public final int compareTo(@NotNull ReducedFraction other) {
+    public final int compareTo(@NotNull Fraction other) {
         int num1 = numerator * other.denominator;
         int num2 = other.numerator * denominator;
         return Integer.compare(num1,num2);
@@ -88,7 +74,7 @@ public class ReducedFraction implements Comparable<ReducedFraction> {
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ReducedFraction fraction = (ReducedFraction) o;
+        Fraction fraction = (Fraction) o;
         return (numerator == fraction.numerator) && (denominator == fraction.denominator);
     }
 
@@ -98,4 +84,5 @@ public class ReducedFraction implements Comparable<ReducedFraction> {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
+
 }

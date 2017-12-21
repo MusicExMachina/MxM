@@ -34,7 +34,7 @@ public final class ChordClass implements Iterable<IntervalClass> {
     private static final ChordClass[] ALL;
     // Initializes the "ALL" array
     static {
-        // Keep track of the start time to know how long initialization takes
+        // Keep track of the start form.time to know how long initialization takes
         long startTime = System.nanoTime();
 
         // Initialize all interval classes

@@ -1,9 +1,9 @@
 package form.passage;
 
-import time.Time;
+import form.time.Time;
 import util.timeline.ITimeline;
-import time.Tempo;
-import time.TimeSig;
+import form.attributes.Tempo;
+import form.attributes.TimeSig;
 import form.events.TempoChange;
 import form.events.TimeSigChange;
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * <p> <b>Interface Overview:</b>
  * A passage is any segment of music that can stand "on its own," meaning that it contains timing information like
- * tempi and time signatures, in addition to some (or no) notes. There are two predominant passage types:
+ * tempi and form.time signatures, in addition to some (or no) notes. There are two predominant passage types:
  * {@link IScore} and {@link IPart}.</p>
  *
  * <p> <b>Design Details:</b>
@@ -23,12 +23,12 @@ import org.jetbrains.annotations.Nullable;
  * @author Patrick Celentano
  */
 public interface IPassage {
-    // Getters for iterators over form.events during a specific time
+    // Getters for iterators over form.events during a specific form.time
 
     /*
-    default @NotNull Sonority getSonorityAt(@NotNull Time time) {
+    default @NotNull Sonority getSonorityAt(@NotNull Time form.time) {
         HashSet<Pitch> pitches = new HashSet<>();
-        for(Sound properties : getNotesAt(time)) {
+        for(Sound properties : getNotesAt(form.time)) {
             ISound sound = properties.getSound();
             if(sound instanceof Pitch) {
                 pitches.add((Pitch)sound);
@@ -36,9 +36,9 @@ public interface IPassage {
         }
         return Sonority.of(pitches);
     }
-    default @NotNull Harmony getHarmonyAt(@NotNull Time time) {
+    default @NotNull Harmony getHarmonyAt(@NotNull Time form.time) {
         HashSet<PitchClass> pitchClasses = new HashSet<>();
-        for(Sound properties : getNotesAt(time)) {
+        for(Sound properties : getNotesAt(form.time)) {
             ISound sound = properties.getSound();
             if(sound instanceof Pitch) {
                 pitchClasses.add(((Pitch)sound).getPitchClass());
@@ -46,9 +46,9 @@ public interface IPassage {
         }
         return Harmony.of(pitchClasses);
     }
-    default @NotNull Timbre getTimbreAt(@NotNull Time time) {
+    default @NotNull Timbre getTimbreAt(@NotNull Time form.time) {
         HashSet<Noise> noises = new HashSet<>();
-        for(Sound properties : getNotesAt(time)) {
+        for(Sound properties : getNotesAt(form.time)) {
             ISound sound = properties.getSound();
             if(sound instanceof Noise) {
                 noises.add((Noise)sound);
@@ -57,7 +57,7 @@ public interface IPassage {
         return Timbre.of(noises);
     }
     */
-    // Getters for form.events during a specific time
+    // Getters for form.events during a specific form.time
 
     default @Nullable TimeSig getTimeSigAt(@NotNull Time time) {
         TimeSigChange timeSigChange = getTimeSigChanges().getBefore(time);
@@ -74,10 +74,10 @@ public interface IPassage {
         return null;
     }
     /*
-    default @NotNull Collection<Sound> getNotesAt(@NotNull Time time) {
-        Frame<Sound> frame = getNotes().getBefore(time);
+    default @NotNull Collection<Sound> getNotesAt(@NotNull Time form.time) {
+        Frame<Sound> frame = getNotes().getBefore(form.time);
         if(frame != null) {
-            return getNotes().getAt(time).ongoingEvents();
+            return getNotes().getAt(form.time).ongoingEvents();
         }
         // Return a trivial collection
         return new ArrayList<>();

@@ -5,9 +5,9 @@ import form.events.TimeSigChange;
 import sound.attributes.Instrument;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
-import time.Tempo;
-import time.Time;
-import time.TimeSig;
+import form.attributes.Tempo;
+import form.time.Time;
+import form.attributes.TimeSig;
 import util.timeline.ITimeline;
 
 public abstract class Part<SoundType> implements IPassage {

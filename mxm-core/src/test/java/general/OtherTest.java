@@ -39,7 +39,7 @@ public class OtherTest {
             elapsedTime = System.nanoTime() - startTime;
             totalTime += elapsedTime;
         }
-        System.out.println("Average time elapsed: " + (totalTime/SAMPLES)/ FACTOR);
+        System.out.println("Average form.time elapsed: " + (totalTime/SAMPLES)/ FACTOR);
 
         // GET THE MAX PITCH, PARALLEL
         System.out.println("");
@@ -52,6 +52,6 @@ public class OtherTest {
             elapsedTime = System.nanoTime() - startTime;
             totalTime += elapsedTime;
         }
-        System.out.println("Average time elapsed: " + (totalTime/SAMPLES)/FACTOR);
+        System.out.println("Average form.time elapsed: " + (totalTime/SAMPLES)/FACTOR);
     }
 }

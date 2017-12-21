@@ -1,6 +1,6 @@
 package form.events;
 
-import time.Time;
+import form.time.Time;
 
 public abstract class InstantEvent implements IEvent {
     private final Time time;

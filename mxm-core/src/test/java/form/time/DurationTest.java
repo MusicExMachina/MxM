@@ -1,8 +1,6 @@
-package time;
+package form.time;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DurationTest {
 

@@ -250,7 +250,7 @@ public class MidiReader implements Reader<TraditionalScore> {
         int denominator = 2 << (data[1] - 1);
         TimeSig timeSignature  = TimeSig.getInstance(4,4);
         if(numerator == 0 || denominator == 0) {
-            System.out.println("MIDI PARSER:\tImproper base.time signature message, reverting to 4/4");
+            System.out.println("MIDI PARSER:\tImproper base.form.time signature message, reverting to 4/4");
         }
         else {
             timeSignature = TimeSig.getInstance(numerator, denominator);
@@ -271,7 +271,7 @@ public class MidiReader implements Reader<TraditionalScore> {
         long tick = 0;
         long prevTick = 0;
         long finalTick = sequence.getTickLength();
-        float base.time = 0.0f;
+        float base.form.time = 0.0f;
 
         // Create the next stage's note-on and note-off collections
         timeSigsFloat = new TreeMap<>();
@@ -283,14 +283,14 @@ public class MidiReader implements Reader<TraditionalScore> {
         noteOffsFloat = new HashMap<>();
         instChangeFloat = new HashMap<>();
 
-        // Add the first base.time signature, if there is one
+        // Add the first base.form.time signature, if there is one
         if (!timeSigsLong.isEmpty()) {
             timeSigsFloat.put(0f, timeSigsLong.firstEntry().getValue());
         }
         // Else, make it 4/4, because why not?
         else {
             timeSigsFloat.put(0f, TimeSig.getInstance(4, 4));
-            System.out.println("MIDI PARSER: No base.time signature... defaulting to 4/4");
+            System.out.println("MIDI PARSER: No base.form.time signature... defaulting to 4/4");
         }
 
         // Add the first tempo, if there is one
@@ -307,13 +307,13 @@ public class MidiReader implements Reader<TraditionalScore> {
         // (Don't worry, we skip ahead efficiently)
         while (tick <= finalTick) {
 
-            // Update the base.time signature if need be
+            // Update the base.form.time signature if need be
             if(timeSigsLong.get(tick) != null) {
-                timeSigsFloat.put(base.time, timeSigsLong.get(tick));
+                timeSigsFloat.put(base.form.time, timeSigsLong.get(tick));
             }
             // Update the tempo if need be
             if(tempiLong.get(tick) != null) {
-                tempiFloat.put(base.time, new Tempo(tempiLong.get(tick)));
+                tempiFloat.put(base.form.time, new Tempo(tempiLong.get(tick)));
             }
 
 
@@ -323,25 +323,25 @@ public class MidiReader implements Reader<TraditionalScore> {
             long ticksElapsed = tick - prevTick;
             float timeElapsed = (float) ticksElapsed / ticksPerMeasure;
 
-            // Add to the base.time and set "prevTick"
-            base.time += timeElapsed;
+            // Add to the base.form.time and set "prevTick"
+            base.form.time += timeElapsed;
             prevTick = tick;
             tick++;
 
             // Add this timePoint, if it's not a duplicate
             if (!timePoints.containsKey(tick)) {
-                timePoints.put(tick, base.time);
+                timePoints.put(tick, base.form.time);
             }
 
-            // If there's a base.time signature change, add that in
+            // If there's a base.form.time signature change, add that in
             if (timeSigsLong.containsKey(tick)) {
-                timeSigsFloat.put(base.time, timeSig);
+                timeSigsFloat.put(base.form.time, timeSig);
             }
 
             // If there's a PPQN change, add that in
             if (tempiLong.containsKey(tick)) {
                 // TODO: Is this right? I think it might not be...
-                tempiFloat.put(base.time, new Tempo(tempiLong.get(tick)));
+                tempiFloat.put(base.form.time, new Tempo(tempiLong.get(tick)));
             }
 
             // Check for the next changes in key signature or pulses per quarter note.
@@ -357,12 +357,12 @@ public class MidiReader implements Reader<TraditionalScore> {
                 nextPPQNChangeTick = tempiLong.ceilingEntry(tick).getKey();
             }
 
-            // If the next upcoming event is the end of the piece, mark it with a base.time point
+            // If the next upcoming event is the end of the piece, mark it with a base.form.time point
             // and be done with it.
             if (tick <= finalTick && finalTick <= nextTimeSigChangeTick && finalTick <= nextPPQNChangeTick) {
                 tick = finalTick;
             }
-            // Else, if a base.time signature change is due sooner, move the tick to that
+            // Else, if a base.form.time signature change is due sooner, move the tick to that
             else if (nextTimeSigChangeTick <= nextPPQNChangeTick) {
                 tick = nextTimeSigChangeTick;
             }
@@ -427,7 +427,7 @@ public class MidiReader implements Reader<TraditionalScore> {
         noteOffsCount = new HashMap<>();
         instChangeCount = new HashMap<>();
 
-        // For each base.time signature change
+        // For each base.form.time signature change
         for (Float timeSigChangeTime : timeSigsFloat.keySet()) {
             // The best-matching count to put this event on
             Count count = closestCount(timeSigChangeTime);
@@ -463,7 +463,7 @@ public class MidiReader implements Reader<TraditionalScore> {
                 // The best-matching count to put this event on
                 Count count = closestCount(noteOnFloat);
 
-                // Add a sound set at this base.time
+                // Add a sound set at this base.form.time
                 noteOnsCount.get(track).put(count, new TreeSet<Pitch>());
 
                 // For each sound to add... add it
@@ -519,17 +519,17 @@ public class MidiReader implements Reader<TraditionalScore> {
     }
 
     private float interpolate(long tick) {
-        // Get the base.time points before and after this tick
+        // Get the base.form.time points before and after this tick
         long earlierTick    = timePoints.floorKey(tick);
         long laterTick      = timePoints.ceilingKey(tick);
 
-        // If we're right on the base.time point we want
+        // If we're right on the base.form.time point we want
         if(Long.compare(earlierTick,laterTick) == 0) {
             return timePoints.get(earlierTick);
         }
         // If we have to interpolate
         else {
-            // Figure out what fractions-of-a-measure those base.time points
+            // Figure out what fractions-of-a-measure those base.form.time points
             // represent, and lerp between them to figure out where "tick" is
             float earlierTimePoint  = timePoints.get(earlierTick);
             float laterTimePoint    = timePoints.get(laterTick);
@@ -538,12 +538,12 @@ public class MidiReader implements Reader<TraditionalScore> {
         }
     }
 
-    private Count closestCount(float base.time) {
+    private Count closestCount(float base.form.time) {
         // Now we get to calculate where in the measure this lies
-        int measure = (int)Math.floor(base.time);
-        float remainder = base.time - measure;
+        int measure = (int)Math.floor(base.form.time);
+        float remainder = base.form.time - measure;
 
-        // We need a base.time.Count that's sufficiently close to the remainder
+        // We need a base.form.time.Count that's sufficiently close to the remainder
         int numerator = 1;
         int denominator = 1;
 
@@ -556,7 +556,7 @@ public class MidiReader implements Reader<TraditionalScore> {
             // If it's close enough
             if(distance < .001f) {
                 denominator = testDenominator;
-                numerator = Math.round(base.time*denominator);
+                numerator = Math.round(base.form.time*denominator);
                 break;
             }
         }

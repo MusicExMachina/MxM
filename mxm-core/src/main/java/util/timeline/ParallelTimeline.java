@@ -1,6 +1,6 @@
 package util.timeline;
 
-import time.Time;
+import form.time.Time;
 import form.events.IEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,10 +9,10 @@ import java.util.stream.Stream;
 
 /**
  * <p> <b>Interface Overview:</b>
- * The {@link ParallelTimeline} interface represents a timeline in which musical form.events may occur at any time, even
+ * The {@link ParallelTimeline} interface represents a timeline in which musical form.events may occur at any form.time, even
  * simultaneously. This contrasts starkly with a {@link SerialTimeline} in which many form.events must happen one after the
  * other, with no overlap. In a {@link ParallelTimeline}, contemporaneous form.events are stored in a {@link Frame}, which
- * is simply a vertical stack of form.events at a given time</p>
+ * is simply a vertical stack of form.events at a given form.time</p>
  *
  * @param <MusicEventType> The subclass of IEvent which this timeline may hold. It's worth noting that this might
  *                        be IEvent itself- in which case, all music form.events may be stored within this timeline.

@@ -5,7 +5,7 @@ import form.events.SpanningEvent;
 import form.events.IEvent;
 import form.ITimed;
 import org.jetbrains.annotations.NotNull;
-import time.Time;
+import form.time.Time;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -26,7 +26,7 @@ public class Frame<MusicEventType extends IEvent> implements ITimed {
         // Member variables         //
         //////////////////////////////
 
-        /** The time at which this frame occurs */
+        /** The form.time at which this frame occurs */
         private final Time time;
         /** All form.events which start exactly on this frame */
         private final TreeSet<MusicEventType> startedEvents;
@@ -42,8 +42,8 @@ public class Frame<MusicEventType extends IEvent> implements ITimed {
         //////////////////////////////
 
         /**
-         * A limited-access constructor which takes in a time, and initializes the various event-holding collections
-         * @param time the time at which this event occurs
+         * A limited-access constructor which takes in a form.time, and initializes the various event-holding collections
+         * @param time the form.time at which this event occurs
          */
         Frame(@NotNull Time time) {
             this.time = time;

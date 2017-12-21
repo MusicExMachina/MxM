@@ -2,10 +2,10 @@ package general;
 
 import sound.pitched.Chord;
 import sound.pitched.Pitch;
-import time.Duration;
-import time.Measure;
-import time.Tempo;
-import time.Time;
+import form.time.Duration;
+import form.time.Measure;
+import form.attributes.Tempo;
+import form.time.Time;
 import form.passage.LeadSheet;
 import form.passage.Line;
 

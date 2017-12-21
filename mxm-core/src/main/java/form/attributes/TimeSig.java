@@ -1,7 +1,7 @@
-package time;
+package form.attributes;
 
 import org.jetbrains.annotations.NotNull;
-import util.timeline.Fraction;
+import util.fraction.Fraction;
 
 import java.util.Objects;
 
@@ -53,7 +53,7 @@ public final class TimeSig {
 
     @Override
     public final @NotNull String toString() {
-        return fraction.toString()+ " time";
+        return fraction.toString()+ "form/time";
     }
     @Override
     public final boolean equals(Object object) {

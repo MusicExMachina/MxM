@@ -1,8 +1,8 @@
 package form.events;
 
 
-import time.Duration;
-import time.Time;
+import form.time.Duration;
+import form.time.Time;
 
 public abstract class SpanningEvent implements IEvent {
     private final Time startITime;

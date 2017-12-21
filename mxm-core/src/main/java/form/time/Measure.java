@@ -1,7 +1,7 @@
-package time;
+package form.time;
 
 import org.jetbrains.annotations.NotNull;
-import util.ReducedFraction;
+import util.fraction.ReducedFraction;
 
 import java.util.Objects;
 

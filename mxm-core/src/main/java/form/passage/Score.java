@@ -2,13 +2,13 @@ package form.passage;
 
 import form.events.TempoChange;
 import form.events.TimeSigChange;
-import time.Time;
+import form.time.Time;
 import util.timeline.ITimeline;
 import util.timeline.SerialTimeline;
 import org.jetbrains.annotations.NotNull;
-import time.Measure;
-import time.Tempo;
-import time.TimeSig;
+import form.time.Measure;
+import form.attributes.Tempo;
+import form.attributes.TimeSig;
 
 import java.util.*;
 

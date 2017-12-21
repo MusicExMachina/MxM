@@ -25,7 +25,7 @@
 
 global = {
   \key b \minor
-  \time 4/4
+  \form.time 4/4
   \tempo "Alla marcia molto marcato" 4=138
 }
 
