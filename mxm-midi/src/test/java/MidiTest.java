@@ -9,14 +9,14 @@ import java.util.List;
 /*
 public class MidiTest {
 
-    @Test
+    @general.Test
     public void sequentialLoadTest() {
         String pathStr = "src/tests/resources/";
 
         // Get the path to the resource we want
-        Path curPath = Paths.get("").toAbsolutePath();
+        Path curPath = Paths.of("").toAbsolutePath();
         String curPathStr = curPath.toString();
-        Path path = Paths.get(curPathStr, pathStr);
+        Path path = Paths.of(curPathStr, pathStr);
         Charset charset = Charset.forName("UTF-8");
 
         // Get the resources folder
@@ -40,14 +40,14 @@ public class MidiTest {
             }
         }
     }
-    @Test
+    @general.Test
     public void concurrentLoadTest() {
         String pathStr = "src/tests/resources/";
 
         // Get the path to the resource we want
-        Path curPath = Paths.get("").toAbsolutePath();
+        Path curPath = Paths.of("").toAbsolutePath();
         String curPathStr = curPath.toString();
-        Path path = Paths.get(curPathStr, pathStr);
+        Path path = Paths.of(curPathStr, pathStr);
         Charset charset = Charset.forName("UTF-8");
 
         // Get the resources folder
@@ -76,16 +76,16 @@ public class MidiTest {
             System.err.println(e);
         }
     }
-    @Test
+    @general.Test
     public void sequentialDownloadTest() {
 
         // The file that holds all the urls we're going to download from
         String filename = "src/tests/resources/url_sources.txt";
 
         // Get the path to the resource we want
-        Path curPath = Paths.get("").toAbsolutePath();
+        Path curPath = Paths.of("").toAbsolutePath();
         String curPathStr = curPath.toString();
-        Path path = Paths.get(curPathStr, filename);
+        Path path = Paths.of(curPathStr, filename);
         Charset charset = Charset.forName("UTF-8");
 
         // Read each line in the sources file
@@ -104,16 +104,16 @@ public class MidiTest {
             System.err.println(e);
         }
     }
-    @Test
+    @general.Test
     public void concurrentDownloadTest() {
 
         // The file that holds all the urls we're going to download from
         String filename = "src/tests/resources/url_sources.txt";
 
         // Get the path to the resource we want
-        Path curPath = Paths.get("").toAbsolutePath();
+        Path curPath = Paths.of("").toAbsolutePath();
         String curPathStr = curPath.toString();
-        Path path = Paths.get(curPathStr, filename);
+        Path path = Paths.of(curPathStr, filename);
         Charset charset = Charset.forName("UTF-8");
 
         // Read each line in the sources file
@@ -133,14 +133,14 @@ public class MidiTest {
             System.err.println(e);
         }
     }
-    @Test
+    @general.Test
     public void playTest() {
         String pathStr = "src/tests/resources/";
 
         // Get the path to the resource we want
-        Path curPath = Paths.get("").toAbsolutePath();
+        Path curPath = Paths.of("").toAbsolutePath();
         String curPathStr = curPath.toString();
-        Path path = Paths.get(curPathStr, pathStr);
+        Path path = Paths.of(curPathStr, pathStr);
         Charset charset = Charset.forName("UTF-8");
 
         // Get the resources folder
@@ -157,14 +157,14 @@ public class MidiTest {
             e.printStackTrace();
         }
     }
-    @Test
+    @general.Test
     public void parseTest() {
         String pathStr = "src/tests/resources/";
 
         // Get the path to the resource we want
-        Path curPath = Paths.get("").toAbsolutePath();
+        Path curPath = Paths.of("").toAbsolutePath();
         String curPathStr = curPath.toString();
-        Path path = Paths.get(curPathStr, pathStr);
+        Path path = Paths.of(curPathStr, pathStr);
         Charset charset = Charset.forName("UTF-8");
 
         // Get the resources folder

@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/git,java,python,gradle,intellij
+# Created by https://www.gitignore.util.io/api/git,java,python,gradle,intellij
 
 ### Git ###
 *.orig
@@ -56,7 +56,7 @@ crashlytics-build.properties
 fabric.properties
 
 ### Intellij Patch ###
-# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+# Comment Reason: https://github.com/joeblau/gitignore.util.io/issues/186#issuecomment-215987721
 
 # *.iml
 # modules.xml
@@ -208,4 +208,4 @@ gradle-app.setting
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 
-# End of https://www.gitignore.io/api/git,java,python,gradle,intellij
+# End of https://www.gitignore.util.io/api/git,java,python,gradle,intellij
