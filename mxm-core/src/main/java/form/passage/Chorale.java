@@ -5,17 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import sound.attributes.Instrument;
 import sound.pitched.Pitch;
 
-/**
- * <p> <b>Class overview:</b>
- * Chorales are a common classical music genre with four vocal parts: soprano, alto, tenor, and bass, each of which is
- * a proper line- one properties after the other, with no polyphony inside a single part.</p>
- *
- * <p> <b>Design Details:</b>
- * Subclasses of {@link Score} are intended to ease users in their composition by restricting the number and
- * type of parts.</p>
- *
- * @author Patrick Celentano
- */
 public final class Chorale extends Score {
 
     //////////////////////////////
