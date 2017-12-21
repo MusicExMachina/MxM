@@ -47,13 +47,13 @@ public class MidiReader implements Reader<TraditionalScore> {
         this.sequence = sequence;
         passage = new TraditionalScore();
 
-        System.out.println("MIDI PARSER:\tParsing midi passage.passage.events...");
+        System.out.println("MIDI PARSER:\tParsing midi passage.passage.form.events...");
         parseAll();
-        System.out.println("MIDI PARSER:\tFinished parsing midi passage.passage.events");
+        System.out.println("MIDI PARSER:\tFinished parsing midi passage.passage.form.events");
 
-        System.out.println("MIDI PARSER:\tInterpolating midi passage.passage.events...");
+        System.out.println("MIDI PARSER:\tInterpolating midi passage.passage.form.events...");
         interpolateAll();
-        System.out.println("MIDI PARSER:\tFinished interpolating midi passage.passage.events");
+        System.out.println("MIDI PARSER:\tFinished interpolating midi passage.passage.form.events");
 
         System.out.println("MIDI PARSER:\tConverting to counts...");
         convertToCounts();
@@ -84,8 +84,8 @@ public class MidiReader implements Reader<TraditionalScore> {
 
             // Set the initial instrument of this track (it may change)
             // Note that "-1" here just means anything else will override it
-            //TreeMap<Long,base.properties.Instrument> init = new TreeMap<>();
-            //init.put(-1L,base.properties.Instrument.DEFAULT);
+            //TreeMap<Long,base.sound.attributes.Instrument> init = new TreeMap<>();
+            //init.put(-1L,base.sound.attributes.Instrument.DEFAULT);
             //instChangeLong.put(track,init);
             // TODO: Instrument change stuff
 
@@ -195,7 +195,7 @@ public class MidiReader implements Reader<TraditionalScore> {
         // Data pulled off of the MidiEvent
         int pitchValue      = message.getData1();
         int velocityValue   = message.getData2();
-        Pitch pitch         = Pitch.get(pitchValue);
+        Pitch sound.pitch         = Pitch.get(pitchValue);
 
         //System.out.println(tick + "\t" + sound);
 
@@ -210,7 +210,7 @@ public class MidiReader implements Reader<TraditionalScore> {
             }
 
             // Add this basic to note-ons
-            noteOnsLong.get(track).get(tick).add(pitch);
+            noteOnsLong.get(track).get(tick).add(sound.pitch);
         }
     }
 
@@ -218,15 +218,15 @@ public class MidiReader implements Reader<TraditionalScore> {
 
         // Data pulled off of the MidiEvent
         int pitchValue      = message.getData1();
-        Pitch pitch         = Pitch.get(pitchValue);
+        Pitch sound.pitch         = Pitch.get(pitchValue);
 
         // If this track hasn't had a note on at this tick
-        if (!noteOffsLong.get(track).containsKey(pitch)) {
-            noteOffsLong.get(track).put(pitch, new TreeSet<Long>());
+        if (!noteOffsLong.get(track).containsKey(sound.pitch)) {
+            noteOffsLong.get(track).put(sound.pitch, new TreeSet<Long>());
         }
 
         // Add this basic to note-offs
-        noteOffsLong.get(track).get(pitch).add(tick);
+        noteOffsLong.get(track).get(sound.pitch).add(tick);
     }
 
     private void parseControlChangeMessage(Track track, MidiEvent event, ShortMessage message, Long tick) {
@@ -241,7 +241,7 @@ public class MidiReader implements Reader<TraditionalScore> {
     private void parseTempoMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
         byte[] data = message.getData();
         Integer ppqn = (data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff);
-        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter passage.passage.events.sounding.Note - I think this is right
+        tempiLong.put(tick,60000000/ppqn); // 60 000 000 / Pulses Per Quarter passage.passage.form.events.sounding.Note - I think this is right
     }
 
     private void parseTimeSignatureMessage(Track track, MidiEvent event, MetaMessage message, Long tick) {
@@ -401,11 +401,11 @@ public class MidiReader implements Reader<TraditionalScore> {
             noteOffsFloat.put(track, new TreeMap<Pitch, TreeSet<Float>>());
 
             // For each frame
-            for (Pitch pitch : noteOffsLong.get(track).keySet()) {
-                noteOffsFloat.get(track).put(pitch, new TreeSet<Float>());
+            for (Pitch sound.pitch : noteOffsLong.get(track).keySet()) {
+                noteOffsFloat.get(track).put(sound.pitch, new TreeSet<Float>());
                 // For each sound
-                for (Long noteOffTick : noteOffsLong.get(track).get(pitch)) {
-                    noteOffsFloat.get(track).get(pitch).add(interpolate(noteOffTick));
+                for (Long noteOffTick : noteOffsLong.get(track).get(sound.pitch)) {
+                    noteOffsFloat.get(track).get(sound.pitch).add(interpolate(noteOffTick));
                 }
             }
         }
@@ -472,11 +472,11 @@ public class MidiReader implements Reader<TraditionalScore> {
                 }
             }
 
-            for (Pitch pitch : noteOffsFloat.get(track).keySet()) {
-                noteOffsCount.get(track).put(pitch, new TreeSet<Count>());
-                for (Float noteOffFloat : noteOffsFloat.get(track).get(pitch)) {
+            for (Pitch sound.pitch : noteOffsFloat.get(track).keySet()) {
+                noteOffsCount.get(track).put(sound.pitch, new TreeSet<Count>());
+                for (Float noteOffFloat : noteOffsFloat.get(track).get(sound.pitch)) {
                     Count count = closestCount(noteOffFloat);
-                    noteOffsCount.get(track).get(pitch).add(count);
+                    noteOffsCount.get(track).get(sound.pitch).add(count);
                 }
             }
         }
@@ -506,10 +506,10 @@ public class MidiReader implements Reader<TraditionalScore> {
 
                 for(Map.Entry<Count, TreeSet<Pitch>> pair : noteOnsCount.get(track).entrySet()) {
                     Count start = pair.getKey();
-                    for(Pitch pitch : pair.getValue()) {
-                        Count end = noteOffsCount.get(track).get(pitch).ceiling(start);
-                        System.out.println(new Note(start,end,pitch));
-                        part.add(new Note(start,end,pitch));
+                    for(Pitch sound.pitch : pair.getValue()) {
+                        Count end = noteOffsCount.get(track).get(sound.pitch).ceiling(start);
+                        System.out.println(new Note(start,end,sound.pitch));
+                        part.add(new Note(start,end,sound.pitch));
                     }
                 }
                 // Add the part to the passage

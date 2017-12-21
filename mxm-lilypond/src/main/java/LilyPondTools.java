@@ -12,7 +12,7 @@ public class LilyPondTools {
         try {
             // Run LilyPond
             String lilyPondPath     = "C:\\Program Files (x86)\\LilyPond\\usr\\bin\\lilypond.exe";
-            Path path               = Paths.get("").toAbsolutePath();
+            Path path               = Paths.of("").toAbsolutePath();
             Runtime runtime         = Runtime.getRuntime();
 
             // Wait for LilyPond to do its thing
@@ -39,8 +39,8 @@ public class LilyPondTools {
             // Run LilyPond
             String lilyPondPath     = "C:\\Program Files (x86)\\LilyPond\\usr\\bin\\lilypond.exe";
             String resourcesPath    = "mxm-lilypond/src/tests/resources/";
-            Path curPath            = Paths.get("").toAbsolutePath();
-            Path path               = Paths.get(curPath.toString(), resourcesPath);
+            Path curPath            = Paths.of("").toAbsolutePath();
+            Path path               = Paths.of(curPath.toString(), resourcesPath);
             Runtime runtime         = Runtime.getRuntime();
 
             System.out.println(path.toString());

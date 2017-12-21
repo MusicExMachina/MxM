@@ -3,7 +3,7 @@ public class LilyPondLeadSheetWriter {
 
     String songName = "Song";
     String songStyle = "Default";
-    String composerName = "io.MxM";
+    String composerName = "util.io.MxM";
 
     public static void main(String args[]) {
         LilyPondLeadSheetWriter writer = new LilyPondLeadSheetWriter();
@@ -117,7 +117,7 @@ public class LilyPondLeadSheetWriter {
         System.out.println("\t\\markup \\column {");
         System.out.println("\t\t\\null");
         System.out.println("\t\t\\fill-line { \\smaller \\smaller { \"Copyright © " +  curYear + " by " + composerName + "\" } }");
-        System.out.println("\t\t\\fill-line { \\smaller \\smaller { \"Typeset by io.MxM, derived from OpenBook\" } }");
+        System.out.println("\t\t\\fill-line { \\smaller \\smaller { \"Typeset by util.io.MxM, derived from OpenBook\" } }");
         System.out.println("\t}");
     }
 }
