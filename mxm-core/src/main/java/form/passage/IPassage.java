@@ -9,19 +9,6 @@ import form.events.TimeSigChange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * <p> <b>Interface Overview:</b>
- * A passage is any segment of music that can stand "on its own," meaning that it contains timing information like
- * tempi and form.time signatures, in addition to some (or no) notes. There are two predominant passage types:
- * {@link IScore} and {@link IPart}.</p>
- *
- * <p> <b>Design Details:</b>
- * This interface stands as an <b>unmodifiable but mutable</b> outer interface for a series of classes which are both
- * modifiable and mutable. This allows for MxM to control access to such classes, which are often delicate in nature
- * and should not be modified by outside parties.</p>
- *
- * @author Patrick Celentano
- */
 public interface IPassage {
     // Getters for iterators over form.events during a specific form.time
 
