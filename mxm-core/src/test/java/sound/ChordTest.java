@@ -1,5 +1,0 @@
-package sound;
-
-class ChordTest {
-
-}

@@ -1,4 +1,4 @@
-import sound.Pitch;
+import sound.pitch.Pitch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class OtherTest {
         totalTime = 0;
         for(int i = 0; i < SAMPLES; i++) {
             startTime = System.nanoTime();
-            Pitch p1 = pitches.stream().max(Pitch::compareTo).orElseGet(null);
+            Pitch p1 = pitches.stream().max(Pitch::compareTo).orElse(null);
             elapsedTime = System.nanoTime() - startTime;
             totalTime += elapsedTime;
         }
@@ -46,7 +46,7 @@ public class OtherTest {
         totalTime = 0;
         for(int i = 0; i < SAMPLES; i++) {
             startTime = System.nanoTime();
-            Pitch p2 = pitches.parallelStream().max(Pitch::compareTo).orElseGet(null);
+            Pitch p2 = pitches.parallelStream().max(Pitch::compareTo).orElse(null);
             elapsedTime = System.nanoTime() - startTime;
             totalTime += elapsedTime;
         }

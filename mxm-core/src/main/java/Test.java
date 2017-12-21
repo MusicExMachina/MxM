@@ -1,16 +1,17 @@
 import sound.Chord;
-import sound.Pitch;
+import sound.pitch.Pitch;
 import time.Duration;
+import time.Measure;
 import time.Tempo;
 import time.Time;
-import form.LeadSheet;
-import form.Line;
+import form.passage.LeadSheet;
+import form.passage.Line;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static sound.ChordClass.*;
-import static sound.PitchClass.*;
+import static sound.pitch.PitchClass.*;
 
 public class Test {
     private static final Logger LOGGER = Logger.getLogger( Test.class.getSimpleName() );
@@ -27,9 +28,9 @@ public class Test {
         Line<Pitch> tune = leadSheet.getTune();
         Line<Chord> changes = leadSheet.getChanges();
         // ========================================================================================================= //
-        leadSheet.add(Tempo.of(120), Time.of(0));
-        leadSheet.add(Tempo.of(100), Time.of(10));
-        leadSheet.add(Tempo.of(120), Time.of(32));
+        leadSheet.add(Tempo.of(120), Time.of(Measure.ONE));
+        leadSheet.add(Tempo.of(100), Time.of(Measure.of(21)));
+        leadSheet.add(Tempo.of(120), Time.of(Measure.of(42)));
         // ========================================================================================================= //
         System.out.println("Creating tune");
         tune.add(Pitch.get(C_NATURAL,4),        Duration.of(1,4))

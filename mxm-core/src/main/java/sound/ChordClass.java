@@ -1,17 +1,19 @@
 package sound;
 
-import io.Log;
+import util.io.Log;
 import org.jetbrains.annotations.NotNull;
+import sound.pitch.IntervalClass;
+import sound.pitch.PitchClass;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static sound.IntervalClass.*;
+import static sound.pitch.IntervalClass.*;
 
 /**
  * <p> <b>Class overview:</b>
  * A sound class is MxM's representation of a fundamental sound type- major, minor, diminished, augmented and so on.
- * Note that static sound classes use shorter names than interval classes in order to avoid name clashing, as well as
+ * Sound that static sound classes use shorter names than interval classes in order to avoid name clashing, as well as
  * to avoid very long names for chords (think half diminished seventh). </p>
  *
  * <p> <b>Design Details:</b>

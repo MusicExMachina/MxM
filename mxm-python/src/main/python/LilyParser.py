@@ -88,7 +88,7 @@ if __name__ == '__main__':
     #Loads a lilypond file into a ly document object
     d = ly.document.Document().load("../../test/resources/test4.ly")
     cursor = ly.document.Cursor(d)
-    #Returns a list of the length of each note
+    #Returns a list of the length of each properties
     r = ly.rhythm.rhythm_extract(cursor)
     p = ly.pitch.PitchIterator(cursor).pitches()
 

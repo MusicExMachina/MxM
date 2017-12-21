@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- * A conceptualization of rhythm as gradual, equal subdivisions of some concrete amount of note.time.
+ * A conceptualization of rhythm as gradual, equal subdivisions of some concrete amount of properties.time.
  * RhythmTrees operate like many other data structures save that their only "real" storage is in
  * their leaf nodes.
  */
@@ -228,8 +228,8 @@ class RhythmNode {
         if(children.size() == 0) {
             String thisNode = "[ ";
             /*
-            for(Note note : frame) {
-                thisNode += note.getPitch().toString() + " ";
+            for(Sound properties : frame) {
+                thisNode += properties.getPitch().toString() + " ";
             }
             */
             return thisNode + "]";

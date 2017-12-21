@@ -1,7 +1,7 @@
 package util;
 
+import form.events.IEvent;
 import time.Time;
-import events.IMusicEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,16 +12,16 @@ import java.util.stream.Stream;
 
 /**
  * <p> <b>Interface Overview:</b>
- * The {@link SerialTimeline} interface represents a timeline in which all musical events are ordered serially- one
- * after the other, that is. This contrasts starkly with a {@link ParallelTimeline} in which many events may happen
- * simultaneously, and are stored in a {@link IFrame}.</p>
+ * The {@link SerialTimeline} interface represents a timeline in which all musical form.events are ordered serially- one
+ * after the other, that is. This contrasts starkly with a {@link ParallelTimeline} in which many form.events may happen
+ * simultaneously, and are stored in a {@link Frame}.</p>
  *
- * @param <MusicEventType> The subclass of IMusicEvent which this timeline may hold. It's worth noting that this might
- *                        be IMusicEvent itself- in which case, all music events may be stored within this timeline.
+ * @param <MusicEventType> The subclass of IEvent which this timeline may hold. It's worth noting that this might
+ *                        be IEvent itself- in which case, all music form.events may be stored within this timeline.
  *
  * @author Patrick Celentano
  */
-public final class SerialTimeline <MusicEventType extends IMusicEvent> implements ITimeline<MusicEventType> {
+public final class SerialTimeline <MusicEventType extends IEvent> implements ITimeline<MusicEventType> {
     private final TreeMap<Time, MusicEventType> events;
 
     public SerialTimeline() {
@@ -29,7 +29,7 @@ public final class SerialTimeline <MusicEventType extends IMusicEvent> implement
     }
 
     // ADDER
-    // Package private on purpose- we don't want users adding events, only score.
+    // Package private on purpose- we don't want users adding form.events, only score.
     public void add(MusicEventType event) {
         if (events.get(event.getTime()) == null) {
             events.put(event.getTime(), event);

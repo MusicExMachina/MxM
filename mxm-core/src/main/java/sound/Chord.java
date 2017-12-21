@@ -1,7 +1,9 @@
 package sound;
 
-import io.Log;
+import util.io.Log;
 import org.jetbrains.annotations.NotNull;
+import sound.pitch.IntervalClass;
+import sound.pitch.PitchClass;
 
 import java.util.*;
 
@@ -54,7 +56,7 @@ public final class Chord implements ISound, Iterable<PitchClass> {
 
         this.factorsInOrder = new ArrayList<>();
         // For every interval in the ChordClass (which holds all intervals above the root, add a sound factor that is
-        // also that high above the root. Note that ninths become seconds,m as to interval classes wrap at the octave
+        // also that high above the root. Sound that ninths become seconds,m as to interval classes wrap at the octave
         for(IntervalClass intervalClass : chordClass) {
             factorsInOrder.add(root.transpose(intervalClass));
         }

@@ -1,5 +1,0 @@
-package note;
-
-class TechniqueTest {
-
-}

@@ -1,13 +1,14 @@
 package form;
 
+import form.events.IEvent;
 import org.jetbrains.annotations.NotNull;
 import time.Time;
-import util.IFrame;
+import util.Frame;
 
 /**
  * <p> <b>Interface Overview:</b>
  * The {@link ITimed} interface represents any object which may be said to exist "in time" with some sort of associated
- * {@link Time}. All {@link events.IMusicEvent}s are {@link ITimed}, as are {@link IFrame}</p>
+ * {@link Time}. All {@link IEvent}s are {@link ITimed}, as are {@link Frame}</p>
  *
  * @author Patrick Celentano
  */

@@ -1,6 +1,3 @@
-
-import static sound.PitchClass.*;
-
 public class OtherOtherTest {
     public static void main(String[] args) {
         // Harmony h = Harmony.of(C_NATURAL,E_NATURAL,G_NATURAL);

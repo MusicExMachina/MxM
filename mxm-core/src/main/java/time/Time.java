@@ -8,31 +8,36 @@ import java.util.Objects;
 public final class Time implements Comparable<Time> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
+    //  Static methods                                                                            //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final Time PICKUP_MEASURE = Time.of(0, 1);
-    public static final Time MEASURE_ONE = Time.of(1, 1);
-
-    public static Time of(int measNum) {
-        return of(measNum, 1);
+    public static @NotNull Time of(@NotNull Measure measure) {
+        return of(measure.getFraction());
     }
 
-    public static Time of(int num, int den, int measNum) {
-        return of(num + (den * measNum), den);
+    public static @NotNull Time of(@NotNull Beat beat, @NotNull Measure measure) {
+        return of(measure.getFraction().plus(beat.getFraction()));
     }
 
-    public static Time of(int num, int den) {
-        return of(ReducedFraction.of(num, den));
-    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //  Package-private methods                                                                   //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static Time of(ReducedFraction fraction) {
+    static @NotNull Time of(@NotNull ReducedFraction fraction) {
         return new Time(fraction);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //  Member variables                                                                          //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private final ReducedFraction fraction;
     private final Measure measure;
     private final Beat beat;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //  Instance methods                                                                          //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private Time(ReducedFraction fraction) {
         this.fraction = fraction;
@@ -40,44 +45,40 @@ public final class Time implements Comparable<Time> {
         measure = Measure.of(fraction.getNumerator() / fraction.getDenominator());
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public @NotNull Beat getBeat() {
+    public final @NotNull Beat getBeat() {
         return beat;
     }
-
-    public @NotNull Measure getMeasure() {
+    public final @NotNull Measure getMeasure() {
         return measure;
     }
-
-    public @NotNull Time plus(Duration duration) {
-        return Time.of(fraction.plus(duration.fraction));
+    public final @NotNull Time plus(Duration duration) {
+        return Time.of(fraction.plus(duration.getFraction()));
     }
-    public @NotNull Time minus(Duration duration) {
-        return Time.of(fraction.minus(duration.fraction));
+    public final @NotNull Time minus(Duration duration) {
+        return Time.of(fraction.minus(duration.getFraction()));
     }
-    public @NotNull Duration minus(Time duration) {
+    public final @NotNull Duration minus(Time duration) {
         return Duration.of(fraction.minus(duration.fraction));
     }
-    public @NotNull Time times(int factor) {
+    public final @NotNull Time times(int factor) {
         return Time.of(fraction.times(factor));
     }
-    public @NotNull Time divBy(int factor) {
+    public final @NotNull Time divBy(int factor) {
         return Time.of(fraction.divBy(factor));
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //  Overrides                                                                                 //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public final @NotNull String toString() {
         return fraction.toString();
     }
-
     @Override
     public final int compareTo(@NotNull Time other) {
         return fraction.compareTo(other.fraction);
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,11 +86,8 @@ public final class Time implements Comparable<Time> {
         Time time = (Time) o;
         return Objects.equals(fraction, time.fraction);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(fraction);
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
 }

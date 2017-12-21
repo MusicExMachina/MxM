@@ -4,6 +4,7 @@ import form.ITimed;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import time.Duration;
+import time.Measure;
 import time.Time;
 
 import java.util.Iterator;
@@ -18,11 +19,11 @@ import java.util.stream.Stream;
 public interface ITimeline <TimedType extends ITimed> extends Iterable<TimedType> {
     default @NotNull Time getStart() {
         if(getFirst() != null) return getFirst().getTime();
-        return Time.MEASURE_ONE;
+        return Time.of(Measure.ONE);
     }
     default @NotNull Time getEnd() {
         if(getLast() != null) return getLast().getTime();
-        return Time.MEASURE_ONE;
+        return Time.of(Measure.ONE);
     }
     default @NotNull Duration getLength() {
         return getEnd().minus(getStart());
