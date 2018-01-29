@@ -23,6 +23,7 @@ def make_explicit(rhythm):
     explicitRhythm = []
 
     for i in xrange(len(r)):
+        print r[i]
         if (r[i] == ''):
             tempList.append(prevLength)
         else:
@@ -37,7 +38,7 @@ def make_explicit(rhythm):
             explicitRhythm.append(tempList)
             tempList = []
 
-        #elif (barCounter > BAR_LENGTH):
+        #if (barCounter > BAR_LENGTH and __debug__):
         #   raise ValueError('INVALID NOTE LENGTHS')
 
     return explicitRhythm
@@ -78,13 +79,30 @@ def first_prime(length):
 def is_prime(n):
     return all(n % i for i in xrange(2, n))
 
+def file_splitter(file):
+    print "here"
+    songs_array = [] #Organizes songs into arrays of arrays in this format:
+                    #[[metadata][chords][notes/rhythms]]
+    while True:
+        line = file.readline()
+        if line == "": #Reached the end of the file
+            break
+        song = [[],[],[]]
+        if line == "\\bookpart {\n": #IS THIS OVERLY SPECIFIC?
+            print "Got a hit"
+            songs_array.append(song)
+            song = [[],[],[]]
+    print songs_array
+    return songs_array
+
 
 #==MAIN========================================================================
 
 if __name__ == '__main__':
-
+    f = open("../../test/resources/realbook.ly")
+    file = file_splitter(f)
     #Loads a lilypond file into a ly document object
-    d = ly.document.Document().load("../../test/resources/test4.ly")
+    d = ly.document.Document().load("../../test/resources/realbook.ly")
     cursor = ly.document.Cursor(d)
     #Returns a list of the length of each note
     r = ly.rhythm.rhythm_extract(cursor)
@@ -95,28 +113,37 @@ if __name__ == '__main__':
     rhythms = []
     chords = []
 
-    rx = r"([a-g]|[r])('?)" #Will only accept notes a-g with optional ' character or a rest
+    rx = r"(([a-g]|[r])('?))|\\tuplet" #Will only accept notes a-g with optional ' character or a rest
 
     #Bring in the individual pitches or rests of the file
     for item in ly.rhythm.music_items(cursor,True,True):
         pitches_temp.append(item.tokens)
     temp_pitches = ["".join(tokens) for tokens in pitches_temp]
 
-
     for item in temp_pitches:
         if re.match(rx, item, re.I):
             pitches.append(item)
 
+    #print pitches
+    #print r
     try:
         rhythm = make_explicit(r)
     except ValueError as e:
         print(e)
         raise
 
+    print rhythm
     v = []
+    rhythm_length = 0
+    for i in xrange(len(rhythm)):
+        rhythm_length += len(rhythm[i])
+    print rhythm_length, len(pitches)
     for i in xrange(100): #Hack solution, only run on the first 100 bars
         v.append(rhythm_to_vector(rhythm[i],pitches))
-    print(v)
+    #print pitches
+    #print rhythms
+    #if __debug__:
+    #    print(v)
 
     print("Working")
 
