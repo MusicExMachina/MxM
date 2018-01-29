@@ -14,6 +14,61 @@ BAR_LENGTH = 1.5 #This needs to change from header parsing
 
 #==PREPROCESSOR HELPER FUNCTIONS===============================================
 
+#Takes a .ly (specifically in the format define by open real book)
+def file_splitter(file):
+    print "here"
+    songs_array = [] #Organizes songs into arrays of arrays in this format:
+                    #([metadata][chords][notes/rhythms])
+
+    song = ([],[],[])
+    while True:
+        line = file.readline()
+
+        #This if block determines what part of the song we are in and adds
+        #the file line by line into the appropriate part of the song tuple
+        
+        #if we reached the end of the file, add current our song and stop
+        if line == "":
+            songs_array.append(song)
+            break
+
+        #else if we started a new song, add our current song and continue
+        elif line == "\\bookpart {\n": #IS THIS OVERLY SPECIFIC? TURN INTO REGEX
+            songs_array.append(song)
+            song = ([],[],[])
+
+        #else if we entered the meta data part of the song, then read in song
+        #title
+        elif line == "\\markup {\n":
+            rx = r" *(\\fill-line)"
+            while (line != "}\n"):
+                line = file.readline()
+                if re.match(rx, line, re.I):
+                    song[0].append(line)
+
+        #else if we reached the chord part of the song, then read in all lines
+        #to chord part of tuple until we reach the end of chordmode
+        elif line == "\\chordmode {\n":
+            while (line != "}\n"):
+                line = file.readline()
+                song[1].append(line)
+
+        #else if we are in rhythm/notes part part of the song, then read in all
+        #lines to rhythm part of tuple, unless it is meta data (go to meta data)
+        elif line == "{\n":
+            rx = r" *\\((tempo)|(time)|(key))"
+            while (line != "}\n"):
+                line = file.readline()
+                if re.match(rx, line, re.I):
+                    song[0].append(line)
+                else:
+                    song[2].append(line)
+
+    #Remove the first, empty song and return array
+    songs_array.pop(0)
+    return songs_array
+
+
 #Takes a list of LilyPond rhythm objects, explicitely defines the length of 
 #the notes, and seperates each bar into sublists
 def make_explicit(rhythm):
@@ -79,28 +134,15 @@ def first_prime(length):
 def is_prime(n):
     return all(n % i for i in xrange(2, n))
 
-def file_splitter(file):
-    print "here"
-    songs_array = [] #Organizes songs into arrays of arrays in this format:
-                    #[[metadata][chords][notes/rhythms]]
-    while True:
-        line = file.readline()
-        if line == "": #Reached the end of the file
-            break
-        song = [[],[],[]]
-        if line == "\\bookpart {\n": #IS THIS OVERLY SPECIFIC?
-            print "Got a hit"
-            songs_array.append(song)
-            song = [[],[],[]]
-    print songs_array
-    return songs_array
 
 
 #==MAIN========================================================================
 
 if __name__ == '__main__':
-    f = open("../../test/resources/realbook.ly")
+    f = open("../../test/resources/test5.ly")
     file = file_splitter(f)
+
+    '''
     #Loads a lilypond file into a ly document object
     d = ly.document.Document().load("../../test/resources/realbook.ly")
     cursor = ly.document.Cursor(d)
@@ -113,7 +155,8 @@ if __name__ == '__main__':
     rhythms = []
     chords = []
 
-    rx = r"(([a-g]|[r])('?))|\\tuplet" #Will only accept notes a-g with optional ' character or a rest
+    rx = r"(([a-g]|[r])('?))|\\tuplet" #Will only accept notes a-g with optional
+                                       #' character or a tuplet or a rest
 
     #Bring in the individual pitches or rests of the file
     for item in ly.rhythm.music_items(cursor,True,True):
@@ -145,6 +188,7 @@ if __name__ == '__main__':
     #if __debug__:
     #    print(v)
 
+    '''
     print("Working")
 
 
