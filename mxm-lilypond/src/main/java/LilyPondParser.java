@@ -17,10 +17,10 @@ public class LilyPondParser {
         if (tokens.length != 2) {
             throw new Error("LILY POND PARSER:\t ChordNote string \"" + chordString + "\" improperly formatted.");
         }
-        PitchClass pitch        = parsePitchClass(tokens[0]);
+        PitchClass sound.pitch        = parsePitchClass(tokens[0]);
         ChordClass chordClass   = parseChordClass(tokens[1]);
 
-        return new Chord(pitch,chordClass);
+        return new Chord(sound.pitch,chordClass);
     }
 
     private static ArrayList<Note> parseNotes(String noteString) {
@@ -31,7 +31,7 @@ public class LilyPondParser {
         for(String noteToken : notes) {
             Note note = parseNote(noteToken, curTime);
             toReturn.add(note);
-            // Keep track of the base.time
+            // Keep track of the base.form.time
             curTime = curTime.plus(note.getDuration());
         }
         return toReturn;
@@ -44,9 +44,9 @@ public class LilyPondParser {
                 break;
             }
         }
-        Pitch pitch = parsePitch(noteToken.substring(0,divider));
+        Pitch sound.pitch = parsePitch(noteToken.substring(0,divider));
         Count length = parseNoteLength(noteToken.substring(divider), Count.ONE);
-        return new Note<Pitch>(curTime,length,pitch);
+        return new Note<Pitch>(curTime,length,sound.pitch);
     }
 
     private static Pitch parsePitch(String pitchToken) {
