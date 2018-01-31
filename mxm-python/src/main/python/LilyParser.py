@@ -7,6 +7,8 @@ import math
 import numpy
 import re
 
+#TODO: FIX CHORD/RHYTHM PARSER, IMPLEMENT HEADER AND CHORD PROCESSING
+
 #==GLOBAL VARIBALES============================================================
 
 BAR_LENGTH = 1.0 #This needs to change from header parsing
@@ -14,11 +16,12 @@ BAR_LENGTH = 1.0 #This needs to change from header parsing
 
 #==PREPROCESSOR HELPER FUNCTIONS===============================================
 
-#Takes a .ly (specifically in the format define by open real book)
+#Takes a .ly (specifically in the format defined by open real book). Cuts the
+#file into individual songs and then again into metadata, chords, and
+#notes/rhythms. Returns them as an array of tuples
 def file_splitter(file):
-    print "here"
     songs_array = [] #Organizes songs into arrays of arrays in this format:
-                    #([metadata][chords][notes/rhythms])
+                     #([metadata][chords][notes/rhythms])
 
     song = ([],[],[])
     while True:
@@ -68,22 +71,73 @@ def file_splitter(file):
     songs_array.pop(0)
     return songs_array
 
-
+#Takes any part of the array and puts into a temporary .ly file to be read by
+#lilypond functions
 def reformat_to_lily(line_array):
-    file = open("tempFile.txt","w")
+    file = open("tempFile.ly","w")
     for i in range(len(line_array)):
         file.write(line_array[i])
 
     file.close()
 
-    return open("tempFile.txt","r")
+    return open("tempFile.ly","r")
 
 
+
+#Takes a list of LilyPond rhythm objects, explicitely defines the length of 
+#the notes, and seperates each bar into sublists. Also allows for cases of
+#tuplets (currently only 3/2 tuplets), which is why we're bringing in pitch
+#Returns an array of arrays of note lengths
+def make_explicit(r,p):
+    #print len(r), len(p)
+    #print r,p
+    tempList = []
+    prevLength = 0
+    barCounter = 0.0
+    explicitRhythm = []
+
+    for i in xrange(len(r)):
+        rx = r"\\tuplet"
+
+        #If this actually a tuplet, then we need to overide where the notes
+        #are placed
+        if (re.match(rx, p[i], re.I)): #THIS ONLY HANDLES 3/2
+            p.pop(i)
+            tempList.extend([3,3,3])
+            barCounter += 0.5
+
+        #If the length of the note is not explicitly given, then assume it's the
+        #previous note's length
+        elif (r[i] == ''):
+            tempList.append(prevLength)
+            barCounter += (1.0/prevLength) 
+
+        #Else, the note length is explicitly given, so set the prevLength to
+        #this length
+        else:
+            prevLength = int(r[i].strip('.'))
+            tempList.append(prevLength)
+            barCounter += (1.0/prevLength) 
+
+        #If the bar has now been filled, then start on a new bar
+        if (barCounter >= BAR_LENGTH):
+            barCounter = 0.0
+            explicitRhythm.append(tempList)
+            tempList = []
+
+        #if (barCounter > BAR_LENGTH and __debug__):
+        #   raise ValueError('INVALID NOTE LENGTHS')
+
+    return explicitRhythm, p
+
+
+#This is the main preprocessor, it takes an array of pitches and rhythms from a
+#.ly file, cleans up/removes garbage and returns 2 arrays: pitches and rhythms
 def rhythm_parser(song): #THIS IS THE UGLIEST CODE I'VE EVER WRITTEN WILL FIX
-    print song
+    #print song
     #Loads a lilypond file into a ly document object
     reformat_to_lily(song[2])
-    d = ly.document.Document().load("tempFile.txt")
+    d = ly.document.Document().load("tempFile.ly")
     cursor = ly.document.Cursor(d)
     #Returns a list of the length of each note
     r = ly.rhythm.rhythm_extract(cursor)
@@ -94,59 +148,27 @@ def rhythm_parser(song): #THIS IS THE UGLIEST CODE I'VE EVER WRITTEN WILL FIX
     rhythms = []
     chords = []
 
-    rx = r"(([a-g]|[r])('?))|\\tuplet" #Will only accept notes a-g with optional
-                                       #' character or a tuplet or a rest
+    #THIS REGEX COULD BE BROKEN
+    rx = r"([a-g]|[r])|\\tuplet" #Will only accept notes a-g with optional
+                                 #' character or a tuplet or a rest
 
     #Bring in the individual pitches or rests of the file
     for item in ly.rhythm.music_items(cursor,True,True):
         pitches_temp.append(item.tokens)
     temp_pitches = ["".join(tokens) for tokens in pitches_temp]
 
+    #Sanitize pitches: only bring in stuff determined by rx
     for item in temp_pitches:
         if re.match(rx, item, re.I):
             pitches.append(item)
 
-    #print pitches
-    #print r
     try:
-        rhythm = make_explicit(r)
+        rhythm,pitches = make_explicit(r,pitches)
     except ValueError as e:
         print(e)
         raise
 
-    print rhythm
     return rhythm, pitches
-
-
-#Takes a list of LilyPond rhythm objects, explicitely defines the length of 
-#the notes, and seperates each bar into sublists
-def make_explicit(r):
-    tempList = []
-    prevLength = 0
-    barCounter = 0.0
-    explicitRhythm = []
-
-    for i in xrange(len(r)):
-        print r[i]
-        if (r[i] == ''):
-            tempList.append(prevLength)
-        else:
-            prevLength = int(r[i].strip('.'))
-            tempList.append(prevLength)
-
-        barCounter += (1.0/prevLength) 
-
-        #If the bar has now been filled
-        if (barCounter >= BAR_LENGTH):
-            barCounter = 0.0
-            explicitRhythm.append(tempList)
-            tempList = []
-
-        #if (barCounter > BAR_LENGTH and __debug__):
-        #   raise ValueError('INVALID NOTE LENGTHS')
-
-    return explicitRhythm
-
 
 
 #==MAIN HELPER FUNCTIONS=======================================================
@@ -185,25 +207,31 @@ def is_prime(n):
     return all(n % i for i in xrange(2, n))
 
 
-
 #==MAIN========================================================================
 
+
 if __name__ == '__main__':
+
+    #Replace this file with "../../test/resources/realbook.ly" to test out the
+    #entire real book
     f = open("../../test/resources/test5.ly")
     songs = file_splitter(f)
 
     rhythm,pitches = rhythm_parser(songs[0])
     
-    
+    #v is the final vector of pitches and rhythms
     v = []
+
+    #Find the size of all of the notes by going into the array of arrays
+    #SHOULD PROBABLY REPLACE THIS WITH A RETURN VARIABLE FROM RHYTHM_PARSER
     rhythm_length = 0
     for i in xrange(len(rhythm)):
         rhythm_length += len(rhythm[i])
-    print rhythm_length, len(pitches)
-    for i in xrange(len(rhythm)): #Hack solution, only run on the first 100 bars
+
+`   #The main processing function call
+    for i in xrange(len(pitches)):
         v.append(rhythm_to_vector(rhythm[i],pitches))
-    #print pitches
-    #print rhythms
+
     if __debug__:
         print(v)
 
