@@ -233,7 +233,7 @@ if __name__ == '__main__':
         v.append(rhythm_to_vector(rhythm[i],pitches))
 
     if __debug__:
-        print(v)
+        print(v) #Add -O option to remove this debug statement
 
     
     print("Working")
