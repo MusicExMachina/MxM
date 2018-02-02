@@ -12,6 +12,12 @@ mxm-python/src/main/.DS_Store
 mxm-python/src/main/.DS_Store
 .DS_Store
 
+### OS X ###
+*/.DS_Store
+mxm-python/src/logs/*
+mxm-python/src/main/.DS_Store
+.DS_Store
+
 ### Git ###
 *.orig
 
@@ -218,8 +224,3 @@ gradle-app.setting
 # Cache of project
 .gradletasknamecache
 
-# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
-# gradle/wrapper/gradle-wrapper.properties
-
-=======
-# End of https://www.gitignore.io/api/git,java,python,gradle,intellij
