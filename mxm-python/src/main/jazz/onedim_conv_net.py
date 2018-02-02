@@ -98,6 +98,12 @@ def make_regressor(wsize, filter_size, num_input_series=1, num_outputs=1, num_fi
 		MaxPooling1D(),
 		Convolution1D(nb_filter=num_filt, filter_length=filter_size, activation='relu'),
 		MaxPooling1D(),
+		Convolution1D(nb_filter=num_filt, filter_length=filter_size, activation='relu'),
+		MaxPooling1D(),
+		Convolution1D(nb_filter=num_filt, filter_length=filter_size, activation='relu'),
+		MaxPooling1D(),
+		Convolution1D(nb_filter=num_filt, filter_length=filter_size, activation='relu'),
+		MaxPooling1D(),
 		Flatten(),
 		Dense(num_outputs, activation='linear'),
 	))
@@ -163,12 +169,8 @@ def main():
 	ts_length = 1000
 	window_size = 50
 
-	print('\nSimple single timeseries vector prediction')
+	print('\nSimple single melody vector prediction')
 	timeseries = np.arange(ts_length)  # The timeseries f(t) = t
-	evaluate(timeseries, window_size)
-
-	print('\nMultiple-input, multiple-output prediction')
-	timeseries = np.array([np.arange(ts_length), -np.arange(ts_length)]).T  # The timeseries f(t) = [t, -t]
 	evaluate(timeseries, window_size)
 
 main()
