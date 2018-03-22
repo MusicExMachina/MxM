@@ -113,6 +113,8 @@ def make_explicit(r,p):
     ran = min(len(r),len(p))
     i = 0
 
+    print r
+    print p
     while i < min(len(r),len(p)):
         rx = r"\\tuplet"
 
@@ -137,7 +139,7 @@ def make_explicit(r,p):
         #Else, the note length is explicitly given, so set the prevLength to
         #this length
         else:
-            prevLength = int((r[i]).strip('~.!'))
+            prevLength = int((r[i]).strip('~.!').split('*')[0])
             tempList.append(prevLength)
             barCounter += (1.0/prevLength) 
 
@@ -332,6 +334,7 @@ def rhythm_parser(song): #THIS IS THE UGLIEST CODE I'VE EVER WRITTEN WILL FIX
     rhythms = []
     chords = []
 
+
     #THIS REGEX COULD BE BROKEN
     rx = r"([a-g]|[r])|\\tuplet" #Will only accept notes a-g with optional
                                  #' character or a tuplet or a rest
@@ -404,41 +407,42 @@ if __name__ == '__main__':
     f = open("../../test/resources/realbook.ly")
     songs = file_splitter(f)
 
-    fh = open("../../test/resources/chords.txt","w")
+    # fh = open("../../test/resources/chords.txt","w")
 
-    for x in xrange(10):
-        #rhythm,pitches = rhythm_parser(songs[x])
-        chords = chord_parser(songs[x])
-        for i in range(len(chords)):
-            for j in range(len(chords[i])):
-                if chords[i][j] != None:
-                    fh.write(str(chords[i][j]))
-                    fh.write("\n")
-        fh.write("\n\n\n\n")
-        continue
+    for x in xrange(5,100):
+        rhythm,pitches = rhythm_parser(songs[x])
+    #     chords = chord_parser(songs[x])
+    #     for i in range(len(chords)):
+    #         for j in range(len(chords[i])):
+    #             if chords[i][j] != None:
+    #                 fh.write(str(chords[i][j]))
+    #                 fh.write("\n")
+    #     fh.write("\n\n\n\n")
+        
 
 
-        #print chords
+    #print chords
 
-        #print len(rhythm), len(chords)
+    #print len(rhythm), len(chords)
 
-        #chords = color_rhythm_with_chords(rhythm,chords)
-        #v is the final vector of pitches and rhythms
-        v = []
+    #chords = color_rhythm_with_chords(rhythm,chords)
+    #v is the final vector of pitches and rhythms
+    v = []
 
-        #Find the size of all of the notes by going into the array of arrays
-        #SHOULD PROBABLY REPLACE THIS WITH A RETURN VARIABLE FROM RHYTHM_PARSER
-        rhythm_length = 0
-        for i in xrange(len(rhythm)):
-            rhythm_length += len(rhythm[i])
+    #Find the size of all of the notes by going into the array of arrays
+    #SHOULD PROBABLY REPLACE THIS WITH A RETURN VARIABLE FROM RHYTHM_PARSER
+    rhythm_length = 0
+    for i in xrange(len(rhythm)):
+        rhythm_length += len(rhythm[i])
 
-        #The main processing function call
-        for i in xrange(len(rhythm)):
+    #The main processing function call
+    for i in xrange(len(rhythm)):
 
-            v.append(rhythm_to_vector(rhythm[i],pitches))
+        v.append(rhythm_to_vector(rhythm[i],pitches))
+        print(v)
 
-        if __debug__:
-            print(v) #Add -O option to remove this debug statement
+    if __debug__:
+        print(v) #Add -O option to remove this debug statement
 
     
     print("Working")
