@@ -9,7 +9,7 @@ import re
 
 #==GLOBAL VARIBALES============================================================
 
-BAR_LENGTH = 1.5
+BAR_LENGTH = 1.5 #This needs to change from header parsing
 
 
 #==PREPROCESSOR HELPER FUNCTIONS===============================================
@@ -48,27 +48,25 @@ def make_explicit(rhythm):
 
 #Take in a lilypond list of rhythm objects and turn into a vector of rhythms
 #that can be read in by our neural nets
-def rhythm_to_vector(r):
-    #print len(r)
-
+def rhythm_to_vector(r,p):
     #Base case 1: sublist is empty, in which case don't do anything
     if len(r) == 0:
         return
 
     #Base case 2: sublist is a singleton, then just return a singleton
     elif len(r) == 1:
-        return [(1,r[0])]
+        return [(1,r[0],p.pop(0))]
 
     #Otherwise chunk list into multiple sublists based on the first prime that
     #evenly divides the list and recurse
     else:
         length = len(r)
         prime = first_prime(length)
-        l = [(prime,None)]
+        l = [(prime,None,None)]
 
         chunks = numpy.array_split(r,prime)#Split list by the found prime
         for i in xrange(len(chunks)):
-            l += rhythm_to_vector(chunks[i])
+            l += rhythm_to_vector(chunks[i],p)
         return l
 
 #OPTIMIZE THIS CODE
@@ -97,23 +95,17 @@ if __name__ == '__main__':
     rhythms = []
     chords = []
 
-    rx = r"u'[a-g]'?'" #Will only accept notes a-g with optional ' character
+    rx = r"([a-g]|[r])('?)" #Will only accept notes a-g with optional ' character or a rest
 
     #Bring in the individual pitches or rests of the file
     for item in ly.rhythm.music_items(cursor,True,True):
-        #print item.tokens
         pitches_temp.append(item.tokens)
-        #print "yo"
-    test = ["".join(tokens) for tokens in pitches_temp]
-    #print "WAZZUP",test
-    print(type(test[0]))
+    temp_pitches = ["".join(tokens) for tokens in pitches_temp]
 
-    #REGULAR EXPRESSION IS BROKEN
-    for item in test:
+
+    for item in temp_pitches:
         if re.match(rx, item, re.I):
             pitches.append(item)
-    print "BRO",pitches
-
 
     try:
         rhythm = make_explicit(r)
@@ -122,9 +114,9 @@ if __name__ == '__main__':
         raise
 
     v = []
-    for i in xrange(len(rhythm)):
-        v.append(rhythm_to_vector(rhythm[i]))
-    #print(v)
+    for i in xrange(100): #Hack solution, only run on the first 100 bars
+        v.append(rhythm_to_vector(rhythm[i],pitches))
+    print(v)
 
     print("Working")
 
